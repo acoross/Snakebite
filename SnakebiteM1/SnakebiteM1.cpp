@@ -4,8 +4,9 @@
 #include "stdafx.h"
 #include "SnakebiteM1.h"
 
+#include "WinWrapper.h"
 #include "game_session.h"
-
+#include "game_session_drawer.h"
 
 
 #define MAX_LOADSTRING 100
@@ -14,6 +15,9 @@
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
+
+std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
+
 
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -30,8 +34,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: 여기에 코드를 입력합니다.
-	using acoross::snakebite::GameSession;
-	GameSession gamesession;
+	using namespace acoross::snakebite;
+	GameSessionSP gamesession = std::make_shared<GameSession>();
+	g_game_drawer = std::make_unique<GameSessionDrawer>(gamesession);
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -67,7 +72,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		DWORD tick = GetTickCount();
 		if (tick > lastTick + 33)
 		{
-			gamesession.UpdateMove(tick - lastTick);
+			gamesession->UpdateMove(tick - lastTick);
 
 			InvalidateRect(msg.hwnd, nullptr, true);
 			lastTick = tick;
@@ -166,10 +171,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_PAINT:
         {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
+			PAINTSTRUCT ps;
+			acoross::Win::WDC wdc(::BeginPaint(hWnd, &ps));
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
-            EndPaint(hWnd, &ps);
+
+			g_game_drawer->Draw(wdc);
+
+			::EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:

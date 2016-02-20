@@ -36,8 +36,14 @@
     <ClInclude Include="geo_types.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="game_session_drawer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="game_session.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="WinWrapper.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

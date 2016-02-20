@@ -11,7 +11,7 @@ namespace acoross {
 namespace snakebite {
 
 // 맵, MovingObject 로 구성되는 하나의 게임 단위.
-class GameSession
+class GameSession final
 {
 public:
 	typedef std::list<std::unique_ptr<MovingObject>> ListMovingObject;
@@ -33,10 +33,16 @@ public:
 	int Width() const { return Right - Left; }
 	int Height() const { return Top - Bottom; }
 
+	//임시로 열어주는 API
+	ListMovingObject& GetMovingObjects() { return moving_objects_; }
+
 private:
 	// unique_ptr 이라서 자동 삭제됨.
 	ListMovingObject moving_objects_;
 };
+
+typedef std::shared_ptr<GameSession> GameSessionSP;
+typedef std::weak_ptr<GameSession> GameSessionWP;
 
 }
 }

@@ -15,6 +15,7 @@ public:
 	MovingObject(Position2D pos, Degree angle, double velocity, double ang_vel)
 		: pos_(pos), angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	{}
+	virtual ~MovingObject(){}
 
 	void MoveTo(Position2D newpos)
 	{
