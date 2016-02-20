@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game_session.h" />
     <ClInclude Include="geo_types.h" />
     <ClInclude Include="moving_object.h" />
     <ClInclude Include="Resource.h" />
@@ -153,6 +154,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="game_session.cpp" />
     <ClCompile Include="moving_object.cpp" />
     <ClCompile Include="SnakebiteM1.cpp" />
     <ClCompile Include="stdafx.cpp">

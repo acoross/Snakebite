@@ -4,7 +4,9 @@
 #include "stdafx.h"
 #include "SnakebiteM1.h"
 
-#include "moving_object.h"
+#include "game_session.h"
+
+
 
 #define MAX_LOADSTRING 100
 
@@ -28,6 +30,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: 여기에 코드를 입력합니다.
+	using acoross::snakebite::GameSession;
+	GameSession gamesession;
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -43,16 +47,32 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_SNAKEBITEM1));
 
     MSG msg;
+	
+	// 기본 메시지 루프입니다.
+	ZeroMemory(&msg, sizeof(msg));
 
-    // 기본 메시지 루프입니다.
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
+	DWORD lastTick = 0;
+	while (msg.message != WM_QUIT)
+	{
+		if (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
+		{
+			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+
+		// main loop
+		DWORD tick = GetTickCount();
+		if (tick > lastTick + 33)
+		{
+			gamesession.UpdateMove(tick - lastTick);
+
+			InvalidateRect(msg.hwnd, nullptr, true);
+			lastTick = tick;
+		}
+	}
 
     return (int) msg.wParam;
 }

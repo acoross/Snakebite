@@ -1,6 +1,9 @@
 #ifndef SNAKEBITE_GEO_TYPES_H
 #define SNAKEBITE_GEO_TYPES_H
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 namespace acoross {
 namespace snakebite {
 
@@ -61,11 +64,16 @@ public:
 	{
 		return angle_;
 	}
+
+	double GetRad() const
+	{
+		return (double)angle_ / M_PI;
+	}
+
 private:
 	int angle_;
 };
 
 }
 }
-
 #endif //SNAKEBITE_GEO_TYPES_H
