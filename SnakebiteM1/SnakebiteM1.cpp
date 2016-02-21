@@ -70,9 +70,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		// main loop
 		DWORD tick = GetTickCount();
-		if (tick > lastTick + 33)
+		auto diffTick = (int64_t)tick - lastTick;
+		if (diffTick > 33)
 		{
-			gamesession->UpdateMove(tick - lastTick);
+			//gamesession->UpdateMove(tick - lastTick);
+			gamesession->UpdateMove(diffTick);
 
 			InvalidateRect(msg.hwnd, nullptr, true);
 			lastTick = tick;
@@ -174,9 +176,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			PAINTSTRUCT ps;
 			acoross::Win::WDC wdc(::BeginPaint(hWnd, &ps));
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
+			/*HDC memdc(::CreateCompatibleDC(wdc.Get()));
+			::DeleteObject(memdc);*/
 
 			g_game_drawer->Draw(wdc);
-
+			
 			::EndPaint(hWnd, &ps);
         }
         break;

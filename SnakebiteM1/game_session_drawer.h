@@ -20,13 +20,16 @@ public:
 
 	void Draw(Win::WDC& wdc)
 	{
+		double ratio = 1.0;
+
 		auto gs = game_session_.lock();
 		if (gs)
 		{
+			// 테두리 그리기
+			wdc.Rectangle(gs->Left, gs->Top, gs->Right, gs->Bottom);
+
 			int h = gs->Height();
 			int w = gs->Width();
-
-			double ratio = 1.0;
 
 			// TODO
 			// 화면과 game_session 크기를 고려해 ratio 를 정한 뒤,
@@ -35,10 +38,16 @@ public:
 			auto& mo_list = gs->GetMovingObjects();
 			for (auto& mo : mo_list)
 			{
+				const int radius = mo->GetRadius();
+
 				auto pos = mo->GetPosition();
 				auto ang = mo->GetAngle();
 
-				wdc.Ellipse(100, 100, 110, 110);
+				int center_x = (int)pos.x;
+				int center_y = (int)pos.y;
+
+				wdc.Ellipse(center_x - radius, center_y - radius, 
+					center_x + radius, center_y + radius);
 			}
 		}
 	}
