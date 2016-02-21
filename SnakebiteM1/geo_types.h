@@ -13,6 +13,8 @@ struct Position2D
 	double y;
 };
 
+double CalcDistance(const Position2D& p1, const Position2D& p2);
+
 typedef Position2D DirVector2D;
 
 class Degree

@@ -148,6 +148,7 @@
     <ClInclude Include="game_session.h" />
     <ClInclude Include="game_session_drawer.h" />
     <ClInclude Include="geo_types.h" />
+    <ClInclude Include="moving_object_container.h" />
     <ClInclude Include="moving_object.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SnakebiteM1.h" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game_session.cpp" />
+    <ClCompile Include="geo_types.cpp" />
     <ClCompile Include="moving_object.cpp" />
     <ClCompile Include="SnakebiteM1.cpp" />
     <ClCompile Include="stdafx.cpp">

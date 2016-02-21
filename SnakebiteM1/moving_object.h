@@ -1,7 +1,10 @@
 #ifndef SNAKEBITE_M1_MOVING_OBJECT_H_
 #define SNAKEBITE_M1_MOVING_OBJECT_H_
 
+#include <iostream>
+
 #include "geo_types.h"
+#include "moving_object_container.h"
 
 namespace acoross {
 namespace snakebite {
@@ -12,8 +15,8 @@ public:
 	MovingObject(MovingObject&) = delete;
 	MovingObject& operator=(MovingObject&) = delete;
 
-	MovingObject(const Position2D& pos, const Degree& angle, double velocity, double ang_vel, double radius)
-		: pos_(pos), angle_(angle), velocity_(velocity), ang_vel_(ang_vel), radius_(radius)
+	MovingObject(MovingObjectContainer& container, const Position2D& pos, const Degree& angle, double velocity, double ang_vel, double radius)
+		: container_(container), pos_(pos), angle_(angle), velocity_(velocity), ang_vel_(ang_vel), radius_(radius)
 	{}
 	virtual ~MovingObject(){}
 
@@ -22,11 +25,7 @@ public:
 		pos_ = newpos;
 	}
 	
-	void Move(const DirVector2D& diff)
-	{
-		pos_.x += diff.x;
-		pos_.y += diff.y;
-	}
+	void Move(const DirVector2D& diff);
 
 	void SetAngle(const Degree& angle)
 	{
@@ -45,12 +44,16 @@ public:
 	double GetRadius() const { return radius_; }
 
 private:
+	MovingObjectContainer& container_;
+
 	Position2D pos_;	// relational positino to field, as UNIT
 	Degree angle_; // degree
 	double velocity_; // UNIT/ms
 	double ang_vel_;	// degree/ms
 	double radius_;
 };
+
+bool IsCrashed(const MovingObject& mo1, const MovingObject& mo2);
 
 }
 }

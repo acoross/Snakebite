@@ -26,11 +26,9 @@ public:
 		if (gs)
 		{
 			// 테두리 그리기
-			wdc.Rectangle(gs->Left, gs->Top, gs->Right, gs->Bottom);
-
-			int h = gs->Height();
-			int w = gs->Width();
-
+			wdc.Rectangle(gs->GetContainer().Left, gs->GetContainer().Top, 
+				gs->GetContainer().Right, gs->GetContainer().Bottom);
+			
 			// TODO
 			// 화면과 game_session 크기를 고려해 ratio 를 정한 뒤,
 			// ratio 에 따라 크기를 조절해서 그린다.
@@ -38,7 +36,7 @@ public:
 			auto& mo_list = gs->GetMovingObjects();
 			for (auto& mo : mo_list)
 			{
-				const int radius = mo->GetRadius();
+				const int radius = (int)mo->GetRadius();
 
 				auto pos = mo->GetPosition();
 				auto ang = mo->GetAngle();

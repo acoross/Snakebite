@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "moving_object.h"
+#include "moving_object_container.h"
 
 namespace acoross {
 namespace snakebite {
@@ -14,7 +15,7 @@ namespace snakebite {
 class GameSession final
 {
 public:
-	typedef std::list<std::unique_ptr<MovingObject>> ListMovingObject;
+	typedef MovingObjectContainer::ListMovingObject ListMovingObject;
 	GameSession() 
 	{
 		Initialize();
@@ -26,25 +27,18 @@ public:
 
 	// moving_objects_ 의 위치를 갱신한다.
 	void UpdateMove(int64_t diff_in_ms);
-
-	// game field APIs
-	const int Left{ 0 };
-	const int Right{ 500 };
-	const int Top{ 0 };
-	const int Bottom{ 500 };
-
-	int Width() const { return Right - Left; }
-	int Height() const { return Top - Bottom; }
-
+	
 	//임시로 열어주는 API
-	ListMovingObject& GetMovingObjects() 
+	ListMovingObject& GetMovingObjects()
 	{ 
-		return moving_objects_; 
+		return container_.GetMovingObjects();
 	}
 
+	// 임시
+	const MovingObjectContainer& GetContainer() const { return container_; }
+
 private:
-	// unique_ptr 이라서 자동 삭제됨.
-	ListMovingObject moving_objects_;
+	MovingObjectContainer container_;
 };
 
 typedef std::shared_ptr<GameSession> GameSessionSP;

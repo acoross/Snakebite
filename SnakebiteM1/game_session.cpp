@@ -16,11 +16,13 @@ void acoross::snakebite::GameSession::Initialize()
 	double velocity{ 0.06 };	//  UNIT/ms
 	double ang_vel{ 0.06 };		// degree/ms
 	double radius{ 5. };		// UNIT
-
-	for (int i = 0; i < 10; ++i)
+	
+	for (int i = 0; i < 1; ++i)
 	{
-		moving_objects_.emplace_back(
-			std::make_unique<MovingObject>(pos, angle, velocity, ang_vel, 0.3 * radius * i + radius));
+		for (int j = 0; j < 3; ++j)
+		{
+			container_.AddNewMovingObject(pos, angle, velocity, ang_vel, 0.3 * radius * j + radius);
+		}
 	}
 }
 
@@ -61,7 +63,7 @@ static void changeDirection(GameSession::ListMovingObject& moving_objects, int64
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
 
-	re.seed(t.time_since_epoch().count());
+	re.seed((unsigned int)t.time_since_epoch().count());
 
 	for (auto& mo : moving_objects)
 	{
@@ -92,10 +94,11 @@ void acoross::snakebite::GameSession::UpdateMove(int64_t diff_in_ms)
 	// 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
 	if (checkChangeDirection())
 	{
-		changeDirection(moving_objects_, diff_in_ms);
+		changeDirection(container_.GetMovingObjects(), diff_in_ms);
 	}
 	
-	for (auto& mo : moving_objects_)
+	// 전진
+	for (auto& mo : container_.GetMovingObjects())
 	{
 		double diff_distance = mo->GetVelocity() * diff_in_ms;
 		Position2D pos_now = mo->GetPosition();
@@ -105,23 +108,6 @@ void acoross::snakebite::GameSession::UpdateMove(int64_t diff_in_ms)
 			diff_distance * std::cos(angle_now_rad),
 			diff_distance * std::sin(angle_now_rad)
 		};
-
-		// 테두리 밖으로 벗어나지 않도록 막음.
-		{
-			auto pos_new = pos_now;
-			pos_new.x += diff_vec.x;
-			pos_new.y += diff_vec.y;
-
-			if (pos_new.x < Left || pos_new.x >= Right)
-			{
-				diff_vec.x = 0;
-			}
-
-			if (pos_new.y < Top || pos_new.y >= Bottom)
-			{
-				diff_vec.y = 0;
-			}
-		}
 
 		mo->Move(diff_vec);
 	}
