@@ -73,8 +73,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		auto diffTick = (int64_t)tick - lastTick;
 		if (diffTick > 33)
 		{
-			//gamesession->UpdateMove(tick - lastTick);
+#if defined(_DEBUG)
+			gamesession->UpdateMove(33);
+#else
 			gamesession->UpdateMove(diffTick);
+#endif
 
 			InvalidateRect(msg.hwnd, nullptr, true);
 			lastTick = tick;
