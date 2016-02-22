@@ -39,7 +39,7 @@ public:
 				const int radius = (int)mo->GetRadius();
 
 				auto pos = mo->GetPosition();
-				auto ang = mo->GetAngle();
+				//auto ang = mo->GetAngle();
 
 				int center_x = (int)pos.x;
 				int center_y = (int)pos.y;

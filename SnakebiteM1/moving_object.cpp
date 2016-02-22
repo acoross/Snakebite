@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "moving_object.h"
 
-bool acoross::snakebite::IsCrashed(const MovingObject & mo1, const MovingObject & mo2)
+namespace acoross {
+namespace snakebite {
+
+bool IsCrashed(const MovingObject & mo1, const MovingObject & mo2)
 {
 	double dist = acoross::snakebite::CalcDistance(mo1.GetPosition(), mo2.GetPosition());
 
@@ -13,7 +16,7 @@ bool acoross::snakebite::IsCrashed(const MovingObject & mo1, const MovingObject 
 	return false;
 }
 
-void acoross::snakebite::MovingObject::Move(const DirVector2D & diff)
+void MovingObject::Move(const DirVector2D & diff)
 {
 	// TODO: [충돌했을 때, 겹쳐져 있는 상태, 충돌에서 벗어날 때] 를 구분해서 이벤트 발생시킨다.
 	// 다른 오브젝트와 충돌했나?
@@ -43,4 +46,7 @@ void acoross::snakebite::MovingObject::Move(const DirVector2D & diff)
 	{
 		pos_.y = pos_new.y;
 	}
+}
+
+}
 }

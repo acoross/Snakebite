@@ -9,7 +9,10 @@
 #include "geo_types.h"
 #include "moving_object.h"
 
-void acoross::snakebite::GameSession::Initialize()
+namespace acoross {
+namespace snakebite {
+
+void GameSession::Initialize()
 {
 	Position2D pos{ 200, 200 };
 	Degree angle(0);
@@ -17,16 +20,20 @@ void acoross::snakebite::GameSession::Initialize()
 	double ang_vel{ 0.06 };		// degree/ms
 	double radius{ 5. };		// UNIT
 	
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j < 10; ++j)
 		{
-			container_.AddNewMovingObject(pos, angle, velocity, ang_vel, 0.3 * radius * j + radius);
+			snakes_.emplace_back(
+				std::make_unique<SnakePiece>(
+					container_.AddNewMovingObject(
+						pos, 0.3 * radius * j + radius)
+					, angle, velocity, ang_vel));
 		}
 	}
 }
 
-void acoross::snakebite::GameSession::CleanUp()
+void GameSession::CleanUp()
 {
 }
 
@@ -35,9 +42,6 @@ void acoross::snakebite::GameSession::CleanUp()
 // 랜덤하게 방향을 변경.
 // UpdatteMove 가 불린 횟수와 관계없이,
 // 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
-namespace acoross {
-namespace snakebite {
-
 static bool checkChangeDirection()
 {	
 	auto clock = std::chrono::high_resolution_clock();
@@ -55,7 +59,7 @@ static bool checkChangeDirection()
 	return false;
 }
 
-static void changeDirection(GameSession::ListMovingObject& moving_objects, int64_t diff_in_ms)
+static void changeDirection(GameSession::ListSnakePiece& snakes, int64_t diff_in_ms)
 {
 	std::uniform_int_distribution<int> unin(0, 100);
 	std::default_random_engine re;
@@ -65,26 +69,23 @@ static void changeDirection(GameSession::ListMovingObject& moving_objects, int64
 
 	re.seed((unsigned int)t.time_since_epoch().count());
 
-	for (auto& mo : moving_objects)
+	for (auto& snake : snakes)
 	{
 		int p = unin(re);
 		if (p < 15) // 5 percent
 		{
-			auto ang_vel = mo->GetAngVelocity();
+			auto ang_vel = snake->GetAngVelocity();
 			auto diff_ang = ang_vel * diff_in_ms;
-			mo->Turn((int)diff_ang);
+			snake->Turn((int)diff_ang);
 		}
 		else if (p < 30) // another 5 percent
 		{
-			auto ang_vel = mo->GetAngVelocity();
+			auto ang_vel = snake->GetAngVelocity();
 			auto diff_ang = -ang_vel * diff_in_ms;
-			mo->Turn((int)diff_ang);
+			snake->Turn((int)diff_ang);
 		}
 	}
 }
-
-}
-} //임시
 
 void acoross::snakebite::GameSession::UpdateMove(int64_t diff_in_ms)
 {
@@ -94,21 +95,24 @@ void acoross::snakebite::GameSession::UpdateMove(int64_t diff_in_ms)
 	// 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
 	if (checkChangeDirection())
 	{
-		changeDirection(container_.GetMovingObjects(), diff_in_ms);
+		changeDirection(snakes_, diff_in_ms);
 	}
 	
 	// 전진
-	for (auto& mo : container_.GetMovingObjects())
+	for (auto& snake : snakes_)
 	{
-		double diff_distance = mo->GetVelocity() * diff_in_ms;
-		Position2D pos_now = mo->GetPosition();
-		double angle_now_rad = mo->GetAngle().GetRad();
-		
+		double diff_distance = snake->GetVelocity() * diff_in_ms;
+		Position2D pos_now = snake->GetMovingObject().GetPosition();
+		double angle_now_rad = snake->GetAngle().GetRad();
+
 		DirVector2D diff_vec{
 			diff_distance * std::cos(angle_now_rad),
 			diff_distance * std::sin(angle_now_rad)
 		};
 
-		mo->Move(diff_vec);
+		snake->GetMovingObject().Move(diff_vec);
 	}
+}
+
+}
 }

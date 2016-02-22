@@ -27,12 +27,12 @@ public:
 	int Height() const { return Top - Bottom; }
 
 	template<typename... Args>
-	void AddNewMovingObject(Args&&... args)
+	MovingObject& AddNewMovingObject(Args&&... args)
 	{
-		moving_objects_.emplace_back(
-			std::make_unique<MovingObject>(
-				*this,
-				std::forward<Args>(args)...));
+		MovingObject* mo_new = new MovingObject(*this, std::forward<Args>(args)...);
+		moving_objects_.emplace_back(mo_new);
+
+		return *mo_new;
 	}
 
 	//임시로 열어주는 API
