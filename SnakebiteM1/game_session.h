@@ -28,9 +28,19 @@ public:
 		angle_ = angle;
 	}
 
+	void Move(const DirVector2D& diff_vec);
+
 	void Turn(const Degree& diff)
 	{
 		angle_ = angle_ + diff;
+	}
+
+	void AddToTail(SnakePiece* snake_new)
+	{
+		if (snake_body_next_.get() == nullptr)
+			snake_body_next_.reset(snake_new);
+		else
+			snake_body_next_->AddToTail(snake_new);
 	}
 
 	Degree GetAngle() const { return angle_; }

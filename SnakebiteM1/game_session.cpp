@@ -20,16 +20,21 @@ void GameSession::Initialize()
 	double ang_vel{ 0.06 };		// degree/ms
 	double radius{ 5. };		// UNIT
 	
-	for (int i = 0; i < 10; ++i)
+	for (int j = 0; j < 10; ++j)
 	{
-		for (int j = 0; j < 10; ++j)
+		double rad_to_set = 0.1 * radius * j + radius;
+		SnakePiece* snake_head = new SnakePiece(
+			container_.AddNewMovingObject(pos, rad_to_set)
+			, angle, velocity, ang_vel);
+
+		for (int k = 0; k < 9; ++k)
 		{
-			snakes_.emplace_back(
-				std::make_unique<SnakePiece>(
-					container_.AddNewMovingObject(
-						pos, 0.3 * radius * j + radius)
-					, angle, velocity, ang_vel));
+			snake_head->AddToTail(new SnakePiece(
+				container_.AddNewMovingObject(pos, rad_to_set)
+				, angle, velocity, ang_vel));
 		}
+
+		snakes_.emplace_back(snake_head);
 	}
 }
 
@@ -87,7 +92,7 @@ static void changeDirection(GameSession::ListSnakePiece& snakes, int64_t diff_in
 	}
 }
 
-void acoross::snakebite::GameSession::UpdateMove(int64_t diff_in_ms)
+void GameSession::UpdateMove(int64_t diff_in_ms)
 {
 	// 임시:
 	// 랜덤하게 방향을 변경.
@@ -110,7 +115,34 @@ void acoross::snakebite::GameSession::UpdateMove(int64_t diff_in_ms)
 			diff_distance * std::sin(angle_now_rad)
 		};
 
-		snake->GetMovingObject().Move(diff_vec);
+		snake->Move(diff_vec);
+	}
+}
+
+void SnakePiece::Move(const DirVector2D& diff_vec)
+{
+	Position2D pos_now = GetMovingObject().GetPosition();
+	GetMovingObject().Move(diff_vec);
+
+	if (snake_body_next_.get() != nullptr)
+	{
+		Position2D pos_body_next = snake_body_next_->GetMovingObject().GetPosition();
+		DirVector2D diff_body_next{
+			pos_now.x - pos_body_next.x,
+			pos_now.y - pos_body_next.y,
+		};
+
+		double piece_dist = acoross::snakebite::CalcLength(diff_body_next);
+		if (piece_dist >= (GetMovingObject().GetRadius() + snake_body_next_->GetMovingObject().GetRadius()) * 0.9)
+		{
+			diff_body_next = acoross::snakebite::Normalize(diff_body_next);
+			double diff_len = acoross::snakebite::CalcLength(diff_vec);
+			diff_body_next.x *= diff_len;
+			diff_body_next.y *= diff_len;
+
+
+			snake_body_next_->Move(diff_body_next);
+		}
 	}
 }
 
