@@ -6,7 +6,7 @@ namespace snakebite {
 
 bool IsCrashed(const MovingObject & mo1, const MovingObject & mo2)
 {
-	double dist = acoross::snakebite::CalcDistance(mo1.GetPosition(), mo2.GetPosition());
+	double dist = Position2D::Distance(mo1.GetPosition(), mo2.GetPosition());
 
 	if (dist < mo1.GetRadius() + mo2.GetRadius())
 	{

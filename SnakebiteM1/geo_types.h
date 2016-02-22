@@ -7,17 +7,23 @@
 namespace acoross {
 namespace snakebite {
 
-struct Position2D
+class Position2D
 {
-	double x;
-	double y;
+public:
+	Position2D(double ax, double ay)
+		: x{ ax }, y{ ay }
+	{}
+
+	double x{ 0 };
+	double y{ 0 };
+
+	double Length() const;
+	const Position2D GetNormalized() const;
+
+	static double Distance(const Position2D& p1, const Position2D& p2);
 };
 
 typedef Position2D DirVector2D;
-
-double CalcDistance(const Position2D& p1, const Position2D& p2);
-double CalcLength(const DirVector2D & v);
-const Position2D Normalize(const Position2D& p);
 
 class Degree
 {

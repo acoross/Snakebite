@@ -14,27 +14,30 @@ namespace snakebite {
 
 void GameSession::Initialize()
 {
-	Position2D pos{ 200, 200 };
+	Position2D pos(200, 200);
 	Degree angle(0);
 	double velocity{ 0.06 };	//  UNIT/ms
 	double ang_vel{ 0.06 };		// degree/ms
 	double radius{ 5. };		// UNIT
 	
-	for (int j = 0; j < 10; ++j)
+	for (int i = 0; i < 7; ++i)
 	{
-		double rad_to_set = 0.1 * radius * j + radius;
-		SnakePiece* snake_head = new SnakePiece(
-			container_.AddNewMovingObject(pos, rad_to_set)
-			, angle, velocity, ang_vel);
-
-		for (int k = 0; k < 9; ++k)
+		for (int j = 0; j < 7; ++j)
 		{
-			snake_head->AddToTail(new SnakePiece(
+			double rad_to_set = 0.01 * radius * j + radius;
+			SnakePiece* snake_head = new SnakePiece(
 				container_.AddNewMovingObject(pos, rad_to_set)
-				, angle, velocity, ang_vel));
-		}
+				, angle + 17 * j, velocity, ang_vel);
 
-		snakes_.emplace_back(snake_head);
+			for (int k = 0; k < 9; ++k)
+			{
+				snake_head->AddToTail(new SnakePiece(
+					container_.AddNewMovingObject(pos, rad_to_set)
+					, angle, velocity, ang_vel));
+			}
+
+			snakes_.emplace_back(snake_head);
+		}
 	}
 }
 
@@ -132,14 +135,14 @@ void SnakePiece::Move(const DirVector2D& diff_vec)
 			pos_now.y - pos_body_next.y,
 		};
 
-		double piece_dist = acoross::snakebite::CalcLength(diff_body_next);
+		double piece_dist = diff_body_next.Length();
 		if (piece_dist >= (GetMovingObject().GetRadius() + snake_body_next_->GetMovingObject().GetRadius()) * 0.9)
 		{
-			diff_body_next = acoross::snakebite::Normalize(diff_body_next);
-			double diff_len = acoross::snakebite::CalcLength(diff_vec);
+			double diff_len = diff_vec.Length();
+
+			diff_body_next = diff_body_next.GetNormalized();
 			diff_body_next.x *= diff_len;
 			diff_body_next.y *= diff_len;
-
 
 			snake_body_next_->Move(diff_body_next);
 		}
