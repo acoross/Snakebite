@@ -56,8 +56,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// 기본 메시지 루프입니다.
 	ZeroMemory(&msg, sizeof(msg));
 
-	DWORD lastTick = ::GetTickCount();
-	DWORD lastTick2draw = ::GetTickCount();
+	DWORD lasttick = ::GetTickCount();
+	DWORD lasttick2draw = ::GetTickCount();
+	DWORD lasttick2collide = ::GetTickCount();
 	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
@@ -71,7 +72,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		// main loop
 		DWORD tick = ::GetTickCount();
-		auto difftick = (int64_t)tick - lastTick;
+		auto difftick = (int64_t)tick - lasttick;
 
 		DWORD frametickdiff = 33;
 
@@ -82,15 +83,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #else
 			gamesession->UpdateMove(difftick);
 #endif	
-			lastTick = tick;
+			lasttick = tick;
 		}
 
 		tick = ::GetTickCount();
-		auto difftick2draw = (int64_t)tick - lastTick2draw;
+		auto difftick2draw = (int64_t)tick - lasttick2draw;
 		if (difftick2draw > 120)
 		{
 			InvalidateRect(msg.hwnd, nullptr, false);
-			lastTick2draw = tick;
+			lasttick2draw = tick;
+		}
+
+		tick = ::GetTickCount();
+		auto difftick2collide = (int64_t)tick - lasttick2draw;
+		if (difftick2collide > 150)
+		{
+			gamesession->ProcessCollisions();
 		}
 	}
 
