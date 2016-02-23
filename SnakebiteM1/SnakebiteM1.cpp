@@ -56,7 +56,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// 기본 메시지 루프입니다.
 	ZeroMemory(&msg, sizeof(msg));
 
-	DWORD lastTick = 0;
+	DWORD lastTick = ::GetTickCount();
+	DWORD lastTick2draw = ::GetTickCount();
 	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
@@ -69,18 +70,27 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 
 		// main loop
-		DWORD tick = GetTickCount();
-		auto diffTick = (int64_t)tick - lastTick;
-		if (diffTick > 66)
+		DWORD tick = ::GetTickCount();
+		auto difftick = (int64_t)tick - lastTick;
+
+		DWORD frametickdiff = 33;
+
+		for (;difftick > frametickdiff; difftick -= frametickdiff)
 		{
 #if defined(_DEBUG)
-			gamesession->UpdateMove(66);
+			gamesession->UpdateMove(frametickdiff);
 #else
-			gamesession->UpdateMove(diffTick);
-#endif
-
-			InvalidateRect(msg.hwnd, nullptr, true);
+			gamesession->UpdateMove(difftick);
+#endif	
 			lastTick = tick;
+		}
+
+		tick = ::GetTickCount();
+		auto difftick2draw = (int64_t)tick - lastTick2draw;
+		if (difftick2draw > 120)
+		{
+			InvalidateRect(msg.hwnd, nullptr, false);
+			lastTick2draw = tick;
 		}
 	}
 
@@ -176,14 +186,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_PAINT:
         {
+			RECT client_rect;
+			::GetClientRect(hWnd, &client_rect);
+
 			PAINTSTRUCT ps;
 			acoross::Win::WDC wdc(::BeginPaint(hWnd, &ps));
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
-			/*HDC memdc(::CreateCompatibleDC(wdc.Get()));
-			::DeleteObject(memdc);*/
+			acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
+			static HBITMAP hbitmap = ::CreateCompatibleBitmap(memdc.Get(), client_rect.right, client_rect.bottom);
+			HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
 
-			g_game_drawer->Draw(wdc);
-			
+			g_game_drawer->Draw(memdc);
+			::BitBlt(wdc.Get(), 0, 0, client_rect.right, client_rect.bottom, memdc.Get(), 0, 0, SRCCOPY);
+
+			::SelectObject(memdc.Get(), oldbit);
+			//::DeleteObject(hbitmap);
+			::DeleteObject(memdc.Get());
 			::EndPaint(hWnd, &ps);
         }
         break;

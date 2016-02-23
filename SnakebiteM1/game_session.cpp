@@ -20,9 +20,9 @@ void GameSession::Initialize()
 	double ang_vel{ 0.06 };		// degree/ms
 	double radius{ 5. };		// UNIT
 	
-	for (int i = 0; i < 7; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
-		for (int j = 0; j < 7; ++j)
+		for (int j = 0; j < 3; ++j)
 		{
 			double rad_to_set = 0.01 * radius * j + radius;
 			SnakePiece* snake_head = new SnakePiece(
@@ -135,8 +135,10 @@ void SnakePiece::Move(const DirVector2D& diff_vec)
 			pos_now.y - pos_body_next.y,
 		};
 
+		double limitdist = (GetMovingObject().GetRadius() + snake_body_next_->GetMovingObject().GetRadius()) * 0.9;
+
 		double piece_dist = diff_body_next.Length();
-		if (piece_dist >= (GetMovingObject().GetRadius() + snake_body_next_->GetMovingObject().GetRadius()) * 0.9)
+		if (piece_dist >= limitdist)
 		{
 			double diff_len = diff_vec.Length();
 
