@@ -7,56 +7,10 @@
 
 #include "moving_object.h"
 #include "moving_object_container.h"
+#include "snake_piece.h"
 
 namespace acoross {
 namespace snakebite {
-
-class SnakePiece
-{
-public:
-	template<typename... Args>
-	SnakePiece(MovingObject& moving_object, const Degree& angle, double velocity, double ang_vel)
-		: snake_body_next_(nullptr)
-		, moving_object_(moving_object)
-		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
-	{
-		;
-	}
-
-	void SetAngle(const Degree& angle)
-	{
-		angle_ = angle;
-	}
-
-	void Move(const DirVector2D& diff_vec);
-
-	void Turn(const Degree& diff)
-	{
-		angle_ = angle_ + diff;
-	}
-
-	void AddToTail(SnakePiece* snake_new)
-	{
-		if (snake_body_next_.get() == nullptr)
-			snake_body_next_.reset(snake_new);
-		else
-			snake_body_next_->AddToTail(snake_new);
-	}
-
-	Degree GetAngle() const { return angle_; }
-	double GetVelocity() const { return velocity_; }
-	double GetAngVelocity() const { return ang_vel_; }
-
-	MovingObject& GetMovingObject() { return moving_object_; }
-
-private:
-	Degree angle_; // degree
-	double velocity_; // UNIT/ms
-	double ang_vel_;	// degree/ms
-
-	std::unique_ptr<SnakePiece> snake_body_next_;
-	MovingObject& moving_object_;
-};
 
 // 맵, MovingObject 로 구성되는 하나의 게임 단위.
 class GameSession final
@@ -77,6 +31,23 @@ public:
 	// moving_objects_ 의 위치를 갱신한다.
 	void UpdateMove(int64_t diff_in_ms);
 	
+	void ProcessCollisions()
+	{
+		// TODO: [충돌했을 때, 겹쳐져 있는 상태, 충돌에서 벗어날 때] 를 구분해서 이벤트 발생시킨다.
+		// 다른 오브젝트와 충돌했나?
+		for (auto& mo1 : container_.GetMovingObjects())
+		{
+			for (auto& mo2 : container_.GetMovingObjects())
+			{
+				if (acoross::snakebite::IsCrashed(*mo1, *mo2))
+				{
+					//DoubleDispatch...
+					std::cout << "crashed" << std::endl;
+				}
+			}
+		}
+	}
+
 	//임시로 열어주는 API
 	ListMovingObject& GetMovingObjects()
 	{ 
