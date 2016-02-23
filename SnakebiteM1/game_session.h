@@ -33,19 +33,7 @@ public:
 	
 	void ProcessCollisions()
 	{
-		// TODO: [충돌했을 때, 겹쳐져 있는 상태, 충돌에서 벗어날 때] 를 구분해서 이벤트 발생시킨다.
-		// 다른 오브젝트와 충돌했나?
-		for (auto& mo1 : container_.GetMovingObjects())
-		{
-			for (auto& mo2 : container_.GetMovingObjects())
-			{
-				if (acoross::snakebite::IsCrashed(*mo1, *mo2))
-				{
-					//DoubleDispatch...
-					std::cout << "crashed" << std::endl;
-				}
-			}
-		}
+		container_.GetCollisionContainer().CheckCollisions();
 	}
 
 	//임시로 열어주는 API

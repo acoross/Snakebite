@@ -95,10 +95,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 
 		tick = ::GetTickCount();
-		auto difftick2collide = (int64_t)tick - lasttick2draw;
-		if (difftick2collide > 150)
+		auto difftick2collide = (int64_t)tick - lasttick2collide;
+		if (difftick2collide > 30)
 		{
 			gamesession->ProcessCollisions();
+			lasttick2collide = tick;
 		}
 	}
 

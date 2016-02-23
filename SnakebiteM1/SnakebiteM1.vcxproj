@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collider.h" />
+    <ClInclude Include="collider_container.h" />
     <ClInclude Include="game_session.h" />
     <ClInclude Include="game_session_drawer.h" />
     <ClInclude Include="geo_types.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="WinWrapper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="collider_container.cpp" />
     <ClCompile Include="game_session.cpp" />
     <ClCompile Include="geo_types.cpp" />
     <ClCompile Include="moving_object.cpp" />

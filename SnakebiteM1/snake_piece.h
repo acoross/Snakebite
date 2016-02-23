@@ -17,8 +17,11 @@ public:
 		, moving_object_(moving_object)
 		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	{
-		;
+		moving_object_.AddCollider();
 	}
+
+	~SnakePiece()
+	{}
 
 	void SetAngle(const Degree& angle)
 	{

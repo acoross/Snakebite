@@ -57,6 +57,9 @@
     <ClInclude Include="collider.h">
       <Filter>moving_object</Filter>
     </ClInclude>
+    <ClInclude Include="collider_container.h">
+      <Filter>moving_object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -76,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="snake_piece.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="collider_container.cpp">
+      <Filter>moving_object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

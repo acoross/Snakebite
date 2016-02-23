@@ -20,23 +20,25 @@ void GameSession::Initialize()
 	double ang_vel{ 0.06 };		// degree/ms
 	double radius{ 5. };		// UNIT
 	
-	for (int i = 0; i < 3; ++i)
+	int id = 0;
+	for (int i = 0; i < 5; ++i)
 	{
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j < 5; ++j)
 		{
 			double rad_to_set = 0.01 * radius * j + radius;
 			SnakePiece* snake_head = new SnakePiece(
-				container_.CreateMovingObject(pos, rad_to_set)
+				container_.CreateMovingObject(id, pos, rad_to_set)
 				, angle + 17 * j, velocity, ang_vel);
 
 			for (int k = 0; k < 9; ++k)
 			{
 				snake_head->AddToTail(new SnakePiece(
-					container_.CreateMovingObject(pos, rad_to_set)
+					container_.CreateMovingObject(id, pos, rad_to_set)
 					, angle, velocity, ang_vel));
 			}
 
 			snakes_.emplace_back(snake_head);
+			++id;
 		}
 	}
 }
