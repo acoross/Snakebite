@@ -27,9 +27,9 @@ public:
 	int Height() const { return Top - Bottom; }
 
 	template<typename... Args>
-	MovingObject& AddNewMovingObject(Args&&... args)
+	MovingObject& CreateMovingObject(Args&&... args)
 	{
-		MovingObject* mo_new = new MovingObject(*this, std::forward<Args>(args)...);
+		auto* mo_new = new MovingObject(*this, std::forward<Args>(args)...);
 		moving_objects_.emplace_back(mo_new);
 
 		return *mo_new;
@@ -40,6 +40,8 @@ public:
 	{
 		return moving_objects_;
 	}
+
+	
 
 private:
 	// unique_ptr 이라서 자동 삭제됨.
