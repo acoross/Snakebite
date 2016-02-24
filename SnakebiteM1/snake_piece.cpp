@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "snake_piece.h"
 
 namespace acoross {

@@ -16,18 +16,15 @@
     <Filter Include="moving_object">
       <UniqueIdentifier>{8d4ff439-463f-4720-b737-671be2afdb69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Win">
+      <UniqueIdentifier>{88ab9f9c-94aa-4106-a34c-ee0e08747344}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SnakebiteM1.h">
@@ -37,9 +34,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="game_session.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="WinWrapper.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="geo_types.h">
@@ -60,11 +54,17 @@
     <ClInclude Include="collider_container.h">
       <Filter>moving_object</Filter>
     </ClInclude>
+    <ClInclude Include="WinWrapper.h">
+      <Filter>Win</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Win</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Win</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="SnakebiteM1.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -82,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="collider_container.cpp">
       <Filter>moving_object</Filter>
+    </ClCompile>
+    <ClCompile Include="WinWrapper.cpp">
+      <Filter>Win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
