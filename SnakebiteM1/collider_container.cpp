@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "collider_container.h"
 
 #include "geo_types.h"
