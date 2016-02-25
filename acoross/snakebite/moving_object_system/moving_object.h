@@ -31,9 +31,9 @@ public:
 	Position2D GetPosition() const { return pos_; }
 	double GetRadius() const { return radius_; }
 
-	void AddCollider()
+	/*void AddCollider()
 	{
-		collider_.reset(new Collider(container_, Id_, *this));
+		collider_.reset(new Collider(container_.GetCollisionContainer(), Id_, *this));
 	}
 
 	std::shared_ptr<ColliderHandle> GetColliderHandle() 
@@ -43,6 +43,7 @@ public:
 		else
 			return nullptr;
 	}
+	*/
 
 private:
 	MovingObjectContainer& container_;
@@ -50,7 +51,7 @@ private:
 	Position2D pos_;	// relational positino to field, as UNIT
 	double radius_;
 
-	std::unique_ptr<Collider> collider_;
+	//std::unique_ptr<Collider> collider_;
 	int Id_;
 };
 

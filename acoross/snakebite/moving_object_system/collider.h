@@ -25,14 +25,14 @@ private:
 class Collider
 {
 public:
-	Collider(MovingObjectContainer& container, int Id, MovingObject& parent)
-		: container_(container), parent_(parent), handle_(std::make_shared<ColliderHandle>(*this)), Id_(Id)
+	Collider(ColliderContainer& collision_container, int Id, MovingObject& parent)
+		: collision_container_(collision_container), parent_(parent), handle_(std::make_shared<ColliderHandle>(*this)), Id_(Id)
 	{
-		container_.GetCollisionContainer().RegisterCollider(this, handle_);
+		collision_container_.RegisterCollider(this, handle_);
 	}
 	~Collider()
 	{
-		container_.GetCollisionContainer().UnregisterCollider(this);
+		collision_container_.UnregisterCollider(this);
 	}
 
 	MovingObject& GetMovingObject() { return parent_; }
@@ -42,7 +42,7 @@ public:
 	int GetId() const { return Id_; }
 
 private:
-	MovingObjectContainer& container_;
+	ColliderContainer& collision_container_;
 	MovingObject& parent_;
 	std::shared_ptr<ColliderHandle> handle_;
 	int Id_;
