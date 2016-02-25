@@ -1,7 +1,7 @@
 #ifndef SNAKEBITE_SNAKE_PEICE_H_
 #define SNAKEBITE_SNAKE_PEICE_H_
 
-#include "moving_object_system/moving_object_system.h"
+#include <acoross/snakebite/moving_object_system/moving_object_system.h>
 
 namespace acoross {
 namespace snakebite {

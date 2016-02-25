@@ -5,7 +5,7 @@
 #include <memory>
 #include <utility>
 
-#include "moving_object_system/moving_object_system.h"
+#include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_piece.h"
 
 namespace acoross {

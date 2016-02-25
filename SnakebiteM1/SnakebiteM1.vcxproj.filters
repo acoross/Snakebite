@@ -13,10 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="moving_object">
+    <Filter Include="moving_object_system">
       <UniqueIdentifier>{8d4ff439-463f-4720-b737-671be2afdb69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Win">
+    <Filter Include="win">
       <UniqueIdentifier>{88ab9f9c-94aa-4106-a34c-ee0e08747344}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -24,77 +24,80 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SnakebiteM1.h">
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\collider.h">
+      <Filter>moving_object_system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\collider_container.h">
+      <Filter>moving_object_system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\geo_types.h">
+      <Filter>moving_object_system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object.h">
+      <Filter>moving_object_system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_container.h">
+      <Filter>moving_object_system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h">
+      <Filter>moving_object_system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="game_session_drawer.h">
+    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="game_session.h">
+    <ClInclude Include="..\acoross\snakebite\SnakebiteM1.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="geo_types.h">
-      <Filter>moving_object</Filter>
+    <ClInclude Include="..\acoross\snakebite\win\targetver.h">
+      <Filter>win</Filter>
     </ClInclude>
-    <ClInclude Include="moving_object.h">
-      <Filter>moving_object</Filter>
+    <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h">
+      <Filter>win</Filter>
     </ClInclude>
-    <ClInclude Include="moving_object_container.h">
-      <Filter>moving_object</Filter>
-    </ClInclude>
-    <ClInclude Include="snake_piece.h">
+    <ClInclude Include="..\acoross\snakebite\win\Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="collider.h">
-      <Filter>moving_object</Filter>
-    </ClInclude>
-    <ClInclude Include="collider_container.h">
-      <Filter>moving_object</Filter>
-    </ClInclude>
-    <ClInclude Include="WinWrapper.h">
-      <Filter>Win</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Win</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Win</Filter>
+    <ClInclude Include="..\acoross\snakebite\snake_piece.h">
+      <Filter>win</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SnakebiteM1.cpp">
+    <ClCompile Include="..\acoross\snakebite\moving_object_system\collider_container.cpp">
+      <Filter>moving_object_system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\moving_object_system\geo_types.cpp">
+      <Filter>moving_object_system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\moving_object_system\moving_object.cpp">
+      <Filter>moving_object_system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\game_session.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="game_session.cpp">
+    <ClCompile Include="..\acoross\snakebite\snake_piece.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="geo_types.cpp">
-      <Filter>moving_object</Filter>
-    </ClCompile>
-    <ClCompile Include="moving_object.cpp">
-      <Filter>moving_object</Filter>
-    </ClCompile>
-    <ClCompile Include="snake_piece.cpp">
+    <ClCompile Include="..\acoross\snakebite\SnakebiteM1.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="collider_container.cpp">
-      <Filter>moving_object</Filter>
-    </ClCompile>
-    <ClCompile Include="WinWrapper.cpp">
-      <Filter>Win</Filter>
+    <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
+      <Filter>win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="SnakebiteM1.rc">
+    <Image Include="..\acoross\snakebite\win\SnakebiteM1.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\acoross\snakebite\win\small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="SnakebiteM1.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
   </ItemGroup>
 </Project>
