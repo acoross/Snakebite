@@ -6,7 +6,6 @@
 #include <memory>
 
 #include "geo_types.h"
-#include "collider_container.h"
 
 namespace acoross {
 namespace snakebite {
@@ -36,16 +35,14 @@ public:
 		return *mo_new;
 	}
 
-	//임시로 열어주는 API
-	ListMovingObject& GetMovingObjects() { return moving_objects_; }
+	void CheckCollisions();
 
 	//임시로 열어주는 API
-	//ColliderContainer& GetCollisionContainer() { return collision_container_; }
+	ListMovingObject& GetMovingObjects() { return moving_objects_; }
 
 private:
 	// unique_ptr 이라서 자동 삭제됨.
 	ListMovingObject moving_objects_;
-	//ColliderContainer collision_container_;
 };
 
 }

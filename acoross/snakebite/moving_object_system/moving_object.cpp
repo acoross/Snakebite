@@ -33,5 +33,19 @@ void MovingObject::Move(const DirVector2D & diff)
 	}
 }
 
+//static
+void MovingObject::ProcessCollsion(MovingObject & m1, MovingObject & m2)
+{
+	// 같은 Id 끼리는 무시.
+	if (m1.GetId() == m2.GetId())
+		return;
+
+	if (acoross::snakebite::IsCrashed(m1, m2))
+	{
+		m1.Collided = true;
+		m2.Collided = true;
+	}
+}
+
 }
 }

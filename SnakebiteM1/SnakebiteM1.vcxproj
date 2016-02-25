@@ -150,8 +150,6 @@
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
     <ClInclude Include="..\acoross\snakebite\game_session_drawer.h" />
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\collider.h" />
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\collider_container.h" />
     <ClInclude Include="..\acoross\snakebite\moving_object_system\geo_types.h" />
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object.h" />
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_container.h" />
@@ -164,9 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
-    <ClCompile Include="..\acoross\snakebite\moving_object_system\collider_container.cpp" />
     <ClCompile Include="..\acoross\snakebite\moving_object_system\geo_types.cpp" />
     <ClCompile Include="..\acoross\snakebite\moving_object_system\moving_object.cpp" />
+    <ClCompile Include="..\acoross\snakebite\moving_object_system\moving_object_container.cpp" />
     <ClCompile Include="..\acoross\snakebite\SnakebiteM1.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_piece.cpp" />
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp" />

@@ -44,8 +44,7 @@ public:
 				int center_x = (int)pos.x;
 				int center_y = (int)pos.y;
 
-				/*auto collider_handle = mo->GetColliderHandle();
-				if (collider_handle && collider_handle->GetCollider().Collided)
+				if (mo->Collided)
 				{
 					HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(BLACK_BRUSH));
 					
@@ -54,7 +53,7 @@ public:
 
 					(HBRUSH)::SelectObject(wdc.Get(), oldbrush);
 				}
-				else*/
+				else
 				{
 					wdc.Ellipse(center_x - radius, center_y - radius,
 						center_x + radius, center_y + radius);

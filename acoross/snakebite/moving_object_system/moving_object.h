@@ -5,7 +5,6 @@
 
 #include "geo_types.h"
 #include "moving_object_container.h"
-#include "collider.h"
 
 namespace acoross {
 namespace snakebite {
@@ -17,7 +16,7 @@ public:
 	MovingObject& operator=(MovingObject&) = delete;
 
 	MovingObject(MovingObjectContainer& container, int Id, const Position2D& pos, double radius)
-		: container_(container), pos_(pos), radius_(radius), Id_(Id)
+		: container_(container), Id_(Id), pos_(pos), radius_(radius)
 	{}
 	virtual ~MovingObject(){}
 
@@ -30,34 +29,23 @@ public:
 
 	Position2D GetPosition() const { return pos_; }
 	double GetRadius() const { return radius_; }
+		
+	static void ProcessCollsion(MovingObject& m1, MovingObject& m2);
 
-	/*void AddCollider()
-	{
-		collider_.reset(new Collider(container_.GetCollisionContainer(), Id_, *this));
-	}
+	bool Collided{ false };
 
-	std::shared_ptr<ColliderHandle> GetColliderHandle() 
-	{ 
-		if (collider_)
-			return collider_->GetHandle();
-		else
-			return nullptr;
-	}
-	*/
+	int GetId() const { return Id_; }
 
 private:
 	MovingObjectContainer& container_;
 
+	int Id_;
 	Position2D pos_;	// relational positino to field, as UNIT
 	double radius_;
-
-	//std::unique_ptr<Collider> collider_;
-	int Id_;
 };
 
 bool IsCrashed(const MovingObject& mo1, const MovingObject& mo2);
 
 }
 }
-
 #endif //SNAKEBITE_M1_MOVING_OBJECT_H_

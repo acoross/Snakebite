@@ -24,12 +24,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\collider.h">
-      <Filter>moving_object_system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\collider_container.h">
-      <Filter>moving_object_system</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\geo_types.h">
       <Filter>moving_object_system</Filter>
     </ClInclude>
@@ -65,9 +59,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\moving_object_system\collider_container.cpp">
-      <Filter>moving_object_system</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\moving_object_system\geo_types.cpp">
       <Filter>moving_object_system</Filter>
     </ClCompile>
@@ -85,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
       <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\moving_object_system\moving_object_container.cpp">
+      <Filter>moving_object_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
