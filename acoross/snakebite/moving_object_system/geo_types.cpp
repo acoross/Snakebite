@@ -1,4 +1,3 @@
-//#include "stdafx.h"
 #include "geo_types.h"
 
 namespace acoross {

@@ -4,7 +4,7 @@
 #include <memory>
 #include <utility>
 
-#include "WinWrapper.h"
+#include <acoross/snakebite/win/WinWrapper.h>
 #include "game_session.h"
 
 namespace acoross {

@@ -6,8 +6,7 @@
 #include <chrono>
 #include <random>
 
-#include "geo_types.h"
-#include "moving_object.h"
+#include <acoross/snakebite/moving_object_system/moving_object_system.h>
 
 namespace acoross {
 namespace snakebite {

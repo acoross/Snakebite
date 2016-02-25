@@ -1,12 +1,8 @@
-// SnakebiteM1.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
-//
-
-//#include "stdafx.h"
 #include "SnakebiteM1.h"
 
 #include <functional>
 
-#include "WinWrapper.h"
+#include <acoross/snakebite/win/WinWrapper.h>
 #include "game_session.h"
 #include "game_session_drawer.h"
 

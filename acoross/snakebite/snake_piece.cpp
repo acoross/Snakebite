@@ -1,5 +1,5 @@
-//#include "stdafx.h"
 #include "snake_piece.h"
+#include "moving_object_system/moving_object_system.h"
 
 namespace acoross {
 namespace snakebite {

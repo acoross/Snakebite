@@ -1,6 +1,4 @@
-//#include "stdafx.h"
 #include "WinWrapper.h"
-
 #include "Resource.h"
 
 namespace acoross {
