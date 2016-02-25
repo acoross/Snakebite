@@ -7,6 +7,7 @@
 #include "game_session_drawer.h"
 
 std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
+std::shared_ptr<acoross::snakebite::GameSession> gamesession;
 
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -35,6 +36,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		}
 	}
 	break;
+	case WM_KEYDOWN:
+		{
+			if (wParam == VK_LEFT)
+			{
+				gamesession->SetPlayerKey(PK_LEFT);
+			}
+			else if (wParam == VK_RIGHT)
+			{
+				gamesession->SetPlayerKey(PK_RIGHT);
+			}
+		}
+		break;
+	case WM_KEYUP:
+		{
+			if (wParam == VK_LEFT)
+			{
+				gamesession->SetKeyUp(PK_LEFT);
+			}
+			else if (wParam == VK_RIGHT)
+			{
+				gamesession->SetKeyUp(PK_RIGHT);
+			}
+		}
 	case WM_PAINT:
 	{
 		RECT client_rect;
@@ -75,7 +99,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // TODO: 여기에 코드를 입력합니다.
 	using namespace acoross::snakebite;
-	GameSessionSP gamesession = std::make_shared<GameSession>();
+	gamesession = std::make_unique<GameSession>();
 	g_game_drawer = std::make_unique<GameSessionDrawer>(gamesession);
 
 	// 응용 프로그램 초기화를 수행합니다.
@@ -86,7 +110,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-	auto loop = [gamesession](MSG& msg)
+	auto loop = [](MSG& msg)
 	{
 		static DWORD lasttick = ::GetTickCount();
 		static DWORD lasttick2draw = ::GetTickCount();

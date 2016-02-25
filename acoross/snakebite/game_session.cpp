@@ -8,6 +8,8 @@
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 
+static int crash = 0;
+
 namespace acoross {
 namespace snakebite {
 
@@ -16,13 +18,44 @@ void GameSession::Initialize()
 	Position2D pos(200, 200);
 	Degree angle(0);
 	double velocity{ 0.06 };	//  UNIT/ms
-	double ang_vel{ 0.06 };		// degree/ms
+	double ang_vel{ 0.1 };		// degree/ms
 	double radius{ 5. };		// UNIT
 	
 	int id = 0;
-	for (int i = 0; i < 5; ++i)
+	
 	{
-		for (int j = 0; j < 5; ++j)
+		double rad_to_set = radius;
+		auto& new_mo = container_.CreateMovingObject(id, Position2D(100, 100), rad_to_set);
+		SnakePiece* snake_head = new SnakePiece(
+			new_mo
+			, angle, velocity, 0.01);
+		new_mo.SetCollideCollback([cont = &container_, sh = snake_head, rad_to_set, id](MovingObject& other)->void
+		{
+			if (other.GetId() == sh->GetMovingObject().GetId())
+			{
+				return;
+			}
+
+			crash++;
+			sh->AddToTail(new SnakePiece(
+				cont->CreateMovingObject(id, Position2D(100, 100), rad_to_set)
+				, 0, 0, 0));
+		});
+
+		for (int k = 0; k < 9; ++k)
+		{
+			snake_head->AddToTail(new SnakePiece(
+				container_.CreateMovingObject(id, Position2D(100, 100), rad_to_set)
+				, angle, velocity, ang_vel));
+		}
+
+		snakes_.emplace_back(snake_head);
+		++id;
+	}
+
+	for (int i = 0; i < 1; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
 		{
 			double rad_to_set = 0.01 * radius * j + radius;
 			SnakePiece* snake_head = new SnakePiece(
@@ -40,10 +73,45 @@ void GameSession::Initialize()
 			++id;
 		}
 	}
+
+	std::uniform_int_distribution<int> unin(50, 400);
+	std::default_random_engine re;
+	auto clock = std::chrono::high_resolution_clock();
+	auto t = clock.now();
+
+	re.seed((unsigned int)t.time_since_epoch().count());
+
+	for (int i = 0; i < 10; ++i)
+	{
+		double rad_to_set = 13;
+		auto& new_mo = container_.CreateMovingObject(id, Position2D(unin(re), unin(re)), rad_to_set);
+				
+		new_mo.SetCollideCollback([cont = &container_, &new_mo](MovingObject& other)
+		{
+			cont->DeleteObject(&new_mo);
+		});
+
+		++id;
+	}
 }
 
 void GameSession::CleanUp()
 {
+	{
+		ListSnakePiece empty_snakes;
+		empty_snakes.swap(snakes_);
+		for (auto& snake : empty_snakes)
+		{
+			container_.DeleteObject(&snake->GetMovingObject());
+		}
+
+		ListApple empty_apples;
+		empty_apples.swap(apples_);
+		for (auto& apple : empty_apples)
+		{
+			container_.DeleteObject(&apple->GetMovingObject());
+		}
+	}
 }
 
 
@@ -51,17 +119,14 @@ void GameSession::CleanUp()
 // 랜덤하게 방향을 변경.
 // UpdatteMove 가 불린 횟수와 관계없이,
 // 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
-static bool checkChangeDirection()
+static bool checkChangeDirection(int64_t diff_in_ms)
 {	
-	auto clock = std::chrono::high_resolution_clock();
-	auto t = clock.now();
-
-	static auto last_time_ns = t.time_since_epoch();
-	auto current_time_ns = t.time_since_epoch();
+	static int64_t delay_sum = 0;
 	
-	if (current_time_ns.count() - last_time_ns.count() > 1000000 /*1s*/)
+	delay_sum += diff_in_ms;
+	if (delay_sum > 100 /*1s*/)
 	{
-		last_time_ns = current_time_ns;
+		delay_sum = 0;
 		return true;
 	}
 
@@ -80,18 +145,23 @@ static void changeDirection(GameSession::ListSnakePiece& snakes, int64_t diff_in
 
 	for (auto& snake : snakes)
 	{
+		if (snake->GetMovingObject().GetId() == 0)
+		{
+			continue;
+		}
+
 		int p = unin(re);
 		if (p < 15) // 5 percent
 		{
 			auto ang_vel = snake->GetAngVelocity();
 			auto diff_ang = ang_vel * diff_in_ms;
-			snake->Turn((int)diff_ang);
+			snake->Turn(diff_ang);
 		}
 		else if (p < 30) // another 5 percent
 		{
 			auto ang_vel = snake->GetAngVelocity();
 			auto diff_ang = -ang_vel * diff_in_ms;
-			snake->Turn((int)diff_ang);
+			snake->Turn(diff_ang);
 		}
 	}
 }
@@ -102,7 +172,7 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 	// 랜덤하게 방향을 변경.
 	// UpdatteMove 가 불린 횟수와 관계없이,
 	// 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
-	if (checkChangeDirection())
+	if (checkChangeDirection(diff_in_ms))
 	{
 		changeDirection(snakes_, diff_in_ms);
 	}
@@ -110,6 +180,22 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 	// 전진
 	for (auto& snake : snakes_)
 	{
+		if (snake->GetMovingObject().GetId() == 0)
+		{
+			if (last_pk_ == PK_RIGHT)
+			{
+				auto ang_vel = snake->GetAngVelocity();
+				auto diff_ang = ang_vel * diff_in_ms;
+				snake->Turn(diff_ang);
+			}
+			else if (last_pk_ == PK_LEFT) // another 5 percent
+			{
+				auto ang_vel = snake->GetAngVelocity();
+				auto diff_ang = -ang_vel * diff_in_ms;
+				snake->Turn(diff_ang);
+			}
+		}
+
 		double diff_distance = snake->GetVelocity() * diff_in_ms;
 		Position2D pos_now = snake->GetMovingObject().GetPosition();
 		double angle_now_rad = snake->GetAngle().GetRad();

@@ -14,7 +14,7 @@ public:
 		: snake_body_next_(nullptr)
 		, moving_object_(moving_object)
 		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
-	{
+	{	
 	}
 
 	~SnakePiece()
@@ -52,6 +52,23 @@ private:
 	double ang_vel_;	// degree/ms
 
 	std::unique_ptr<SnakePiece> snake_body_next_;
+	MovingObject& moving_object_;
+};
+
+class Apple
+{
+public:
+	Apple(Apple&) = delete;
+	Apple& operator=(Apple&) = delete;
+
+	Apple(MovingObject& moving_object)
+		: moving_object_(moving_object)
+	{}
+	~Apple(){}
+	
+	MovingObject& GetMovingObject() { return moving_object_; }
+
+private:
 	MovingObject& moving_object_;
 };
 

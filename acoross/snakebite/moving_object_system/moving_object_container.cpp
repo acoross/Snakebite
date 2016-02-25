@@ -7,14 +7,17 @@ namespace snakebite {
 void MovingObjectContainer::CheckCollisions()
 {
 	// clean up collision
-	for (auto& mo : moving_objects_)
+
+	ListMovingObject mo_list(moving_objects_);
+
+	for (auto& mo : mo_list)
 	{
 		mo->Collided = false;
 	}
 
-	for (auto& mo1 : moving_objects_)
+	for (auto& mo1 : mo_list)
 	{
-		for (auto& mo2 : moving_objects_)
+		for (auto& mo2 : mo_list)
 		{
 			if (mo1.get() == mo2.get())
 				continue;

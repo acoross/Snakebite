@@ -2,6 +2,7 @@
 #define SNAKEBITE_M1_MOVING_OBJECT_H_
 
 #include <iostream>
+#include <functional>
 
 #include "geo_types.h"
 #include "moving_object_container.h"
@@ -12,13 +13,15 @@ namespace snakebite {
 class MovingObject
 {
 public:
+	typedef std::function<void(MovingObject& mo)> OnCollideCollback;
 	MovingObject(MovingObject&) = delete;
 	MovingObject& operator=(MovingObject&) = delete;
 
 	MovingObject(MovingObjectContainer& container, int Id, const Position2D& pos, double radius)
 		: container_(container), Id_(Id), pos_(pos), radius_(radius)
 	{}
-	virtual ~MovingObject(){}
+	virtual ~MovingObject()
+	{}
 
 	void MoveTo(const Position2D& newpos)
 	{
@@ -35,6 +38,13 @@ public:
 	bool Collided{ false };
 
 	int GetId() const { return Id_; }
+	
+	void SetCollideCollback(OnCollideCollback collideCallback)
+	{
+		collideCallback_ = collideCallback;
+	}
+
+	OnCollideCollback collideCallback_;
 
 private:
 	MovingObjectContainer& container_;

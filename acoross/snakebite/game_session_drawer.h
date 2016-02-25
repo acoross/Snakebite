@@ -55,8 +55,18 @@ public:
 				}
 				else
 				{
-					wdc.Ellipse(center_x - radius, center_y - radius,
-						center_x + radius, center_y + radius);
+					if (mo->GetId() == 0)
+					{
+						HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(LTGRAY_BRUSH));
+						wdc.Ellipse(center_x - radius, center_y - radius,
+							center_x + radius, center_y + radius);
+						(HBRUSH)::SelectObject(wdc.Get(), oldbrush);
+					}
+					else
+					{
+						wdc.Ellipse(center_x - radius, center_y - radius,
+							center_x + radius, center_y + radius);
+					}
 				}
 			}
 		}

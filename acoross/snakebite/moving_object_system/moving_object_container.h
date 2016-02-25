@@ -15,7 +15,7 @@ class MovingObject;
 class MovingObjectContainer
 {
 public:
-	typedef std::list<std::unique_ptr<MovingObject>> ListMovingObject;
+	typedef std::list<std::shared_ptr<MovingObject>> ListMovingObject;
 
 	// game field APIs
 	const int Left{ 0 };
@@ -33,6 +33,18 @@ public:
 		moving_objects_.emplace_back(mo_new);
 
 		return *mo_new;
+	}
+
+	void DeleteObject(MovingObject* mo)
+	{
+		for (auto it = moving_objects_.begin(); it != moving_objects_.end(); ++it)
+		{
+			if (it->get() == mo)
+			{
+				moving_objects_.erase(it);
+				return;
+			}
+		}
 	}
 
 	void CheckCollisions();

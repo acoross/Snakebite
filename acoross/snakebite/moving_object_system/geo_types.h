@@ -28,7 +28,7 @@ typedef Position2D DirVector2D;
 class Degree
 {
 public:
-	Degree(int angle)
+	Degree(double angle)
 		: angle_(angle) {}
 
 	const Degree& operator+=(const Degree& rhs)
@@ -57,20 +57,21 @@ public:
 		return ret;
 	}
 
-	int Turn(int diff)
+	double Turn(double diff)
 	{
 		angle_ += diff;
-		angle_ %= 360;
+		int c = (int)angle_ / 360;
+		angle_ = angle_ - 360 * c;
 
 		return angle_;
 	}
 
-	void Set(int angle)
+	void Set(double angle)
 	{
 		angle_ = angle;
 	}
 
-	int Get() const
+	double Get() const
 	{
 		return angle_;
 	}
@@ -81,7 +82,7 @@ public:
 	}
 
 private:
-	int angle_;
+	double angle_;
 };
 
 }

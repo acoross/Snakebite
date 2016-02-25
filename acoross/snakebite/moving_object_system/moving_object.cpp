@@ -44,6 +44,11 @@ void MovingObject::ProcessCollsion(MovingObject & m1, MovingObject & m2)
 	{
 		m1.Collided = true;
 		m2.Collided = true;
+
+		if (m1.collideCallback_)
+			m1.collideCallback_(m2);
+		if (m2.collideCallback_)
+			m2.collideCallback_(m1);
 	}
 }
 

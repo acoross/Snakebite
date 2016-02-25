@@ -55,7 +55,7 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake_piece.h">
-      <Filter>win</Filter>
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

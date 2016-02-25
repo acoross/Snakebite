@@ -8,6 +8,13 @@
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_piece.h"
 
+enum PlayerKey
+{
+	PK_NONE,
+	PK_RIGHT,
+	PK_LEFT
+};
+
 namespace acoross {
 namespace snakebite {
 
@@ -17,12 +24,16 @@ class GameSession final
 public:
 	typedef MovingObjectContainer::ListMovingObject ListMovingObject;
 	typedef std::list<std::unique_ptr<SnakePiece>> ListSnakePiece;
-	
+	typedef std::list<std::unique_ptr<Apple>> ListApple;
+
 	GameSession() 
 	{
 		Initialize();
 	}
-	~GameSession() {}
+	~GameSession() 
+	{
+		CleanUp();
+	}
 
 	void Initialize();
 	void CleanUp();
@@ -41,12 +52,39 @@ public:
 		return container_.GetMovingObjects();
 	}
 
+	void SetPlayerKey(PlayerKey player_key)
+	{
+		last_pk_ = player_key;
+	}
+
+	void SetKeyUp(PlayerKey player_key)
+	{
+		if (last_pk_ == player_key)
+		{
+			last_pk_ = PK_NONE;
+		}
+	}
+
+	PlayerKey GetPlayerKey() const
+	{
+		return last_pk_;
+	}
+
+	PlayerKey RetrievePlayerKey()
+	{
+		auto ret = last_pk_;
+		last_pk_ = PK_NONE;
+		return ret;
+	}
+
 	// юс╫ц
 	const MovingObjectContainer& GetContainer() const { return container_; }
 
 private:
 	ListSnakePiece snakes_;
+	ListApple apples_;
 	MovingObjectContainer container_;
+	PlayerKey last_pk_{ PK_NONE };
 };
 
 typedef std::shared_ptr<GameSession> GameSessionSP;
