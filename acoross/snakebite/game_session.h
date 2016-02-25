@@ -32,7 +32,7 @@ public:
 	
 	void ProcessCollisions()
 	{
-		container_.GetCollisionContainer().CheckCollisions();
+		//container_.GetCollisionContainer().CheckCollisions();
 	}
 
 	//임시로 열어주는 API

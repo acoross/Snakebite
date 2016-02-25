@@ -37,18 +37,15 @@ public:
 	}
 
 	//임시로 열어주는 API
-	ListMovingObject& GetMovingObjects()
-	{
-		return moving_objects_;
-	}
+	ListMovingObject& GetMovingObjects() { return moving_objects_; }
 
 	//임시로 열어주는 API
-	ColliderContainer& GetCollisionContainer() { return collision_container_; }
+	//ColliderContainer& GetCollisionContainer() { return collision_container_; }
 
 private:
 	// unique_ptr 이라서 자동 삭제됨.
 	ListMovingObject moving_objects_;
-	ColliderContainer collision_container_;
+	//ColliderContainer collision_container_;
 };
 
 }
