@@ -13,17 +13,23 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="moving_object_system">
-      <UniqueIdentifier>{8d4ff439-463f-4720-b737-671be2afdb69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win">
-      <UniqueIdentifier>{88ab9f9c-94aa-4106-a34c-ee0e08747344}</UniqueIdentifier>
-    </Filter>
     <Filter Include="viewer">
       <UniqueIdentifier>{8be660ba-e130-4bf9-824e-9322a081292c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cpp_util">
+    <Filter Include="lib">
+      <UniqueIdentifier>{e733a46a-1f5d-40a7-b2b8-b69e29d29b15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\cpp_util">
       <UniqueIdentifier>{76e8e65d-1447-438d-be28-02c6ffac0b4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\moving_object_system">
+      <UniqueIdentifier>{8d4ff439-463f-4720-b737-671be2afdb69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\win">
+      <UniqueIdentifier>{88ab9f9c-94aa-4106-a34c-ee0e08747344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collider">
+      <UniqueIdentifier>{c1e9a824-62e2-45ce-b6d5-61d564e56493}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -31,16 +37,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\geo_types.h">
-      <Filter>moving_object_system</Filter>
+      <Filter>lib\moving_object_system</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object.h">
-      <Filter>moving_object_system</Filter>
+      <Filter>lib\moving_object_system</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_container.h">
-      <Filter>moving_object_system</Filter>
+      <Filter>lib\moving_object_system</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h">
-      <Filter>moving_object_system</Filter>
+      <Filter>lib\moving_object_system</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session.h">
       <Filter>헤더 파일</Filter>
@@ -49,10 +55,10 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\win\targetver.h">
-      <Filter>win</Filter>
+      <Filter>lib\win</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h">
-      <Filter>win</Filter>
+      <Filter>lib\win</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\win\Resource.h">
       <Filter>헤더 파일</Filter>
@@ -64,15 +70,18 @@
       <Filter>viewer</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\util.h">
-      <Filter>cpp_util</Filter>
+      <Filter>lib\cpp_util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\snake_collider.h">
+      <Filter>collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\moving_object_system\geo_types.cpp">
-      <Filter>moving_object_system</Filter>
+      <Filter>lib\moving_object_system</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\moving_object_system\moving_object.cpp">
-      <Filter>moving_object_system</Filter>
+      <Filter>lib\moving_object_system</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp">
       <Filter>소스 파일</Filter>
@@ -84,10 +93,10 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
-      <Filter>win</Filter>
+      <Filter>lib\win</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\moving_object_system\moving_object_container.cpp">
-      <Filter>moving_object_system</Filter>
+      <Filter>lib\moving_object_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

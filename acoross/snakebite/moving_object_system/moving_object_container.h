@@ -10,14 +10,13 @@
 namespace acoross {
 namespace snakebite {
 
-class MovingObject;
-using MovingObjectSP = std::shared_ptr<MovingObject>;
-using MovingObjectWP = std::weak_ptr<MovingObject>;
-
+template <typename TMovingObject>
 class MovingObjectContainer
 {
 public:
-	typedef std::list<std::shared_ptr<MovingObject>> ListMovingObject;
+	using MovingObjectSP = std::shared_ptr<TMovingObject>;
+	using MovingObjectWP = std::weak_ptr<TMovingObject>;
+	typedef std::list<MovingObjectSP> ListMovingObject;
 
 	// game field APIs
 	const int Left{ 0 };
@@ -40,9 +39,16 @@ public:
 	void DeleteObject(MovingObjectWP mo_wp)
 	{
 		if (auto mo = mo_wp.lock())
+		{
+			DeleteObject(mo.get());
+		}
+	}
+
+	void DeleteObject(TMovingObject* mo)
+	{
 		for (auto it = moving_objects_.begin(); it != moving_objects_.end(); ++it)
 		{
-			if (it->get() == mo.get())
+			if (it->get() == mo)
 			{
 				moving_objects_.erase(it);
 				return;
@@ -50,7 +56,7 @@ public:
 		}
 	}
 
-	//void CheckCollisions();
+	void CheckCollisions();
 
 	//임시로 열어주는 API
 	ListMovingObject& GetMovingObjects() { return moving_objects_; }
@@ -59,6 +65,32 @@ private:
 	// unique_ptr 이라서 자동 삭제됨.
 	ListMovingObject moving_objects_;
 };
+
+template <typename TMovingObject>
+void MovingObjectContainer<TMovingObject>::CheckCollisions()
+{
+	ListMovingObject& mo_list = moving_objects_;
+
+	// clean up collision
+	for (auto& mo : mo_list)
+	{
+		mo->Collided = false;
+	}
+
+	for (auto& mo1 : mo_list)
+	{
+		for (auto& mo2 : mo_list)
+		{
+			if (mo1.get() == mo2.get())
+				continue;
+
+			mo1->Collide(*mo2);
+			mo2->Collide(*mo1);
+
+			/*MovingObject::ProcessCollsion(*mo1, *mo2);*/
+		}
+	}
+}
 
 }
 }

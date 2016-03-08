@@ -11,6 +11,7 @@ namespace acoross {
 namespace snakebite {
 
 //reference type
+template <typename TCollider>
 class MovingObject
 {
 public:
@@ -19,8 +20,8 @@ public:
 	MovingObject(MovingObject&) = delete;
 	MovingObject& operator=(MovingObject&) = delete;
 
-	MovingObject(MovingObjectContainer& container, int Id, const Position2D& pos, double radius)
-		: container_(container), Id_(Id), pos_(pos), radius_(radius)
+	MovingObject(MovingObjectContainer<MovingObject>& container, int Id, const Position2D& pos, double radius, TCollider* collider)
+		: container_(container), Id_(Id), pos_(pos), radius_(radius), collider_(collider)
 	{}
 	virtual ~MovingObject()
 	{}
@@ -46,17 +47,54 @@ public:
 		collideCallback_ = collideCallback;
 	}
 
-	OnCollideCollback collideCallback_;
+	void Collide(MovingObject& other)
+	{
+		collider_->Collide(*other.collider_, 0);
+	}
 
+	OnCollideCollback collideCallback_;
+	
 private:
-	MovingObjectContainer& container_;
+	MovingObjectContainer<MovingObject>& container_;
 
 	int Id_;
 	Position2D pos_;	// relational positino to field, as UNIT
 	double radius_;
+
+	std::unique_ptr<TCollider> collider_;
 };
 
-bool IsCrashed(const MovingObject& mo1, const MovingObject& mo2);
+template <typename TCollider>
+bool IsCrashed(const MovingObject<TCollider>& mo1, const MovingObject<TCollider>& mo2)
+{
+	double dist = Position2D::Distance(mo1.GetPosition(), mo2.GetPosition());
+
+	if (dist < mo1.GetRadius() + mo2.GetRadius())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+template <typename TCollider>
+void MovingObject<TCollider>::Move(const DirVector2D & diff)
+{
+	// 테두리 밖으로 벗어나지 않도록 막음.
+	auto pos_new = pos_;
+	pos_new.x += diff.x;
+	pos_new.y += diff.y;
+
+	if (pos_new.x > container_.Left && pos_new.x < container_.Right)
+	{
+		pos_.x = pos_new.x;
+	}
+
+	if (pos_new.y > container_.Top && pos_new.y < container_.Bottom)
+	{
+		pos_.y = pos_new.y;
+	}
+}
 
 }
 }

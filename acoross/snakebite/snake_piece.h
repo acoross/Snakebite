@@ -3,19 +3,20 @@
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/util.h>
+#include "snake_collider.h"
 
 namespace acoross {
 namespace snakebite {
 
 // reference type
-class SnakePiece : public MovingObject
+class SnakePiece : public MovingObject<ColliderBase>
 {
 public:
 	SnakePiece(SnakePiece&) = delete;
 	SnakePiece& operator=(SnakePiece&) = delete;
 
-	SnakePiece(MovingObjectContainer& container, int Id, const Position2D& pos, double radius, const Degree& angle, double velocity, double ang_vel)
-		: MovingObject(container, Id, pos, radius)
+	SnakePiece(MovingObjectContainer<MovingObject<ColliderBase>>& container, int Id, const Position2D& pos, double radius, const Degree& angle, double velocity, double ang_vel, ColliderBase* collider)
+		: MovingObject<ColliderBase>(container, Id, pos, radius, collider)
 		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	{}
 

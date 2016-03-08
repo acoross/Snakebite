@@ -7,14 +7,32 @@
 #include <random>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
-
-static int crash = 0;
+#include "snake_collider.h"
 
 namespace acoross {
 namespace snakebite {
 
 void GameSession::Initialize()
 {
+	{
+		/*std::vector<std::unique_ptr<Foo<ColliderBase>>> lst;
+
+		lst.emplace_back(new Foo<ColliderBase>(new PlayerHeadCollider));
+		lst.emplace_back(new Foo<ColliderBase>(new SnakeHeadCollider));
+		lst.emplace_back(new Foo<ColliderBase>(new SnakeBodyCollider));
+
+		for (auto& c1 : lst)
+		{
+			for (auto& c2 : lst)
+			{
+				if (c1.get() == c2.get())
+					continue;
+
+				c1->Collide(*c2.get());
+			}
+		}*/
+	}
+
 	Position2D pos(200, 200);
 	Degree angle(0);
 	double velocity{ 0.06 };	// UNIT/ms
@@ -29,7 +47,8 @@ void GameSession::Initialize()
 		double rad_to_set = radius;
 		auto& snake_head = container_.CreateMovingObject<SnakePiece>(
 			id, player_pos, rad_to_set
-			, angle, velocity, 0.01);
+			, angle, velocity, 0.01
+			, new PlayerHeadCollider());
 		
 		//new_mo.SetCollideCollback([cont = &container_, sh = snake_head, rad_to_set, id](MovingObject& other)->void
 		//{
@@ -49,7 +68,8 @@ void GameSession::Initialize()
 			{
 				sh->AddToTail(container_.CreateMovingObject<SnakePiece>(
 					id, player_pos, rad_to_set
-					, angle, velocity, ang_vel));
+					, angle, velocity, ang_vel
+					, new SnakeBodyCollider()));
 			}
 		}
 
@@ -64,7 +84,8 @@ void GameSession::Initialize()
 			double rad_to_set = 0.01 * radius * j + radius;
 			auto& snake_head = container_.CreateMovingObject<SnakePiece>(
 				id, pos, rad_to_set
-				, angle + 17 * j, velocity, ang_vel);
+				, angle + 17 * j, velocity, ang_vel
+				, new SnakeHeadCollider());
 
 			if (auto sh = snake_head.lock())
 			{
@@ -72,7 +93,8 @@ void GameSession::Initialize()
 				{
 					sh->AddToTail(container_.CreateMovingObject<SnakePiece>(
 						id, pos, rad_to_set
-						, angle, velocity, ang_vel));
+						, angle, velocity, ang_vel
+						, new SnakeBodyCollider()));
 				}
 			}
 
