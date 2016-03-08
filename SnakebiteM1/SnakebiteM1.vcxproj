@@ -159,6 +159,7 @@
     <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
     <ClInclude Include="..\acoross\snakebite\win\targetver.h" />
     <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
+    <ClInclude Include="..\acoross\util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />

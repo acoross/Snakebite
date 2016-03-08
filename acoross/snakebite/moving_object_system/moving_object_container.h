@@ -11,6 +11,8 @@ namespace acoross {
 namespace snakebite {
 
 class MovingObject;
+using MovingObjectSP = std::shared_ptr<MovingObject>;
+using MovingObjectWP = std::weak_ptr<MovingObject>;
 
 class MovingObjectContainer
 {
@@ -26,20 +28,21 @@ public:
 	int Width() const { return Right - Left; }
 	int Height() const { return Top - Bottom; }
 
-	template<typename... Args>
-	MovingObject& CreateMovingObject(Args&&... args)
+	template<typename T, typename... Args>
+	std::weak_ptr<T> CreateMovingObject(Args&&... args)
 	{
-		MovingObject* mo_new = new MovingObject(*this, std::forward<Args>(args)...);
-		moving_objects_.emplace_back(mo_new);
+		auto mo_new = std::make_shared<T>(*this, std::forward<Args>(args)...);
+		moving_objects_.push_back(mo_new);
 
-		return *mo_new;
+		return mo_new;
 	}
 
-	void DeleteObject(MovingObject* mo)
+	void DeleteObject(MovingObjectWP mo_wp)
 	{
+		if (auto mo = mo_wp.lock())
 		for (auto it = moving_objects_.begin(); it != moving_objects_.end(); ++it)
 		{
-			if (it->get() == mo)
+			if (it->get() == mo.get())
 			{
 				moving_objects_.erase(it);
 				return;
@@ -47,7 +50,7 @@ public:
 		}
 	}
 
-	void CheckCollisions();
+	//void CheckCollisions();
 
 	//임시로 열어주는 API
 	ListMovingObject& GetMovingObjects() { return moving_objects_; }

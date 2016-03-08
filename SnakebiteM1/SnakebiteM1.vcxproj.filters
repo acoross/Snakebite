@@ -19,6 +19,12 @@
     <Filter Include="win">
       <UniqueIdentifier>{88ab9f9c-94aa-4106-a34c-ee0e08747344}</UniqueIdentifier>
     </Filter>
+    <Filter Include="viewer">
+      <UniqueIdentifier>{8be660ba-e130-4bf9-824e-9322a081292c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpp_util">
+      <UniqueIdentifier>{76e8e65d-1447-438d-be28-02c6ffac0b4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -39,9 +45,6 @@
     <ClInclude Include="..\acoross\snakebite\game_session.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\SnakebiteM1.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -56,6 +59,12 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake_piece.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h">
+      <Filter>viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\util.h">
+      <Filter>cpp_util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

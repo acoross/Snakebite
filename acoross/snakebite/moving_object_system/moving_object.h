@@ -10,10 +10,12 @@
 namespace acoross {
 namespace snakebite {
 
+//reference type
 class MovingObject
 {
 public:
 	typedef std::function<void(MovingObject& mo)> OnCollideCollback;
+
 	MovingObject(MovingObject&) = delete;
 	MovingObject& operator=(MovingObject&) = delete;
 
@@ -23,17 +25,17 @@ public:
 	virtual ~MovingObject()
 	{}
 
-	void MoveTo(const Position2D& newpos)
+	virtual void MoveTo(const Position2D& newpos)
 	{
 		pos_ = newpos;
 	}
 	
-	void Move(const DirVector2D& diff);
+	virtual void Move(const DirVector2D& diff);
 
 	Position2D GetPosition() const { return pos_; }
 	double GetRadius() const { return radius_; }
 		
-	static void ProcessCollsion(MovingObject& m1, MovingObject& m2);
+	//static void ProcessCollsion(MovingObject& m1, MovingObject& m2);
 
 	bool Collided{ false };
 

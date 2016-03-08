@@ -2,74 +2,63 @@
 #define SNAKEBITE_SNAKE_PEICE_H_
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
+#include <acoross/util.h>
 
 namespace acoross {
 namespace snakebite {
 
-class SnakePiece
+// reference type
+class SnakePiece : public MovingObject
 {
 public:
-	template<typename... Args>
-	SnakePiece(MovingObject& moving_object, const Degree& angle, double velocity, double ang_vel)
-		: snake_body_next_(nullptr)
-		, moving_object_(moving_object)
-		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
-	{	
-	}
+	SnakePiece(SnakePiece&) = delete;
+	SnakePiece& operator=(SnakePiece&) = delete;
 
-	~SnakePiece()
+	SnakePiece(MovingObjectContainer& container, int Id, const Position2D& pos, double radius, const Degree& angle, double velocity, double ang_vel)
+		: MovingObject(container, Id, pos, radius)
+		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	{}
+
+	virtual ~SnakePiece() {}
 
 	void SetAngle(const Degree& angle)
 	{
 		angle_ = angle;
 	}
 
-	void Move(const DirVector2D& diff_vec);
+	virtual void Move(const DirVector2D& diff_vec) override;
 
 	void Turn(const Degree& diff)
 	{
 		angle_ = angle_ + diff;
 	}
 
-	void AddToTail(SnakePiece* snake_new)
+	void AddToTail(std::weak_ptr<SnakePiece> snake_new_wp)
 	{
-		if (snake_body_next_.get() == nullptr)
-			snake_body_next_.reset(snake_new);
+		if (auto next = snake_body_next_.lock())
+		{
+			if (auto snake_new = snake_new_wp.lock())
+			{
+				snake_new->MoveTo(next->GetPosition());
+				next->AddToTail(snake_new_wp);
+			}
+		}
 		else
-			snake_body_next_->AddToTail(snake_new);
+		{
+			snake_body_next_ = snake_new_wp;
+		}
 	}
 
 	Degree GetAngle() const { return angle_; }
 	double GetVelocity() const { return velocity_; }
 	double GetAngVelocity() const { return ang_vel_; }
 
-	MovingObject& GetMovingObject() { return moving_object_; }
-
 private:
 	Degree angle_; // degree
 	double velocity_; // UNIT/ms
 	double ang_vel_;	// degree/ms
 
-	std::unique_ptr<SnakePiece> snake_body_next_;
-	MovingObject& moving_object_;
-};
-
-class Apple
-{
-public:
-	Apple(Apple&) = delete;
-	Apple& operator=(Apple&) = delete;
-
-	Apple(MovingObject& moving_object)
-		: moving_object_(moving_object)
-	{}
-	~Apple(){}
-	
-	MovingObject& GetMovingObject() { return moving_object_; }
-
-private:
-	MovingObject& moving_object_;
+	std::weak_ptr<SnakePiece> snake_body_next_;
 };
 
 }
