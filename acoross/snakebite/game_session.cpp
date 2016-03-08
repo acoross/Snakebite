@@ -14,25 +14,6 @@ namespace snakebite {
 
 void GameSession::Initialize()
 {
-	{
-		/*std::vector<std::unique_ptr<Foo<ColliderBase>>> lst;
-
-		lst.emplace_back(new Foo<ColliderBase>(new PlayerHeadCollider));
-		lst.emplace_back(new Foo<ColliderBase>(new SnakeHeadCollider));
-		lst.emplace_back(new Foo<ColliderBase>(new SnakeBodyCollider));
-
-		for (auto& c1 : lst)
-		{
-			for (auto& c2 : lst)
-			{
-				if (c1.get() == c2.get())
-					continue;
-
-				c1->Collide(*c2.get());
-			}
-		}*/
-	}
-
 	Position2D pos(200, 200);
 	Degree angle(0);
 	double velocity{ 0.06 };	// UNIT/ms

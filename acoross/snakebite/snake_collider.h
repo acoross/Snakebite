@@ -19,41 +19,25 @@ public:
 	virtual void Collide(PlayerHeadCollider& other, int cnt) = 0;
 };
 
-template <typename TCollider>
-class Foo
-{
-public:
-	Foo(TCollider* c)
-		: c_(c)
-	{}
-
-	void Collide(Foo& other)
-	{
-		other.c_->Collide(*c_, 0);
-	}
-
-	std::unique_ptr<TCollider> c_;
-};
-
 class SnakeHeadCollider : public ColliderBase
 {
 public:
-	virtual void Collide(ColliderBase& other, int cnt)
+	virtual void Collide(ColliderBase& other, int cnt) override
 	{
 		other.Collide(*this, cnt + 1);
 	}
 
-	virtual void Collide(SnakeHeadCollider& other, int cnt)
+	virtual void Collide(SnakeHeadCollider& other, int cnt) override
 	{
 		return;
 	}
 
-	virtual void Collide(SnakeBodyCollider& other, int cnt)
+	virtual void Collide(SnakeBodyCollider& other, int cnt) override
 	{
 		return;
 	}
 
-	virtual void Collide(PlayerHeadCollider& other, int cnt)
+	virtual void Collide(PlayerHeadCollider& other, int cnt) override
 	{
 		return;
 	}
@@ -62,22 +46,22 @@ public:
 class SnakeBodyCollider : public ColliderBase
 {
 public:
-	virtual void Collide(ColliderBase& other, int cnt)
+	virtual void Collide(ColliderBase& other, int cnt) override
 	{
 		other.Collide(*this, cnt + 1);
 	}
 
-	virtual void Collide(SnakeBodyCollider& other, int cnt)
+	virtual void Collide(SnakeBodyCollider& other, int cnt) override
 	{
 		return;
 	}
 
-	virtual void Collide(SnakeHeadCollider& other, int cnt)
+	virtual void Collide(SnakeHeadCollider& other, int cnt) override
 	{
 		return;
 	}
 
-	virtual void Collide(PlayerHeadCollider& other, int cnt)
+	virtual void Collide(PlayerHeadCollider& other, int cnt) override
 	{
 		return;
 	}
@@ -86,22 +70,22 @@ public:
 class PlayerHeadCollider : public ColliderBase
 {
 public:
-	virtual void Collide(ColliderBase& other, int cnt)
+	virtual void Collide(ColliderBase& other, int cnt) override
 	{
 		other.Collide(*this, cnt + 1);
 	}
 
-	virtual void Collide(SnakeBodyCollider& other, int cnt)
+	virtual void Collide(SnakeBodyCollider& other, int cnt) override
 	{
 		return;
 	}
 
-	virtual void Collide(SnakeHeadCollider& other, int cnt)
+	virtual void Collide(SnakeHeadCollider& other, int cnt) override
 	{
 		return;
 	}
 
-	virtual void Collide(PlayerHeadCollider& other, int cnt)
+	virtual void Collide(PlayerHeadCollider& other, int cnt) override
 	{
 		return;
 	}
