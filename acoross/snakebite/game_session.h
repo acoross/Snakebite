@@ -24,7 +24,6 @@ class GameSession final
 public:
 	typedef MovingObjectContainer::ListMovingObject ListMovingObject;
 	typedef std::list<std::weak_ptr<SnakePiece>> ListSnakePiece;
-	//typedef std::list<std::unique_ptr<Apple>> ListApple;
 
 	GameSession() 
 	{
@@ -82,7 +81,6 @@ public:
 
 private:
 	ListSnakePiece snakes_;
-	//ListApple apples_;
 	MovingObjectContainer container_;
 	PlayerKey last_pk_{ PK_NONE };
 };

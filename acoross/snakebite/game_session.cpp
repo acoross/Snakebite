@@ -17,16 +17,18 @@ void GameSession::Initialize()
 {
 	Position2D pos(200, 200);
 	Degree angle(0);
-	double velocity{ 0.06 };	//  UNIT/ms
+	double velocity{ 0.06 };	// UNIT/ms
 	double ang_vel{ 0.1 };		// degree/ms
 	double radius{ 5. };		// UNIT
 	
 	int id = 0;
 	
 	{
+		Position2D player_pos(100, 100);
+
 		double rad_to_set = radius;
 		auto& snake_head = container_.CreateMovingObject<SnakePiece>(
-			id, Position2D(100, 100), rad_to_set
+			id, player_pos, rad_to_set
 			, angle, velocity, 0.01);
 		
 		//new_mo.SetCollideCollback([cont = &container_, sh = snake_head, rad_to_set, id](MovingObject& other)->void
@@ -46,7 +48,7 @@ void GameSession::Initialize()
 			for (int k = 0; k < 9; ++k)
 			{
 				sh->AddToTail(container_.CreateMovingObject<SnakePiece>(
-					id, Position2D(100, 100), rad_to_set
+					id, player_pos, rad_to_set
 					, angle, velocity, ang_vel));
 			}
 		}
@@ -55,7 +57,7 @@ void GameSession::Initialize()
 		++id;
 	}
 
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		for (int j = 0; j < 3; ++j)
 		{
@@ -78,26 +80,6 @@ void GameSession::Initialize()
 			++id;
 		}
 	}
-
-	/*std::uniform_int_distribution<int> unin(50, 400);
-	std::default_random_engine re;
-	auto clock = std::chrono::high_resolution_clock();
-	auto t = clock.now();
-
-	re.seed((unsigned int)t.time_since_epoch().count());*/
-
-	//for (int i = 0; i < 10; ++i)
-	//{
-	//	double rad_to_set = 13;
-	//	auto& new_mo = container_.CreateMovingObject<MovingObject>(id, Position2D(unin(re), unin(re)), rad_to_set);
-	//			
-	//	/*new_mo.SetCollideCollback([cont = &container_, &new_mo](MovingObject& other)
-	//	{
-	//		cont->DeleteObject(&new_mo);
-	//	});*/
-
-	//	++id;
-	//}
 }
 
 void GameSession::CleanUp()
@@ -108,13 +90,6 @@ void GameSession::CleanUp()
 	{
 		container_.DeleteObject(snake);
 	}
-
-	//ListApple empty_apples;
-	/*empty_apples.swap(apples_);
-	for (auto& apple : empty_apples)
-	{
-		container_.DeleteObject(apple->GetMovingObject());
-	}*/
 }
 
 
@@ -196,7 +171,7 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 					auto diff_ang = ang_vel * diff_in_ms;
 					snake->Turn(diff_ang);
 				}
-				else if (last_pk_ == PK_LEFT) // another 5 percent
+				else if (last_pk_ == PK_LEFT)
 				{
 					auto ang_vel = snake->GetAngVelocity();
 					auto diff_ang = -ang_vel * diff_in_ms;
