@@ -11,7 +11,7 @@ namespace acoross {
 namespace snakebite {
 
 //reference type
-template <typename TCollider>
+template <typename TCollider>	//TCollider 는 void Collider(TCollider&); 를 구현해야 한다.
 class MovingObject
 {
 public:
