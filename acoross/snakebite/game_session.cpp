@@ -29,8 +29,18 @@ void GameSession::Initialize()
 		auto& snake_head = container_.CreateMovingObject<SnakePiece>(
 			id, player_pos, rad_to_set
 			, angle, velocity, 0.01
-			, new PlayerHeadCollider());
+			, [](SnakePiece* owner)->PlayerHeadCollider*
+		{
+			return new PlayerHeadCollider(owner);
+		}, true);
 		
+		/*new SnakePiece(container_, id, player_pos, rad_to_set
+			, angle, velocity, 0.01, 
+			[](SnakePiece* owner)->PlayerHeadCollider*
+		{
+			return new PlayerHeadCollider(owner);
+		}, true);*/
+
 		//new_mo.SetCollideCollback([cont = &container_, sh = snake_head, rad_to_set, id](MovingObject& other)->void
 		//{
 		//	if (other.GetId() == sh->GetMovingObject().GetId())

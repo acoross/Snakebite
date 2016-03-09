@@ -92,6 +92,9 @@
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
       <Filter>lib\win</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\acoross\snakebite\win\SnakebiteM1.ico">

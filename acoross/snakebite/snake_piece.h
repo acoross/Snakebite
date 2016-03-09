@@ -20,6 +20,12 @@ public:
 		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	{}
 
+	template <typename FColliderFactory>
+	SnakePiece(MovingObjectContainer<MovingObject<ColliderBase>>& container, int Id, const Position2D& pos, double radius, const Degree& angle, double velocity, double ang_vel, FColliderFactory collider_factory, bool b)
+		: MovingObject<ColliderBase>(container, Id, pos, radius, collider_factory(this))
+		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
+	{}
+
 	virtual ~SnakePiece() {}
 
 	void SetAngle(const Degree& angle)
