@@ -69,7 +69,7 @@ private:
 template <typename TMovingObject>
 void MovingObjectContainer<TMovingObject>::CheckCollisions()
 {
-	ListMovingObject& mo_list = moving_objects_;
+	ListMovingObject mo_list = moving_objects_;
 
 	// clean up collision
 	for (auto& mo : mo_list)
@@ -84,9 +84,15 @@ void MovingObjectContainer<TMovingObject>::CheckCollisions()
 			if (mo1.get() == mo2.get())
 				continue;
 
-			mo1->Collide(*mo2);
-			mo2->Collide(*mo1);
+			if (mo1->GetId() == mo2->GetId())
+				continue;
 
+			if (mo1->IsCrashed(*mo2))
+			{
+				mo1->Collide(*mo2);
+				mo2->Collide(*mo1);
+			}
+			
 			/*MovingObject::ProcessCollsion(*mo1, *mo2);*/
 		}
 	}

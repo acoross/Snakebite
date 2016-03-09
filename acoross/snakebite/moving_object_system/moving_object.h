@@ -54,28 +54,27 @@ public:
 
 	OnCollideCollback collideCallback_;
 	
-private:
 	MovingObjectContainer<MovingObject>& container_;
 
+	bool IsCrashed(const MovingObject& other)
+	{
+		double dist = Position2D::Distance(GetPosition(), other.GetPosition());
+
+		if (dist < GetRadius() + other.GetRadius())
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+private:
 	int Id_;
 	Position2D pos_;	// relational positino to field, as UNIT
 	double radius_;
 
 	std::unique_ptr<TCollider> collider_;
 };
-
-template <typename TCollider>
-bool IsCrashed(const MovingObject<TCollider>& mo1, const MovingObject<TCollider>& mo2)
-{
-	double dist = Position2D::Distance(mo1.GetPosition(), mo2.GetPosition());
-
-	if (dist < mo1.GetRadius() + mo2.GetRadius())
-	{
-		return true;
-	}
-
-	return false;
-}
 
 template <typename TCollider>
 void MovingObject<TCollider>::Move(const DirVector2D & diff)
