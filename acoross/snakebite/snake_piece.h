@@ -38,14 +38,14 @@ public:
 	{
 		if (auto next = snake_body_next_.lock())
 		{
-			if (auto snake_new = snake_new_wp.lock())
-			{
-				snake_new->MoveTo(next->GetPosition());
-				next->AddToTail(snake_new_wp);
-			}
+			next->AddToTail(snake_new_wp);
 		}
 		else
 		{
+			if (auto snake_new = snake_new_wp.lock())
+			{
+				snake_new->MoveTo(GetPosition());
+			}
 			snake_body_next_ = snake_new_wp;
 		}
 	}

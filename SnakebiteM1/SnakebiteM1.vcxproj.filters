@@ -80,9 +80,6 @@
     <ClCompile Include="..\acoross\snakebite\moving_object_system\geo_types.cpp">
       <Filter>lib\moving_object_system</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\moving_object_system\moving_object.cpp">
-      <Filter>lib\moving_object_system</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -94,9 +91,6 @@
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
       <Filter>lib\win</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\moving_object_system\moving_object_container.cpp">
-      <Filter>lib\moving_object_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
