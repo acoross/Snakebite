@@ -9,14 +9,15 @@ namespace acoross {
 namespace snakebite {
 
 // reference type
-class SnakePiece : public MovingObject<ColliderBase>
+class SnakePiece : public MovingObject
 {
 public:
 	SnakePiece(SnakePiece&) = delete;
 	SnakePiece& operator=(SnakePiece&) = delete;
 
-	SnakePiece(MovingObjectContainer<MovingObject<ColliderBase>>& container, int Id, const Position2D& pos, double radius, const Degree& angle, double velocity, double ang_vel, ColliderBase* collider)
-		: MovingObject<ColliderBase>(container, Id, pos, radius, collider)
+	SnakePiece(MovingObjectContainer& container, 
+		int Id, const Position2D& pos, double radius, const Degree& angle, double velocity, double ang_vel)
+		: MovingObject(container, Id, pos, radius)
 		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	{}
 

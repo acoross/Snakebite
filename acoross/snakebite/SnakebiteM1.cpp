@@ -4,9 +4,9 @@
 
 #include <acoross/snakebite/win/WinWrapper.h>
 #include "game_session.h"
-#include "game_session_drawer.h"
+#include "container_drawer.h"
 
-std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
+std::unique_ptr<acoross::snakebite::ContainerDrawer> g_game_drawer;
 std::shared_ptr<acoross::snakebite::GameSession> gamesession;
 
 //
@@ -100,7 +100,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // TODO: 여기에 코드를 입력합니다.
 	using namespace acoross::snakebite;
 	gamesession = std::make_unique<GameSession>();
-	g_game_drawer = std::make_unique<GameSessionDrawer>(gamesession);
+	g_game_drawer = std::make_unique<ContainerDrawer>(gamesession->GetContainer());
 
 	// 응용 프로그램 초기화를 수행합니다.
 	acoross::Win::Window window(hInstance);

@@ -19,9 +19,6 @@
     <Filter Include="lib">
       <UniqueIdentifier>{e733a46a-1f5d-40a7-b2b8-b69e29d29b15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lib\cpp_util">
-      <UniqueIdentifier>{76e8e65d-1447-438d-be28-02c6ffac0b4b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="lib\moving_object_system">
       <UniqueIdentifier>{8d4ff439-463f-4720-b737-671be2afdb69}</UniqueIdentifier>
     </Filter>
@@ -66,14 +63,11 @@
     <ClInclude Include="..\acoross\snakebite\snake_piece.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h">
-      <Filter>viewer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\util.h">
-      <Filter>lib\cpp_util</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake_collider.h">
       <Filter>collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\container_drawer.h">
+      <Filter>viewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -86,11 +80,11 @@
     <ClCompile Include="..\acoross\snakebite\snake_piece.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\SnakebiteM1.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
       <Filter>lib\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\SnakebiteM1.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

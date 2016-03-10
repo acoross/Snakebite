@@ -149,7 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
-    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h" />
+    <ClInclude Include="..\acoross\snakebite\container_drawer.h" />
     <ClInclude Include="..\acoross\snakebite\moving_object_system\geo_types.h" />
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object.h" />
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_container.h" />
@@ -160,7 +160,6 @@
     <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
     <ClInclude Include="..\acoross\snakebite\win\targetver.h" />
     <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
-    <ClInclude Include="..\acoross\util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />

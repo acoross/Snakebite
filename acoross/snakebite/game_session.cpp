@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <chrono>
 #include <random>
+#include <memory>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_collider.h"
@@ -24,41 +25,26 @@ void GameSession::Initialize()
 	
 	{
 		Position2D player_pos(100, 100);
-
 		double rad_to_set = radius;
-		auto& snake_head = container_.CreateMovingObject<SnakePiece>(
-			id, player_pos, rad_to_set
-			, angle, velocity, 0.01
-			, new PlayerHeadCollider());
-		
-		//new_mo.SetCollideCollback([cont = &container_, sh = snake_head, rad_to_set, id](MovingObject& other)->void
-		//{
-		//	if (other.GetId() == sh->GetMovingObject().GetId())
-		//	{
-		//		return;
-		//	}
-		//	crash++;			
-		//	sh->AddToTail(new SnakePiece(
-		//		cont->CreateMovingObject(id, Position2D(100, 100) /*tail 좌표로 이동된다.*/, rad_to_set)
-		//		, 0, 0, 0));
-		//});
+		auto sh = std::make_shared<SnakePiece>(
+			container_, id, player_pos, rad_to_set
+			, angle, velocity, 0.01);
+		container_.RegisterMovingObject(sh);
 
-		if (auto sh = snake_head.lock())
+		for (int k = 0; k < 9; ++k)
 		{
-			for (int k = 0; k < 9; ++k)
-			{
-				sh->AddToTail(container_.CreateMovingObject<SnakePiece>(
-					id, player_pos, rad_to_set
-					, angle, velocity, ang_vel
-					, new SnakeBodyCollider()));
-			}
+			auto sb = std::make_shared<SnakePiece>(
+				container_, id, player_pos, rad_to_set
+				, angle, velocity, ang_vel);
+			container_.RegisterMovingObject(sb);
+			sh->AddToTail(sb);
 		}
-
-		snakes_.emplace_back(snake_head);
+		
+		player_ = sh;
 		++id;
 	}
 
-	for (int i = 0; i < 3; ++i)
+	/*for (int i = 0; i < 3; ++i)
 	{
 		for (int j = 0; j < 3; ++j)
 		{
@@ -82,7 +68,7 @@ void GameSession::Initialize()
 			snakes_.emplace_back(snake_head);
 			++id;
 		}
-	}
+	}*/
 }
 
 void GameSession::CleanUp()
@@ -124,15 +110,10 @@ static void changeDirection(GameSession::ListSnakePiece& snakes, int64_t diff_in
 
 	re.seed((unsigned int)t.time_since_epoch().count());
 
-	for (auto& snake_wp : snakes)
+	for (auto& snake : snakes)
 	{
-		if (auto snake = snake_wp.lock())
+		//if (auto snake = snake_wp.lock())
 		{
-			if (snake->GetId() == 0)
-			{
-				continue;
-			}
-
 			int p = unin(re);
 			if (p < 15) // 5 percent
 			{
@@ -161,27 +142,38 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 		changeDirection(snakes_, diff_in_ms);
 	}
 	
-	// 전진
-	for (auto& snake_wp : snakes_)
+	if (auto snake = player_ )//.lock())
 	{
-		if (auto snake = snake_wp.lock())
+		if (last_pk_ == PK_RIGHT)
 		{
-			if (snake->GetId() == 0)
-			{
-				if (last_pk_ == PK_RIGHT)
-				{
-					auto ang_vel = snake->GetAngVelocity();
-					auto diff_ang = ang_vel * diff_in_ms;
-					snake->Turn(diff_ang);
-				}
-				else if (last_pk_ == PK_LEFT)
-				{
-					auto ang_vel = snake->GetAngVelocity();
-					auto diff_ang = -ang_vel * diff_in_ms;
-					snake->Turn(diff_ang);
-				}
-			}
+			auto ang_vel = snake->GetAngVelocity();
+			auto diff_ang = ang_vel * diff_in_ms;
+			snake->Turn(diff_ang);
+		}
+		else if (last_pk_ == PK_LEFT)
+		{
+			auto ang_vel = snake->GetAngVelocity();
+			auto diff_ang = -ang_vel * diff_in_ms;
+			snake->Turn(diff_ang);
+		}
 
+		double diff_distance = snake->GetVelocity() * diff_in_ms;
+		Position2D pos_now = snake->GetPosition();
+		double angle_now_rad = snake->GetAngle().GetRad();
+
+		DirVector2D diff_vec{
+			diff_distance * std::cos(angle_now_rad),
+			diff_distance * std::sin(angle_now_rad)
+		};
+
+		snake->Move(diff_vec);
+	}
+
+	// 전진
+	for (auto& snake : snakes_)
+	{
+		//if (auto snake = snake_wp.lock())
+		{
 			double diff_distance = snake->GetVelocity() * diff_in_ms;
 			Position2D pos_now = snake->GetPosition();
 			double angle_now_rad = snake->GetAngle().GetRad();

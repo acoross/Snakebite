@@ -22,11 +22,11 @@ namespace snakebite {
 class GameSession final
 {
 public:
-	using MyMovingObject = MovingObject<ColliderBase>;
-	using MyContainer = MovingObjectContainer<MyMovingObject>;
+	using MyMovingObject = MovingObject;
+	using MyContainer = MovingObjectContainer;
 	typedef MyContainer::ListMovingObject ListMovingObject;
 
-	typedef std::list<std::weak_ptr<SnakePiece>> ListSnakePiece;
+	typedef std::list<std::shared_ptr<SnakePiece>> ListSnakePiece;
 
 	GameSession() 
 	{
@@ -45,7 +45,7 @@ public:
 	
 	void ProcessCollisions()
 	{
-		container_.CheckCollisions();
+		//container_.CheckCollisions();
 	}
 
 	//임시로 열어주는 API
@@ -79,10 +79,10 @@ public:
 		return ret;
 	}
 
-	// 임시
-	const MyContainer& GetContainer() const { return container_; }
+	MyContainer& GetContainer() { return container_; }
 
 private:
+	std::shared_ptr<SnakePiece> player_;
 	ListSnakePiece snakes_;
 	MyContainer container_;
 	PlayerKey last_pk_{ PK_NONE };
