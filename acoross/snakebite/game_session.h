@@ -22,8 +22,8 @@ namespace snakebite {
 class GameSession final
 {
 public:
-	using MyMovingObject = MovingObject;
-	using MyContainer = MovingObjectContainer;
+	using MyMovingObject = MovingObject<ColliderBase>;
+	using MyContainer = MovingObjectContainer<MyMovingObject>;
 	typedef MyContainer::ListMovingObject ListMovingObject;
 
 	typedef std::list<std::shared_ptr<Snake>> ListSnake;
@@ -45,7 +45,7 @@ public:
 	
 	void ProcessCollisions()
 	{
-		//container_.CheckCollisions();
+		container_.ProcessCollisions();
 	}
 
 	//임시로 열어주는 API

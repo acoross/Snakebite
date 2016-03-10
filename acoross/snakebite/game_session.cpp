@@ -1,4 +1,3 @@
-//#include "stdafx.h"
 #include "game_session.h"
 
 #include <cmath>
@@ -17,21 +16,24 @@ void GameSession::Initialize()
 {
 	Degree angle(0);
 	double velocity{ 0.06 };	// UNIT/ms
-	double ang_vel{ 0.1 };		// degree/ms
+	double ang_vel{ 1.5 };		// degree/ms
 	double radius{ 5. };		// UNIT
 	
 	Position2D player_pos(100, 100);
 	double rad_to_set = radius;
 
-	player_ = std::make_shared<Snake>(container_, player_pos, rad_to_set, angle, velocity, 0.01, 10);
+	player_ = std::make_shared<Snake>(container_, player_pos, rad_to_set, angle, velocity, 0.15, 9);
 
+	Position2D init_pos(200, 200);
 	for (int i = 0; i < 3; ++i)
 	{
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j < 9; ++j)
 		{
 			double rad_to_set = 0.01 * radius * j + radius;
-			auto snake = std::make_shared<Snake>(container_, player_pos, rad_to_set
-				, angle + 17 * j, velocity, ang_vel, 10);
+
+			auto snake = std::make_shared<Snake>(
+				container_, init_pos, rad_to_set
+				, angle + 17 * j, velocity, ang_vel, 15);
 			
 			snakes_.emplace_back(snake);
 		}

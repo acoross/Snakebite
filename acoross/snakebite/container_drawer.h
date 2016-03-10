@@ -7,10 +7,11 @@
 namespace acoross {
 namespace snakebite {
 
+template <typename MyContainer>
 class ContainerDrawer final
 {
 public:
-	ContainerDrawer(MovingObjectContainer& container)
+	ContainerDrawer(MyContainer& container)
 		: container_(container)
 	{}
 	virtual ~ContainerDrawer(){}
@@ -26,7 +27,9 @@ public:
 		// TODO
 		// 화면과 game_session 크기를 고려해 ratio 를 정한 뒤,
 		// ratio 에 따라 크기를 조절해서 그린다.
-			
+		
+		int i = 0;
+
 		auto& mo_list = container_.GetMovingObjects();
 		for (auto& mo : mo_list)
 		{
@@ -49,14 +52,16 @@ public:
 			}
 			else*/
 			{
-				/*if (mo->GetId() == 0)
+				//if (mo->GetId() == 0)
+				if (i == 0)
 				{
-					HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(LTGRAY_BRUSH));
+					++i;
+					HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(BLACK_BRUSH));
 					wdc.Ellipse(center_x - radius, center_y - radius,
 						center_x + radius, center_y + radius);
 					(HBRUSH)::SelectObject(wdc.Get(), oldbrush);
 				}
-				else*/
+				else
 				{
 					wdc.Ellipse(center_x - radius, center_y - radius,
 						center_x + radius, center_y + radius);
@@ -66,7 +71,7 @@ public:
 	}
 
 private:
-	MovingObjectContainer& container_;
+	MyContainer& container_;
 };
 
 }

@@ -78,7 +78,7 @@ public:
 
 	double GetRad() const
 	{
-		return (double)angle_ / M_PI;
+		return (double)angle_ * M_PI / 180.;
 	}
 
 private:

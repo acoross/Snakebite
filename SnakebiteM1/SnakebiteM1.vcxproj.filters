@@ -86,6 +86,9 @@
     <ClCompile Include="..\acoross\snakebite\moving_object_system\details\geo_types.cpp">
       <Filter>lib\moving_object_system\details</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\acoross\snakebite\win\SnakebiteM1.ico">

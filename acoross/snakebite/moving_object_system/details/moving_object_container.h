@@ -10,8 +10,7 @@
 namespace acoross {
 namespace snakebite {
 
-class MovingObject;
-
+template <typename MovingObject>
 class MovingObjectContainer
 {
 public:
@@ -45,6 +44,8 @@ public:
 		}
 	}
 
+	void ProcessCollisions();
+
 	//임시로 열어주는 API
 	ListMovingObject& GetMovingObjects() { return moving_objects_; }
 
@@ -53,31 +54,38 @@ private:
 	ListMovingObject moving_objects_;
 };
 
-//inline void MovingObjectContainer::CheckCollisions()
-//{
-//	ListMovingObject& mo_list = moving_objects_;
-//
-//	//// clean up collision
-//	//for (auto& mo : mo_list)
-//	//{
-//	//	mo->Collided = false;
-//	//}
-//
-//	for (auto& mo1 : mo_list)
-//	{
-//		for (auto& mo2 : mo_list)
-//		{
-//			if (mo1.get() == mo2.get())
-//				continue;
-//
-//			mo1->Collide(*mo2);
-//			mo2->Collide(*mo1);
-//
-//			/*MovingObject::ProcessCollsion(*mo1, *mo2);*/
-//		}
-//	}
-//}
+template <typename MovingObject>
+inline void MovingObjectContainer<MovingObject>::ProcessCollisions()
+{
+	// 리스트를 복사하여 처리한다.
+	ListMovingObject mo_list = moving_objects_;
 
+	//// clean up collision
+	//for (auto& mo : mo_list)
+	//{
+	//	mo->Collided = false;
+	//}
+
+	for (auto& mo1 : mo_list)
+	{
+		for (auto& mo2 : mo_list)
+		{
+			if (mo1.get() == mo2.get())
+				continue;
+
+			if (IsCrashed(*mo1, *mo2))
+			{
+				mo1->Collide(*mo2);
+				mo2->Collide(*mo1);
+			}
+			else
+			{
+				mo1->ReleaseCollision(*mo2);
+				mo2->ReleaseCollision(*mo1);
+			}
+		}
+	}
+}
 
 }
 }

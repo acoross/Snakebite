@@ -11,22 +11,25 @@ namespace snakebite {
 class Snake
 {
 public:
+	using MyMovingObject = MovingObject<ColliderBase>;
+	using MyContainer = MovingObjectContainer<MyMovingObject>;
+
 	Snake(Snake&) = delete;
 	Snake& operator=(Snake&) = delete;
 
-	Snake(MovingObjectContainer& container
+	Snake(MyContainer& container
 		, const Position2D& pos, double radius, const Degree& angle, double velocity, double ang_vel, int len)
 		: container_(container), angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	{
 		{
-			auto mo = std::make_shared<MovingObject>(container, pos, radius);
+			auto mo = std::make_shared<MyMovingObject>(container, pos, radius, new PlayerHeadCollider(this));
 			container.RegisterMovingObject(mo);
 			head_ = mo;
 		}
 		
 		for (int i = 0; i < len; ++i)
 		{
-			auto mo = std::make_shared<MovingObject>(container, pos, radius);
+			auto mo = std::make_shared<MyMovingObject>(container, pos, radius, new SnakeBodyCollider(this));
 			container.RegisterMovingObject(mo);
 
 			body_list_.push_back(mo);
@@ -40,40 +43,7 @@ public:
 		}
 	}
 	
-	void Move(const DirVector2D& diff_vec)
-	{
-		Position2D pos_prev = head_->GetPosition();
-		DirVector2D diff_prev = diff_vec;
-
-		head_->Move(diff_vec);
-		
-		for (auto mo : body_list_)
-		{
-			Position2D pos_now = mo->GetPosition();
-			DirVector2D diff = { pos_prev.x - pos_now.x, pos_prev.y - pos_now.y};
-
-			double limitdist = 2 * (mo->GetRadius()) * 0.9;
-			double piece_dist = diff.Length();
-
-			if (piece_dist >= limitdist)
-			{
-				double diff_len = diff_prev.Length();
-
-				diff = diff.GetNormalized();
-				diff.x *= diff_len;
-				diff.y *= diff_len;
-
-				pos_prev = mo->GetPosition();
-				mo->Move(diff);
-
-				diff_prev = diff;
-			}
-			else
-			{
-				break;
-			}
-		}
-	}
+	void Move(const DirVector2D& diff_vec);
 
 	void SetAngle(const Degree& angle)
 	{
@@ -95,10 +65,46 @@ private:
 	double velocity_; // UNIT/ms
 	double ang_vel_;	// degree/ms
 
-	std::shared_ptr<MovingObject> head_;
-	std::list<std::shared_ptr<MovingObject>> body_list_;
-	MovingObjectContainer container_;
+	std::shared_ptr<MyMovingObject> head_;
+	std::list<std::shared_ptr<MyMovingObject>> body_list_;
+	MyContainer& container_;
 };
+
+inline void Snake::Move(const DirVector2D & diff_vec)
+{
+	Position2D pos_prev = head_->GetPosition();
+	DirVector2D diff_prev = diff_vec;
+
+	head_->Move(diff_vec);
+
+	for (auto mo : body_list_)
+	{
+		Position2D pos_now = mo->GetPosition();
+		DirVector2D diff = { pos_prev.x - pos_now.x, pos_prev.y - pos_now.y };
+
+		double limitdist = 2 * (mo->GetRadius()) * 0.9;
+		double piece_dist = diff.Length();
+
+		if (piece_dist >= limitdist)
+		{
+			double diff_len = diff_prev.Length();
+
+			diff = diff.GetNormalized();
+			diff.x *= diff_len;
+			diff.y *= diff_len;
+
+			pos_prev = mo->GetPosition();
+			mo->Move(diff);
+
+			diff_prev = diff;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
 
 }
 }

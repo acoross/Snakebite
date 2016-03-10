@@ -6,7 +6,8 @@
 #include "game_session.h"
 #include "container_drawer.h"
 
-std::unique_ptr<acoross::snakebite::ContainerDrawer> g_game_drawer;
+using MyContainer = acoross::snakebite::Snake::MyContainer;
+std::unique_ptr<acoross::snakebite::ContainerDrawer<MyContainer>> g_game_drawer;
 std::shared_ptr<acoross::snakebite::GameSession> gamesession;
 
 //
@@ -100,7 +101,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // TODO: 여기에 코드를 입력합니다.
 	using namespace acoross::snakebite;
 	gamesession = std::make_unique<GameSession>();
-	g_game_drawer = std::make_unique<ContainerDrawer>(gamesession->GetContainer());
+	g_game_drawer = std::make_unique<ContainerDrawer<MyContainer>>(gamesession->GetContainer());
 
 	// 응용 프로그램 초기화를 수행합니다.
 	acoross::Win::Window window(hInstance);
@@ -134,7 +135,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		tick = ::GetTickCount();
 		auto difftick2draw = (int64_t)tick - lasttick2draw;
-		if (difftick2draw > 120)
+		if (difftick2draw > 200)
 		{
 			InvalidateRect(msg.hwnd, nullptr, false);
 			lasttick2draw = tick;
@@ -142,7 +143,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		tick = ::GetTickCount();
 		auto difftick2collide = (int64_t)tick - lasttick2collide;
-		if (difftick2collide > 30)
+		if (difftick2collide > 60)
 		{
 			gamesession->ProcessCollisions();
 			lasttick2collide = tick;
