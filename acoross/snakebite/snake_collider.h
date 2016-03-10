@@ -13,6 +13,7 @@ class PlayerHeadCollider;
 class ColliderBase
 {
 public:
+	virtual ~ColliderBase(){}
 	virtual void Collide(ColliderBase& other, int cnt) = 0;
 	virtual void Collide(SnakeHeadCollider& other, int cnt) = 0;
 	virtual void Collide(SnakeBodyCollider& other, int cnt) = 0;
@@ -66,6 +67,8 @@ public:
 		return;
 	}
 };
+
+class SnakePiece;
 
 class PlayerHeadCollider : public ColliderBase
 {
