@@ -28,20 +28,14 @@
     <Filter Include="collider">
       <UniqueIdentifier>{c1e9a824-62e2-45ce-b6d5-61d564e56493}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\moving_object_system\details">
+      <UniqueIdentifier>{37918eef-a83e-4099-a61e-711aa395820b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\geo_types.h">
-      <Filter>lib\moving_object_system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object.h">
-      <Filter>lib\moving_object_system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_container.h">
-      <Filter>lib\moving_object_system</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h">
       <Filter>lib\moving_object_system</Filter>
     </ClInclude>
@@ -69,11 +63,17 @@
     <ClInclude Include="..\acoross\snakebite\container_drawer.h">
       <Filter>viewer</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h">
+      <Filter>lib\moving_object_system\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object.h">
+      <Filter>lib\moving_object_system\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
+      <Filter>lib\moving_object_system\details</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\moving_object_system\geo_types.cpp">
-      <Filter>lib\moving_object_system</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -85,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\SnakebiteM1.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\moving_object_system\details\geo_types.cpp">
+      <Filter>lib\moving_object_system\details</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -114,13 +114,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\moving_object_system\geo_types.cpp" />
+    <ClCompile Include="..\acoross\snakebite\moving_object_system\details\geo_types.cpp" />
     <ClCompile Include="test_main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\geo_types.h" />
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object.h" />
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_container.h" />
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h" />
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object.h" />
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h" />
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -16,27 +16,30 @@
     <Filter Include="lib">
       <UniqueIdentifier>{0fe95813-33ea-41b2-b98d-73cf0cda6ee0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\details">
+      <UniqueIdentifier>{c0cef381-089c-4efb-8973-a5d876c577be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\moving_object_system\geo_types.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="test_main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\moving_object_system\details\geo_types.cpp">
+      <Filter>lib\details</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\geo_types.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_container.h">
-      <Filter>lib</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h">
       <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h">
+      <Filter>lib\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object.h">
+      <Filter>lib\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
+      <Filter>lib\details</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
