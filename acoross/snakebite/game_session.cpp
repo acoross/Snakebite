@@ -15,70 +15,33 @@ namespace snakebite {
 
 void GameSession::Initialize()
 {
-	Position2D pos(200, 200);
 	Degree angle(0);
 	double velocity{ 0.06 };	// UNIT/ms
 	double ang_vel{ 0.1 };		// degree/ms
 	double radius{ 5. };		// UNIT
 	
-	int id = 0;
-	
-	{
-		Position2D player_pos(100, 100);
-		double rad_to_set = radius;
-		auto sh = std::make_shared<SnakePiece>(
-			container_, id, player_pos, rad_to_set
-			, angle, velocity, 0.01);
-		container_.RegisterMovingObject(sh);
+	Position2D player_pos(100, 100);
+	double rad_to_set = radius;
 
-		for (int k = 0; k < 9; ++k)
-		{
-			auto sb = std::make_shared<SnakePiece>(
-				container_, id, player_pos, rad_to_set
-				, angle, velocity, ang_vel);
-			container_.RegisterMovingObject(sb);
-			sh->AddToTail(sb);
-		}
-		
-		player_ = sh;
-		++id;
-	}
+	player_ = std::make_shared<Snake>(container_, player_pos, rad_to_set, angle, velocity, 0.01, 10);
 
-	/*for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		for (int j = 0; j < 3; ++j)
 		{
 			double rad_to_set = 0.01 * radius * j + radius;
-			auto& snake_head = container_.CreateMovingObject<SnakePiece>(
-				id, pos, rad_to_set
-				, angle + 17 * j, velocity, ang_vel
-				, new SnakeHeadCollider());
-
-			if (auto sh = snake_head.lock())
-			{
-				for (int k = 0; k < 9; ++k)
-				{
-					sh->AddToTail(container_.CreateMovingObject<SnakePiece>(
-						id, pos, rad_to_set
-						, angle, velocity, ang_vel
-						, new SnakeBodyCollider()));
-				}
-			}
-
-			snakes_.emplace_back(snake_head);
-			++id;
+			auto snake = std::make_shared<Snake>(container_, player_pos, rad_to_set
+				, angle + 17 * j, velocity, ang_vel, 10);
+			
+			snakes_.emplace_back(snake);
 		}
-	}*/
+	}
 }
 
 void GameSession::CleanUp()
 {
-	ListSnakePiece empty_snakes;
+	ListSnake empty_snakes;
 	empty_snakes.swap(snakes_);
-	for (auto& snake : empty_snakes)
-	{
-		container_.DeleteObject(snake);
-	}
 }
 
 
@@ -100,7 +63,7 @@ static bool checkChangeDirection(int64_t diff_in_ms)
 	return false;
 }
 
-static void changeDirection(GameSession::ListSnakePiece& snakes, int64_t diff_in_ms)
+static void changeDirection(GameSession::ListSnake& snakes, int64_t diff_in_ms)
 {
 	std::uniform_int_distribution<int> unin(0, 100);
 	std::default_random_engine re;
@@ -131,18 +94,23 @@ static void changeDirection(GameSession::ListSnakePiece& snakes, int64_t diff_in
 	}
 }
 
+static void updateMoveSnake(std::shared_ptr<Snake>& snake, int64_t diff_in_ms)
+{
+	double diff_distance = snake->GetVelocity() * diff_in_ms;
+	Position2D pos_now = snake->GetPosition();
+	double angle_now_rad = snake->GetAngle().GetRad();
+
+	DirVector2D diff_vec{
+		diff_distance * std::cos(angle_now_rad),
+		diff_distance * std::sin(angle_now_rad)
+	};
+
+	snake->Move(diff_vec);
+}
+
 void GameSession::UpdateMove(int64_t diff_in_ms)
 {
-	// 임시:
-	// 랜덤하게 방향을 변경.
-	// UpdatteMove 가 불린 횟수와 관계없이,
-	// 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
-	if (checkChangeDirection(diff_in_ms))
-	{
-		changeDirection(snakes_, diff_in_ms);
-	}
-	
-	if (auto snake = player_ )//.lock())
+	if (auto snake = player_)//.lock())
 	{
 		if (last_pk_ == PK_RIGHT)
 		{
@@ -157,34 +125,22 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 			snake->Turn(diff_ang);
 		}
 
-		double diff_distance = snake->GetVelocity() * diff_in_ms;
-		Position2D pos_now = snake->GetPosition();
-		double angle_now_rad = snake->GetAngle().GetRad();
-
-		DirVector2D diff_vec{
-			diff_distance * std::cos(angle_now_rad),
-			diff_distance * std::sin(angle_now_rad)
-		};
-
-		snake->Move(diff_vec);
+		acoross::snakebite::updateMoveSnake(snake, diff_in_ms);
 	}
-
+	
+	// 임시:
+	// 랜덤하게 방향을 변경.
+	// UpdatteMove 가 불린 횟수와 관계없이,
+	// 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
+	if (checkChangeDirection(diff_in_ms))
+	{
+		changeDirection(snakes_, diff_in_ms);
+	}
+	
 	// 전진
 	for (auto& snake : snakes_)
 	{
-		//if (auto snake = snake_wp.lock())
-		{
-			double diff_distance = snake->GetVelocity() * diff_in_ms;
-			Position2D pos_now = snake->GetPosition();
-			double angle_now_rad = snake->GetAngle().GetRad();
-
-			DirVector2D diff_vec{
-				diff_distance * std::cos(angle_now_rad),
-				diff_distance * std::sin(angle_now_rad)
-			};
-
-			snake->Move(diff_vec);
-		}
+		acoross::snakebite::updateMoveSnake(snake, diff_in_ms);
 	}
 }
 

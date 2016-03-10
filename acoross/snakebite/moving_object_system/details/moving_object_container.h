@@ -33,11 +33,15 @@ public:
 		moving_objects_.push_back(mo);
 	}
 
-	void DeleteObject(MovingObjectSP mo_wp)
+	void DeleteObject(MovingObjectSP mo)
 	{
 		for (auto it = moving_objects_.begin(); it != moving_objects_.end(); ++it)
 		{
-			moving_objects_.erase(it);
+			if (*it == mo)
+			{
+				moving_objects_.erase(it);
+				return;
+			}
 		}
 	}
 

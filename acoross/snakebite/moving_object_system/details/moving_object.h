@@ -17,7 +17,7 @@ public:
 	MovingObject(MovingObject&) = delete;
 	MovingObject& operator=(MovingObject&) = delete;
 
-	MovingObject(MovingObjectContainer& container, int Id, const Position2D& pos, double radius)
+	MovingObject(MovingObjectContainer& container, const Position2D& pos, double radius)
 		: container_(container), pos_(pos), radius_(radius)
 	{}
 	virtual ~MovingObject()	{}

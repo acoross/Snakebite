@@ -54,9 +54,6 @@
     <ClInclude Include="..\acoross\snakebite\win\Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\snake_piece.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake_collider.h">
       <Filter>collider</Filter>
     </ClInclude>
@@ -72,12 +69,12 @@
     <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
       <Filter>lib\moving_object_system\details</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\snake.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\snake_piece.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">

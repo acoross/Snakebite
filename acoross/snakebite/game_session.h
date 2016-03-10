@@ -6,7 +6,7 @@
 #include <utility>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
-#include "snake_piece.h"
+#include "snake.h"
 
 enum PlayerKey
 {
@@ -26,7 +26,7 @@ public:
 	using MyContainer = MovingObjectContainer;
 	typedef MyContainer::ListMovingObject ListMovingObject;
 
-	typedef std::list<std::shared_ptr<SnakePiece>> ListSnakePiece;
+	typedef std::list<std::shared_ptr<Snake>> ListSnake;
 
 	GameSession() 
 	{
@@ -82,9 +82,9 @@ public:
 	MyContainer& GetContainer() { return container_; }
 
 private:
-	std::shared_ptr<SnakePiece> player_;
-	ListSnakePiece snakes_;
 	MyContainer container_;
+	std::shared_ptr<Snake> player_;
+	ListSnake snakes_;
 	PlayerKey last_pk_{ PK_NONE };
 };
 
