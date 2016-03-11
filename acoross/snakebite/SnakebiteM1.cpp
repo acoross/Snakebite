@@ -113,40 +113,44 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	auto loop = [](MSG& msg)
 	{
-		static DWORD lasttick = ::GetTickCount();
-		static DWORD lasttick2draw = ::GetTickCount();
-		static DWORD lasttick2collide = ::GetTickCount();
-	
-		// main loop
-		DWORD tick = ::GetTickCount();
-		auto difftick = (int64_t)tick - lasttick;
-
-		DWORD frametickdiff = 33;
-
-		for (;difftick > frametickdiff; difftick -= frametickdiff)
 		{
+			const DWORD frametickdiff = 33;
+
+			static DWORD lasttick = ::GetTickCount();
+			DWORD tick = ::GetTickCount();
+			auto difftick = (int64_t)tick - lasttick;
+			for (;difftick > frametickdiff; difftick -= frametickdiff)
+			{
 #if defined(_DEBUG)
-			gamesession->UpdateMove(frametickdiff);
+				gamesession->UpdateMove(frametickdiff);
 #else
-			gamesession->UpdateMove(difftick);
+				gamesession->UpdateMove(difftick);
 #endif	
-			lasttick = tick;
+				lasttick = tick;
+			}
 		}
+		
 
-		tick = ::GetTickCount();
-		auto difftick2draw = (int64_t)tick - lasttick2draw;
-		if (difftick2draw > 200)
 		{
-			InvalidateRect(msg.hwnd, nullptr, false);
-			lasttick2draw = tick;
+			static DWORD lasttick2draw = ::GetTickCount();
+			DWORD tick = ::GetTickCount();
+			auto difftick2draw = (int64_t)tick - lasttick2draw;
+			if (difftick2draw > 200)
+			{
+				InvalidateRect(msg.hwnd, nullptr, false);
+				lasttick2draw = tick;
+			}
 		}
-
-		tick = ::GetTickCount();
-		auto difftick2collide = (int64_t)tick - lasttick2collide;
-		if (difftick2collide > 60)
+		
 		{
-			gamesession->ProcessCollisions();
-			lasttick2collide = tick;
+			static DWORD lasttick2collide = ::GetTickCount();
+			DWORD tick = ::GetTickCount();
+			auto difftick2collide = (int64_t)tick - lasttick2collide;
+			if (difftick2collide > 60)
+			{
+				gamesession->ProcessCollisions();
+				lasttick2collide = tick;
+			}
 		}
 	};
 

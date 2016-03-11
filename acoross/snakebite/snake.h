@@ -60,6 +60,48 @@ public:
 	double GetAngVelocity() const { return ang_vel_; }
 	Position2D GetPosition() const { return head_->GetPosition(); }
 
+	bool IsCollidingTo(std::shared_ptr<Snake> other) const
+	{
+		if (this == other.get())
+		{
+			return false;
+		}
+
+		if (IsCrashed(*head_, *other->head_))
+		{
+			return true;
+		}
+
+		for (auto mo : other->body_list_)
+		{
+			if (IsCrashed(*head_, *mo))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	void OnCollideStart(std::shared_ptr<Snake> other)
+	{
+		//this->Turn(180);
+		ProcDie();
+	}
+	void OnColliding(std::shared_ptr<Snake> other)
+	{
+
+	}
+	void OnCollideEnd(std::shared_ptr<Snake> other)
+	{
+
+	}
+
+	void ProcDie()
+	{
+
+	}
+
 private:
 	Degree angle_; // degree
 	double velocity_; // UNIT/ms

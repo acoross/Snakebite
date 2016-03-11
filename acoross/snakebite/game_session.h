@@ -28,11 +28,11 @@ public:
 
 	typedef std::list<std::shared_ptr<Snake>> ListSnake;
 
-	GameSession() 
+	GameSession()
 	{
 		Initialize();
 	}
-	~GameSession() 
+	~GameSession()
 	{
 		CleanUp();
 	}
@@ -42,10 +42,21 @@ public:
 
 	// moving_objects_ 의 위치를 갱신한다.
 	void UpdateMove(int64_t diff_in_ms);
-	
+
 	void ProcessCollisions()
 	{
-		container_.ProcessCollisions();
+		//container_.ProcessCollisions();
+
+		ListSnake snakes = snakes_;
+		snakes.push_back(player_);
+
+		for (auto& snake1 : snakes)
+		{
+			for (auto& snake2 : snakes)
+			{
+				ProcessCollision(snake1, snake2);
+			}
+		}
 	}
 
 	//임시로 열어주는 API
@@ -82,6 +93,39 @@ public:
 	MyContainer& GetContainer() { return container_; }
 
 private:
+	using SnakeWP = std::weak_ptr<Snake>;
+	using CollisionMap = std::map<Snake*, SnakeWP>;
+
+	void ProcessCollision(std::shared_ptr<Snake> actor, std::shared_ptr<Snake> target)
+	{
+		if (actor.get() == target.get())
+			return;
+
+		if (actor->IsCollidingTo(target))
+		{
+			auto ret = collision_map_.insert(CollisionMap::value_type(actor.get(), SnakeWP(target)));
+			if (ret.second == true)
+			{
+				// onCollideBegin
+				actor->OnCollideStart(target);
+			}
+			else
+			{
+				// onColliding
+				actor->OnColliding(target);
+			}
+		}
+		else
+		{
+			if (collision_map_.erase(actor.get()) > 0)
+			{
+				// onCollideEnd
+				actor->OnCollideEnd(target);
+			}
+		}
+	}
+
+	CollisionMap collision_map_;
 	MyContainer container_;
 	std::shared_ptr<Snake> player_;
 	ListSnake snakes_;

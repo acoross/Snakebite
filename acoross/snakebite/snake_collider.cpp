@@ -8,15 +8,15 @@ namespace snakebite {
 //ColliderImpl(SnakeHeadCollider)
 void SnakeHeadCollider::Collide(SnakeBodyCollider & other, int cnt)
 {
-	if (owner_ == other.owner_)
-		return;
+	//if (owner_ == other.owner_)
+	//	return;
 
-	auto it = collided_set_.insert(other.owner_);
-	if (it.second)
-	{
-		// on collide
-		owner_->Turn(60);
-	}
+	//auto it = collided_set_.insert(other.owner_);
+	//if (it.second)
+	//{
+	//	// on collide
+	//	owner_->Turn(60);
+	//}
 
 	return;
 }
@@ -50,15 +50,15 @@ void SnakeBodyCollider::Collide(PlayerHeadCollider & other, int cnt)
 //ColliderImpl(PlayerHeadCollider)
 void PlayerHeadCollider::Collide(SnakeBodyCollider & other, int cnt)
 {
-	if (owner_ == other.owner_)
-		return;
+	//if (owner_ == other.owner_)
+	//	return;
 
-	auto it = collided_set_.insert(other.owner_);
-	if (it.second)
-	{
-		// on collide
-		owner_->Turn(60);
-	}
+	//auto it = collided_set_.insert(other.owner_);
+	//if (it.second)
+	//{
+	//	// on collide
+	//	owner_->Turn(60);
+	//}
 
 	return;
 }
