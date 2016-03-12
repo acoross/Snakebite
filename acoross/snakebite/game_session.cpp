@@ -142,8 +142,6 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 
 void GameSession::ProcessCollisions()
 {
-	//container_.ProcessCollisions();
-
 	ListSnake snakes = snakes_;
 	ListApple apples = apples_;
 

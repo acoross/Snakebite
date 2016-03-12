@@ -94,6 +94,8 @@ private:
 	ListSnake snakes_;
 	ListApple apples_;
 	PlayerKey last_pk_{ PK_NONE };
+
+	friend class GameSessionDrawer;
 };
 
 typedef std::shared_ptr<GameSession> GameSessionSP;

@@ -57,9 +57,6 @@
     <ClInclude Include="..\acoross\snakebite\snake_collider.h">
       <Filter>collider</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\container_drawer.h">
-      <Filter>viewer</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h">
       <Filter>lib\moving_object_system\details</Filter>
     </ClInclude>
@@ -80,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\Apple.h">
       <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h">
+      <Filter>viewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
