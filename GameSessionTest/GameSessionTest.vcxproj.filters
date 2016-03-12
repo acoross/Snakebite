@@ -13,30 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="moving_object_system">
-      <UniqueIdentifier>{0fe95813-33ea-41b2-b98d-73cf0cda6ee0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="moving_object_system\details">
-      <UniqueIdentifier>{c0cef381-089c-4efb-8973-a5d876c577be}</UniqueIdentifier>
+    <Filter Include="game_session">
+      <UniqueIdentifier>{f033a7d6-3137-43ab-87b2-9ee73e73e67e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test_main.cpp">
+    <ClCompile Include="gamesession_test_main.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\game_session.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\snake.cpp">
+      <Filter>game_session</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h">
-      <Filter>moving_object_system</Filter>
+    <ClInclude Include="..\acoross\snakebite\Apple.h">
+      <Filter>game_session</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h">
-      <Filter>moving_object_system\details</Filter>
+    <ClInclude Include="..\acoross\snakebite\game_object.h">
+      <Filter>game_session</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object.h">
-      <Filter>moving_object_system\details</Filter>
+    <ClInclude Include="..\acoross\snakebite\game_session.h">
+      <Filter>game_session</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
-      <Filter>moving_object_system\details</Filter>
+    <ClInclude Include="..\acoross\snakebite\snake.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\snake_collider.h">
+      <Filter>game_session</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

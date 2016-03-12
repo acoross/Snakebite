@@ -19,16 +19,10 @@
     <Filter Include="lib">
       <UniqueIdentifier>{e733a46a-1f5d-40a7-b2b8-b69e29d29b15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lib\moving_object_system">
-      <UniqueIdentifier>{8d4ff439-463f-4720-b737-671be2afdb69}</UniqueIdentifier>
-    </Filter>
     <Filter Include="lib\win">
       <UniqueIdentifier>{88ab9f9c-94aa-4106-a34c-ee0e08747344}</UniqueIdentifier>
     </Filter>
-    <Filter Include="collider">
-      <UniqueIdentifier>{c1e9a824-62e2-45ce-b6d5-61d564e56493}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game">
+    <Filter Include="game_session">
       <UniqueIdentifier>{e06e88cf-3907-4674-9af3-9f1706f3d822}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -36,12 +30,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h">
-      <Filter>lib\moving_object_system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\SnakebiteM1.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\win\targetver.h">
       <Filter>lib\win</Filter>
     </ClInclude>
@@ -51,39 +39,42 @@
     <ClInclude Include="..\acoross\snakebite\win\Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\snake_collider.h">
-      <Filter>collider</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session.h">
-      <Filter>game</Filter>
+      <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake.h">
-      <Filter>game</Filter>
+      <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_object.h">
-      <Filter>game</Filter>
+      <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\Apple.h">
-      <Filter>game</Filter>
+      <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session_drawer.h">
       <Filter>viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\snake_collider.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="SnakebiteM1.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
       <Filter>lib\win</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\SnakebiteM1.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\acoross\snakebite\game_session.cpp">
+      <Filter>game_session</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
-      <Filter>collider</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\game_session.cpp">
-      <Filter>game</Filter>
+      <Filter>game_session</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\snake.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakebiteM1.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,8 +3,8 @@
 #include <functional>
 
 #include <acoross/snakebite/win/WinWrapper.h>
-#include "game_session.h"
-#include "game_session_drawer.h"
+#include <acoross/snakebite/game_session.h>
+#include <acoross/snakebite/game_session_drawer.h>
 
 std::shared_ptr<acoross::snakebite::GameSession> gamesession;
 std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
@@ -147,7 +147,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				InvalidateRect(msg.hwnd, nullptr, false);
 				lasttick2draw = tick;
 			}
-		}		
+		}
 	};
 
 	return window.PeekMessegeLoop(loop);
