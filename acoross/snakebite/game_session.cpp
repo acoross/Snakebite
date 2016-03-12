@@ -30,12 +30,9 @@ void GameSession::Initialize()
 	player_ = player;
 	snakes_.push_back(player);
 
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
-		for (int j = 0; j < 1; ++j)
-		{
-			AddSnake();
-		}
+		AddSnake();
 	}
 
 	for (int i = 0; i < 10; ++i)
