@@ -151,6 +151,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\acoross\snakebite\Apple.h" />
+    <ClInclude Include="..\acoross\snakebite\game_object.h" />
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
     <ClInclude Include="..\acoross\snakebite\container_drawer.h" />
     <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h" />

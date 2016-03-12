@@ -73,5 +73,21 @@ void PlayerHeadCollider::Collide(PlayerHeadCollider & other, int cnt)
 	return;
 }
 
+//ColliderImpl(DummyCollider)
+void DummyCollider::Collide(SnakeBodyCollider & other, int cnt)
+{
+	return;
+}
+
+void DummyCollider::Collide(SnakeHeadCollider & other, int cnt)
+{
+	return;
+}
+
+void DummyCollider::Collide(PlayerHeadCollider & other, int cnt)
+{
+	return;
+}
+
 }
 }

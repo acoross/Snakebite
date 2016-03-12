@@ -4,9 +4,11 @@
 #include <list>
 #include <memory>
 #include <utility>
+#include <random>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake.h"
+#include "Apple.h"
 
 enum PlayerKey
 {
@@ -24,9 +26,10 @@ class GameSession final
 public:
 	using MyMovingObject = MovingObject<ColliderBase>;
 	using MyContainer = MovingObjectContainer<MyMovingObject>;
-	typedef MyContainer::ListMovingObject ListMovingObject;
+	using ListMovingObject = MyContainer::ListMovingObject;
 
-	typedef std::list<std::shared_ptr<Snake>> ListSnake;
+	using ListSnake = std::list<std::shared_ptr<Snake>>;
+	using ListApple = std::list<std::shared_ptr<Apple>>;
 
 	GameSession()
 	{
@@ -40,36 +43,13 @@ public:
 	void Initialize();
 	void CleanUp();
 
-	// moving_objects_ 의 위치를 갱신한다.
 	void UpdateMove(int64_t diff_in_ms);
-
-	void ProcessCollisions()
-	{
-		//container_.ProcessCollisions();
-
-		ListSnake snakes = snakes_;
-		snakes.push_back(player_);
-
-		for (auto& snake1 : snakes)
-		{
-			for (auto& snake2 : snakes)
-			{
-				ProcessCollision(snake1, snake2);
-			}
-		}
-	}
+	void ProcessCollisions();
 
 	//임시로 열어주는 API
-	ListMovingObject& GetMovingObjects()
-	{ 
-		return container_.GetMovingObjects();
-	}
+	ListMovingObject& GetMovingObjects() { return container_.GetMovingObjects(); }
 
-	void SetPlayerKey(PlayerKey player_key)
-	{
-		last_pk_ = player_key;
-	}
-
+	void SetPlayerKey(PlayerKey player_key) { last_pk_ = player_key; }
 	void SetKeyUp(PlayerKey player_key)
 	{
 		if (last_pk_ == player_key)
@@ -78,57 +58,31 @@ public:
 		}
 	}
 
-	PlayerKey GetPlayerKey() const
-	{
-		return last_pk_;
-	}
-
+	PlayerKey GetPlayerKey() const { return last_pk_; }
 	PlayerKey RetrievePlayerKey()
 	{
 		auto ret = last_pk_;
 		last_pk_ = PK_NONE;
 		return ret;
 	}
-
 	MyContainer& GetContainer() { return container_; }
 
 private:
+	using GameObjectWP = std::weak_ptr<GameObject>;
 	using SnakeWP = std::weak_ptr<Snake>;
-	using CollisionMap = std::map<Snake*, SnakeWP>;
+	using CollisionMap = std::map<Snake*, GameObjectWP>;
+	using WallCollisionSet = std::set<Snake*>;
 
-	void ProcessCollision(std::shared_ptr<Snake> actor, std::shared_ptr<Snake> target)
-	{
-		if (actor.get() == target.get())
-			return;
+	void ProcessCollision(std::shared_ptr<Snake> actor, std::shared_ptr<Snake> target);
+	void ProcessCollisionToWall(std::shared_ptr<Snake> actor);
 
-		if (actor->IsCollidingTo(target))
-		{
-			auto ret = collision_map_.insert(CollisionMap::value_type(actor.get(), SnakeWP(target)));
-			if (ret.second == true)
-			{
-				// onCollideBegin
-				actor->OnCollideStart(target);
-			}
-			else
-			{
-				// onColliding
-				actor->OnColliding(target);
-			}
-		}
-		else
-		{
-			if (collision_map_.erase(actor.get()) > 0)
-			{
-				// onCollideEnd
-				actor->OnCollideEnd(target);
-			}
-		}
-	}
-
+	std::default_random_engine random_engine_;
+	WallCollisionSet wall_collision_set_;
 	CollisionMap collision_map_;
 	MyContainer container_;
 	std::shared_ptr<Snake> player_;
 	ListSnake snakes_;
+	ListApple apples_;
 	PlayerKey last_pk_{ PK_NONE };
 };
 

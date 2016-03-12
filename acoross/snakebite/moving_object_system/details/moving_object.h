@@ -55,6 +55,18 @@ private:
 	std::unique_ptr<TCollider> collider_;
 };
 
+template <typename T>
+T Trim(T src, T minv, T maxv)
+{
+	_ASSERT(minv <= maxv);
+
+	if (src < minv)
+		return minv;
+	if (src > maxv)
+		return maxv;
+	return src;
+}
+
 template <typename TCollider>
 inline void MovingObject<TCollider>::Move(const DirVector2D & diff)
 {
@@ -62,16 +74,11 @@ inline void MovingObject<TCollider>::Move(const DirVector2D & diff)
 	auto pos_new = pos_;
 	pos_new.x += diff.x;
 	pos_new.y += diff.y;
+	
+	pos_new.x = Trim<double>(pos_new.x, container_.Left, container_.Right);
+	pos_new.y = Trim<double>(pos_new.y, container_.Top, container_.Bottom);
 
-	if (pos_new.x > container_.Left && pos_new.x < container_.Right)
-	{
-		pos_.x = pos_new.x;
-	}
-
-	if (pos_new.y > container_.Top && pos_new.y < container_.Bottom)
-	{
-		pos_.y = pos_new.y;
-	}
+	pos_ = pos_new;
 }
 
 template <typename TCollider>

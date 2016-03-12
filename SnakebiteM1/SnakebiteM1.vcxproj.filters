@@ -31,6 +31,9 @@
     <Filter Include="lib\moving_object_system\details">
       <UniqueIdentifier>{37918eef-a83e-4099-a61e-711aa395820b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{e06e88cf-3907-4674-9af3-9f1706f3d822}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -38,9 +41,6 @@
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h">
       <Filter>lib\moving_object_system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\SnakebiteM1.h">
       <Filter>헤더 파일</Filter>
@@ -69,14 +69,20 @@
     <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
       <Filter>lib\moving_object_system\details</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session.h">
+      <Filter>game</Filter>
+    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_object.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\Apple.h">
+      <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\game_session.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
       <Filter>lib\win</Filter>
     </ClCompile>
@@ -87,7 +93,10 @@
       <Filter>lib\moving_object_system\details</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\game_session.cpp">
+      <Filter>game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

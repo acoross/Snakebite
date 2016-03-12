@@ -125,6 +125,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				gamesession->UpdateMove(frametickdiff);
 #else
 				gamesession->UpdateMove(difftick);
+				gamesession->ProcessCollisions();
 #endif	
 				lasttick = tick;
 			}
@@ -135,7 +136,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			static DWORD lasttick2draw = ::GetTickCount();
 			DWORD tick = ::GetTickCount();
 			auto difftick2draw = (int64_t)tick - lasttick2draw;
-			if (difftick2draw > 200)
+			if (difftick2draw > 50)
 			{
 				InvalidateRect(msg.hwnd, nullptr, false);
 				lasttick2draw = tick;
@@ -143,14 +144,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		
 		{
-			static DWORD lasttick2collide = ::GetTickCount();
+			/*static DWORD lasttick2collide = ::GetTickCount();
 			DWORD tick = ::GetTickCount();
 			auto difftick2collide = (int64_t)tick - lasttick2collide;
-			if (difftick2collide > 60)
+			if (difftick2collide > 20)
 			{
 				gamesession->ProcessCollisions();
 				lasttick2collide = tick;
-			}
+			}*/
 		}
 	};
 

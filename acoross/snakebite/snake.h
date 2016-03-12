@@ -4,22 +4,21 @@
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/util.h>
 #include "snake_collider.h"
+#include "game_object.h"
 
 namespace acoross {
 namespace snakebite {
 
-class Snake
+class Snake : public GameObject
 {
 public:
-	using MyMovingObject = MovingObject<ColliderBase>;
-	using MyContainer = MovingObjectContainer<MyMovingObject>;
-
 	Snake(Snake&) = delete;
 	Snake& operator=(Snake&) = delete;
 
 	Snake(MyContainer& container
 		, const Position2D& pos, double radius, const Degree& angle, double velocity, double ang_vel, int len)
-		: container_(container), angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
+		: GameObject(container)
+		, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	{
 		{
 			auto mo = std::make_shared<MyMovingObject>(container, pos, radius, new PlayerHeadCollider(this));
@@ -35,7 +34,7 @@ public:
 			body_list_.push_back(mo);
 		}
 	}
-	~Snake() 
+	virtual ~Snake()
 	{
 		for (auto mo : body_list_)
 		{
@@ -83,16 +82,16 @@ public:
 		return false;
 	}
 
-	void OnCollideStart(std::shared_ptr<Snake> other)
+	void OnCollideStart(GameObject* other)
 	{
-		//this->Turn(180);
-		ProcDie();
+		this->Turn(180);		
+		//ProcDie();
 	}
-	void OnColliding(std::shared_ptr<Snake> other)
+	void OnColliding(GameObject* other)
 	{
 
 	}
-	void OnCollideEnd(std::shared_ptr<Snake> other)
+	void OnCollideEnd(GameObject* other)
 	{
 
 	}
@@ -109,44 +108,39 @@ private:
 
 	std::shared_ptr<MyMovingObject> head_;
 	std::list<std::shared_ptr<MyMovingObject>> body_list_;
-	MyContainer& container_;
 };
 
 inline void Snake::Move(const DirVector2D & diff_vec)
 {
-	Position2D pos_prev = head_->GetPosition();
-	DirVector2D diff_prev = diff_vec;
+	const double dist_mov = diff_vec.Length();
 
+	Position2D pos_prev_node = head_->GetPosition();
 	head_->Move(diff_vec);
+
+	//DirVector2D diff_prev = diff_vec;
 
 	for (auto mo : body_list_)
 	{
-		Position2D pos_now = mo->GetPosition();
-		DirVector2D diff = { pos_prev.x - pos_now.x, pos_prev.y - pos_now.y };
-
-		double limitdist = 2 * (mo->GetRadius()) * 0.9;
-		double piece_dist = diff.Length();
-
-		if (piece_dist >= limitdist)
-		{
-			double diff_len = diff_prev.Length();
-
-			diff = diff.GetNormalized();
-			diff.x *= diff_len;
-			diff.y *= diff_len;
-
-			pos_prev = mo->GetPosition();
-			mo->Move(diff);
-
-			diff_prev = diff;
-		}
-		else
+		const Position2D pos_current_node = mo->GetPosition();
+		const DirVector2D diff_now_to_prev = { 
+			pos_prev_node.x - pos_current_node.x, 
+			pos_prev_node.y - pos_current_node.y 
+		};
+		
+		const double limitdist = 2 * (mo->GetRadius()) * 0.9;
+		if (diff_now_to_prev.Length() < limitdist)
 		{
 			break;
 		}
+
+		auto diff_move = diff_now_to_prev.GetNormalized();
+		diff_move.x *= dist_mov;
+		diff_move.y *= dist_mov;
+		
+		pos_prev_node = mo->GetPosition();
+		mo->Move(diff_move);
 	}
 }
-
 
 }
 }

@@ -7,17 +7,18 @@
 namespace acoross {
 namespace snakebite {
 
-class Snake;
+class GameObject;
 
 class SnakeHeadCollider;
 class SnakeBodyCollider;
 class PlayerHeadCollider;
+class DummyCollider;
 
 class ColliderBase
 {
 public:
 	ColliderBase() = delete;
-	ColliderBase(Snake* owner)
+	ColliderBase(GameObject* owner)
 		: owner_(owner)
 	{}
 	virtual ~ColliderBase(){}
@@ -26,22 +27,23 @@ public:
 	virtual void Collide(SnakeHeadCollider& other, int cnt) = 0;
 	virtual void Collide(SnakeBodyCollider& other, int cnt) = 0;
 	virtual void Collide(PlayerHeadCollider& other, int cnt) = 0;
-	
-	void ReleaseCollision(ColliderBase& other)
+	virtual void Collide(DummyCollider& other, int cnt)
 	{
-		collided_set_.erase(other.owner_);
+		return;
 	}
 
-	Snake* owner_;
+	void ReleaseCollision(ColliderBase& other)
+	{
+	}
 
-	std::set<Snake*> collided_set_;
+	GameObject* owner_;
 };
 
 #define ColliderImpl(T) \
 class T : public ColliderBase \
 {	\
 public:	\
-	T(Snake* owner) : ColliderBase(owner){}	\
+	T(GameObject* owner) : ColliderBase(owner){}	\
 	virtual void Collide(ColliderBase& other, int cnt) override	\
 	{	\
 		other.Collide(*this, cnt + 1);	\
@@ -54,6 +56,7 @@ public:	\
 ColliderImpl(SnakeHeadCollider)
 ColliderImpl(SnakeBodyCollider)
 ColliderImpl(PlayerHeadCollider)
+ColliderImpl(DummyCollider)
 #undef ColliderImpl
 
 }

@@ -3,7 +3,6 @@
 #include <cmath>
 #include <algorithm>
 #include <chrono>
-#include <random>
 #include <memory>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
@@ -13,7 +12,11 @@ namespace acoross {
 namespace snakebite {
 
 void GameSession::Initialize()
-{
+{	
+	auto clock = std::chrono::high_resolution_clock();
+	auto t = clock.now();
+	random_engine_.seed((unsigned int)t.time_since_epoch().count());
+
 	Degree angle(0);
 	double velocity{ 0.06 };	// UNIT/ms
 	double ang_vel{ 1.5 };		// degree/ms
@@ -24,26 +27,35 @@ void GameSession::Initialize()
 
 	player_ = std::make_shared<Snake>(container_, player_pos, rad_to_set, angle, velocity, 0.15, 9);
 
-	Position2D init_pos(200, 200);
-	for (int i = 0; i < 3; ++i)
+	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
+	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
+
+	for (int i = 0; i < 4; ++i)
 	{
-		for (int j = 0; j < 9; ++j)
+		for (int j = 0; j < 4; ++j)
 		{
+			Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
 			double rad_to_set = 0.01 * radius * j + radius;
 
 			auto snake = std::make_shared<Snake>(
 				container_, init_pos, rad_to_set
-				, angle + 17 * j, velocity, ang_vel, 15);
+				, angle + 17 * j, velocity, ang_vel, 7);
 			
 			snakes_.emplace_back(snake);
 		}
+	}
+
+	for (int i = 0; i < 10; ++i)
+	{
+		Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
+		auto apple = std::make_shared<Apple>(container_, init_pos, radius * 2);
+
+		apples_.emplace_back(apple);
 	}
 }
 
 void GameSession::CleanUp()
 {
-	ListSnake empty_snakes;
-	empty_snakes.swap(snakes_);
 }
 
 
@@ -65,15 +77,9 @@ static bool checkChangeDirection(int64_t diff_in_ms)
 	return false;
 }
 
-static void changeDirection(GameSession::ListSnake& snakes, int64_t diff_in_ms)
+static void changeDirection(std::default_random_engine& re, GameSession::ListSnake& snakes, int64_t diff_in_ms)
 {
 	std::uniform_int_distribution<int> unin(0, 100);
-	std::default_random_engine re;
-
-	auto clock = std::chrono::high_resolution_clock();
-	auto t = clock.now();
-
-	re.seed((unsigned int)t.time_since_epoch().count());
 
 	for (auto& snake : snakes)
 	{
@@ -136,13 +142,93 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 	// 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
 	if (checkChangeDirection(diff_in_ms))
 	{
-		changeDirection(snakes_, diff_in_ms);
+		changeDirection(random_engine_, snakes_, diff_in_ms);
 	}
 	
 	// 전진
 	for (auto& snake : snakes_)
 	{
 		acoross::snakebite::updateMoveSnake(snake, diff_in_ms);
+	}
+}
+
+void GameSession::ProcessCollisions()
+{
+	//container_.ProcessCollisions();
+
+	ListSnake snakes = snakes_;
+	snakes.push_back(player_);
+
+	for (auto& snake1 : snakes)
+	{
+		for (auto& snake2 : snakes)
+		{
+			ProcessCollision(snake1, snake2);
+		}
+
+		ProcessCollisionToWall(snake1);
+	}
+}
+
+void GameSession::ProcessCollision(std::shared_ptr<Snake> actor, std::shared_ptr<Snake> target)
+{
+	if (actor.get() == target.get())
+		return;
+
+	if (actor->IsCollidingTo(target))
+	{
+		auto ret = collision_map_.insert(CollisionMap::value_type(actor.get(), SnakeWP(target)));
+		if (ret.second == true)
+		{
+			// onCollideBegin
+			actor->OnCollideStart(target.get());
+		}
+		else
+		{
+			// onColliding
+			actor->OnColliding(target.get());
+		}
+	}
+	else
+	{
+		if (collision_map_.erase(actor.get()) > 0)
+		{
+			// onCollideEnd
+			actor->OnCollideEnd(target.get());
+		}
+	}
+}
+
+void GameSession::ProcessCollisionToWall(std::shared_ptr<Snake> actor)
+{
+	auto& pos = actor->GetPosition();
+	if (pos.x <= container_.Left + 1 || pos.x >= container_.Right - 1
+		|| pos.y <= container_.Top + 1 || pos.y >= container_.Bottom - 1)
+	{
+		auto ret = wall_collision_set_.insert(actor.get());
+		if (ret.second == true)
+		{
+			// onCollideBegin
+			if (pos.x <= container_.Left + 1 || pos.x >= container_.Right - 1)
+			{
+				actor->SetAngle(180. - actor->GetAngle().Get());
+			}
+			else if (pos.y <= container_.Top + 1 || pos.y >= container_.Bottom - 1)
+			{
+				actor->SetAngle(-1 * actor->GetAngle().Get());
+			}
+		}
+		else
+		{
+			// onColliding
+		}
+	}
+	else
+	{
+		if (wall_collision_set_.erase(actor.get()) > 0)
+		{
+			// onCollideEnd
+		}
 	}
 }
 
