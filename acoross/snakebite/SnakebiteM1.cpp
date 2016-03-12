@@ -47,6 +47,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			{
 				gamesession->SetPlayerKey(PK_RIGHT);
 			}
+			else if (wParam == VK_RETURN)
+			{
+				gamesession->AddSnake();
+			}
 		}
 		break;
 	case WM_KEYUP:
@@ -125,8 +129,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				gamesession->UpdateMove(frametickdiff);
 #else
 				gamesession->UpdateMove(difftick);
-				gamesession->ProcessCollisions();
 #endif	
+				gamesession->ProcessCollisions();
 				lasttick = tick;
 			}
 		}

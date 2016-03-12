@@ -169,6 +169,7 @@
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
     <ClCompile Include="..\acoross\snakebite\moving_object_system\details\geo_types.cpp" />
+    <ClCompile Include="..\acoross\snakebite\snake.cpp" />
     <ClCompile Include="..\acoross\snakebite\SnakebiteM1.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp" />
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp" />

@@ -8,55 +8,43 @@ namespace acoross {
 namespace snakebite {
 
 class GameObject;
+class Snake;
+class Apple;
 
-class SnakeHeadCollider;
-class SnakeBodyCollider;
-class PlayerHeadCollider;
+class SnakeCollider;
+class AppleCollider;
 class DummyCollider;
 
 class ColliderBase
 {
 public:
-	ColliderBase() = delete;
-	ColliderBase(GameObject* owner)
-		: owner_(owner)
-	{}
 	virtual ~ColliderBase(){}
 
 	virtual void Collide(ColliderBase& other, int cnt) = 0;
-	virtual void Collide(SnakeHeadCollider& other, int cnt) = 0;
-	virtual void Collide(SnakeBodyCollider& other, int cnt) = 0;
-	virtual void Collide(PlayerHeadCollider& other, int cnt) = 0;
-	virtual void Collide(DummyCollider& other, int cnt)
-	{
-		return;
-	}
-
-	void ReleaseCollision(ColliderBase& other)
-	{
-	}
-
-	GameObject* owner_;
+	virtual void Collide(SnakeCollider& other, int cnt) {}
+	virtual void Collide(AppleCollider& other, int cnt) {}
+	virtual void Collide(DummyCollider& other, int cnt) {}
 };
 
-#define ColliderImpl(T) \
+#define ColliderImpl(T, OwnerT) \
 class T : public ColliderBase \
 {	\
 public:	\
-	T(GameObject* owner) : ColliderBase(owner){}	\
+	T(OwnerT* owner) : owner_(owner){}	\
 	virtual void Collide(ColliderBase& other, int cnt) override	\
 	{	\
 		other.Collide(*this, cnt + 1);	\
 	}	\
-	virtual void Collide(SnakeHeadCollider& other, int cnt) override;	\
-	virtual void Collide(SnakeBodyCollider& other, int cnt) override;	\
-	virtual void Collide(PlayerHeadCollider& other, int cnt) override;	\
+	virtual void Collide(SnakeCollider& other, int cnt) override;	\
+	virtual void Collide(AppleCollider& other, int cnt) override;	\
+\
+	OwnerT* owner_;	\
 };
 
-ColliderImpl(SnakeHeadCollider)
-ColliderImpl(SnakeBodyCollider)
-ColliderImpl(PlayerHeadCollider)
-ColliderImpl(DummyCollider)
+ColliderImpl(SnakeCollider, Snake)
+ColliderImpl(AppleCollider, Apple)
+ColliderImpl(DummyCollider, GameObject)
+
 #undef ColliderImpl
 
 }

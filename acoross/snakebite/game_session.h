@@ -24,12 +24,14 @@ namespace snakebite {
 class GameSession final
 {
 public:
-	using MyMovingObject = MovingObject<ColliderBase>;
-	using MyContainer = MovingObjectContainer<MyMovingObject>;
+	using MyMovingObject = MovingObject;
+	using MyContainer = MovingObjectContainer;
 	using ListMovingObject = MyContainer::ListMovingObject;
 
 	using ListSnake = std::list<std::shared_ptr<Snake>>;
+	using ListSnakeNpc = std::list<std::weak_ptr<Snake>>;
 	using ListApple = std::list<std::shared_ptr<Apple>>;
+	using ListGameObject = std::list<std::shared_ptr<GameObject>>;
 
 	GameSession()
 	{
@@ -67,20 +69,28 @@ public:
 	}
 	MyContainer& GetContainer() { return container_; }
 
+	void RemoveSnake(Snake* snake);
+	void RemoveApple(Apple* apple);
+
+	void AddSnake();
+	void AddApple();
+
 private:
 	using GameObjectWP = std::weak_ptr<GameObject>;
 	using SnakeWP = std::weak_ptr<Snake>;
 	using CollisionMap = std::map<Snake*, GameObjectWP>;
-	using WallCollisionSet = std::set<Snake*>;
+	using CollisionSet = std::set<Snake*>;
 
-	void ProcessCollision(std::shared_ptr<Snake> actor, std::shared_ptr<Snake> target);
+	//void ProcessCollision(std::shared_ptr<Snake> actor, std::shared_ptr<Snake> target);
+	//void ProcessCollisionToApple(std::shared_ptr<Snake> actor, std::shared_ptr<Apple> target);
 	void ProcessCollisionToWall(std::shared_ptr<Snake> actor);
 
 	std::default_random_engine random_engine_;
-	WallCollisionSet wall_collision_set_;
+	CollisionSet wall_collision_set_;
 	CollisionMap collision_map_;
 	MyContainer container_;
-	std::shared_ptr<Snake> player_;
+	std::weak_ptr<Snake> player_;
+	ListSnakeNpc snake_npcs_;
 	ListSnake snakes_;
 	ListApple apples_;
 	PlayerKey last_pk_{ PK_NONE };

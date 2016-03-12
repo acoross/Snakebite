@@ -98,6 +98,9 @@
     <ClCompile Include="..\acoross\snakebite\game_session.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\snake.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\acoross\snakebite\win\SnakebiteM1.ico">

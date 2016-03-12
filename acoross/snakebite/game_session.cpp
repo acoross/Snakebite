@@ -7,6 +7,7 @@
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_collider.h"
+#include "game_object.h"
 
 namespace acoross {
 namespace snakebite {
@@ -16,41 +17,30 @@ void GameSession::Initialize()
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
 	random_engine_.seed((unsigned int)t.time_since_epoch().count());
-
-	Degree angle(0);
-	double velocity{ 0.06 };	// UNIT/ms
-	double ang_vel{ 1.5 };		// degree/ms
-	double radius{ 5. };		// UNIT
 	
+	const double velocity{ 0.06 };	// UNIT/ms
+	const double ang_vel{ 1.5 };		// degree/ms
+	const double radius{ 5. };		// UNIT
+	const int body_len{ 13 };
+
 	Position2D player_pos(100, 100);
 	double rad_to_set = radius;
 
-	player_ = std::make_shared<Snake>(container_, player_pos, rad_to_set, angle, velocity, 0.15, 9);
+	auto player = std::make_shared<Snake>(*this, container_, player_pos, rad_to_set, 0, velocity, 0.15, 2);
+	player_ = player;
+	snakes_.push_back(player);
 
-	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
-	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
-
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 1; ++i)
 	{
-		for (int j = 0; j < 4; ++j)
+		for (int j = 0; j < 1; ++j)
 		{
-			Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
-			double rad_to_set = 0.01 * radius * j + radius;
-
-			auto snake = std::make_shared<Snake>(
-				container_, init_pos, rad_to_set
-				, angle + 17 * j, velocity, ang_vel, 7);
-			
-			snakes_.emplace_back(snake);
+			AddSnake();
 		}
 	}
 
 	for (int i = 0; i < 10; ++i)
 	{
-		Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
-		auto apple = std::make_shared<Apple>(container_, init_pos, radius * 2);
-
-		apples_.emplace_back(apple);
+		AddApple();
 	}
 }
 
@@ -77,13 +67,13 @@ static bool checkChangeDirection(int64_t diff_in_ms)
 	return false;
 }
 
-static void changeDirection(std::default_random_engine& re, GameSession::ListSnake& snakes, int64_t diff_in_ms)
+static void changeDirection(std::default_random_engine& re, GameSession::ListSnakeNpc& snakes, int64_t diff_in_ms)
 {
 	std::uniform_int_distribution<int> unin(0, 100);
 
-	for (auto& snake : snakes)
+	for (auto& snake_wp : snakes)
 	{
-		//if (auto snake = snake_wp.lock())
+		if (auto snake = snake_wp.lock())
 		{
 			int p = unin(re);
 			if (p < 15) // 5 percent
@@ -118,22 +108,23 @@ static void updateMoveSnake(std::shared_ptr<Snake>& snake, int64_t diff_in_ms)
 
 void GameSession::UpdateMove(int64_t diff_in_ms)
 {
-	if (auto snake = player_)//.lock())
+	if (auto snake = player_.lock())
 	{
-		if (last_pk_ == PK_RIGHT)
+		auto last_pk = GetPlayerKey();
+		if (last_pk == PK_RIGHT)
 		{
 			auto ang_vel = snake->GetAngVelocity();
 			auto diff_ang = ang_vel * diff_in_ms;
 			snake->Turn(diff_ang);
 		}
-		else if (last_pk_ == PK_LEFT)
+		else if (last_pk == PK_LEFT)
 		{
 			auto ang_vel = snake->GetAngVelocity();
 			auto diff_ang = -ang_vel * diff_in_ms;
 			snake->Turn(diff_ang);
 		}
 
-		acoross::snakebite::updateMoveSnake(snake, diff_in_ms);
+		//acoross::snakebite::updateMoveSnake(snake, diff_in_ms);
 	}
 	
 	// 임시:
@@ -142,7 +133,7 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 	// 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
 	if (checkChangeDirection(diff_in_ms))
 	{
-		changeDirection(random_engine_, snakes_, diff_in_ms);
+		changeDirection(random_engine_, snake_npcs_, diff_in_ms);
 	}
 	
 	// 전진
@@ -157,46 +148,81 @@ void GameSession::ProcessCollisions()
 	//container_.ProcessCollisions();
 
 	ListSnake snakes = snakes_;
-	snakes.push_back(player_);
+	ListApple apples = apples_;
 
 	for (auto& snake1 : snakes)
 	{
 		for (auto& snake2 : snakes)
 		{
-			ProcessCollision(snake1, snake2);
+			snake1->ProcessCollision(snake2);
 		}
 
 		ProcessCollisionToWall(snake1);
+
+		for (auto& apple : apples)
+		{
+			snake1->ProcessCollision(apple);
+		}
 	}
 }
 
-void GameSession::ProcessCollision(std::shared_ptr<Snake> actor, std::shared_ptr<Snake> target)
+void GameSession::RemoveSnake(Snake * snake)
 {
-	if (actor.get() == target.get())
-		return;
+	for (auto it = snakes_.begin(); it != snakes_.end(); ++it)
+	{
+		if (it->get() == snake)
+		{
+			snakes_.erase(it);
+			return;
+		}
+	}
+}
 
-	if (actor->IsCollidingTo(target))
+void GameSession::RemoveApple(Apple * apple)
+{
+	for (auto it = apples_.begin(); it != apples_.end(); ++it)
 	{
-		auto ret = collision_map_.insert(CollisionMap::value_type(actor.get(), SnakeWP(target)));
-		if (ret.second == true)
+		if (it->get() == apple)
 		{
-			// onCollideBegin
-			actor->OnCollideStart(target.get());
-		}
-		else
-		{
-			// onColliding
-			actor->OnColliding(target.get());
+			apples_.erase(it);
+			return;
 		}
 	}
-	else
-	{
-		if (collision_map_.erase(actor.get()) > 0)
-		{
-			// onCollideEnd
-			actor->OnCollideEnd(target.get());
-		}
-	}
+}
+
+void GameSession::AddSnake()
+{
+	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
+	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
+	std::uniform_int_distribution<int> unin_degree(0, 360);
+
+	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
+	
+	const double velocity{ 0.06 };	// UNIT/ms
+	const double ang_vel{ 1.5 };		// degree/ms
+	const double radius{ 5. };		// UNIT
+	const int body_len{ 5 };
+
+	auto snake = std::make_shared<Snake>(
+		*this
+		, container_, init_pos, radius
+		, unin_degree(random_engine_), velocity, ang_vel, body_len);
+
+	snakes_.emplace_back(snake);
+	snake_npcs_.push_back(snake);
+}
+
+void GameSession::AddApple()
+{
+	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
+	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
+
+	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
+	const double radius{ 5. };		// UNIT
+
+	auto apple = std::make_shared<Apple>(container_, init_pos, radius * 2);
+
+	apples_.emplace_back(apple);
 }
 
 void GameSession::ProcessCollisionToWall(std::shared_ptr<Snake> actor)

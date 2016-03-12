@@ -1,90 +1,44 @@
 #include "snake_collider.h"
 
 #include "snake.h"
+#include "Apple.h"
 
 namespace acoross {
 namespace snakebite {
 
-//ColliderImpl(SnakeHeadCollider)
-void SnakeHeadCollider::Collide(SnakeBodyCollider & other, int cnt)
-{
-	//if (owner_ == other.owner_)
-	//	return;
-
-	//auto it = collided_set_.insert(other.owner_);
-	//if (it.second)
-	//{
-	//	// on collide
-	//	owner_->Turn(60);
-	//}
-
-	return;
-}
-
-void SnakeHeadCollider::Collide(SnakeHeadCollider & other, int cnt)
-{
-	return;
-}
-
-void SnakeHeadCollider::Collide(PlayerHeadCollider & other, int cnt)
-{
-	return;
-}
-
-//ColliderImpl(SnakeBodyCollider)
-void SnakeBodyCollider::Collide(SnakeBodyCollider & other, int cnt)
-{
-	return;
-}
-
-void SnakeBodyCollider::Collide(SnakeHeadCollider & other, int cnt)
-{
-	return;
-}
-
-void SnakeBodyCollider::Collide(PlayerHeadCollider & other, int cnt)
-{
-	return;
-}
-
-//ColliderImpl(PlayerHeadCollider)
-void PlayerHeadCollider::Collide(SnakeBodyCollider & other, int cnt)
-{
-	//if (owner_ == other.owner_)
-	//	return;
-
-	//auto it = collided_set_.insert(other.owner_);
-	//if (it.second)
-	//{
-	//	// on collide
-	//	owner_->Turn(60);
-	//}
-
-	return;
-}
-
-void PlayerHeadCollider::Collide(SnakeHeadCollider & other, int cnt)
-{
-	return;
-}
-
-void PlayerHeadCollider::Collide(PlayerHeadCollider & other, int cnt)
-{
-	return;
-}
-
 //ColliderImpl(DummyCollider)
-void DummyCollider::Collide(SnakeBodyCollider & other, int cnt)
+void DummyCollider::Collide(SnakeCollider& other, int cnt)
+{
+	return;
+}
+void DummyCollider::Collide(AppleCollider& other, int cnt)
 {
 	return;
 }
 
-void DummyCollider::Collide(SnakeHeadCollider & other, int cnt)
+//ColliderImpl(SnakeCollider)
+void SnakeCollider::Collide(SnakeCollider& other, int cnt)
 {
+	owner_->game_session_.RemoveSnake(owner_);
+	owner_->game_session_.AddSnake();
+
+	return;
+}
+void SnakeCollider::Collide(AppleCollider& other, int cnt)
+{
+	owner_->game_session_.RemoveApple(other.owner_);
+	owner_->game_session_.AddApple();
+	owner_->AddBody();
+
 	return;
 }
 
-void DummyCollider::Collide(PlayerHeadCollider & other, int cnt)
+//ColliderImpl(AppleCollider)
+void AppleCollider::Collide(SnakeCollider& other, int cnt)
+{
+	return;
+}
+void AppleCollider::Collide(AppleCollider& other, int cnt)
 {
 	return;
 }

@@ -11,17 +11,16 @@ class Apple : public GameObject
 public:
 	Apple(MyContainer& container
 		, const Position2D& pos, double radius)
-		: GameObject(container)
+		: GameObject(container, new AppleCollider(this))
 	{
-		auto mo = std::make_shared<MyMovingObject>(container, pos, radius, new DummyCollider(this));
+		auto mo = std::make_shared<MyMovingObject>(container, pos, radius);
 		container.RegisterMovingObject(mo);
-		mo_ = mo;
+		head_ = mo;
 	}
 
 	virtual ~Apple(){}
 
 private:
-	std::shared_ptr<MyMovingObject> mo_;
 };
 
 }

@@ -10,7 +10,8 @@
 namespace acoross {
 namespace snakebite {
 
-template <typename MovingObject>
+class MovingObject;
+
 class MovingObjectContainer
 {
 public:
@@ -44,8 +45,6 @@ public:
 		}
 	}
 
-	void ProcessCollisions();
-
 	//임시로 열어주는 API
 	ListMovingObject& GetMovingObjects() { return moving_objects_; }
 
@@ -53,39 +52,6 @@ private:
 	// unique_ptr 이라서 자동 삭제됨.
 	ListMovingObject moving_objects_;
 };
-
-template <typename MovingObject>
-inline void MovingObjectContainer<MovingObject>::ProcessCollisions()
-{
-	// 리스트를 복사하여 처리한다.
-	ListMovingObject mo_list = moving_objects_;
-
-	//// clean up collision
-	//for (auto& mo : mo_list)
-	//{
-	//	mo->Collided = false;
-	//}
-
-	for (auto& mo1 : mo_list)
-	{
-		for (auto& mo2 : mo_list)
-		{
-			if (mo1.get() == mo2.get())
-				continue;
-
-			if (IsCrashed(*mo1, *mo2))
-			{
-				mo1->Collide(*mo2);
-				mo2->Collide(*mo1);
-			}
-			else
-			{
-				mo1->ReleaseCollision(*mo2);
-				mo2->ReleaseCollision(*mo1);
-			}
-		}
-	}
-}
 
 }
 }
