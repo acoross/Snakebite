@@ -6,9 +6,8 @@
 #include "game_session.h"
 #include "game_session_drawer.h"
 
-using MyContainer = acoross::snakebite::Snake::MyContainer;
-std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
 std::shared_ptr<acoross::snakebite::GameSession> gamesession;
+std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
 
 //
 //  ÇÔ¼ö: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -50,6 +49,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			else if (wParam == VK_RETURN)
 			{
 				gamesession->AddSnake();
+			}
+			else if (wParam == VK_SPACE)
+			{
+				gamesession->AddApple();
 			}
 		}
 		break;
@@ -134,29 +137,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				lasttick = tick;
 			}
 		}
-		
 
 		{
 			static DWORD lasttick2draw = ::GetTickCount();
 			DWORD tick = ::GetTickCount();
 			auto difftick2draw = (int64_t)tick - lasttick2draw;
-			if (difftick2draw > 50)
+			if (difftick2draw > 200)
 			{
 				InvalidateRect(msg.hwnd, nullptr, false);
 				lasttick2draw = tick;
 			}
-		}
-		
-		{
-			/*static DWORD lasttick2collide = ::GetTickCount();
-			DWORD tick = ::GetTickCount();
-			auto difftick2collide = (int64_t)tick - lasttick2collide;
-			if (difftick2collide > 20)
-			{
-				gamesession->ProcessCollisions();
-				lasttick2collide = tick;
-			}*/
-		}
+		}		
 	};
 
 	return window.PeekMessegeLoop(loop);

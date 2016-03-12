@@ -28,9 +28,6 @@
     <Filter Include="collider">
       <UniqueIdentifier>{c1e9a824-62e2-45ce-b6d5-61d564e56493}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lib\moving_object_system\details">
-      <UniqueIdentifier>{37918eef-a83e-4099-a61e-711aa395820b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="game">
       <UniqueIdentifier>{e06e88cf-3907-4674-9af3-9f1706f3d822}</UniqueIdentifier>
     </Filter>
@@ -57,15 +54,6 @@
     <ClInclude Include="..\acoross\snakebite\snake_collider.h">
       <Filter>collider</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h">
-      <Filter>lib\moving_object_system\details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object.h">
-      <Filter>lib\moving_object_system\details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
-      <Filter>lib\moving_object_system\details</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session.h">
       <Filter>game</Filter>
     </ClInclude>
@@ -88,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\SnakebiteM1.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\moving_object_system\details\geo_types.cpp">
-      <Filter>lib\moving_object_system\details</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
       <Filter>collider</Filter>
