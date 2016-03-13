@@ -5,6 +5,8 @@
 
 #include <boost/asio.hpp>
 
+#include <acoross/snakebite/game_session.h>
+
 using boost::asio::ip::tcp;
 
 class session
@@ -94,6 +96,10 @@ int main()
 	{
 
 	}
+
+	using namespace acoross::snakebite;
+
+	GameSession game_session;
 
 	return 0;
 }

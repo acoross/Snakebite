@@ -114,10 +114,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
+    <ClCompile Include="..\acoross\snakebite\snake.cpp" />
+    <ClCompile Include="..\acoross\snakebite\snake_collider.cpp" />
     <ClCompile Include="snakebite_asio_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\acoross\snakebite\Apple.h" />
+    <ClInclude Include="..\acoross\snakebite\game_object.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h" />
+    <ClInclude Include="..\acoross\snakebite\snake.h" />
+    <ClInclude Include="..\acoross\snakebite\snake_collider.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

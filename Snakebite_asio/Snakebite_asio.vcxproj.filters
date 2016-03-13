@@ -13,13 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="game_session">
+      <UniqueIdentifier>{1de09b59-2ab0-4b76-b43d-ecc91b051e00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="snakebite_asio_main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\game_session.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\snake.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\acoross\snakebite\Apple.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_object.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\snake.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\snake_collider.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
