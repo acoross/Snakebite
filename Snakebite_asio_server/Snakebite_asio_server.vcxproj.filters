@@ -18,9 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="snakebite_asio_main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp">
       <Filter>game_session</Filter>
     </ClCompile>
@@ -29,6 +26,9 @@
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
       <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="snakebite_asio_server.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

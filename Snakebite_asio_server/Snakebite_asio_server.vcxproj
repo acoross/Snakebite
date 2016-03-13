@@ -117,7 +117,7 @@
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp" />
-    <ClCompile Include="snakebite_asio_main.cpp" />
+    <ClCompile Include="snakebite_asio_server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
