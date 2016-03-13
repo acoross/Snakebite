@@ -16,6 +16,12 @@
     <Filter Include="game_session">
       <UniqueIdentifier>{16b2e924-9b4e-473d-b47b-ff828200233e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{dd81ede9-b234-43ed-b5d6-454c1bf2f2ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\win">
+      <UniqueIdentifier>{91ae5e5b-7dee-4f4e-85ed-14e56ba3e204}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="snakebite_asio_client.cpp">
@@ -29,6 +35,9 @@
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
       <Filter>game_session</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
+      <Filter>lib\win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,8 +59,22 @@
     <ClInclude Include="..\acoross\snakebite\snake_collider.h">
       <Filter>game_session</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\win\Resource.h">
+      <Filter>lib\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\win\targetver.h">
+      <Filter>lib\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h">
+      <Filter>lib\win</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc">
+      <Filter>lib\win</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -36,9 +36,6 @@
     <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h">
       <Filter>lib\win</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\win\Resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session.h">
       <Filter>game_session</Filter>
     </ClInclude>
@@ -59,6 +56,9 @@
     </ClInclude>
     <ClInclude Include="SnakebiteM1.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\win\Resource.h">
+      <Filter>lib\win</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc">
-      <Filter>리소스 파일</Filter>
+      <Filter>lib\win</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>
