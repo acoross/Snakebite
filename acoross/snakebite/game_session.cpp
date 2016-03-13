@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <chrono>
 #include <memory>
+#include <mutex>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_collider.h"
@@ -20,12 +21,12 @@ void GameSession::Initialize()
 
 	//InitPlayer();
 
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 1; ++i)
 	{
 		AddSnake();
 	}
 
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 20; ++i)
 	{
 		AddApple();
 	}
@@ -95,6 +96,8 @@ static void updateMoveSnake(std::shared_ptr<Snake>& snake, int64_t diff_in_ms)
 
 void GameSession::UpdateMove(int64_t diff_in_ms)
 {
+	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+
 	if (auto snake = player_.lock())
 	{
 		auto last_pk = GetPlayerKey();
@@ -110,8 +113,6 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 			auto diff_ang = -ang_vel * diff_in_ms;
 			snake->Turn(diff_ang);
 		}
-
-		//acoross::snakebite::updateMoveSnake(snake, diff_in_ms);
 	}
 	
 	// юс╫ц:
@@ -132,6 +133,8 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 
 void GameSession::ProcessCollisions()
 {
+	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+	
 	ListSnake snakes = snakes_;
 	ListApple apples = apples_;
 
@@ -153,6 +156,8 @@ void GameSession::ProcessCollisions()
 
 void GameSession::RemoveSnake(Snake * snake)
 {
+	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+
 	for (auto it = snakes_.begin(); it != snakes_.end(); ++it)
 	{
 		if (it->get() == snake)
@@ -165,6 +170,8 @@ void GameSession::RemoveSnake(Snake * snake)
 
 void GameSession::RemoveApple(Apple * apple)
 {
+	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+
 	for (auto it = apples_.begin(); it != apples_.end(); ++it)
 	{
 		if (it->get() == apple)
@@ -175,7 +182,7 @@ void GameSession::RemoveApple(Apple * apple)
 	}
 }
 
-void GameSession::AddSnake()
+std::shared_ptr<Snake> GameSession::AddSnake()
 {
 	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
 	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
@@ -184,15 +191,20 @@ void GameSession::AddSnake()
 	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
 	
 	const double ang_vel{ 1.5 };		// degree/ms
-	const int body_len{ 5 };
+	const int body_len{ 1 };
 
 	auto snake = std::make_shared<Snake>(
 		*this
 		, container_, init_pos, radius
 		, unin_degree(random_engine_), velocity, ang_vel, body_len);
 
-	snakes_.emplace_back(snake);
-	snake_npcs_.push_back(snake);
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		snake_npcs_.push_back(snake);
+		snakes_.emplace_back(snake);
+	}
+
+	return snake;
 }
 
 void GameSession::AddApple()
@@ -204,20 +216,25 @@ void GameSession::AddApple()
 
 	auto apple = std::make_shared<Apple>(container_, init_pos, radius * 2);
 
-	apples_.emplace_back(apple);
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		apples_.emplace_back(apple);
+	}
 }
 
 void GameSession::InitPlayer()
 {
 	auto player = std::make_shared<Snake>(*this, container_, player_pos, radius, 0, velocity, 0.15, 2);
-	
 	if (auto player = player_.lock())
 	{
 		RemoveSnake(player.get());
 	}
 	
-	player_ = player;
-	snakes_.push_back(player);
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		player_ = player;
+		snakes_.push_back(player);
+	}
 }
 
 void GameSession::ProcessCollisionToWall(std::shared_ptr<Snake> actor)

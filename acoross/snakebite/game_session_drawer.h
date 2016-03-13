@@ -29,26 +29,30 @@ public:
 		// 화면과 game_session 크기를 고려해 ratio 를 정한 뒤,
 		// ratio 에 따라 크기를 조절해서 그린다.
 		
-		if (auto player = game_session_.player_.lock())
 		{
-			HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(BLACK_BRUSH));
-			DrawSnake(wdc, *player);
-			(HBRUSH)::SelectObject(wdc.Get(), oldbrush);
-		}
+			std::lock_guard<std::recursive_mutex> lock(game_session_.LockSnakes());
 
-		auto snake_npc_list = game_session_.snake_npcs_;
-		for (auto& snake_wp : snake_npc_list)
-		{
-			if (auto snake = snake_wp.lock())
+			if (auto player = game_session_.player_.lock())
 			{
-				DrawSnake(wdc, *snake);
+				HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(BLACK_BRUSH));
+				DrawSnake(wdc, *player);
+				(HBRUSH)::SelectObject(wdc.Get(), oldbrush);
 			}
-		}
 
-		auto apple_list = game_session_.apples_;
-		for (auto& apple : apple_list)
-		{
-			DrawMovingObject(wdc, *apple->head_);
+			auto snake_npc_list = game_session_.snake_npcs_;
+			for (auto& snake_wp : snake_npc_list)
+			{
+				if (auto snake = snake_wp.lock())
+				{
+					DrawSnake(wdc, *snake);
+				}
+			}
+
+			auto apple_list = game_session_.apples_;
+			for (auto& apple : apple_list)
+			{
+				DrawMovingObject(wdc, *apple->head_);
+			}
 		}
 	}
 

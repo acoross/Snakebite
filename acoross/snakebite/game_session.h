@@ -5,6 +5,7 @@
 #include <memory>
 #include <utility>
 #include <random>
+#include <mutex>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake.h"
@@ -72,9 +73,14 @@ public:
 	void RemoveSnake(Snake* snake);
 	void RemoveApple(Apple* apple);
 
-	void AddSnake();
+	std::shared_ptr<Snake> AddSnake();
 	void AddApple();
 	void InitPlayer();
+
+	std::recursive_mutex& LockSnakes()
+	{
+		return snakes_mutex_;
+	}
 
 private:
 	using GameObjectWP = std::weak_ptr<GameObject>;
@@ -90,11 +96,18 @@ private:
 	CollisionSet wall_collision_set_;
 	CollisionMap collision_map_;
 	MyContainer container_;
+	
+#pragma region snakes
 	std::weak_ptr<Snake> player_;
 	ListSnakeNpc snake_npcs_;
 	ListSnake snakes_;
 	ListApple apples_;
 	PlayerKey last_pk_{ PK_NONE };
+
+	// 병신같지만 drawer 랑 동기화 하기 위해 추가한 lock 이다...
+	// 수정 필요.
+	std::recursive_mutex snakes_mutex_;
+#pragma endregion snakes
 
 	const double radius{ 5. };		// UNIT
 	const double velocity{ 0.06 };	// UNIT/ms

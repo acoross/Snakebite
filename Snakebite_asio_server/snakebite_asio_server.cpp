@@ -10,7 +10,7 @@
 #include <acoross/snakebite/game_session_drawer.h>
 #include "game_server.h"
 
-std::shared_ptr<acoross::snakebite::GameSession> gamesession;
+std::shared_ptr<acoross::snakebite::GameSession> g_game_session;
 std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
 
 //
@@ -44,23 +44,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		{
 			if (wParam == VK_LEFT)
 			{
-				gamesession->SetPlayerKey(PK_LEFT);
+				g_game_session->SetPlayerKey(PK_LEFT);
 			}
 			else if (wParam == VK_RIGHT)
 			{
-				gamesession->SetPlayerKey(PK_RIGHT);
+				g_game_session->SetPlayerKey(PK_RIGHT);
 			}
 			else if (wParam == VK_RETURN)
 			{
-				gamesession->AddSnake();
+				g_game_session->AddSnake();
 			}
 			else if (wParam == VK_SPACE)
 			{
-				gamesession->AddApple();
+				g_game_session->AddApple();
 			}
 			else if (wParam == VK_F5)
 			{
-				gamesession->InitPlayer();
+				g_game_session->InitPlayer();
 			}
 		}
 		break;
@@ -68,11 +68,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		{
 			if (wParam == VK_LEFT)
 			{
-				gamesession->SetKeyUp(PK_LEFT);
+				g_game_session->SetKeyUp(PK_LEFT);
 			}
 			else if (wParam == VK_RIGHT)
 			{
-				gamesession->SetKeyUp(PK_RIGHT);
+				g_game_session->SetKeyUp(PK_RIGHT);
 			}
 		}
 	case WM_PAINT:
@@ -115,8 +115,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// TODO: 여기에 코드를 입력합니다.
 	using namespace acoross::snakebite;
-	gamesession = std::make_unique<GameSession>();
-	g_game_drawer = std::make_unique<GameSessionDrawer>(*gamesession.get());
+	g_game_session = std::make_shared<GameSession>();
+	g_game_drawer = std::make_unique<GameSessionDrawer>(*g_game_session.get());
 
 	// 응용 프로그램 초기화를 수행합니다.
 	acoross::Win::Window window(hInstance);
@@ -126,53 +126,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return FALSE;
 	}
 
-	auto loop = [](MSG& msg)
-	{
+	boost::asio::io_service io_service;
+	std::thread game_thread(
+		[&io_service]()
 		{
-			const DWORD frametickdiff = 33;
-
-			static DWORD lasttick = ::GetTickCount();
-			DWORD tick = ::GetTickCount();
-			auto difftick = (int64_t)tick - lasttick;
-			for (;difftick > frametickdiff; difftick -= frametickdiff)
-			{
-#if defined(_DEBUG)
-				gamesession->UpdateMove(frametickdiff);
-#else
-				gamesession->UpdateMove(difftick);
-#endif	
-				gamesession->ProcessCollisions();
-				lasttick = tick;
-			}
-		}
-
-		{
-			static DWORD lasttick2draw = ::GetTickCount();
-			DWORD tick = ::GetTickCount();
-			auto difftick2draw = (int64_t)tick - lasttick2draw;
-			if (difftick2draw > 200)
-			{
-				InvalidateRect(msg.hwnd, nullptr, false);
-				lasttick2draw = tick;
-			}
-		}
-	};
-
-	std::thread server_thread(
-		[]() 
-		{
-			try
-			{
-				boost::asio::io_service io_service;
-				GameServer s(io_service, 22000);
-				io_service.run();
-			}
-			catch (std::exception& e)
-			{
-				std::cout << e.what() << std::endl;
-			}
+			GameServer s(io_service, 22000, g_game_session);
+			io_service.run();
 		}
 	);
-	
-	return window.PeekMessegeLoop(loop);
+
+	auto loop = [](MSG& msg)
+	{
+		static DWORD lasttick2draw = ::GetTickCount();
+		DWORD tick = ::GetTickCount();
+		auto difftick2draw = (int64_t)tick - lasttick2draw;
+		if (difftick2draw > 200)
+		{
+			InvalidateRect(msg.hwnd, nullptr, false);
+			lasttick2draw = tick;
+		}
+	};
+	window.PeekMessegeLoop(loop);
+
+	io_service.stop();
+	game_thread.join();
+
+	return 0;
 }
