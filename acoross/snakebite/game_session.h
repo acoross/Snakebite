@@ -74,6 +74,7 @@ public:
 
 	void AddSnake();
 	void AddApple();
+	void InitPlayer();
 
 private:
 	using GameObjectWP = std::weak_ptr<GameObject>;
@@ -94,6 +95,10 @@ private:
 	ListSnake snakes_;
 	ListApple apples_;
 	PlayerKey last_pk_{ PK_NONE };
+
+	const double radius{ 5. };		// UNIT
+	const double velocity{ 0.06 };	// UNIT/ms
+	const Position2D player_pos{ 100, 100 };
 
 	friend class GameSessionDrawer;
 };

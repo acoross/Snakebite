@@ -54,6 +54,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			{
 				gamesession->AddApple();
 			}
+			else if (wParam == VK_F5)
+			{
+				gamesession->InitPlayer();
+			}
 		}
 		break;
 	case WM_KEYUP:

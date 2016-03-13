@@ -17,18 +17,8 @@ void GameSession::Initialize()
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
 	random_engine_.seed((unsigned int)t.time_since_epoch().count());
-	
-	const double velocity{ 0.06 };	// UNIT/ms
-	const double ang_vel{ 1.5 };		// degree/ms
-	const double radius{ 5. };		// UNIT
-	const int body_len{ 13 };
 
-	Position2D player_pos(100, 100);
-	double rad_to_set = radius;
-
-	auto player = std::make_shared<Snake>(*this, container_, player_pos, rad_to_set, 0, velocity, 0.15, 2);
-	player_ = player;
-	snakes_.push_back(player);
+	//InitPlayer();
 
 	for (int i = 0; i < 10; ++i)
 	{
@@ -193,9 +183,7 @@ void GameSession::AddSnake()
 
 	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
 	
-	const double velocity{ 0.06 };	// UNIT/ms
 	const double ang_vel{ 1.5 };		// degree/ms
-	const double radius{ 5. };		// UNIT
 	const int body_len{ 5 };
 
 	auto snake = std::make_shared<Snake>(
@@ -213,11 +201,23 @@ void GameSession::AddApple()
 	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
 
 	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
-	const double radius{ 5. };		// UNIT
 
 	auto apple = std::make_shared<Apple>(container_, init_pos, radius * 2);
 
 	apples_.emplace_back(apple);
+}
+
+void GameSession::InitPlayer()
+{
+	auto player = std::make_shared<Snake>(*this, container_, player_pos, radius, 0, velocity, 0.15, 2);
+	
+	if (auto player = player_.lock())
+	{
+		RemoveSnake(player.get());
+	}
+	
+	player_ = player;
+	snakes_.push_back(player);
 }
 
 void GameSession::ProcessCollisionToWall(std::shared_ptr<Snake> actor)

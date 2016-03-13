@@ -8,6 +8,8 @@
 #include <acoross/snakebite/game_session.h>
 
 using boost::asio::ip::tcp;
+using acoross::snakebite::GameSession;
+
 
 class session
 	: public std::enable_shared_from_this<session>
@@ -81,6 +83,8 @@ private:
 
 	tcp::acceptor acceptor_;
 	tcp::socket socket_;
+	
+	GameSession game_session_;
 };
 
 
@@ -94,12 +98,8 @@ int main()
 	}
 	catch (std::exception& e)
 	{
-
+		std::cout << e.what() << std::endl;
 	}
-
-	using namespace acoross::snakebite;
-
-	GameSession game_session;
 
 	return 0;
 }
