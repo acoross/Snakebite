@@ -19,16 +19,20 @@ void DummyCollider::Collide(AppleCollider& other, int cnt)
 //ColliderImpl(SnakeCollider)
 void SnakeCollider::Collide(SnakeCollider& other, int cnt)
 {
-	owner_->game_session_.RemoveSnake(owner_);
-	owner_->game_session_.AddSnake();
+	if (owner_->game_session_.RemoveSnake(owner_))
+	{
+		owner_->game_session_.AddSnake();
+	}
 
 	return;
 }
 void SnakeCollider::Collide(AppleCollider& other, int cnt)
 {
-	owner_->game_session_.RemoveApple(other.owner_);
-	owner_->game_session_.AddApple();
-	owner_->AddBody();
+	if (owner_->game_session_.RemoveApple(other.owner_))
+	{
+		owner_->game_session_.AddApple();
+		owner_->AddBody();
+	}
 
 	return;
 }

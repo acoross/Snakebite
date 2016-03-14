@@ -34,17 +34,8 @@ public:
 	using ListApple = std::list<std::shared_ptr<Apple>>;
 	using ListGameObject = std::list<std::shared_ptr<GameObject>>;
 
-	GameSession()
-	{
-		Initialize();
-	}
-	~GameSession()
-	{
-		CleanUp();
-	}
-
-	void Initialize();
-	void CleanUp();
+	explicit GameSession(unsigned int init_snake_count = 1);
+	~GameSession();
 
 	void UpdateMove(int64_t diff_in_ms);
 	void ProcessCollisions();
@@ -70,12 +61,24 @@ public:
 	}
 	MyContainer& GetContainer() { return container_; }
 
-	void RemoveSnake(Snake* snake);
-	void RemoveApple(Apple* apple);
+	bool RemoveSnake(Snake* snake);
+	bool RemoveApple(Apple* apple);
 
 	std::shared_ptr<Snake> AddSnake();
 	void AddApple();
 	void InitPlayer();
+
+	size_t CalculateSnakeCount() 
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		return snakes_.size();
+	}
+
+	size_t CalculateAppleCount()
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		return apples_.size();
+	}
 
 	std::recursive_mutex& LockSnakes()
 	{

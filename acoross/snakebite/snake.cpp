@@ -66,16 +66,18 @@ void Snake::AddBody()
 
 bool Snake::ProcessCollision(std::shared_ptr<GameObject> target)
 {
+	//TODO: !!!! collision_set_ 에 삽입된 snake 가 죽으면 맵에서 빠지지 않게 됨.
+	// 하지만 그것 때문에 느려지는 건 아닌것 같고.
 	if (IsCollidingTo(target))
 	{
-		auto ret = collision_set_.insert(target.get());
-		if (ret.second == true)
+		//auto ret = collision_set_.insert(target.get());
+		//if (ret.second == true)
 		{
 			// onCollideBegin
 			//OnCollideStart(target.get());
 			target->collider_->Collide(*this->collider_, 0);
 		}
-		else
+		//else
 		{
 			// onColliding
 		}
@@ -84,7 +86,7 @@ bool Snake::ProcessCollision(std::shared_ptr<GameObject> target)
 	}
 	else
 	{
-		if (collision_set_.erase(target.get()) > 0)
+		//if (collision_set_.erase(target.get()) > 0)
 		{
 			// onCollideEnd
 		}

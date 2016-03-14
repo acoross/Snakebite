@@ -13,15 +13,18 @@
 namespace acoross {
 namespace snakebite {
 
-void GameSession::Initialize()
+
+GameSession::GameSession(unsigned int init_snake_count)
 {	
+	_ASSERT(init_snake_count < 10000);
+
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
 	random_engine_.seed((unsigned int)t.time_since_epoch().count());
 
 	//InitPlayer();
 
-	for (int i = 0; i < 1; ++i)
+	for (unsigned int i = 0; i < init_snake_count; ++i)
 	{
 		AddSnake();
 	}
@@ -32,7 +35,7 @@ void GameSession::Initialize()
 	}
 }
 
-void GameSession::CleanUp()
+GameSession::~GameSession()
 {
 }
 
@@ -154,21 +157,35 @@ void GameSession::ProcessCollisions()
 	}
 }
 
-void GameSession::RemoveSnake(Snake * snake)
+bool GameSession::RemoveSnake(Snake * snake)
 {
 	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+
+	for (auto it = snake_npcs_.begin(); it != snake_npcs_.end(); ++it)
+	{
+		if (auto sp = it->lock())
+		{
+			if (sp.get() == snake)
+			{
+				snake_npcs_.erase(it);
+				break;
+			}
+		}
+	}
 
 	for (auto it = snakes_.begin(); it != snakes_.end(); ++it)
 	{
 		if (it->get() == snake)
 		{
 			snakes_.erase(it);
-			return;
+			return true;
 		}
 	}
+
+	return false;
 }
 
-void GameSession::RemoveApple(Apple * apple)
+bool GameSession::RemoveApple(Apple * apple)
 {
 	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 
@@ -177,9 +194,11 @@ void GameSession::RemoveApple(Apple * apple)
 		if (it->get() == apple)
 		{
 			apples_.erase(it);
-			return;
+			return true;
 		}
 	}
+
+	return false;
 }
 
 std::shared_ptr<Snake> GameSession::AddSnake()
