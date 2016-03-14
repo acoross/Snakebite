@@ -42,7 +42,7 @@ public:
 			auto snake_npc_list = game_session_.snake_npcs_;
 			for (auto& snake_wp : snake_npc_list)
 			{
-				if (auto snake = snake_wp.lock())
+				if (auto snake = snake_wp.second.lock())
 				{
 					DrawSnake(wdc, *snake);
 				}

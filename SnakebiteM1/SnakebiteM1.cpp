@@ -135,7 +135,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #if defined(_DEBUG)
 				g_game_session->UpdateMove(frametickdiff);
 #else
-				gamesession->UpdateMove(difftick);
+				g_game_session->UpdateMove(difftick);
 #endif	
 				g_game_session->ProcessCollisions();
 				lasttick = tick;

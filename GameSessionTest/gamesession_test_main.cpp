@@ -10,14 +10,20 @@ int main(int argc, char* argv[])
 	using namespace acoross::snakebite;
 
 	unsigned int init_snake_count = 110;
+	unsigned int init_apple_count = 20;
 
 	if (argc > 1)
 	{
 		init_snake_count = (unsigned int)_strtoi64(argv[1], NULL, 0);
 		std::cout <<"count: " << init_snake_count << std::endl;
 	}
+	if (argc > 2)
+	{
+		init_apple_count = (unsigned int)_strtoi64(argv[2], NULL, 0);
+		std::cout << "count: " << init_apple_count << std::endl;
+	}
 	
-	std::unique_ptr<GameSession> gamesession = std::make_unique<GameSession>(init_snake_count);
+	std::unique_ptr<GameSession> gamesession = std::make_unique<GameSession>(init_snake_count, init_apple_count);
 
 	try
 	{

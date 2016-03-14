@@ -2,6 +2,7 @@
 #define SNAKEBITE_GAME_SESSION_H_
 
 #include <list>
+#include <map>
 #include <memory>
 #include <utility>
 #include <random>
@@ -29,12 +30,14 @@ public:
 	using MyContainer = MovingObjectContainer;
 	using ListMovingObject = MyContainer::ListMovingObject;
 
-	using ListSnake = std::list<std::shared_ptr<Snake>>;
-	using ListSnakeNpc = std::list<std::weak_ptr<Snake>>;
+	//using ListSnake = std::list<std::shared_ptr<Snake>>;
+	//using ListSnakeNpc = std::list<std::weak_ptr<Snake>>;
+	using MapSnake = std::map<Snake*, std::shared_ptr<Snake>>;
+	using MapSnakeWP = std::map<Snake*, std::weak_ptr<Snake>>;
 	using ListApple = std::list<std::shared_ptr<Apple>>;
 	using ListGameObject = std::list<std::shared_ptr<GameObject>>;
 
-	explicit GameSession(unsigned int init_snake_count = 1);
+	explicit GameSession(unsigned int init_snake_count = 1, unsigned int init_apple_count = 20);
 	~GameSession();
 
 	void UpdateMove(int64_t diff_in_ms);
@@ -102,8 +105,8 @@ private:
 	
 #pragma region snakes
 	std::weak_ptr<Snake> player_;
-	ListSnakeNpc snake_npcs_;
-	ListSnake snakes_;
+	MapSnakeWP snake_npcs_;
+	MapSnake snakes_;
 	ListApple apples_;
 	PlayerKey last_pk_{ PK_NONE };
 

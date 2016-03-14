@@ -14,7 +14,7 @@ namespace acoross {
 namespace snakebite {
 
 
-GameSession::GameSession(unsigned int init_snake_count)
+GameSession::GameSession(unsigned int init_snake_count, unsigned int init_apple_count)
 {	
 	_ASSERT(init_snake_count < 10000);
 
@@ -29,7 +29,7 @@ GameSession::GameSession(unsigned int init_snake_count)
 		AddSnake();
 	}
 
-	for (int i = 0; i < 20; ++i)
+	for (unsigned int i = 0; i < init_apple_count; ++i)
 	{
 		AddApple();
 	}
@@ -58,13 +58,13 @@ static bool checkChangeDirection(int64_t diff_in_ms)
 	return false;
 }
 
-static void changeDirection(std::default_random_engine& re, GameSession::ListSnakeNpc& snakes, int64_t diff_in_ms)
+static void changeDirection(std::default_random_engine& re, GameSession::MapSnakeWP& snakes, int64_t diff_in_ms)
 {
 	std::uniform_int_distribution<int> unin(0, 100);
 
 	for (auto& snake_wp : snakes)
 	{
-		if (auto snake = snake_wp.lock())
+		if (auto snake = snake_wp.second.lock())
 		{
 			int p = unin(re);
 			if (p < 15) // 5 percent
@@ -130,7 +130,7 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 	// ÀüÁø
 	for (auto& snake : snakes_)
 	{
-		acoross::snakebite::updateMoveSnake(snake, diff_in_ms);
+		acoross::snakebite::updateMoveSnake(snake.second, diff_in_ms);
 	}
 }
 
@@ -138,21 +138,21 @@ void GameSession::ProcessCollisions()
 {
 	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 	
-	ListSnake snakes = snakes_;
+	MapSnake snakes = snakes_;
 	ListApple apples = apples_;
 
 	for (auto& snake1 : snakes)
 	{
 		for (auto& snake2 : snakes)
 		{
-			snake1->ProcessCollision(snake2);
+			snake1.second->ProcessCollision(snake2.second);
 		}
 
-		ProcessCollisionToWall(snake1);
+		ProcessCollisionToWall(snake1.second);
 
 		for (auto& apple : apples)
 		{
-			snake1->ProcessCollision(apple);
+			snake1.second->ProcessCollision(apple);
 		}
 	}
 }
@@ -163,7 +163,7 @@ bool GameSession::RemoveSnake(Snake * snake)
 
 	for (auto it = snake_npcs_.begin(); it != snake_npcs_.end(); ++it)
 	{
-		if (auto sp = it->lock())
+		if (auto sp = it->second.lock())
 		{
 			if (sp.get() == snake)
 			{
@@ -173,14 +173,18 @@ bool GameSession::RemoveSnake(Snake * snake)
 		}
 	}
 
-	for (auto it = snakes_.begin(); it != snakes_.end(); ++it)
+	if (snakes_.erase(snake) > 0)
+	{
+		return true;
+	}
+	/*for (auto it = snakes_.begin(); it != snakes_.end(); ++it)
 	{
 		if (it->get() == snake)
 		{
 			snakes_.erase(it);
 			return true;
 		}
-	}
+	}*/
 
 	return false;
 }
@@ -219,8 +223,8 @@ std::shared_ptr<Snake> GameSession::AddSnake()
 
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		snake_npcs_.push_back(snake);
-		snakes_.emplace_back(snake);
+		snake_npcs_.emplace(snake.get(), snake);
+		snakes_.emplace(snake.get(), snake);
 	}
 
 	return snake;
@@ -252,7 +256,7 @@ void GameSession::InitPlayer()
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 		player_ = player;
-		snakes_.push_back(player);
+		snakes_.emplace(player.get(), player);
 	}
 }
 
