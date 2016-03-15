@@ -26,7 +26,7 @@ GameSession::GameSession(unsigned int init_snake_count, unsigned int init_apple_
 
 	for (unsigned int i = 0; i < init_snake_count; ++i)
 	{
-		AddSnake();
+		AddSnakeNpc();
 	}
 
 	for (unsigned int i = 0; i < init_apple_count; ++i)
@@ -212,7 +212,7 @@ std::shared_ptr<Snake> GameSession::AddSnake()
 	std::uniform_int_distribution<int> unin_degree(0, 360);
 
 	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
-	
+
 	const double ang_vel{ 1.5 };		// degree/ms
 	const int body_len{ 1 };
 
@@ -223,10 +223,19 @@ std::shared_ptr<Snake> GameSession::AddSnake()
 
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		snake_npcs_.emplace(snake.get(), snake);
 		snakes_.emplace(snake.get(), snake);
 	}
+	return snake;
+}
 
+std::shared_ptr<Snake> GameSession::AddSnakeNpc()
+{
+	auto snake = AddSnake();
+
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		snake_npcs_.emplace(snake.get(), snake);
+	}
 	return snake;
 }
 

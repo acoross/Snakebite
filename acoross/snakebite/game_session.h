@@ -64,6 +64,7 @@ public:
 	bool RemoveApple(Apple* apple);
 
 	std::shared_ptr<Snake> AddSnake();
+	std::shared_ptr<Snake> AddSnakeNpc();
 	void AddApple();
 	void InitPlayer();
 

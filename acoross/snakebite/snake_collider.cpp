@@ -22,7 +22,7 @@ void SnakeCollider::Collide(SnakeCollider& other, int cnt)
 {
 	if (owner_->game_session_.RemoveSnake(owner_))
 	{
-		owner_->game_session_.AddSnake();
+		owner_->game_session_.AddSnakeNpc();
 	}
 
 	return;
