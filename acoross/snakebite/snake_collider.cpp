@@ -2,6 +2,7 @@
 
 #include "snake.h"
 #include "Apple.h"
+#include "game_session.h"
 
 namespace acoross {
 namespace snakebite {

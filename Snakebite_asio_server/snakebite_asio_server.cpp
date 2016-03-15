@@ -13,6 +13,8 @@
 std::shared_ptr<acoross::snakebite::GameSession> g_game_session;
 std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
 
+using namespace acoross::snakebite;
+
 //
 //  ÇÔ¼ö: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -44,11 +46,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		{
 			if (wParam == VK_LEFT)
 			{
-				g_game_session->SetPlayerKey(PK_LEFT);
+				if (auto player = g_game_session->GetPlayer())
+				{
+					player->SetPlayerKey(acoross::snakebite::PK_LEFT);
+				}
+				//g_game_session->SetPlayerKey(PK_LEFT);
 			}
 			else if (wParam == VK_RIGHT)
 			{
-				g_game_session->SetPlayerKey(PK_RIGHT);
+				if (auto player = g_game_session->GetPlayer())
+				{
+					player->SetPlayerKey(PK_RIGHT);
+				}
+				//g_game_session->SetPlayerKey(PK_RIGHT);
 			}
 			else if (wParam == VK_RETURN)
 			{
@@ -68,11 +78,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		{
 			if (wParam == VK_LEFT)
 			{
-				g_game_session->SetKeyUp(PK_LEFT);
+				if (auto player = g_game_session->GetPlayer())
+				{
+					player->SetKeyUp(PK_LEFT);
+				}
+				//g_game_session->SetKeyUp(PK_LEFT);
 			}
 			else if (wParam == VK_RIGHT)
 			{
-				g_game_session->SetKeyUp(PK_RIGHT);
+				if (auto player = g_game_session->GetPlayer())
+				{
+					player->SetKeyUp(PK_RIGHT);
+				}
+				//g_game_session->SetKeyUp(PK_RIGHT);
 			}
 		}
 	case WM_PAINT:

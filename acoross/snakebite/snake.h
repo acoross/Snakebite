@@ -4,10 +4,16 @@
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/util.h>
 #include "game_object.h"
-#include "game_session.h"
 
 namespace acoross {
 namespace snakebite {
+
+enum PlayerKey
+{
+	PK_NONE,
+	PK_RIGHT,
+	PK_LEFT
+};
 
 class Apple;
 class GameSession;
@@ -43,6 +49,25 @@ public:
 
 	bool ProcessCollision(std::shared_ptr<GameObject> target);
 
+#pragma region key_input
+	void SetPlayerKey(PlayerKey player_key) { last_pk_ = player_key; }
+	void SetKeyUp(PlayerKey player_key)
+	{
+		if (last_pk_ == player_key)
+		{
+			last_pk_ = PK_NONE;
+		}
+	}
+
+	PlayerKey GetPlayerKey() const { return last_pk_; }
+	PlayerKey RetrievePlayerKey()
+	{
+		auto ret = last_pk_;
+		last_pk_ = PK_NONE;
+		return ret;
+	}
+#pragma endregion key_input
+
 public:
 	GameSession& game_session_;
 
@@ -52,6 +77,8 @@ private:
 	double ang_vel_;	// degree/ms
 
 	CollisionSet collision_set_;
+
+	PlayerKey last_pk_{ PK_NONE };
 };
 
 }

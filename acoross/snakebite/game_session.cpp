@@ -103,7 +103,7 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 
 	if (auto snake = player_.lock())
 	{
-		auto last_pk = GetPlayerKey();
+		auto last_pk = snake->GetPlayerKey();
 		if (last_pk == PK_RIGHT)
 		{
 			auto ang_vel = snake->GetAngVelocity();

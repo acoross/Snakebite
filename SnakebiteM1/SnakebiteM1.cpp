@@ -9,6 +9,8 @@
 std::shared_ptr<acoross::snakebite::GameSession> g_game_session;
 std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
 
+using namespace acoross::snakebite;
+
 //
 //  ÇÔ¼ö: WndProc(HWND, UINT, WPARAM, LPARAM)
 //

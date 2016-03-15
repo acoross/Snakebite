@@ -12,13 +12,6 @@
 #include "snake.h"
 #include "Apple.h"
 
-enum PlayerKey
-{
-	PK_NONE,
-	PK_RIGHT,
-	PK_LEFT
-};
-
 namespace acoross {
 namespace snakebite {
 
@@ -86,6 +79,11 @@ public:
 	std::recursive_mutex& LockSnakes()
 	{
 		return snakes_mutex_;
+	}
+
+	std::shared_ptr<Snake> GetPlayer()
+	{
+		return player_.lock();
 	}
 
 private:
