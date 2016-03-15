@@ -39,6 +39,7 @@ public:
 	//임시로 열어주는 API
 	ListMovingObject& GetMovingObjects() { return container_.GetMovingObjects(); }
 
+	/* 플레이어 조작은 Snake 를 직접 조작
 	void SetPlayerKey(PlayerKey player_key) { last_pk_ = player_key; }
 	void SetKeyUp(PlayerKey player_key)
 	{
@@ -55,6 +56,8 @@ public:
 		last_pk_ = PK_NONE;
 		return ret;
 	}
+	*/
+
 	MyContainer& GetContainer() { return container_; }
 
 	bool RemoveSnake(Snake* snake);

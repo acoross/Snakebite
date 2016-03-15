@@ -42,11 +42,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		{
 			if (wParam == VK_LEFT)
 			{
-				g_game_session->SetPlayerKey(PK_LEFT);
+				g_game_session->GetPlayer()->SetPlayerKey(PK_LEFT);
 			}
 			else if (wParam == VK_RIGHT)
 			{
-				g_game_session->SetPlayerKey(PK_RIGHT);
+				g_game_session->GetPlayer()->SetPlayerKey(PK_RIGHT);
 			}
 			else if (wParam == VK_RETURN)
 			{
@@ -66,11 +66,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		{
 			if (wParam == VK_LEFT)
 			{
-				g_game_session->SetKeyUp(PK_LEFT);
+				g_game_session->GetPlayer()->SetKeyUp(PK_LEFT);
 			}
 			else if (wParam == VK_RIGHT)
 			{
-				g_game_session->SetKeyUp(PK_RIGHT);
+				g_game_session->GetPlayer()->SetKeyUp(PK_RIGHT);
 			}
 		}
 	case WM_PAINT:
