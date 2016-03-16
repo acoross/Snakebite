@@ -147,7 +147,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		static DWORD lasttick2draw = ::GetTickCount();
 		DWORD tick = ::GetTickCount();
 		auto difftick2draw = (int64_t)tick - lasttick2draw;
-		if (difftick2draw > 200)
+		if (difftick2draw > 33)
 		{
 			InvalidateRect(msg.hwnd, nullptr, false);
 			lasttick2draw = tick;

@@ -1,6 +1,8 @@
 #ifndef SNAKEBITE_SNAKE_PEICE_H_
 #define SNAKEBITE_SNAKE_PEICE_H_
 
+#include <atomic>
+
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/util.h>
 #include "game_object.h"
@@ -15,7 +17,6 @@ enum PlayerKey
 	PK_LEFT
 };
 
-class Apple;
 class GameSession;
 
 class Snake : public GameObject
@@ -23,13 +24,10 @@ class Snake : public GameObject
 public:
 	using CollisionSet = std::set<GameObject*>;
 
-	Snake(Snake&) = delete;
-	Snake& operator=(Snake&) = delete;
-
-	Snake(GameSession& game_session, MyContainer& container, const Position2D& pos, double radius
+	Snake(GameSession& game_session, const Position2D& pos, double radius
 		, const Degree& angle, double velocity, double ang_vel, int len);
 	virtual ~Snake();
-	
+
 	void Move(const DirVector2D& diff_vec);
 
 	void SetAngle(const Degree& angle)
@@ -43,29 +41,24 @@ public:
 	Degree GetAngle() const { return angle_; }
 	double GetVelocity() const { return velocity_; }
 	double GetAngVelocity() const { return ang_vel_; }
-	Position2D GetPosition() const { return head_->GetPosition(); }
+	Position2D GetPosition() const { return head_.GetPosition(); }
 
 	void AddBody();
 
 	bool ProcessCollision(std::shared_ptr<GameObject> target);
 
 #pragma region key_input
-	void SetPlayerKey(PlayerKey player_key) { last_pk_ = player_key; }
+	//@atomic
+	void SetKeyDown(PlayerKey player_key) 
+	{ 
+		last_pk_.store(player_key);
+	}
 	void SetKeyUp(PlayerKey player_key)
 	{
-		if (last_pk_ == player_key)
-		{
-			last_pk_ = PK_NONE;
-		}
+		last_pk_.compare_exchange_strong(player_key, PK_NONE);
 	}
-
-	PlayerKey GetPlayerKey() const { return last_pk_; }
-	PlayerKey RetrievePlayerKey()
-	{
-		auto ret = last_pk_;
-		last_pk_ = PK_NONE;
-		return ret;
-	}
+	PlayerKey GetPlayerKey() const { return last_pk_.load(); }
+	//
 #pragma endregion key_input
 
 public:
@@ -76,10 +69,13 @@ private:
 	double velocity_; // UNIT/ms
 	double ang_vel_;	// degree/ms
 
-	CollisionSet collision_set_;
+	//CollisionSet collision_set_;
 
-	PlayerKey last_pk_{ PK_NONE };
+	std::atomic<PlayerKey> last_pk_{ PK_NONE };
 };
+using SnakeSP = std::shared_ptr<Snake>;
+
+class SnakeData;
 
 }
 }

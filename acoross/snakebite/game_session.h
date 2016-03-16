@@ -19,51 +19,45 @@ namespace snakebite {
 class GameSession final
 {
 public:
-	using MyMovingObject = MovingObject;
-	using MyContainer = MovingObjectContainer;
-	using ListMovingObject = MyContainer::ListMovingObject;
-
-	//using ListSnake = std::list<std::shared_ptr<Snake>>;
-	//using ListSnakeNpc = std::list<std::weak_ptr<Snake>>;
-	using MapSnake = std::map<Snake*, std::shared_ptr<Snake>>;
-	using ListApple = std::list<std::shared_ptr<Apple>>;
-	using ListGameObject = std::list<std::shared_ptr<GameObject>>;
-
+	using ListMovingObject = MovingObjectContainer::ListMovingObject;
+	
 	explicit GameSession(unsigned int init_snake_count = 1, unsigned int init_apple_count = 20);
 	~GameSession();
 
+	// use lock
 	void UpdateMove(int64_t diff_in_ms);
 	void ProcessCollisions();
 	
-	//임시로 열어주는 API
-	ListMovingObject& GetMovingObjects() { return container_.GetMovingObjects(); }
-
-	/* 플레이어 조작은 Snake 를 직접 조작
-	void SetPlayerKey(PlayerKey player_key) { last_pk_ = player_key; }
-	void SetKeyUp(PlayerKey player_key)
-	{
-		if (last_pk_ == player_key)
-		{
-			last_pk_ = PK_NONE;
-		}
-	}
-
-	PlayerKey GetPlayerKey() const { return last_pk_; }
-	PlayerKey RetrievePlayerKey()
-	{
-		auto ret = last_pk_;
-		last_pk_ = PK_NONE;
-		return ret;
-	}
-	*/
-
-	MyContainer& GetContainer() { return container_; }
-
+	SnakeSP AddSnake();
+	void AddApple();
 	bool RemoveSnake(Snake* snake);
 	bool RemoveApple(Apple* apple);
 
-	std::shared_ptr<Snake> AddSnake();
-	void AddApple();
+	std::list<std::pair<Snake*, GameObjectClone>> CloneSnakeList()
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		std::list<std::pair<Snake*, GameObjectClone>> snakes;
+		
+		for (auto pair : snakes_)
+		{
+			snakes.push_back(std::make_pair(pair.first, pair.second->Clone()));
+		}
+
+		return snakes;
+	}
+	std::list<GameObjectClone> CloneAppleList()
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		std::list<GameObjectClone> apples;
+
+		for (auto apple : apples_)
+		{
+			apples.push_back(apple->Clone());
+		}
+
+		return apples;
+	}
+	//
 
 	size_t CalculateSnakeCount() 
 	{
@@ -81,20 +75,23 @@ public:
 	{
 		return snakes_mutex_;
 	}
-	
+
+	//임시로 열어주는 API
+	MovingObjectContainer& GetContainer() { return container_; }
+	//
+
 private:
-	using GameObjectWP = std::weak_ptr<GameObject>;
+	using MapSnake = std::map<Snake*, SnakeSP>;
+	using ListApple = std::list<AppleSP>;
 	using CollisionMap = std::map<Snake*, GameObjectWP>;
 	using CollisionSet = std::set<Snake*>;
 
-	//void ProcessCollision(std::shared_ptr<Snake> actor, std::shared_ptr<Snake> target);
-	//void ProcessCollisionToApple(std::shared_ptr<Snake> actor, std::shared_ptr<Apple> target);
-	void ProcessCollisionToWall(std::shared_ptr<Snake> actor);
+	void ProcessCollisionToWall(SnakeSP actor);
 
 	std::default_random_engine random_engine_;
 	CollisionSet wall_collision_set_;
 	CollisionMap collision_map_;
-	MyContainer container_;
+	MovingObjectContainer container_;
 	
 #pragma region snakes
 	MapSnake snakes_;

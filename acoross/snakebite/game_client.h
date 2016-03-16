@@ -7,6 +7,7 @@
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/snakebite/game_session.h>
+#include <acoross/snakebite/game_object.h>
 #include <acoross/snakebite/snake.h>
 
 namespace acoross {
@@ -33,35 +34,66 @@ public:
 		// 화면과 game_session 크기를 고려해 ratio 를 정한 뒤,
 		// ratio 에 따라 크기를 조절해서 그린다.
 		
-		{
-			std::lock_guard<std::recursive_mutex> lock(game_session_.LockSnakes());
+		{ 
+			// snake 와 apple 의 복제본 리스트를 받아온 뒤 화면에 그린다.
+			// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
+			// 복사생성은 비싸지 않은 작업이라고 생각했다.
 
-			auto snakes = game_session_.snakes_;
+			game_session_.LockSnakes().lock();
+				auto snake_pairs = game_session_.CloneSnakeList();
+				auto apples = game_session_.CloneAppleList();
+			game_session_.LockSnakes().unlock();
+
 			auto player = player_.lock();
-			for (auto pair : snakes)
+			for (auto& snake_pair : snake_pairs)
 			{
-				auto& snake = pair.second;
-
-				if (snake == player_.lock())
+				if (snake_pair.first == player.get())
 				{
 					HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(BLACK_BRUSH));
-					DrawSnake(wdc, *player);
+					DrawSnake(wdc, snake_pair.second);
 					(HBRUSH)::SelectObject(wdc.Get(), oldbrush);
+				}
+				else
+				{
+					DrawSnake(wdc, snake_pair.second);
+				}
+			}
+			
+			for (auto& apple : apples)
+			{
+				DrawMovingObject(wdc, apple.head_);
+			}
+		}
+
+		{
+			/*std::lock_guard<std::recursive_mutex> lock(game_session_.LockSnakes());
+			auto snakes = game_session_.snakes_;
+			auto apples = game_session_.apples_;
+
+			auto player = player_.lock();
+			for (auto& pair : snakes)
+			{
+				auto& snake = pair.second;
+				if (snake == player_.lock())
+				{
+				HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(BLACK_BRUSH));
+				DrawSnake(wdc, *player);
+				(HBRUSH)::SelectObject(wdc.Get(), oldbrush);
 				}
 				else
 				{
 					DrawSnake(wdc, *snake);
 				}
 			}
-			
-			auto apple_list = game_session_.apples_;
-			for (auto& apple : apple_list)
+
+			for (auto& apple : apples)
 			{
-				DrawMovingObject(wdc, *apple->head_);
-			}
+				DrawMovingObject(wdc, apple->head_);
+			}*/
 		}
 	}
 
+	//@lock
 	void InitPlayer()
 	{
 		if (auto player = player_.lock())
@@ -71,12 +103,14 @@ public:
 
 		player_ = game_session_.AddSnake();
 	}
+	//
 
+	//@atomic for Snake
 	void SetKeyDown(PlayerKey player_key)
 	{
 		if (auto player = player_.lock())
 		{
-			player->SetPlayerKey(player_key);
+			player->SetKeyDown(player_key);
 		}
 	}
 
@@ -87,17 +121,18 @@ public:
 			player->SetKeyUp(player_key);
 		}
 	}
+	//
 
 private:
-	void DrawSnake(Win::WDC& wdc, Snake& snake)
+	//@need GameSession::snakes_mutex_ locked
+	void DrawSnake(Win::WDC& wdc, GameObjectClone& snake)
 	{
-		DrawMovingObject(wdc, *snake.head_);
+		DrawMovingObject(wdc, snake.head_);
 		for (auto& body : snake.body_list_)
 		{
-			DrawMovingObject(wdc, *body);
+			DrawMovingObject(wdc, body);
 		}
 	}
-
 	void DrawMovingObject(Win::WDC& wdc, MovingObject& mo)
 	{
 		const int radius = (int)mo.GetRadius();
@@ -108,6 +143,7 @@ private:
 		wdc.Ellipse(center_x - radius, center_y - radius,
 			center_x + radius, center_y + radius);
 	}
+	//
 
 	std::weak_ptr<Snake> player_;
 	GameSession& game_session_;

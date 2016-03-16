@@ -10,7 +10,6 @@
 namespace acoross {
 namespace snakebite {
 
-//reference type
 //template <typename TCollider>	//TCollider 는 void Collider(TCollider&); 를 구현해야 한다.
 class MovingObject
 {
@@ -18,11 +17,8 @@ public:
 	using MyType = MovingObject;//<TCollider>;
 	using MyContainer = MovingObjectContainer;//<MyType>;
 
-	MovingObject(MovingObject&) = delete;
-	MovingObject& operator=(MovingObject&) = delete;
-
-	MovingObject(MyContainer& container, const Position2D& pos, double radius)
-		: container_(container), pos_(pos), radius_(radius)
+	MovingObject(const Position2D& pos, double radius)
+		: pos_(pos), radius_(radius)
 	{}
 	virtual ~MovingObject()	{}
 
@@ -31,14 +27,12 @@ public:
 		pos_ = newpos;
 	}
 	
-	virtual void Move(const DirVector2D& diff);
+	void Move(const DirVector2D& diff, MyContainer& container);
 
 	Position2D GetPosition() const { return pos_; }
 	double GetRadius() const { return radius_; }
 	
 private:
-	MyContainer& container_;
-
 	Position2D pos_;	// relational positino to field, as UNIT
 	double radius_;
 };
@@ -55,15 +49,15 @@ T Trim(T src, T minv, T maxv)
 	return src;
 }
 
-inline void MovingObject::Move(const DirVector2D & diff)
+inline void MovingObject::Move(const DirVector2D & diff, MovingObjectContainer& container)
 {
 	// 테두리 밖으로 벗어나지 않도록 막음.
 	auto pos_new = pos_;
 	pos_new.x += diff.x;
 	pos_new.y += diff.y;
 	
-	pos_new.x = Trim<double>(pos_new.x, container_.Left, container_.Right);
-	pos_new.y = Trim<double>(pos_new.y, container_.Top, container_.Bottom);
+	pos_new.x = Trim<double>(pos_new.x, container.Left, container.Right);
+	pos_new.y = Trim<double>(pos_new.y, container.Top, container.Bottom);
 
 	pos_ = pos_new;
 }

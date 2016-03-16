@@ -28,6 +28,7 @@ public:
 	int Width() const { return Right - Left; }
 	int Height() const { return Top - Bottom; }
 
+private:	// deprecate
 	void RegisterMovingObject(MovingObjectSP mo)
 	{
 		moving_objects_.push_back(mo);
@@ -44,9 +45,6 @@ public:
 			}
 		}
 	}
-
-	//임시로 열어주는 API
-	ListMovingObject& GetMovingObjects() { return moving_objects_; }
 
 private:
 	// unique_ptr 이라서 자동 삭제됨.

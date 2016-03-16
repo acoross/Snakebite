@@ -47,9 +47,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\Apple.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_object.h">
       <Filter>game_session</Filter>
     </ClInclude>
@@ -78,6 +75,9 @@
       <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_client.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\apple.h">
       <Filter>game_session</Filter>
     </ClInclude>
   </ItemGroup>

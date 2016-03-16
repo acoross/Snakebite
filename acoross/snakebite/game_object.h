@@ -8,24 +8,25 @@
 namespace acoross {
 namespace snakebite {
 
+class GameObjectClone;
+
 class GameObject
 {
 public:
-	using MyMovingObject = MovingObject;
-	using MyContainer = MovingObjectContainer;
-	
-	GameObject(MyContainer& container, ColliderBase* collider)
-		: container_(container), collider_(collider)
+	GameObject(MovingObjectContainer& container, ColliderBase* collider, Position2D pos, double radius)
+		: container_(container), collider_(collider), head_(pos, radius)
 	{}
 	virtual ~GameObject()
 	{
-		container_.DeleteObject(head_);
+		/*container_.DeleteObject(head_);
 		for (auto mo : body_list_)
 		{
 			container_.DeleteObject(mo);
-		}
+		}*/
 	}
 	
+	GameObjectClone Clone();
+
 	bool IsCollidingTo(std::shared_ptr<GameObject> other) const
 	{
 		if (this == other.get())
@@ -33,14 +34,14 @@ public:
 			return false;
 		}
 
-		if (IsCrashed(*head_, *other->head_))
+		if (IsCrashed(head_, other->head_))
 		{
 			return true;
 		}
 
 		for (auto mo : other->body_list_)
 		{
-			if (IsCrashed(*head_, *mo))
+			if (IsCrashed(head_, mo))
 			{
 				return true;
 			}
@@ -51,10 +52,29 @@ public:
 
 public:
 	std::unique_ptr<ColliderBase> collider_;
-	MyContainer& container_;
-	std::shared_ptr<MyMovingObject> head_;
-	std::list<std::shared_ptr<MyMovingObject>> body_list_;
+	MovingObjectContainer& container_;
+	MovingObject head_;
+	std::list<MovingObject> body_list_;
 };
+
+using GameObjectWP = std::weak_ptr<GameObject>;
+
+class GameObjectClone
+{
+public:
+	GameObjectClone(GameObject& lhs)
+		: head_(lhs.head_)
+		, body_list_(lhs.body_list_)
+	{}
+
+	MovingObject head_;
+	std::list<MovingObject> body_list_;
+};
+
+inline GameObjectClone GameObject::Clone()
+{
+	return GameObjectClone(*this);
+}
 
 }
 }

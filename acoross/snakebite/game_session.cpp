@@ -145,7 +145,7 @@ std::shared_ptr<Snake> GameSession::AddSnake()
 
 	auto snake = std::make_shared<Snake>(
 		*this
-		, container_, init_pos, radius
+		, init_pos, radius
 		, unin_degree(random_engine_), velocity, ang_vel, body_len);
 
 	{
@@ -170,7 +170,7 @@ void GameSession::AddApple()
 	}
 }
 
-void GameSession::ProcessCollisionToWall(std::shared_ptr<Snake> actor)
+void GameSession::ProcessCollisionToWall(SnakeSP actor)
 {
 	auto& pos = actor->GetPosition();
 	if (pos.x <= container_.Left + 1 || pos.x >= container_.Right - 1

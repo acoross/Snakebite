@@ -9,19 +9,20 @@ namespace snakebite {
 class Apple : public GameObject
 {
 public:
-	Apple(MyContainer& container
+	Apple(MovingObjectContainer& container
 		, const Position2D& pos, double radius)
-		: GameObject(container, new AppleCollider(this))
+		: GameObject(container, new AppleCollider(this), pos, radius)
 	{
-		auto mo = std::make_shared<MyMovingObject>(container, pos, radius);
-		container.RegisterMovingObject(mo);
-		head_ = mo;
+		//container.RegisterMovingObject(mo);
 	}
+	Apple(Apple& lhs) = default;
+	Apple(Apple&& lhs) = default;
 
 	virtual ~Apple(){}
 
 private:
 };
+using AppleSP = std::shared_ptr<Apple>;
 
 }
 }
