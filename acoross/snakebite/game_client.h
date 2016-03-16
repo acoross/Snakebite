@@ -2,19 +2,23 @@
 #define SNAKEBITE_CONTAINER_DRAWER_H_
 
 #include <acoross/snakebite/win/WinWrapper.h>
+#include <memory>
+#include <mutex>
+
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/snakebite/game_session.h>
+#include <acoross/snakebite/snake.h>
 
 namespace acoross {
 namespace snakebite {
 
-class GameSessionDrawer final
+class GameClient final
 {
 public:
-	GameSessionDrawer(GameSession& game_session)
+	GameClient(GameSession& game_session)
 		: game_session_(game_session)
 	{}
-	virtual ~GameSessionDrawer(){}
+	virtual ~GameClient(){}
 
 	void Draw(Win::WDC& wdc)
 	{
@@ -32,22 +36,24 @@ public:
 		{
 			std::lock_guard<std::recursive_mutex> lock(game_session_.LockSnakes());
 
-			if (auto player = game_session_.player_.lock())
+			auto snakes = game_session_.snakes_;
+			auto player = player_.lock();
+			for (auto pair : snakes)
 			{
-				HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(BLACK_BRUSH));
-				DrawSnake(wdc, *player);
-				(HBRUSH)::SelectObject(wdc.Get(), oldbrush);
-			}
+				auto& snake = pair.second;
 
-			auto snake_npc_list = game_session_.snake_npcs_;
-			for (auto& snake_wp : snake_npc_list)
-			{
-				if (auto snake = snake_wp.second.lock())
+				if (snake == player_.lock())
+				{
+					HBRUSH oldbrush = (HBRUSH)::SelectObject(wdc.Get(), ::GetStockObject(BLACK_BRUSH));
+					DrawSnake(wdc, *player);
+					(HBRUSH)::SelectObject(wdc.Get(), oldbrush);
+				}
+				else
 				{
 					DrawSnake(wdc, *snake);
 				}
 			}
-
+			
 			auto apple_list = game_session_.apples_;
 			for (auto& apple : apple_list)
 			{
@@ -56,6 +62,33 @@ public:
 		}
 	}
 
+	void InitPlayer()
+	{
+		if (auto player = player_.lock())
+		{
+			game_session_.RemoveSnake(player.get());
+		}
+
+		player_ = game_session_.AddSnake();
+	}
+
+	void SetKeyDown(PlayerKey player_key)
+	{
+		if (auto player = player_.lock())
+		{
+			player->SetPlayerKey(player_key);
+		}
+	}
+
+	void SetKeyUp(PlayerKey player_key)
+	{
+		if (auto player = player_.lock())
+		{
+			player->SetKeyUp(player_key);
+		}
+	}
+
+private:
 	void DrawSnake(Win::WDC& wdc, Snake& snake)
 	{
 		DrawMovingObject(wdc, *snake.head_);
@@ -76,7 +109,7 @@ public:
 			center_x + radius, center_y + radius);
 	}
 
-private:
+	std::weak_ptr<Snake> player_;
 	GameSession& game_session_;
 };
 

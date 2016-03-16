@@ -2,18 +2,19 @@
 #include <acoross/snakebite/win/Resource.h>
 #include <acoross/snakebite/win/WinWrapper.h>
 
+#include <memory>
 #include <functional>
 #include <thread>
 #include <boost/asio.hpp>
 
 #include <acoross/snakebite/game_session.h>
-#include <acoross/snakebite/game_session_drawer.h>
+#include <acoross/snakebite/game_client.h>
 #include "game_server.h"
 
-std::shared_ptr<acoross::snakebite::GameSession> g_game_session;
-std::unique_ptr<acoross::snakebite::GameSessionDrawer> g_game_drawer;
-
 using namespace acoross::snakebite;
+
+std::shared_ptr<GameSession> g_game_session;
+std::unique_ptr<GameClient> g_game_client;
 
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -46,23 +47,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		{
 			if (wParam == VK_LEFT)
 			{
-				if (auto player = g_game_session->GetPlayer())
-				{
-					player->SetPlayerKey(acoross::snakebite::PK_LEFT);
-				}
-				//g_game_session->SetPlayerKey(PK_LEFT);
+				g_game_client->SetKeyDown(PK_LEFT);
 			}
 			else if (wParam == VK_RIGHT)
 			{
-				if (auto player = g_game_session->GetPlayer())
-				{
-					player->SetPlayerKey(PK_RIGHT);
-				}
-				//g_game_session->SetPlayerKey(PK_RIGHT);
+				g_game_client->SetKeyDown(PK_RIGHT);
 			}
 			else if (wParam == VK_RETURN)
 			{
-				g_game_session->AddSnakeNpc();
+				//g_game_session->AddSnakeNpc();
+				g_game_session->AddSnake();
 			}
 			else if (wParam == VK_SPACE)
 			{
@@ -70,7 +64,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			}
 			else if (wParam == VK_F5)
 			{
-				g_game_session->InitPlayer();
+				g_game_client->InitPlayer();
 			}
 		}
 		break;
@@ -78,19 +72,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		{
 			if (wParam == VK_LEFT)
 			{
-				if (auto player = g_game_session->GetPlayer())
-				{
-					player->SetKeyUp(PK_LEFT);
-				}
-				//g_game_session->SetKeyUp(PK_LEFT);
+				g_game_client->SetKeyUp(PK_LEFT);
 			}
 			else if (wParam == VK_RIGHT)
 			{
-				if (auto player = g_game_session->GetPlayer())
-				{
-					player->SetKeyUp(PK_RIGHT);
-				}
-				//g_game_session->SetKeyUp(PK_RIGHT);
+				g_game_client->SetKeyUp(PK_RIGHT);
 			}
 		}
 	case WM_PAINT:
@@ -105,7 +91,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			static HBITMAP hbitmap = ::CreateCompatibleBitmap(memdc.Get(), client_rect.right, client_rect.bottom);
 			HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
 
-			g_game_drawer->Draw(memdc);
+			//g_game_drawer->Draw(memdc);
+			g_game_client->Draw(memdc);
+
 			::BitBlt(wdc.Get(), 0, 0, client_rect.right, client_rect.bottom, memdc.Get(), 0, 0, SRCCOPY);
 
 			::SelectObject(memdc.Get(), oldbit);
@@ -134,7 +122,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// TODO: 여기에 코드를 입력합니다.
 	using namespace acoross::snakebite;
 	g_game_session = std::make_shared<GameSession>();
-	g_game_drawer = std::make_unique<GameSessionDrawer>(*g_game_session.get());
+	//g_game_drawer = std::make_unique<GameSessionDrawer>(*g_game_session.get());
+	g_game_client = std::make_unique<GameClient>(*g_game_session.get());
 
 	// 응용 프로그램 초기화를 수행합니다.
 	acoross::Win::Window window(hInstance);

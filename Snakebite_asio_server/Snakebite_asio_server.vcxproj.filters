@@ -39,6 +39,9 @@
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
       <Filter>lib\win</Filter>
     </ClCompile>
+    <ClCompile Include="snake_npc_control_manager.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -51,9 +54,6 @@
       <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h">
       <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake.h">
@@ -73,6 +73,12 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\win\Resource.h">
       <Filter>lib\win</Filter>
+    </ClInclude>
+    <ClInclude Include="snake_npc_control_manager.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_client.h">
+      <Filter>game_session</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

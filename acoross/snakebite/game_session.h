@@ -26,7 +26,6 @@ public:
 	//using ListSnake = std::list<std::shared_ptr<Snake>>;
 	//using ListSnakeNpc = std::list<std::weak_ptr<Snake>>;
 	using MapSnake = std::map<Snake*, std::shared_ptr<Snake>>;
-	using MapSnakeWP = std::map<Snake*, std::weak_ptr<Snake>>;
 	using ListApple = std::list<std::shared_ptr<Apple>>;
 	using ListGameObject = std::list<std::shared_ptr<GameObject>>;
 
@@ -35,7 +34,7 @@ public:
 
 	void UpdateMove(int64_t diff_in_ms);
 	void ProcessCollisions();
-
+	
 	//임시로 열어주는 API
 	ListMovingObject& GetMovingObjects() { return container_.GetMovingObjects(); }
 
@@ -64,9 +63,7 @@ public:
 	bool RemoveApple(Apple* apple);
 
 	std::shared_ptr<Snake> AddSnake();
-	std::shared_ptr<Snake> AddSnakeNpc();
 	void AddApple();
-	void InitPlayer();
 
 	size_t CalculateSnakeCount() 
 	{
@@ -84,15 +81,9 @@ public:
 	{
 		return snakes_mutex_;
 	}
-
-	std::shared_ptr<Snake> GetPlayer()
-	{
-		return player_.lock();
-	}
-
+	
 private:
 	using GameObjectWP = std::weak_ptr<GameObject>;
-	using SnakeWP = std::weak_ptr<Snake>;
 	using CollisionMap = std::map<Snake*, GameObjectWP>;
 	using CollisionSet = std::set<Snake*>;
 
@@ -106,11 +97,8 @@ private:
 	MyContainer container_;
 	
 #pragma region snakes
-	std::weak_ptr<Snake> player_;
-	MapSnakeWP snake_npcs_;
 	MapSnake snakes_;
 	ListApple apples_;
-	PlayerKey last_pk_{ PK_NONE };
 
 	// 병신같지만 drawer 랑 동기화 하기 위해 추가한 lock 이다...
 	// 수정 필요.
@@ -121,7 +109,8 @@ private:
 	const double velocity{ 0.06 };	// UNIT/ms
 	const Position2D player_pos{ 100, 100 };
 
-	friend class GameSessionDrawer;
+	//임시
+	friend class GameClient;
 };
 
 typedef std::shared_ptr<GameSession> GameSessionSP;

@@ -10,7 +10,6 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 #include <acoross/snakebite/game_session.h>
-#include <acoross/snakebite/game_session_drawer.h>
 #include <acoross/snakebite/snake.h>
 
 using boost::asio::ip::tcp;
