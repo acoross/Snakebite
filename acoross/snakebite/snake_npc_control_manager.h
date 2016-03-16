@@ -3,11 +3,14 @@
 
 #include <memory>
 #include <mutex>
+#include <random>
 
 #include <acoross/snakebite/snake.h>
 
 namespace acoross {
 namespace snakebite {
+
+class GameSession;
 
 class SnakeNpcControlManager final
 {
@@ -19,7 +22,7 @@ public:
 	SnakeNpcControlManager& operator=(SnakeNpcControlManager&) = delete;
 
 public:
-	SnakeNpcControlManager() {}
+	SnakeNpcControlManager(GameSession& game_session);
 	~SnakeNpcControlManager() {}
 
 	void ChangeNpcDirection(int64_t diff_in_ms);
@@ -28,8 +31,12 @@ public:
 	bool RemoveSnakeNpc(Snake* snake);
 
 private:
+	std::default_random_engine random_engine_;
+
 	std::recursive_mutex snake_npcs_mutex_;
 	MapSnakeWP snake_npcs_;
+
+	GameSession& game_session_;
 };
 
 }

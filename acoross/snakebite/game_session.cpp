@@ -1,10 +1,10 @@
 #include "game_session.h"
 
 #include <cmath>
-#include <algorithm>
-#include <chrono>
 #include <memory>
 #include <mutex>
+#include <chrono>
+#include <algorithm>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_collider.h"
@@ -15,6 +15,7 @@ namespace snakebite {
 
 
 GameSession::GameSession(unsigned int init_snake_count, unsigned int init_apple_count)
+	: npc_controll_manager_(*this)
 {	
 	_ASSERT(init_snake_count < 10000);
 
@@ -73,6 +74,8 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 {
 	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 	auto snakes = snakes_;
+
+	npc_controll_manager_.ChangeNpcDirection(diff_in_ms);
 
 	// ÀüÁø
 	for (auto& snake : snakes)

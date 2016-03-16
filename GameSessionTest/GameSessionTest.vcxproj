@@ -117,6 +117,7 @@
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp" />
+    <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp" />
     <ClCompile Include="gamesession_test_main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +126,7 @@
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
     <ClInclude Include="..\acoross\snakebite\snake.h" />
     <ClInclude Include="..\acoross\snakebite\snake_collider.h" />
+    <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

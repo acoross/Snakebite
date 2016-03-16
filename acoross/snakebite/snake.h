@@ -74,8 +74,7 @@ private:
 	std::atomic<PlayerKey> last_pk_{ PK_NONE };
 };
 using SnakeSP = std::shared_ptr<Snake>;
-
-class SnakeData;
+using SnakeWP = std::weak_ptr<Snake>;
 
 }
 }

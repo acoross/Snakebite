@@ -11,6 +11,7 @@
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake.h"
 #include "Apple.h"
+#include "snake_npc_control_manager.h"
 
 namespace acoross {
 namespace snakebite {
@@ -28,6 +29,11 @@ public:
 	void UpdateMove(int64_t diff_in_ms);
 	void ProcessCollisions();
 	
+	SnakeWP AddSnakeNpc()
+	{
+		return npc_controll_manager_.AddSnakeNpc();
+	}
+
 	SnakeSP AddSnake();
 	void AddApple();
 	bool RemoveSnake(Snake* snake);
@@ -88,11 +94,13 @@ private:
 
 	void ProcessCollisionToWall(SnakeSP actor);
 
-	std::default_random_engine random_engine_;
 	CollisionSet wall_collision_set_;
 	CollisionMap collision_map_;
 	MovingObjectContainer container_;
-	
+	SnakeNpcControlManager npc_controll_manager_;
+
+	std::default_random_engine random_engine_;
+
 #pragma region snakes
 	MapSnake snakes_;
 	ListApple apples_;

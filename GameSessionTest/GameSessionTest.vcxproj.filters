@@ -30,6 +30,9 @@
     <ClCompile Include="..\acoross\snakebite\snake.cpp">
       <Filter>game_session</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp">
+      <Filter>game_session</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\Apple.h">
@@ -45,6 +48,9 @@
       <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake_collider.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h">
       <Filter>game_session</Filter>
     </ClInclude>
   </ItemGroup>
