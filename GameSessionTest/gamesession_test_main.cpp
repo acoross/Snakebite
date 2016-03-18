@@ -25,6 +25,11 @@ int main(int argc, char* argv[])
 	
 	std::unique_ptr<GameSession> gamesession = std::make_unique<GameSession>(init_snake_count, init_apple_count);
 
+	for (unsigned int i = 0; i < init_snake_count; ++i)
+	{
+		gamesession->AddSnakeNpc();
+	}
+
 	try
 	{
 		while (true)

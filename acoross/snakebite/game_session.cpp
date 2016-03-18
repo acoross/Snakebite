@@ -135,7 +135,7 @@ bool GameSession::RemoveApple(Apple * apple)
 	return false;
 }
 
-std::shared_ptr<Snake> GameSession::AddSnake()
+SnakeWP GameSession::AddSnake(Snake::EventHandler onDieHandler)
 {
 	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
 	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
@@ -149,7 +149,8 @@ std::shared_ptr<Snake> GameSession::AddSnake()
 	auto snake = std::make_shared<Snake>(
 		*this
 		, init_pos, radius
-		, unin_degree(random_engine_), velocity, ang_vel, body_len);
+		, unin_degree(random_engine_), velocity, ang_vel, body_len
+		, onDieHandler);
 
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);

@@ -2,6 +2,7 @@
 #define SNAKEBITE_SNAKE_PEICE_H_
 
 #include <atomic>
+#include <functional>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/util.h>
@@ -22,13 +23,18 @@ class GameSession;
 class Snake : public GameObject
 {
 public:
+	using EventHandler = std::function<void(Snake&)>;
 	using CollisionSet = std::set<GameObject*>;
 
 	Snake(GameSession& game_session, const Position2D& pos, double radius
-		, const Degree& angle, double velocity, double ang_vel, int len);
+		, const Degree& angle, double velocity, double ang_vel, int len
+		, EventHandler onDie = EventHandler());
 	virtual ~Snake();
 
 	void Move(const DirVector2D& diff_vec);
+
+	//@thread-safe: atomic once
+	void Die();
 
 	void SetAngle(const Degree& angle)
 	{
@@ -72,6 +78,9 @@ private:
 	//CollisionSet collision_set_;
 
 	std::atomic<PlayerKey> last_pk_{ PK_NONE };
+
+	std::atomic<bool> isAlive_{ true };
+	EventHandler onDie_;
 };
 using SnakeSP = std::shared_ptr<Snake>;
 using SnakeWP = std::weak_ptr<Snake>;

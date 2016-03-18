@@ -82,12 +82,18 @@ void SnakeNpcControlManager::ChangeNpcDirection(int64_t diff_in_ms)
 
 std::weak_ptr<Snake> SnakeNpcControlManager::AddSnakeNpc()
 {
-	//auto snake = AddSnake();
-	auto snake = game_session_.AddSnake();
+	auto snake = game_session_.AddSnake(
+		/* onDie */
+		[this_ = this](Snake& snake)
+		{
+			this_->AddSnakeNpc();	// Á×À¸¸é ´ÙÀ½²¨ »ý¼º
+		}
+	);
 
+	if (auto snakesp = snake.lock())
 	{
 		std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
-		snake_npcs_.emplace(snake.get(), snake);
+		snake_npcs_.emplace(snakesp.get(), snake);
 	}
 	return snake;
 }

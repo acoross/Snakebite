@@ -5,10 +5,13 @@
 namespace acoross {
 namespace snakebite {
 
-Snake::Snake(GameSession& game_session, const Position2D & pos, double radius, const Degree & angle, double velocity, double ang_vel, int len)
+Snake::Snake(GameSession& game_session, const Position2D & pos, double radius, 
+	const Degree & angle, double velocity, double ang_vel, int len, 
+	EventHandler onDie)
 	: GameObject(game_session.GetContainer(), new SnakeCollider(this), pos, radius)
 	, game_session_(game_session)
 	, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
+	, onDie_(onDie)
 {
 	for (int i = 0; i < len; ++i)
 	{
@@ -17,7 +20,8 @@ Snake::Snake(GameSession& game_session, const Position2D & pos, double radius, c
 }
 
 Snake::~Snake()
-{	
+{
+
 }
 
 void Snake::Move(const DirVector2D & diff_vec)
@@ -49,6 +53,22 @@ void Snake::Move(const DirVector2D & diff_vec)
 
 		pos_prev_node = mo.GetPosition();
 		mo.Move(diff_move, container_);
+	}
+}
+
+//@thread-safe: atomic once
+
+void Snake::Die()
+{
+	bool expAlive = true;
+	if (isAlive_.compare_exchange_strong(expAlive, false))
+	{
+		if (onDie_)
+		{
+			onDie_(*this);
+		}
+
+		game_session_.RemoveSnake(this);
 	}
 }
 

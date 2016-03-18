@@ -34,7 +34,7 @@ public:
 		return npc_controll_manager_.AddSnakeNpc();
 	}
 
-	SnakeSP AddSnake();
+	SnakeWP AddSnake(Snake::EventHandler onDieHandler = Snake::EventHandler());
 	void AddApple();
 	bool RemoveSnake(Snake* snake);
 	bool RemoveApple(Apple* apple);

@@ -56,7 +56,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			else if (wParam == VK_RETURN)
 			{
 				g_game_session->AddSnakeNpc();
-				//g_game_session->AddSnake();
 			}
 			else if (wParam == VK_SPACE)
 			{
