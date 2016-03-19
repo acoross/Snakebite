@@ -72,8 +72,10 @@ static void updateMoveSnake(std::shared_ptr<Snake>& snake, int64_t diff_in_ms)
 
 void GameSession::UpdateMove(int64_t diff_in_ms)
 {
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+	//std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+	snakes_mutex_.lock();
 	auto snakes = snakes_;
+	snakes_mutex_.unlock();
 
 	npc_controll_manager_.ChangeNpcDirection(diff_in_ms);
 
@@ -86,10 +88,11 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 
 void GameSession::ProcessCollisions()
 {
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	
+	//std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+	snakes_mutex_.lock();
 	MapSnake snakes = snakes_;
 	ListApple apples = apples_;
+	snakes_mutex_.unlock();
 
 	for (auto& snake1 : snakes)
 	{

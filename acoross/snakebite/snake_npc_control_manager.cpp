@@ -86,6 +86,7 @@ std::weak_ptr<Snake> SnakeNpcControlManager::AddSnakeNpc()
 		/* onDie */
 		[this_ = this](Snake& snake)
 		{
+			this_->RemoveSnakeNpc(&snake);
 			this_->AddSnakeNpc();	// Á×À¸¸é ´ÙÀ½²¨ »ý¼º
 		}
 	);

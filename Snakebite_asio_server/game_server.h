@@ -5,6 +5,7 @@
 #include <iostream>
 #include <exception>
 #include <memory>
+#include <atomic>
 
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -90,6 +91,9 @@ public:
 		do_accept();
 	}
 
+	std::atomic<double> mean_move_time_ms_{ 0 };
+	std::atomic<double> mean_collision_time_ms_{ 0 };
+
 private:
 	void do_update_game_session()
 	{
@@ -100,7 +104,14 @@ private:
 		//for (;diff > FRAME_TICK; diff -= FRAME_TICK)
 		{
 			game_session_->UpdateMove(FRAME_TICK);
+			double after_move_tick = static_cast<double>(::GetTickCount64());
+			double new_mean_move = mean_move_time_ms_.load() * 0.9 + (after_move_tick - current_tick) * 0.1;
+			mean_move_time_ms_.store(new_mean_move);
+
 			game_session_->ProcessCollisions();
+			double after_collision_tick = static_cast<double>(::GetTickCount64());
+			double new_mean_collision = mean_collision_time_ms_.load() * 0.9 + (after_collision_tick - after_move_tick) * 0.1;
+			mean_collision_time_ms_.store(new_mean_collision);
 		}
 
 		last_tick = current_tick;

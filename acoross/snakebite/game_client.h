@@ -39,10 +39,14 @@ public:
 			// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
 			// 복사생성은 비싸지 않은 작업이라고 생각했다.
 
+			double before_tick = ::GetTickCount64();
 			game_session_.LockSnakes().lock();
 				auto snake_pairs = game_session_.CloneSnakeList();
 				auto apples = game_session_.CloneAppleList();
 			game_session_.LockSnakes().unlock();
+			double after_tick = ::GetTickCount64();
+
+			double diff_tick = after_tick - before_tick;
 
 			auto player = player_.lock();
 			for (auto& snake_pair : snake_pairs)
