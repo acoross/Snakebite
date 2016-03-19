@@ -14,20 +14,13 @@ namespace acoross {
 namespace snakebite {
 
 
-GameSession::GameSession(unsigned int init_snake_count, unsigned int init_apple_count)
+GameSession::GameSession(unsigned int init_apple_count, int width, int height)
 	: npc_controll_manager_(*this)
-	, container_(0, 500, 0, 500)	//container size
+	, container_(0, width, 0, height)	//container size
 {	
-	_ASSERT(init_snake_count < 10000);
-
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
 	random_engine_.seed((unsigned int)t.time_since_epoch().count());
-
-	/*for (unsigned int i = 0; i < init_snake_count; ++i)
-	{
-		AddSnakeNpc();
-	}*/
 
 	for (unsigned int i = 0; i < init_apple_count; ++i)
 	{

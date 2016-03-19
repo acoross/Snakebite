@@ -11,12 +11,11 @@
 #include <atomic>
 
 #include <acoross/snakebite/game_session.h>
-#include <acoross/snakebite/game_client.h>
+#include "game_client.h"
 #include "game_server.h"
 
 using namespace acoross::snakebite;
 
-std::shared_ptr<GameSession> g_game_session;
 std::unique_ptr<GameClient> g_game_client;
 std::weak_ptr<GameServer> g_game_server_wp;
 
@@ -63,11 +62,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			}
 			else if (wParam == VK_RETURN)
 			{
-				g_game_session->AddSnakeNpc();
+				if (auto server = g_game_server_wp.lock())
+				{
+					server->RequestToSession(
+						[](GameSession& session)
+					{
+						session.AddSnakeNpc();
+					});
+				}
 			}
 			else if (wParam == VK_SPACE)
 			{
-				g_game_session->AddApple();
+				if (auto server = g_game_server_wp.lock())
+				{
+					server->RequestToSession(
+						[](GameSession& session)
+					{
+						session.AddApple();
+					});
+				}
 			}
 			else if (wParam == VK_F5)
 			{
@@ -113,7 +126,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				wchar_t outBuf[1000] = { 0, };
 				::StringCchPrintfW(
 					outBuf, 1000,
-					L"snakes: %d, apples: %d, \n"
+					//L"snakes: %d, apples: %d, \n"
 					L"mean move time: %.4f(ms), \n"
 					L"mean collision time: %.4f(ms)\n"
 					L"mean clone time: %.4f(ms)\n"
@@ -121,8 +134,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					L"mean total draw time: %.4f(ms)\n"
 					L"mean real draw time: %.4f(ms)\n"
 					,
-					g_game_session->CalculateSnakeCount(),
-					g_game_session->CalculateAppleCount(),
+					//g_game_session->CalculateSnakeCount(), g_game_session->CalculateAppleCount(),
 					game_server->mean_move_time_ms_.load(),
 					game_server->mean_collision_time_ms_.load(),
 					game_server->mean_clone_object_time_ms_.load(),
@@ -158,22 +170,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	// TODO: 여기에 코드를 입력합니다.
-	g_game_session = std::make_shared<GameSession>();
-	g_game_client = std::make_unique<GameClient>(*g_game_session.get());
-
-	// 응용 프로그램 초기화를 수행합니다.
-	acoross::Win::Window window(hInstance);
-	window.MyRegisterClass(WndProc);
-	if (!window.InitInstance(nCmdShow))
-	{
-		return FALSE;
-	}
-
 	boost::asio::io_service io_service;
 	auto server = std::make_shared<GameServer>(
-		io_service, 22000, g_game_session
+		io_service, 22000
 		);
+
+	g_game_client = std::make_unique<GameClient>(*server);
 	g_game_server_wp = server;
+
 	server->AddUpdateEventListner(
 		"client",
 		[client = g_game_client.get()](GameSession& session)
@@ -185,11 +189,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	std::thread game_thread(
 		[&io_service]()
-		{
-			io_service.run();
-		}
+	{
+		io_service.run();
+	}
 	);
-
+	
+	// 응용 프로그램 초기화를 수행합니다.
+	acoross::Win::Window window(hInstance);
+	window.MyRegisterClass(WndProc);
+	if (!window.InitInstance(nCmdShow))
+	{
+		return FALSE;
+	}
+	
 	auto loop = [](MSG& msg)
 	{
 		static DWORD lasttick2draw = ::GetTickCount();

@@ -71,9 +71,6 @@
     <ClInclude Include="..\acoross\snakebite\win\Resource.h">
       <Filter>lib\win</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_client.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\apple.h">
       <Filter>game_session</Filter>
     </ClInclude>
@@ -82,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\util.h">
       <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="game_client.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

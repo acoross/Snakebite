@@ -11,6 +11,7 @@
 #include <acoross/snakebite/game_session.h>
 #include <acoross/snakebite/game_object.h>
 #include <acoross/snakebite/snake.h>
+#include "game_server.h"
 
 namespace acoross {
 namespace snakebite {
@@ -18,8 +19,8 @@ namespace snakebite {
 class GameClient final
 {
 public:
-	GameClient(GameSession& game_session)
-		: game_session_(game_session)
+	GameClient(GameServer& game_server)
+		: game_server_(game_server)
 	{}
 	virtual ~GameClient(){}
 
@@ -55,10 +56,6 @@ public:
 		std::list<std::pair<Snake*, GameObjectClone>> snake_pairs;
 		std::list<GameObjectClone> apples;
 		RetrieveObjectList(snake_pairs, apples);
-		/*
-		auto snake_pairs = game_session_.CloneSnakeList();
-		auto apples = game_session_.CloneAppleList();
-		*/
 		//
 
 		acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
@@ -68,9 +65,8 @@ public:
 		double ratio = 1.0;
 
 		// 테두리 그리기
-		auto& cont = game_session_.GetContainer();
-		memdc.Rectangle(cont.Left, cont.Top,
-			cont.Right, cont.Bottom);
+		memdc.Rectangle(0, 0,
+			game_server_.Width, game_server_.Height);
 		
 		// TODO
 		// 화면과 game_session 크기를 고려해 ratio 를 정한 뒤,
@@ -108,12 +104,15 @@ public:
 	//@lock
 	void InitPlayer()
 	{
-		if (auto player = player_.lock())
+		game_server_.RequestToSession(
+			[_this = this](GameSession& session)
 		{
-			game_session_.RemoveSnake(player.get());
-		}
-
-		player_ = game_session_.AddSnake();
+			if (auto player = _this->player_.lock())
+			{
+				session.RemoveSnake(player.get());
+			}
+			_this->player_ = session.AddSnake();
+		});
 	}
 	//
 
@@ -138,7 +137,7 @@ public:
 	std::atomic<double> mean_draw_time_ms_{ 0 };
 private:
 	//@need GameSession::snakes_mutex_ locked
-	void DrawSnake(Win::WDC& wdc, GameObjectClone& snake)
+	static void DrawSnake(Win::WDC& wdc, GameObjectClone& snake)
 	{
 		DrawMovingObject(wdc, snake.head_);
 		for (auto& body : snake.body_list_)
@@ -146,7 +145,7 @@ private:
 			DrawMovingObject(wdc, body);
 		}
 	}
-	void DrawMovingObject(Win::WDC& wdc, MovingObject& mo)
+	static void DrawMovingObject(Win::WDC& wdc, MovingObject& mo)
 	{
 		const int radius = (int)mo.GetRadius();
 		const auto pos = mo.GetPosition();
@@ -158,8 +157,11 @@ private:
 	}
 	//
 
+	//FIXME: !!! player_ 는 atomic 이어야 한다.
+		// 그러려면 Snake 가 copyable 이어야 함 -> 수정!
+	//std::atomic<std::weak_ptr<Snake>> player_;
 	std::weak_ptr<Snake> player_;
-	GameSession& game_session_;
+	GameServer& game_server_;
 
 	std::mutex clone_list_mutex_;
 	std::list<std::pair<Snake*, GameObjectClone>> snake_clone_list_;

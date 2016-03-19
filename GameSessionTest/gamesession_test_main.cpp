@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 		std::cout << "count: " << init_apple_count << std::endl;
 	}
 	
-	std::unique_ptr<GameSession> gamesession = std::make_unique<GameSession>(init_snake_count, init_apple_count);
+	std::unique_ptr<GameSession> gamesession = std::make_unique<GameSession>(init_apple_count, 500, 500);
 
 	for (unsigned int i = 0; i < init_snake_count; ++i)
 	{

@@ -22,7 +22,7 @@ class GameSession final
 public:
 	using ListMovingObject = MovingObjectContainer::ListMovingObject;
 	
-	explicit GameSession(unsigned int init_snake_count = 1, unsigned int init_apple_count = 20);
+	explicit GameSession(unsigned int init_apple_count = 20, int width = 500, int height = 500);
 	~GameSession();
 
 	// use lock
