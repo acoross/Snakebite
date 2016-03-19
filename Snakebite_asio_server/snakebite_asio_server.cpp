@@ -92,54 +92,51 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			RECT client_rect;
 			::GetClientRect(hWnd, &client_rect);
 
-			double beforeDrawTick = static_cast<double>(::GetTickCount64());
-				PAINTSTRUCT ps;
-				acoross::Win::WDC wdc(::BeginPaint(hWnd, &ps));
-				// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
-				acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
-				static HBITMAP hbitmap = ::CreateCompatibleBitmap(memdc.Get(), client_rect.right, client_rect.bottom);
-				HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
+			PAINTSTRUCT ps;
+			acoross::Win::WDC wdc(::BeginPaint(hWnd, &ps));
+			
+			// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
+			{
+				MeanProcessTimeChecker mean_draw(mean_draw_time_ms);
+				g_game_client->Draw(wdc, client_rect);
+			}
 
-				//g_game_drawer->Draw(memdc);
+			// performance monitor
+			if (auto game_server = g_game_server_wp.lock())
+			{
+				RECT rect{
+					10,
+					10,
+					300,
+					150
+				};
 
-				g_game_client->Draw(memdc);
-				
-				if (auto game_server = g_game_server_wp.lock())
-				{
-					RECT rect{ 
-						g_game_session->GetContainer().Right + 10,
-						10,
-						g_game_session->GetContainer().Right + 300,
-						110
-					};
+				wchar_t outBuf[1000] = { 0, };
+				::StringCchPrintfW(
+					outBuf, 1000,
+					L"snakes: %d, apples: %d, \n"
+					L"mean move time: %.4f(ms), \n"
+					L"mean collision time: %.4f(ms)\n"
+					L"mean clone time: %.4f(ms)\n"
+					L"mean server tick time: %.4f(ms)\n"
+					L"mean total draw time: %.4f(ms)\n"
+					L"mean real draw time: %.4f(ms)\n"
+					,
+					g_game_session->CalculateSnakeCount(),
+					g_game_session->CalculateAppleCount(),
+					game_server->mean_move_time_ms_.load(),
+					game_server->mean_collision_time_ms_.load(),
+					game_server->mean_clone_object_time_ms_.load(),
+					game_server->mean_tick_time_ms_.load(),
+					mean_draw_time_ms.load(),
+					g_game_client->mean_draw_time_ms_.load()
+				);
 
-					//::FillRect(wdc.Get(), &rect, ::GetSysColorBrush(0));
+				size_t str_len = 0;
+				::StringCchLengthW(outBuf, 1000, &str_len);
 
-					wchar_t outBuf[1000] = { 0, };
-					::StringCchPrintfW(outBuf, 1000,
-						L"snakes: %d, apples: %d, \n"
-						L"mean move time: %.4f(ms), \n"
-						L"mean collision time: %.4f(ms)\n"
-						L"mean draw time: %.4f(ms)\n",
-						g_game_session->CalculateSnakeCount(),
-						g_game_session->CalculateAppleCount(),
-						game_server->mean_move_time_ms_.load(),
-						game_server->mean_collision_time_ms_.load(),
-						mean_draw_time_ms.load());
-
-					size_t str_len = 0;
-					::StringCchLengthW(outBuf, 1000, &str_len);
-
-					::DrawTextW(memdc.Get(), outBuf, (int)str_len, &rect, DT_CENTER);
-				}
-
-				::BitBlt(wdc.Get(), 0, 0, client_rect.right, client_rect.bottom, memdc.Get(), 0, 0, SRCCOPY);
-
-				::SelectObject(memdc.Get(), oldbit);
-				::DeleteObject(memdc.Get());
-			double afterDrawTick = static_cast<double>(::GetTickCount64());
-			double new_mean_draw = mean_draw_time_ms.load() * 0.9 + (afterDrawTick - beforeDrawTick) * 0.1;
-			mean_draw_time_ms.store(new_mean_draw);
+				::DrawTextW(wdc.Get(), outBuf, (int)str_len, &rect, DT_CENTER);
+			}
 
 			::EndPaint(hWnd, &ps);
 		}
@@ -176,11 +173,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 
 	boost::asio::io_service io_service;
+	auto server = std::make_shared<GameServer>(
+		io_service, 22000, g_game_session
+		);
+	g_game_server_wp = server;
+	server->AddUpdateEventListner(
+		"client",
+		[client = g_game_client.get()](GameSession& session)
+	{
+		auto snake_list = session.CloneSnakeList();
+		auto apple_list = session.CloneAppleList();
+		client->SetObjectList(std::move(snake_list), std::move(apple_list));
+	});
+
 	std::thread game_thread(
 		[&io_service]()
 		{
-			auto server = std::make_shared<GameServer>(io_service, 22000, g_game_session);
-			g_game_server_wp = server;
 			io_service.run();
 		}
 	);

@@ -1,4 +1,0 @@
-#ifndef ACOROSS_UTIL_H_
-#define ACOROSS_UTIL_H_
-
-#endif //ACOROSS_CPP_UTIL_H_

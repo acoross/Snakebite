@@ -2,7 +2,6 @@
 #define SNAKEBITE_GAME_OBJECT_H_
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
-#include <acoross/util.h>
 #include "snake_collider.h"
 
 namespace acoross {

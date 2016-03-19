@@ -10,6 +10,7 @@
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
+#include <acoross/snakebite/util.h>
 #include <acoross/snakebite/game_session.h>
 #include <acoross/snakebite/snake.h>
 
@@ -78,6 +79,8 @@ private:
 class GameServer
 {
 public:
+	using EventHandler = std::function<void(GameSession&)>;
+
 	GameServer(boost::asio::io_service& io_service
 		, short port
 		, std::shared_ptr<GameSession> game_session
@@ -91,31 +94,50 @@ public:
 		do_accept();
 	}
 
+	void AddUpdateEventListner(std::string name, EventHandler on_update)
+	{
+		std::lock_guard<std::mutex> lock(update_handler_mutex_);
+		on_update_event_listeners_[name] = on_update;
+	}
+
 	std::atomic<double> mean_move_time_ms_{ 0 };
 	std::atomic<double> mean_collision_time_ms_{ 0 };
+	std::atomic<double> mean_clone_object_time_ms_{ 0 };
+	std::atomic<double> mean_tick_time_ms_{ 0 };
 
 private:
 	void do_update_game_session()
 	{
+		MeanProcessTimeChecker mean_tick(mean_tick_time_ms_);
+
 		static uint64_t last_tick = ::GetTickCount64();
 		uint64_t current_tick = ::GetTickCount64();
 		uint64_t diff = current_tick - last_tick;
 
 		//for (;diff > FRAME_TICK; diff -= FRAME_TICK)
 		{
+			MeanProcessTimeChecker mean_move(mean_move_time_ms_);
 			game_session_->UpdateMove(FRAME_TICK);
-			double after_move_tick = static_cast<double>(::GetTickCount64());
-			double new_mean_move = mean_move_time_ms_.load() * 0.9 + (after_move_tick - current_tick) * 0.1;
-			mean_move_time_ms_.store(new_mean_move);
-
+		}
+		
+		{
+			MeanProcessTimeChecker mean_collision(mean_collision_time_ms_);
 			game_session_->ProcessCollisions();
-			double after_collision_tick = static_cast<double>(::GetTickCount64());
-			double new_mean_collision = mean_collision_time_ms_.load() * 0.9 + (after_collision_tick - after_move_tick) * 0.1;
-			mean_collision_time_ms_.store(new_mean_collision);
+		}
+
+		{
+			MeanProcessTimeChecker mean_clone(mean_clone_object_time_ms_);
+			std::lock_guard<std::mutex> lock(update_handler_mutex_);
+			for (auto& pair : on_update_event_listeners_)
+			{
+				auto& listner = pair.second;
+				listner(*game_session_);
+			}
+			mean_clone.~MeanProcessTimeChecker();
 		}
 
 		last_tick = current_tick;
-
+		
 		game_update_timer_.expires_from_now(boost::posix_time::milliseconds(FRAME_TICK));
 		game_update_timer_.async_wait(
 			[this](boost::system::error_code ec)
@@ -148,6 +170,9 @@ private:
 	
 	boost::asio::deadline_timer game_update_timer_;
 	std::shared_ptr<GameSession> game_session_;
+
+	std::mutex update_handler_mutex_;
+	std::map<std::string, EventHandler> on_update_event_listeners_;
 };
 
 }

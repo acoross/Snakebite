@@ -16,6 +16,7 @@ namespace snakebite {
 
 GameSession::GameSession(unsigned int init_snake_count, unsigned int init_apple_count)
 	: npc_controll_manager_(*this)
+	, container_(0, 500, 0, 500)	//container size
 {	
 	_ASSERT(init_snake_count < 10000);
 

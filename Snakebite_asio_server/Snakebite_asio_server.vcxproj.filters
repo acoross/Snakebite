@@ -80,6 +80,9 @@
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h">
       <Filter>game_session</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\util.h">
+      <Filter>lib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc">

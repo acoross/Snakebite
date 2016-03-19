@@ -5,7 +5,6 @@
 #include <functional>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
-#include <acoross/util.h>
 #include "game_object.h"
 
 namespace acoross {

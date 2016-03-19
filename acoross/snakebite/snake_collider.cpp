@@ -21,10 +21,6 @@ void DummyCollider::Collide(AppleCollider& other, int cnt)
 void SnakeCollider::Collide(SnakeCollider& other, int cnt)
 {
 	owner_->Die();
-	//if (owner_->game_session_.RemoveSnake(owner_))
-	//{
-	//	//owner_->game_session_.AddSnake();
-	//}
 
 	return;
 }

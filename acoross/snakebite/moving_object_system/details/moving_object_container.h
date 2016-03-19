@@ -12,12 +12,16 @@ namespace snakebite {
 
 class MovingObject;
 
-class MovingObjectContainer
+class MovingObjectContainer final
 {
 public:
 	using MovingObjectSP = std::shared_ptr<MovingObject>;
 	using MovingObjectWP = std::weak_ptr<MovingObject>;
 	typedef std::list<MovingObjectSP> ListMovingObject;
+
+	MovingObjectContainer(int left, int right, int top, int bottom)
+		: Left(left), Right(right), Top(top), Bottom(bottom)
+	{}
 
 	// game field APIs
 	const int Left{ 0 };

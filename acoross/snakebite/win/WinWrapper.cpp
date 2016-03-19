@@ -49,7 +49,7 @@ ATOM Window::MyRegisterClass(WndProcFunc* func)
 BOOL Window::InitInstance(int nCmdShow)
 {
 	HWND hWnd = CreateWindowW(szWindowClass_, szTitle_, WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInst_, nullptr);
+		CW_USEDEFAULT, 0, 1000, 1000, nullptr, nullptr, hInst_, nullptr);
 
 	if (!hWnd)
 	{
