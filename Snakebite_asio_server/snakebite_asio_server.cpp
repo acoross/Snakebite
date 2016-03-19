@@ -123,24 +123,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					150
 				};
 
+				game_server->RequestToSession(
+					[client = g_game_client.get()](GameSession& session)
+				{
+					client->apple_count_.store(session.CalculateAppleCount());
+					client->snake_count_.store(session.CalculateSnakeCount());
+				});
+
 				wchar_t outBuf[1000] = { 0, };
 				::StringCchPrintfW(
 					outBuf, 1000,
-					//L"snakes: %d, apples: %d, \n"
+					L"snakes: %d, apples: %d, \n"
 					L"mean move time: %.4f(ms), \n"
 					L"mean collision time: %.4f(ms)\n"
 					L"mean clone time: %.4f(ms)\n"
 					L"mean server tick time: %.4f(ms)\n"
 					L"mean total draw time: %.4f(ms)\n"
 					L"mean real draw time: %.4f(ms)\n"
+					L"mean frame tick: %.4f(ms)\n"
 					,
-					//g_game_session->CalculateSnakeCount(), g_game_session->CalculateAppleCount(),
+					g_game_client->snake_count_.load(), g_game_client->apple_count_.load(),
 					game_server->mean_move_time_ms_.load(),
 					game_server->mean_collision_time_ms_.load(),
 					game_server->mean_clone_object_time_ms_.load(),
 					game_server->mean_tick_time_ms_.load(),
 					mean_draw_time_ms.load(),
-					g_game_client->mean_draw_time_ms_.load()
+					g_game_client->mean_draw_time_ms_.load(),
+					game_server->mean_frame_tick_.load()
 				);
 
 				size_t str_len = 0;

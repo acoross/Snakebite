@@ -134,6 +134,8 @@ public:
 	}
 	//
 
+	std::atomic<int> snake_count_{ 0 };
+	std::atomic<int> apple_count_{ 0 };
 	std::atomic<double> mean_draw_time_ms_{ 0 };
 private:
 	//@need GameSession::snakes_mutex_ locked
@@ -157,8 +159,8 @@ private:
 	}
 	//
 
-	//FIXME: !!! player_ 는 atomic 이어야 한다.
-		// 그러려면 Snake 가 copyable 이어야 함 -> 수정!
+	//FIXME: !!! player_ 의 exchange 가 atomic 해야함
+	// lock 을 추가하던지 뭔가 코드 수정 필요.
 	//std::atomic<std::weak_ptr<Snake>> player_;
 	std::weak_ptr<Snake> player_;
 	GameServer& game_server_;

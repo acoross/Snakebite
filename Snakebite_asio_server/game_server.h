@@ -117,15 +117,20 @@ public:
 	std::atomic<double> mean_collision_time_ms_{ 0 };
 	std::atomic<double> mean_clone_object_time_ms_{ 0 };
 	std::atomic<double> mean_tick_time_ms_{ 0 };
+	std::atomic<double> mean_frame_tick_{ 0 };
 
 private:
 	void do_update_game_session()
 	{
 		MeanProcessTimeChecker mean_tick(mean_tick_time_ms_);
+		game_update_timer_.expires_from_now(boost::posix_time::milliseconds(FRAME_TICK));
 
 		static uint64_t last_tick = ::GetTickCount64();
 		uint64_t current_tick = ::GetTickCount64();
 		uint64_t diff = current_tick - last_tick;
+
+		double new_mean_time = mean_frame_tick_.load() * 0.9 + diff * 0.1;
+		mean_frame_tick_.store((double)new_mean_time);
 
 		{
 			MeanProcessTimeChecker mean_move(mean_move_time_ms_);
@@ -148,8 +153,7 @@ private:
 		}
 
 		last_tick = current_tick;
-		
-		game_update_timer_.expires_from_now(boost::posix_time::milliseconds(FRAME_TICK));
+				
 		game_update_timer_.async_wait(
 			[this](boost::system::error_code ec)
 		{
@@ -174,7 +178,7 @@ private:
 		});
 	}
 
-	const int FRAME_TICK{ 66 };
+	const int FRAME_TICK{ 33 };
 
 	boost::asio::io_service& io_service_;
 	tcp::acceptor acceptor_;
