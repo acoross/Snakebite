@@ -1,4 +1,3 @@
-//#include "SnakebiteM1.h"
 #include <acoross/snakebite/win/Resource.h>
 #include <acoross/snakebite/win/WinWrapper.h>
 
@@ -159,9 +158,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	// TODO: 여기에 코드를 입력합니다.
-	using namespace acoross::snakebite;
 	g_game_session = std::make_shared<GameSession>();
-	//g_game_drawer = std::make_unique<GameSessionDrawer>(*g_game_session.get());
 	g_game_client = std::make_unique<GameClient>(*g_game_session.get());
 
 	// 응용 프로그램 초기화를 수행합니다.
