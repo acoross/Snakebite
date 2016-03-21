@@ -68,7 +68,7 @@ void Snake::Die()
 			onDie_(*this);
 		}
 
-		game_session_.RemoveSnake(this);
+		game_session_.RemoveSnake(Handle<Snake>(this).handle);
 	}
 }
 

@@ -32,7 +32,7 @@ public:
 	{
 		if (auto my_snake = user_snake_.lock())
 		{
-			game_session_->RemoveSnake(my_snake.get());
+			game_session_->RemoveSnake(Handle<Snake>(my_snake.get()).handle);
 		}
 	}
 

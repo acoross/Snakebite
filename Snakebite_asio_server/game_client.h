@@ -25,7 +25,7 @@ public:
 	virtual ~GameClient(){}
 
 	void SetObjectList(
-		std::list<std::pair<Snake*, GameObjectClone>>&& snake_clone_list,
+		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&& snake_clone_list,
 		std::list<GameObjectClone>&& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
@@ -35,7 +35,7 @@ public:
 	}
 
 	void RetrieveObjectList(
-		std::list<std::pair<Snake*, GameObjectClone>>& snake_clone_list,
+		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list,
 		std::list<GameObjectClone>& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
@@ -53,7 +53,7 @@ public:
 
 		// snake 와 apple 의 복제본 리스트를 받아온 뒤 화면에 그린다.
 		// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
-		std::list<std::pair<Snake*, GameObjectClone>> snake_pairs;
+		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_pairs;
 		std::list<GameObjectClone> apples;
 		RetrieveObjectList(snake_pairs, apples);
 		//
@@ -77,7 +77,7 @@ public:
 			auto player = player_.lock();
 			for (auto& snake_pair : snake_pairs)
 			{
-				if (snake_pair.first == player.get())
+				if (snake_pair.first == Handle<Snake>(player.get()).handle)
 				{
 					HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(BLACK_BRUSH));
 					DrawSnake(memdc, snake_pair.second);
@@ -109,7 +109,7 @@ public:
 		{
 			if (auto player = _this->player_.lock())
 			{
-				session.RemoveSnake(player.get());
+				session.RemoveSnake(Handle<Snake>(player.get()).handle);
 			}
 			_this->player_ = session.AddSnake();
 		});
@@ -166,7 +166,7 @@ private:
 	GameServer& game_server_;
 
 	std::mutex clone_list_mutex_;
-	std::list<std::pair<Snake*, GameObjectClone>> snake_clone_list_;
+	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_clone_list_;
 	std::list<GameObjectClone> apple_clone_list_;
 	std::atomic<bool> clone_list_changed_{ false };
 };

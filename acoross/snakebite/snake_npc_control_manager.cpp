@@ -80,7 +80,8 @@ std::weak_ptr<Snake> SnakeNpcControlManager::AddSnakeNpc()
 		/* onDie */
 		[this_ = this](Snake& snake)
 		{
-			this_->RemoveSnakeNpc(&snake);
+
+			this_->RemoveSnakeNpc(Handle<Snake>(snake).handle);
 			this_->AddSnakeNpc();	// Á×À¸¸é ´ÙÀ½²¨ »ý¼º
 		}
 	);
@@ -88,12 +89,12 @@ std::weak_ptr<Snake> SnakeNpcControlManager::AddSnakeNpc()
 	if (auto snakesp = snake.lock())
 	{
 		std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
-		snake_npcs_.emplace(snakesp.get(), snake);
+		snake_npcs_.emplace(Handle<Snake>(snakesp.get()).handle, snake);
 	}
 	return snake;
 }
 
-bool SnakeNpcControlManager::RemoveSnakeNpc(Snake* snake)
+bool SnakeNpcControlManager::RemoveSnakeNpc(Handle<Snake>::Type snake)
 {
 	{
 		std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);

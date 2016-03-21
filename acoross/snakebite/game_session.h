@@ -36,13 +36,13 @@ public:
 
 	SnakeWP AddSnake(Snake::EventHandler onDieHandler = Snake::EventHandler());
 	void AddApple();
-	bool RemoveSnake(Snake* snake);
+	bool RemoveSnake(Handle<Snake>::Type snake);
 	bool RemoveApple(Apple* apple);
 
-	std::list<std::pair<Snake*, GameObjectClone>> CloneSnakeList()
+	auto CloneSnakeList()
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		std::list<std::pair<Snake*, GameObjectClone>> snakes;
+		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snakes;
 		
 		for (auto pair : snakes_)
 		{
@@ -87,10 +87,10 @@ public:
 	//
 
 private:
-	using MapSnake = std::map<Snake*, SnakeSP>;
+	using MapSnake = std::map<Handle<Snake>::Type, SnakeSP>;
 	using ListApple = std::list<AppleSP>;
-	using CollisionMap = std::map<Snake*, GameObjectWP>;
-	using CollisionSet = std::set<Snake*>;
+	using CollisionMap = std::map<Handle<Snake>::Type, GameObjectWP>;
+	using CollisionSet = std::set<Handle<Snake>::Type>;
 
 	void ProcessCollisionToWall(SnakeSP actor);
 

@@ -84,6 +84,24 @@ private:
 using SnakeSP = std::shared_ptr<Snake>;
 using SnakeWP = std::weak_ptr<Snake>;
 
+template <typename T>
+class Handle final
+{
+public:
+	Handle()
+		: handle(0)
+	{}
+	Handle(const T& v)
+		: handle(reinterpret_cast<uintptr_t>(&v))
+	{}
+	Handle(T* ptr)
+		: handle(reinterpret_cast<uintptr_t>(ptr))
+	{}
+	
+	using Type = uintptr_t;
+	Type handle;
+};
+
 class SnakeHandle final
 {
 public:

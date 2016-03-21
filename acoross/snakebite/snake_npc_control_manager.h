@@ -16,7 +16,7 @@ class SnakeNpcControlManager final
 {
 public:
 	using SnakeWP = std::weak_ptr<Snake>;
-	using MapSnakeWP = std::map<Snake*, std::weak_ptr<Snake>>;
+	using MapSnakeWP = std::map<Handle<Snake>::Type, std::weak_ptr<Snake>>;
 
 	SnakeNpcControlManager(SnakeNpcControlManager&) = delete;
 	SnakeNpcControlManager& operator=(SnakeNpcControlManager&) = delete;
@@ -28,7 +28,7 @@ public:
 	void ChangeNpcDirection(int64_t diff_in_ms);
 
 	std::weak_ptr<Snake> AddSnakeNpc();
-	bool RemoveSnakeNpc(Snake* snake);
+	bool RemoveSnakeNpc(Handle<Snake>::Type snake);
 
 private:
 	std::default_random_engine random_engine_;

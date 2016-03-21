@@ -104,7 +104,7 @@ void GameSession::ProcessCollisions()
 	}
 }
 
-bool GameSession::RemoveSnake(Snake * snake)
+bool GameSession::RemoveSnake(Handle<Snake>::Type snake)
 {
 	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 
@@ -151,7 +151,7 @@ SnakeWP GameSession::AddSnake(Snake::EventHandler onDieHandler)
 
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		snakes_.emplace(snake.get(), snake);
+		snakes_.emplace(Handle<Snake>(snake.get()).handle, snake);
 	}
 	return snake;
 }
@@ -177,7 +177,7 @@ void GameSession::ProcessCollisionToWall(SnakeSP actor)
 	if (pos.x <= container_.Left + 1 || pos.x >= container_.Right - 1
 		|| pos.y <= container_.Top + 1 || pos.y >= container_.Bottom - 1)
 	{
-		auto ret = wall_collision_set_.insert(actor.get());
+		auto ret = wall_collision_set_.insert(Handle<Snake>(actor.get()).handle);
 		if (ret.second == true)
 		{
 			// onCollideBegin
@@ -197,7 +197,7 @@ void GameSession::ProcessCollisionToWall(SnakeSP actor)
 	}
 	else
 	{
-		if (wall_collision_set_.erase(actor.get()) > 0)
+		if (wall_collision_set_.erase(Handle<Snake>(actor.get()).handle) > 0)
 		{
 			// onCollideEnd
 		}
