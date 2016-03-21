@@ -84,6 +84,48 @@ private:
 using SnakeSP = std::shared_ptr<Snake>;
 using SnakeWP = std::weak_ptr<Snake>;
 
+class SnakeHandle final
+{
+public:
+	SnakeHandle()
+		: handle_(0)
+	{}
+
+	SnakeHandle(SnakeSP snake)
+		: handle_(reinterpret_cast<uintptr_t>(snake.get()))
+		, snake_wp_(snake)
+	{}
+
+	uintptr_t handle() const { return handle_; }
+	const SnakeSP get() const
+	{
+		if (const auto snake = snake_wp_.lock())
+		{
+			return snake;
+		}
+		return SnakeSP();
+	}
+
+	void SetKeyDown(PlayerKey player_key)
+	{
+		if (auto snake = snake_wp_.lock())
+		{
+			snake->SetKeyDown(player_key);
+		}
+	}
+	void SetKeyUp(PlayerKey player_key)
+	{
+		if (auto snake = snake_wp_.lock())
+		{
+			snake->SetKeyUp(player_key);
+		}
+	}
+
+private:
+	uintptr_t handle_;
+	SnakeWP snake_wp_;
+};
+
 }
 }
 

@@ -134,8 +134,8 @@ public:
 	}
 	//
 
-	std::atomic<int> snake_count_{ 0 };
-	std::atomic<int> apple_count_{ 0 };
+	std::atomic<size_t> snake_count_{ 0 };
+	std::atomic<size_t> apple_count_{ 0 };
 	std::atomic<double> mean_draw_time_ms_{ 0 };
 private:
 	//@need GameSession::snakes_mutex_ locked

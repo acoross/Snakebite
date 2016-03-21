@@ -37,16 +37,10 @@ static void changeDirection(std::default_random_engine& re, SnakeNpcControlManag
 			int p = unin(re);
 			if (p < 15) // 5 percent
 			{
-				auto ang_vel = snake->GetAngVelocity();
-				auto diff_ang = ang_vel * diff_in_ms * 10;
-				//snake->Turn(diff_ang);
 				snake->SetKeyDown(PK_LEFT);
 			}
 			else if (p < 30) // another 5 percent
 			{
-				auto ang_vel = snake->GetAngVelocity();
-				auto diff_ang = -ang_vel * diff_in_ms * 10;
-				//snake->Turn(diff_ang);
 				snake->SetKeyDown(PK_RIGHT);
 			}
 			else if (p < 45)
@@ -58,7 +52,7 @@ static void changeDirection(std::default_random_engine& re, SnakeNpcControlManag
 	}
 }
 
-SnakeNpcControlManager::SnakeNpcControlManager(GameSession & game_session)
+SnakeNpcControlManager::SnakeNpcControlManager(GameSession& game_session)
 	: game_session_(game_session)
 {
 	auto clock = std::chrono::high_resolution_clock();
@@ -99,21 +93,11 @@ std::weak_ptr<Snake> SnakeNpcControlManager::AddSnakeNpc()
 	return snake;
 }
 
-bool SnakeNpcControlManager::RemoveSnakeNpc(Snake * snake)
+bool SnakeNpcControlManager::RemoveSnakeNpc(Snake* snake)
 {
 	{
 		std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
-		for (auto it = snake_npcs_.begin(); it != snake_npcs_.end(); ++it)
-		{
-			if (auto sp = it->second.lock())
-			{
-				if (sp.get() == snake)
-				{
-					snake_npcs_.erase(it);
-					break;
-				}
-			}
-		}
+		snake_npcs_.erase(snake);
 	}
 	
 	return game_session_.RemoveSnake(snake);
