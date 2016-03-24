@@ -19,8 +19,8 @@ class MessageHandlerTable
 {
 public:
 	bool ProcessMessage(
-		UserSession& session, unsigned short message_type, char* data_body, unsigned int body_length, 
-		char* reply_buffer, unsigned int reply_length, unsigned int* reply_body_length)
+		UserSession& session, unsigned short message_type, char* data_body, size_t body_length, 
+		char* reply_buffer, size_t reply_length, size_t* reply_body_length)
 	{
 		if (reply_body_length == nullptr)
 		{
@@ -181,7 +181,7 @@ private:
 	{
 		// 3~4 byte ดย packet number;
 		SnakebiteMessage reply;
-		unsigned int reply_body_length = 0;
+		size_t reply_body_length = 0;
 
 		return 
 			message_handler_.ProcessMessage(

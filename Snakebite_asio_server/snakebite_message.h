@@ -65,14 +65,15 @@ public:
 		}
 
 		message_type_ = *reinterpret_cast<unsigned short*>(data_ + 2);
+		return true;
 	}
 
-	void encode_header()
+	/*void encode_header()
 	{
 		char header[header_length + 1] = "";
 		std::sprintf(header, "%4d", static_cast<int>(body_length_));
 		std::memcpy(data_, header, header_length);
-	}
+	}*/
 
 	unsigned short message_type() const
 	{
