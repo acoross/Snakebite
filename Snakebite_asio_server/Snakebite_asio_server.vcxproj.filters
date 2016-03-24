@@ -45,16 +45,19 @@
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp">
       <Filter>game_session</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\protos\snakebite_protocol.pb.cc">
-      <Filter>protos</Filter>
+    <ClCompile Include="snakebite_message_handler_table.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\chat_server.cpp">
-      <Filter>헤더 파일</Filter>
+    <ClCompile Include="UserSession.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc">
+      <Filter>protos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="..\acoross\snakebite\protos\snakebite_protocol.proto">
+    <None Include="..\acoross\snakebite\protos\snakebite_message.proto">
       <Filter>protos</Filter>
     </None>
   </ItemGroup>
@@ -95,17 +98,20 @@
     <ClInclude Include="game_client.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_protocol.pb.h">
-      <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\chat_message.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="snakebite_message.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="UserSession.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="snakebite_message_type.h">
+      <Filter>protos</Filter>
+    </ClInclude>
+    <ClInclude Include="snakebite_message_handler_table.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h">
+      <Filter>protos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

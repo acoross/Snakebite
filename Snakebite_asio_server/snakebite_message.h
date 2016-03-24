@@ -27,7 +27,7 @@ public:
 		return data_;
 	}
 
-	std::size_t length() const
+	unsigned short length() const
 	{
 		return header_length + body_length_;
 	}
@@ -42,12 +42,12 @@ public:
 		return data_ + header_length;
 	}
 
-	std::size_t body_length() const
+	unsigned short body_length() const
 	{
 		return body_length_;
 	}
 
-	void body_length(std::size_t new_length)
+	void body_length(unsigned short new_length)
 	{
 		body_length_ = new_length;
 		if (body_length_ > max_body_length)
@@ -68,12 +68,13 @@ public:
 		return true;
 	}
 
-	/*void encode_header()
+	void encode_header(unsigned short message_type)
 	{
-		char header[header_length + 1] = "";
-		std::sprintf(header, "%4d", static_cast<int>(body_length_));
-		std::memcpy(data_, header, header_length);
-	}*/
+		message_type_ = message_type;
+
+		*(unsigned short*)(&data_[0]) = body_length_;
+		*(unsigned short*)(&data_[2]) = message_type_;
+	}
 
 	unsigned short message_type() const
 	{
@@ -82,7 +83,7 @@ public:
 
 private:
 	char data_[header_length + max_body_length]{ '\0' };
-	std::size_t body_length_{ 0 };
+	unsigned short body_length_{ 0 };
 	unsigned short message_type_{ 0 };
 };
 

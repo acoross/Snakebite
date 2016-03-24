@@ -14,7 +14,8 @@ enum PlayerKey
 {
 	PK_NONE,
 	PK_RIGHT,
-	PK_LEFT
+	PK_LEFT,
+	PK_MAX
 };
 
 class GameSession;

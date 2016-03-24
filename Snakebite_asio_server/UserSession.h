@@ -1,77 +1,21 @@
 #ifndef SNAKEBITE_USER_SESSION_H_
 #define SNAKEBITE_USER_SESSION_H_
 
+#include <acoross/snakebite/win/WinWrapper.h>
+
 #include <memory>
 #include <boost/asio.hpp>
+#include <deque>
 
 #include "snakebite_message.h"
+#include "snakebite_message_handler_table.h"
 
-#include <acoross/snakebite/protos/snakebite_protocol.pb.h>
+#include <acoross/snakebite/protos/snakebite_message.pb.h>
 
 using boost::asio::ip::tcp;
 
 namespace acoross {
 namespace snakebite {
-
-class UserSession;
-
-class MessageHandlerTable
-{
-public:
-	bool ProcessMessage(
-		UserSession& session, unsigned short message_type, char* data_body, size_t body_length, 
-		char* reply_buffer, size_t reply_length, size_t* reply_body_length)
-	{
-		if (reply_body_length == nullptr)
-		{
-			return false;
-		}
-
-		enum class SnakebiteMessageType : unsigned short
-		{
-			None = 0,
-			Turn,
-			Max
-		};
-
-		if (message_type >= static_cast<unsigned short>(SnakebiteMessageType::Max))
-		{
-			return false;
-		}
-
-		auto message_type_typed = static_cast<SnakebiteMessageType>(message_type);
-		switch (message_type_typed)
-		{
-		case SnakebiteMessageType::Turn:
-			{
-				TurnKeyDownRequest rq;
-				rq.ParseFromArray(data_body, body_length);
-
-				TurnKeyDownReply rp;
-				
-				bool ret = TurnMessage(session, rq, &rp);
-				rp.SerializeToArray(reply_buffer, reply_length);
-				*reply_body_length = rp.ByteSize();
-
-				return ret;
-			}
-			break;
-		default:
-			break;
-		}
-
-		return false;
-	}
-
-	bool TurnMessage(UserSession& session, TurnKeyDownRequest rq, TurnKeyDownReply* rp)
-	{
-		
-
-		return true;
-	}
-};
-
-//----------------------------------------------------------------------
 
 using SnakebiteMessageQueue = std::deque<SnakebiteMessage>;
 
@@ -89,19 +33,9 @@ public:
 		end();
 	}
 
-	void start()
-	{
-		user_snake_ = game_session_->AddSnake();
-		do_read_header();
-	}
+	void start();
 
-	void end()
-	{
-		if (auto my_snake = user_snake_.lock())
-		{
-			game_session_->RemoveSnake(Handle<Snake>(my_snake.get()).handle);
-		}
-	}
+	void end();
 
 	void send(const SnakebiteMessage& msg)
 	{
@@ -112,6 +46,24 @@ public:
 			do_write();
 		}
 	}
+
+	// @atomic
+	void TurnKeyDown(PlayerKey pk)
+	{
+		if (auto player = user_snake_.lock())
+		{
+			player->SetKeyDown(pk);
+		}
+	}
+
+	void TurnKeyUp(PlayerKey pk)
+	{
+		if (auto player = user_snake_.lock())
+		{
+			player->SetKeyUp(pk);
+		}
+	}
+	//
 
 private:
 	void do_read_header()
@@ -179,15 +131,12 @@ private:
 
 	bool process_message(SnakebiteMessage msg)
 	{
-		// 3~4 byte ดย packet number;
 		SnakebiteMessage reply;
-		size_t reply_body_length = 0;
+		bool ret = message_handler_.ProcessMessage(*this, msg, &reply);
 
-		return 
-			message_handler_.ProcessMessage(
-			*this, 
-			msg.message_type(), msg.body(), msg.body_length(), 
-			reply.body(), reply.max_body_length, &reply_body_length);
+		send(reply);
+
+		return ret;
 	}
 
 	tcp::socket socket_;
@@ -199,7 +148,7 @@ private:
 	SnakebiteMessage read_msg_;
 	SnakebiteMessageQueue write_msgs_;
 
-	MessageHandlerTable message_handler_;
+	SnakebiteMessageHandlerTable message_handler_;
 };
 
 }
