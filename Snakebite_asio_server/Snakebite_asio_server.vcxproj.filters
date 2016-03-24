@@ -22,6 +22,9 @@
     <Filter Include="lib\win">
       <UniqueIdentifier>{11e9a164-1366-43fb-848b-47a5770c4599}</UniqueIdentifier>
     </Filter>
+    <Filter Include="protos">
+      <UniqueIdentifier>{d7610301-a541-4f6b-be9c-c243d0526d95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp">
@@ -42,9 +45,18 @@
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp">
       <Filter>game_session</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_protocol.pb.cc">
+      <Filter>protos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\chat_server.cpp">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\acoross\snakebite\protos\snakebite_protocol.proto">
+      <Filter>protos</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\game_object.h">
@@ -81,6 +93,15 @@
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="game_client.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_protocol.pb.h">
+      <Filter>protos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\chat_message.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="snakebite_message.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

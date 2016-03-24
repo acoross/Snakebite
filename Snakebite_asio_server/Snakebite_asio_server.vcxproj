@@ -114,7 +114,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\acoross\snakebite\chat_server.cpp" />
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_protocol.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\snake.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp" />
@@ -122,12 +124,15 @@
     <ClCompile Include="snakebite_asio_server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\acoross\snakebite\protos\snakebite_protocol.proto" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\apple.h" />
+    <ClInclude Include="..\acoross\snakebite\chat_message.hpp" />
     <ClInclude Include="..\acoross\snakebite\game_object.h" />
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_protocol.pb.h" />
     <ClInclude Include="..\acoross\snakebite\snake.h" />
     <ClInclude Include="..\acoross\snakebite\snake_collider.h" />
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h" />
@@ -137,6 +142,7 @@
     <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
     <ClInclude Include="game_client.h" />
     <ClInclude Include="game_server.h" />
+    <ClInclude Include="snakebite_message.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc" />
