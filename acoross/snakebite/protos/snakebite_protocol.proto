@@ -43,18 +43,18 @@ message HelloReply {
 
 //------------------------------
 message TurnKeyDownRequest {
-  required int key = 1;
+  required int32 key = 1;
 }
 
 message TurnKeyDownReply {
-  required int key = 1;
+  required int32 key = 1;
 }
 
 //------------------------------
 message TurnKeyUpRequest {
-  required int key = 1;
+  required int32 key = 1;
 }
 
 message TurnKeyUpReply {
-  required int key = 1;
+  required int32 key = 1;
 }

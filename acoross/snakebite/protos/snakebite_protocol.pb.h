@@ -36,6 +36,10 @@ void protobuf_ShutdownFile_snakebite_5fprotocol_2eproto();
 
 class HelloRequest;
 class HelloReply;
+class TurnKeyDownRequest;
+class TurnKeyDownReply;
+class TurnKeyUpRequest;
+class TurnKeyUpReply;
 
 // ===================================================================
 
@@ -211,6 +215,334 @@ class HelloReply : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static HelloReply* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class TurnKeyDownRequest : public ::google::protobuf::Message {
+ public:
+  TurnKeyDownRequest();
+  virtual ~TurnKeyDownRequest();
+
+  TurnKeyDownRequest(const TurnKeyDownRequest& from);
+
+  inline TurnKeyDownRequest& operator=(const TurnKeyDownRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TurnKeyDownRequest& default_instance();
+
+  void Swap(TurnKeyDownRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  TurnKeyDownRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const TurnKeyDownRequest& from);
+  void MergeFrom(const TurnKeyDownRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 key = 1;
+  inline bool has_key() const;
+  inline void clear_key();
+  static const int kKeyFieldNumber = 1;
+  inline ::google::protobuf::int32 key() const;
+  inline void set_key(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.TurnKeyDownRequest)
+ private:
+  inline void set_has_key();
+  inline void clear_has_key();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 key_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_snakebite_5fprotocol_2eproto();
+  friend void protobuf_AssignDesc_snakebite_5fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_snakebite_5fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static TurnKeyDownRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class TurnKeyDownReply : public ::google::protobuf::Message {
+ public:
+  TurnKeyDownReply();
+  virtual ~TurnKeyDownReply();
+
+  TurnKeyDownReply(const TurnKeyDownReply& from);
+
+  inline TurnKeyDownReply& operator=(const TurnKeyDownReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TurnKeyDownReply& default_instance();
+
+  void Swap(TurnKeyDownReply* other);
+
+  // implements Message ----------------------------------------------
+
+  TurnKeyDownReply* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const TurnKeyDownReply& from);
+  void MergeFrom(const TurnKeyDownReply& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 key = 1;
+  inline bool has_key() const;
+  inline void clear_key();
+  static const int kKeyFieldNumber = 1;
+  inline ::google::protobuf::int32 key() const;
+  inline void set_key(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.TurnKeyDownReply)
+ private:
+  inline void set_has_key();
+  inline void clear_has_key();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 key_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_snakebite_5fprotocol_2eproto();
+  friend void protobuf_AssignDesc_snakebite_5fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_snakebite_5fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static TurnKeyDownReply* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class TurnKeyUpRequest : public ::google::protobuf::Message {
+ public:
+  TurnKeyUpRequest();
+  virtual ~TurnKeyUpRequest();
+
+  TurnKeyUpRequest(const TurnKeyUpRequest& from);
+
+  inline TurnKeyUpRequest& operator=(const TurnKeyUpRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TurnKeyUpRequest& default_instance();
+
+  void Swap(TurnKeyUpRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  TurnKeyUpRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const TurnKeyUpRequest& from);
+  void MergeFrom(const TurnKeyUpRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 key = 1;
+  inline bool has_key() const;
+  inline void clear_key();
+  static const int kKeyFieldNumber = 1;
+  inline ::google::protobuf::int32 key() const;
+  inline void set_key(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.TurnKeyUpRequest)
+ private:
+  inline void set_has_key();
+  inline void clear_has_key();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 key_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_snakebite_5fprotocol_2eproto();
+  friend void protobuf_AssignDesc_snakebite_5fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_snakebite_5fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static TurnKeyUpRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class TurnKeyUpReply : public ::google::protobuf::Message {
+ public:
+  TurnKeyUpReply();
+  virtual ~TurnKeyUpReply();
+
+  TurnKeyUpReply(const TurnKeyUpReply& from);
+
+  inline TurnKeyUpReply& operator=(const TurnKeyUpReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TurnKeyUpReply& default_instance();
+
+  void Swap(TurnKeyUpReply* other);
+
+  // implements Message ----------------------------------------------
+
+  TurnKeyUpReply* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const TurnKeyUpReply& from);
+  void MergeFrom(const TurnKeyUpReply& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 key = 1;
+  inline bool has_key() const;
+  inline void clear_key();
+  static const int kKeyFieldNumber = 1;
+  inline ::google::protobuf::int32 key() const;
+  inline void set_key(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.TurnKeyUpReply)
+ private:
+  inline void set_has_key();
+  inline void clear_has_key();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 key_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_snakebite_5fprotocol_2eproto();
+  friend void protobuf_AssignDesc_snakebite_5fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_snakebite_5fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static TurnKeyUpReply* default_instance_;
+};
 // ===================================================================
 
 
@@ -360,6 +692,110 @@ inline void HelloReply::set_allocated_message(::std::string* message) {
     clear_has_message();
     message_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// TurnKeyDownRequest
+
+// required int32 key = 1;
+inline bool TurnKeyDownRequest::has_key() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void TurnKeyDownRequest::set_has_key() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void TurnKeyDownRequest::clear_has_key() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void TurnKeyDownRequest::clear_key() {
+  key_ = 0;
+  clear_has_key();
+}
+inline ::google::protobuf::int32 TurnKeyDownRequest::key() const {
+  return key_;
+}
+inline void TurnKeyDownRequest::set_key(::google::protobuf::int32 value) {
+  set_has_key();
+  key_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// TurnKeyDownReply
+
+// required int32 key = 1;
+inline bool TurnKeyDownReply::has_key() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void TurnKeyDownReply::set_has_key() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void TurnKeyDownReply::clear_has_key() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void TurnKeyDownReply::clear_key() {
+  key_ = 0;
+  clear_has_key();
+}
+inline ::google::protobuf::int32 TurnKeyDownReply::key() const {
+  return key_;
+}
+inline void TurnKeyDownReply::set_key(::google::protobuf::int32 value) {
+  set_has_key();
+  key_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// TurnKeyUpRequest
+
+// required int32 key = 1;
+inline bool TurnKeyUpRequest::has_key() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void TurnKeyUpRequest::set_has_key() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void TurnKeyUpRequest::clear_has_key() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void TurnKeyUpRequest::clear_key() {
+  key_ = 0;
+  clear_has_key();
+}
+inline ::google::protobuf::int32 TurnKeyUpRequest::key() const {
+  return key_;
+}
+inline void TurnKeyUpRequest::set_key(::google::protobuf::int32 value) {
+  set_has_key();
+  key_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// TurnKeyUpReply
+
+// required int32 key = 1;
+inline bool TurnKeyUpReply::has_key() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void TurnKeyUpReply::set_has_key() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void TurnKeyUpReply::clear_has_key() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void TurnKeyUpReply::clear_key() {
+  key_ = 0;
+  clear_has_key();
+}
+inline ::google::protobuf::int32 TurnKeyUpReply::key() const {
+  return key_;
+}
+inline void TurnKeyUpReply::set_key(::google::protobuf::int32 value) {
+  set_has_key();
+  key_ = value;
 }
 
 

@@ -143,6 +143,7 @@
     <ClInclude Include="game_client.h" />
     <ClInclude Include="game_server.h" />
     <ClInclude Include="snakebite_message.h" />
+    <ClInclude Include="UserSession.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc" />

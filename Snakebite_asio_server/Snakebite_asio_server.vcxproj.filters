@@ -104,6 +104,9 @@
     <ClInclude Include="snakebite_message.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="UserSession.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc">

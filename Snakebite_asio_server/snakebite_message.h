@@ -1,6 +1,8 @@
 #ifndef SNAKEBITET_SNAKEBITE_MESSAGE_H_
 #define SNAKEBITET_SNAKEBITE_MESSAGE_H_
 
+#include <strsafe.h>
+
 namespace acoross {
 namespace snakebite {
 
@@ -54,15 +56,15 @@ public:
 
 	bool decode_header()
 	{
-		char header[header_length + 1] = "";
-		std::strncat(header, data_, header_length);
-		body_length_ = std::atoi(header);
+		// Ã¹ 2byte ´Â body length;
+		unsigned short body_length_ = *reinterpret_cast<unsigned short*>(data_);
 		if (body_length_ > max_body_length)
 		{
 			body_length_ = 0;
 			return false;
 		}
-		return true;
+
+		message_type_ = *reinterpret_cast<unsigned short*>(data_ + 2);
 	}
 
 	void encode_header()
@@ -72,9 +74,15 @@ public:
 		std::memcpy(data_, header, header_length);
 	}
 
+	unsigned short message_type() const
+	{
+		return message_type_;
+	}
+
 private:
-	char data_[header_length + max_body_length];
-	std::size_t body_length_;
+	char data_[header_length + max_body_length]{ '\0' };
+	std::size_t body_length_{ 0 };
+	unsigned short message_type_{ 0 };
 };
 
 }

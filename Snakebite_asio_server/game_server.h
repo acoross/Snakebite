@@ -14,7 +14,7 @@
 #include <acoross/snakebite/util.h>
 #include <acoross/snakebite/game_session.h>
 #include <acoross/snakebite/snake.h>
-#include "snakebite_message.h"
+#include "UserSession.h"
 
 using boost::asio::ip::tcp;
 
@@ -22,128 +22,6 @@ namespace acoross {
 namespace snakebite {
 
 //----------------------------------------------------------------------
-
-using SnakebiteMessageQueue =  std::deque<SnakebiteMessage>;
-
-//----------------------------------------------------------------------
-
-class UserSession
-	: public std::enable_shared_from_this<UserSession>
-{
-public:
-	UserSession(tcp::socket socket, std::shared_ptr<GameSession> game_session)
-		: socket_(std::move(socket))
-		, game_session_(game_session)
-	{}
-
-	~UserSession()
-	{
-		end();
-	}
-
-	void start()
-	{
-		user_snake_ = game_session_->AddSnake();
-		do_read_header();
-	}
-
-	void end()
-	{
-		if (auto my_snake = user_snake_.lock())
-		{
-			game_session_->RemoveSnake(Handle<Snake>(my_snake.get()).handle);
-		}
-	}
-
-	void send(const SnakebiteMessage& msg)
-	{
-		bool write_in_progress = !write_msgs_.empty();
-		write_msgs_.push_back(msg);
-		if (!write_in_progress)
-		{
-			do_write();
-		}
-	}
-
-private:
-	void do_read_header()
-	{
-		auto self(shared_from_this());
-		boost::asio::async_read(socket_,
-			boost::asio::buffer(read_msg_.data(), SnakebiteMessage::header_length),
-			[this, self](boost::system::error_code ec, std::size_t /*length*/)
-		{
-			if (!ec && read_msg_.decode_header())
-			{
-				do_read_body();
-			}
-			else
-			{
-				//room_.leave(shared_from_this());
-				end();
-			}
-		});
-	}
-
-	void do_read_body()
-	{
-		auto self(shared_from_this());
-		boost::asio::async_read(socket_,
-			boost::asio::buffer(read_msg_.body(), read_msg_.body_length()),
-			[this, self](boost::system::error_code ec, std::size_t /*length*/)
-		{
-			if (!ec && process_message(read_msg_))
-			{
-				//room_.deliver(read_msg_);
-				do_read_header();
-			}
-			else
-			{
-				//room_.leave(shared_from_this());
-				end();
-			}
-		});
-	}
-
-	void do_write()
-	{
-		auto self(shared_from_this());
-		boost::asio::async_write(socket_,
-			boost::asio::buffer(write_msgs_.front().data(),
-				write_msgs_.front().length()),
-			[this, self](boost::system::error_code ec, std::size_t /*length*/)
-		{
-			if (!ec)
-			{
-				write_msgs_.pop_front();
-				if (!write_msgs_.empty())
-				{
-					do_write();
-				}
-			}
-			else
-			{
-				//room_.leave(shared_from_this());
-				end();
-			}
-		});
-	}
-
-	bool process_message(SnakebiteMessage msg)
-	{
-
-		return false; // Á¾·á
-	}
-
-	tcp::socket socket_;
-	enum { max_length = 1024 };
-	char data_[max_length];
-	std::weak_ptr<Snake> user_snake_;
-	std::shared_ptr<GameSession> game_session_;
-
-	SnakebiteMessage read_msg_;
-	SnakebiteMessageQueue write_msgs_;
-};
 
 class GameServer
 {
