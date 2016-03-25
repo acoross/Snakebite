@@ -65,6 +65,8 @@ public:
 	}
 	//
 
+	void RequestInitPlayer(std::string name);
+
 private:
 	void do_read_header()
 	{

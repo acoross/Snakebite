@@ -7,6 +7,7 @@ namespace snakebite {
 enum class SnakebiteMessageType : unsigned short
 {
 	None = 0,
+	InitPlayerSnake,
 	TurnKeyDown,
 	TurnKeyUp,
 	Max

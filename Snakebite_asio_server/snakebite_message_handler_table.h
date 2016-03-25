@@ -9,24 +9,18 @@
 namespace acoross {
 namespace snakebite {
 
-enum class SnakebiteMessageType : unsigned short
-{
-	None = 0,
-	TurnKeyDown,
-	TurnKeyUp,
-	Max
-};
-
 class UserSession;
 
 class SnakebiteMessageHandlerTable
 {
 public:
-	bool ProcessMessage(UserSession& session, SnakebiteMessage request, SnakebiteMessage* reply);
+	bool ProcessMessage(UserSession& session, const SnakebiteMessage& request, SnakebiteMessage* reply);
 
-	bool TurnKeyDownMessage(UserSession& session, TurnKeyDownRequest rq, TurnKeyDownReply* rp);
+	bool TurnKeyDownMessage(UserSession& session, TurnKeyDownRequest& rq);
 
-	bool TurnKeyUpMessage(UserSession& session, TurnKeyUpRequest rq, TurnKeyUpReply* rp);
+	bool TurnKeyUpMessage(UserSession& session, TurnKeyUpRequest& rq);
+
+	bool InitPlayerSnakeMessage(UserSession& session, InitPlayerSnakeRequest& rq);
 };
 
 }

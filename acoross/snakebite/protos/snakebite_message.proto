@@ -33,28 +33,30 @@ package acoross.snakebite;
 
 // The request message containing the user's name.
 message HelloRequest {
-  string name = 1;
+	string name = 1;
 }
 
 // The response message containing the greetings
 message HelloReply {
-  string message = 1;
+	string message = 1;
+}
+
+//------------------------------
+message VoidReply{
+	int32 err = 1;
+}
+
+//------------------------------
+message InitPlayerSnakeRequest{
+	string name = 1;
 }
 
 //------------------------------
 message TurnKeyDownRequest {
-  int32 key = 1;
-}
-
-message TurnKeyDownReply {
-  int32 key = 1;
+	int32 key = 1;
 }
 
 //------------------------------
 message TurnKeyUpRequest {
-  int32 key = 1;
-}
-
-message TurnKeyUpReply {
-  int32 key = 1;
+	int32 key = 1;
 }

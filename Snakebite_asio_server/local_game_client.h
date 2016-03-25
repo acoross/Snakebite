@@ -1,5 +1,5 @@
-#ifndef SNAKEBITE_CONTAINER_DRAWER_H_
-#define SNAKEBITE_CONTAINER_DRAWER_H_
+#ifndef SNAKEBITE_LOCAL_GAME_CLIENT_H_
+#define SNAKEBITE_LOCAL_GAME_CLIENT_H_
 
 #include <acoross/snakebite/win/WinWrapper.h>
 #include <memory>
@@ -16,13 +16,13 @@
 namespace acoross {
 namespace snakebite {
 
-class GameClient final
+class LocalGameClient final
 {
 public:
-	GameClient(GameServer& game_server)
+	LocalGameClient(GameServer& game_server)
 		: game_server_(game_server)
 	{}
-	virtual ~GameClient(){}
+	virtual ~LocalGameClient(){}
 
 	void SetObjectList(
 		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&& snake_clone_list,
@@ -184,4 +184,4 @@ private:
 
 }
 }
-#endif //SNAKEBITE_CONTAINER_DRAWER_H_
+#endif //SNAKEBITE_LOCAL_GAME_CLIENT_H_

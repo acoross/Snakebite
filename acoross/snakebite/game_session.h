@@ -116,7 +116,7 @@ private:
 	const Position2D player_pos{ 100, 100 };
 
 	//юс╫ц
-	friend class GameClient;
+	friend class LocalGameClient;
 };
 
 typedef std::shared_ptr<GameSession> GameSessionSP;

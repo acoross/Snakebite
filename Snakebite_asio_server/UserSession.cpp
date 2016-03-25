@@ -3,7 +3,6 @@
 
 void acoross::snakebite::UserSession::start()
 {
-	user_snake_ = game_session_->AddSnake(Snake::EventHandler(), "player");
 	do_read_header();
 }
 
@@ -13,4 +12,9 @@ inline void acoross::snakebite::UserSession::end()
 	{
 		game_session_->RemoveSnake(Handle<Snake>(my_snake.get()).handle);
 	}
+}
+
+void acoross::snakebite::UserSession::RequestInitPlayer(std::string name)
+{
+	user_snake_ = game_session_->AddSnake(Snake::EventHandler(), name);
 }

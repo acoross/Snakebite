@@ -11,12 +11,12 @@
 #include <atomic>
 
 #include <acoross/snakebite/game_session.h>
-#include "game_client.h"
+#include "local_game_client.h"
 #include "game_server.h"
 
 using namespace acoross::snakebite;
 
-std::unique_ptr<GameClient> g_game_client;
+std::unique_ptr<LocalGameClient> g_game_client;
 std::weak_ptr<GameServer> g_game_server_wp;
 
 //<test>
@@ -185,7 +185,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		io_service, 22000
 		);
 
-	g_game_client = std::make_unique<GameClient>(*server);
+	g_game_client = std::make_unique<LocalGameClient>(*server);
 	g_game_server_wp = server;
 
 	server->AddUpdateEventListner(

@@ -39,10 +39,10 @@ void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
 class HelloReply;
 class HelloRequest;
-class TurnKeyDownReply;
+class InitPlayerSnakeRequest;
 class TurnKeyDownRequest;
-class TurnKeyUpReply;
 class TurnKeyUpRequest;
+class VoidReply;
 
 // ===================================================================
 
@@ -212,6 +212,167 @@ class HelloReply : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class VoidReply : public ::google::protobuf::Message {
+ public:
+  VoidReply();
+  virtual ~VoidReply();
+
+  VoidReply(const VoidReply& from);
+
+  inline VoidReply& operator=(const VoidReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const VoidReply& default_instance();
+
+  void Swap(VoidReply* other);
+
+  // implements Message ----------------------------------------------
+
+  inline VoidReply* New() const { return New(NULL); }
+
+  VoidReply* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const VoidReply& from);
+  void MergeFrom(const VoidReply& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(VoidReply* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 err = 1;
+  void clear_err();
+  static const int kErrFieldNumber = 1;
+  ::google::protobuf::int32 err() const;
+  void set_err(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.VoidReply)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::int32 err_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static VoidReply* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class InitPlayerSnakeRequest : public ::google::protobuf::Message {
+ public:
+  InitPlayerSnakeRequest();
+  virtual ~InitPlayerSnakeRequest();
+
+  InitPlayerSnakeRequest(const InitPlayerSnakeRequest& from);
+
+  inline InitPlayerSnakeRequest& operator=(const InitPlayerSnakeRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const InitPlayerSnakeRequest& default_instance();
+
+  void Swap(InitPlayerSnakeRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline InitPlayerSnakeRequest* New() const { return New(NULL); }
+
+  InitPlayerSnakeRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const InitPlayerSnakeRequest& from);
+  void MergeFrom(const InitPlayerSnakeRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(InitPlayerSnakeRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string name = 1;
+  void clear_name();
+  static const int kNameFieldNumber = 1;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
+
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.InitPlayerSnakeRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static InitPlayerSnakeRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class TurnKeyDownRequest : public ::google::protobuf::Message {
  public:
   TurnKeyDownRequest();
@@ -290,84 +451,6 @@ class TurnKeyDownRequest : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TurnKeyDownReply : public ::google::protobuf::Message {
- public:
-  TurnKeyDownReply();
-  virtual ~TurnKeyDownReply();
-
-  TurnKeyDownReply(const TurnKeyDownReply& from);
-
-  inline TurnKeyDownReply& operator=(const TurnKeyDownReply& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const TurnKeyDownReply& default_instance();
-
-  void Swap(TurnKeyDownReply* other);
-
-  // implements Message ----------------------------------------------
-
-  inline TurnKeyDownReply* New() const { return New(NULL); }
-
-  TurnKeyDownReply* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const TurnKeyDownReply& from);
-  void MergeFrom(const TurnKeyDownReply& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(TurnKeyDownReply* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional int32 key = 1;
-  void clear_key();
-  static const int kKeyFieldNumber = 1;
-  ::google::protobuf::int32 key() const;
-  void set_key(::google::protobuf::int32 value);
-
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.TurnKeyDownReply)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::int32 key_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static TurnKeyDownReply* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class TurnKeyUpRequest : public ::google::protobuf::Message {
  public:
   TurnKeyUpRequest();
@@ -443,84 +526,6 @@ class TurnKeyUpRequest : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static TurnKeyUpRequest* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class TurnKeyUpReply : public ::google::protobuf::Message {
- public:
-  TurnKeyUpReply();
-  virtual ~TurnKeyUpReply();
-
-  TurnKeyUpReply(const TurnKeyUpReply& from);
-
-  inline TurnKeyUpReply& operator=(const TurnKeyUpReply& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const TurnKeyUpReply& default_instance();
-
-  void Swap(TurnKeyUpReply* other);
-
-  // implements Message ----------------------------------------------
-
-  inline TurnKeyUpReply* New() const { return New(NULL); }
-
-  TurnKeyUpReply* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const TurnKeyUpReply& from);
-  void MergeFrom(const TurnKeyUpReply& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(TurnKeyUpReply* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional int32 key = 1;
-  void clear_key();
-  static const int kKeyFieldNumber = 1;
-  ::google::protobuf::int32 key() const;
-  void set_key(::google::protobuf::int32 value);
-
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.TurnKeyUpReply)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::int32 key_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static TurnKeyUpReply* default_instance_;
 };
 // ===================================================================
 
@@ -622,6 +627,71 @@ inline void HelloReply::set_allocated_message(::std::string* message) {
 
 // -------------------------------------------------------------------
 
+// VoidReply
+
+// optional int32 err = 1;
+inline void VoidReply::clear_err() {
+  err_ = 0;
+}
+inline ::google::protobuf::int32 VoidReply::err() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.VoidReply.err)
+  return err_;
+}
+inline void VoidReply::set_err(::google::protobuf::int32 value) {
+  
+  err_ = value;
+  // @@protoc_insertion_point(field_set:acoross.snakebite.VoidReply.err)
+}
+
+// -------------------------------------------------------------------
+
+// InitPlayerSnakeRequest
+
+// optional string name = 1;
+inline void InitPlayerSnakeRequest::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& InitPlayerSnakeRequest::name() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.InitPlayerSnakeRequest.name)
+  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void InitPlayerSnakeRequest::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:acoross.snakebite.InitPlayerSnakeRequest.name)
+}
+inline void InitPlayerSnakeRequest::set_name(const char* value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:acoross.snakebite.InitPlayerSnakeRequest.name)
+}
+inline void InitPlayerSnakeRequest::set_name(const char* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.InitPlayerSnakeRequest.name)
+}
+inline ::std::string* InitPlayerSnakeRequest::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:acoross.snakebite.InitPlayerSnakeRequest.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* InitPlayerSnakeRequest::release_name() {
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void InitPlayerSnakeRequest::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.InitPlayerSnakeRequest.name)
+}
+
+// -------------------------------------------------------------------
+
 // TurnKeyDownRequest
 
 // optional int32 key = 1;
@@ -640,24 +710,6 @@ inline void TurnKeyDownRequest::set_key(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
-// TurnKeyDownReply
-
-// optional int32 key = 1;
-inline void TurnKeyDownReply::clear_key() {
-  key_ = 0;
-}
-inline ::google::protobuf::int32 TurnKeyDownReply::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.TurnKeyDownReply.key)
-  return key_;
-}
-inline void TurnKeyDownReply::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.TurnKeyDownReply.key)
-}
-
-// -------------------------------------------------------------------
-
 // TurnKeyUpRequest
 
 // optional int32 key = 1;
@@ -672,24 +724,6 @@ inline void TurnKeyUpRequest::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
   // @@protoc_insertion_point(field_set:acoross.snakebite.TurnKeyUpRequest.key)
-}
-
-// -------------------------------------------------------------------
-
-// TurnKeyUpReply
-
-// optional int32 key = 1;
-inline void TurnKeyUpReply::clear_key() {
-  key_ = 0;
-}
-inline ::google::protobuf::int32 TurnKeyUpReply::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.TurnKeyUpReply.key)
-  return key_;
-}
-inline void TurnKeyUpReply::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.TurnKeyUpReply.key)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS

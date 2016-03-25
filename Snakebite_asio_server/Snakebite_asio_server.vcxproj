@@ -101,7 +101,7 @@
     <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
     <ClInclude Include="..\acoross\snakebite\win\targetver.h" />
     <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
-    <ClInclude Include="game_client.h" />
+    <ClInclude Include="local_game_client.h" />
     <ClInclude Include="game_server.h" />
     <ClInclude Include="snakebite_message.h" />
     <ClInclude Include="snakebite_message_handler_table.h" />
