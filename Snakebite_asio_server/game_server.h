@@ -35,7 +35,7 @@ public:
 		, acceptor_(io_service, tcp::endpoint(tcp::v4(), port))
 		, socket_(io_service)
 		, game_update_timer_(io_service, boost::posix_time::milliseconds(FRAME_TICK))
-		, game_session_(std::make_unique<GameSession>(20, 500, 500))
+		, game_session_(std::make_unique<GameSession>(20, Width, Height))
 	{
 		do_update_game_session();
 		do_accept();
@@ -57,8 +57,8 @@ public:
 	}
 
 public:
-	const int Width{ 500 };
-	const int Height{ 500 };
+	const int Width{ 1000 };
+	const int Height{ 1000 };
 
 	std::atomic<double> mean_move_time_ms_{ 0 };
 	std::atomic<double> mean_collision_time_ms_{ 0 };

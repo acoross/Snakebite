@@ -44,7 +44,7 @@ public:
 		clone_list_changed_.store(false);
 	}
 
-	void Draw(Win::WDC& wdc, RECT client_rect)
+	void Draw(Win::WDC& wdc, RECT& client_rect)
 	{
 		if (clone_list_changed_.load() == false)
 		{
