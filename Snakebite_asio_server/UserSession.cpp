@@ -3,7 +3,7 @@
 
 void acoross::snakebite::UserSession::start()
 {
-	user_snake_ = game_session_->AddSnake();
+	user_snake_ = game_session_->AddSnake(Snake::EventHandler(), "player");
 	do_read_header();
 }
 

@@ -7,6 +7,7 @@
 #include <utility>
 #include <random>
 #include <mutex>
+#include <string>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake.h"
@@ -34,7 +35,7 @@ public:
 		return npc_controll_manager_.AddSnakeNpc();
 	}
 
-	SnakeWP AddSnake(Snake::EventHandler onDieHandler = Snake::EventHandler());
+	SnakeWP AddSnake(Snake::EventHandler onDieHandler = Snake::EventHandler(), std::string name = "noname");
 	void AddApple();
 	bool RemoveSnake(Handle<Snake>::Type snake);
 	bool RemoveApple(Apple* apple);

@@ -7,6 +7,7 @@
 #include <windows.h>
 
 #include <functional>
+#include <string>
 
 //#include "Resource.h"
 
@@ -35,6 +36,16 @@ public:
 	void Ellipse(int left, int top, int right, int bottom)
 	{
 		::Ellipse(hdc_, left, top, right, bottom);
+	}
+
+	void DrawTextW(std::wstring text, RECT& rect, UINT format)
+	{
+		::DrawTextW(hdc_, text.c_str(), (int)text.length(), &rect, format);
+	}
+
+	void DrawTextA(std::string text, RECT& rect, UINT format)
+	{
+		::DrawTextA(hdc_, text.c_str(), (int)text.length(), &rect, format);
 	}
 
 protected:

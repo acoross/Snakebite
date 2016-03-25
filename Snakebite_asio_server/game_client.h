@@ -111,7 +111,7 @@ public:
 			{
 				session.RemoveSnake(Handle<Snake>(player.get()).handle);
 			}
-			_this->player_ = session.AddSnake();
+			_this->player_ = session.AddSnake(Snake::EventHandler(), "local player");
 		});
 	}
 	//
@@ -141,6 +141,8 @@ private:
 	//@need GameSession::snakes_mutex_ locked
 	static void DrawSnake(Win::WDC& wdc, GameObjectClone& snake)
 	{
+		DrawSnakeName(wdc, snake);
+
 		DrawMovingObject(wdc, snake.head_);
 		for (auto& body : snake.body_list_)
 		{
@@ -156,6 +158,15 @@ private:
 
 		wdc.Ellipse(center_x - radius, center_y - radius,
 			center_x + radius, center_y + radius);
+	}
+	static void DrawSnakeName(Win::WDC& wdc, GameObjectClone& snake)
+	{
+		auto pos = snake.head_.GetPosition();
+		RECT rect{ 
+			(long)pos.x - 50, (long)pos.y - 20, 
+			(long)pos.x + 50, (long)pos.y - 5
+		};
+		wdc.DrawTextA(snake.Name, rect, DT_CENTER | DT_VCENTER);
 	}
 	//
 

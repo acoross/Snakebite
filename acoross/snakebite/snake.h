@@ -3,6 +3,7 @@
 
 #include <atomic>
 #include <functional>
+#include <string>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "game_object.h"
@@ -28,7 +29,7 @@ public:
 
 	Snake(GameSession& game_session, const Position2D& pos, double radius
 		, const Degree& angle, double velocity, double ang_vel, int len
-		, EventHandler onDie = EventHandler());
+		, EventHandler onDie = EventHandler(), std::string name = "noname");
 	virtual ~Snake();
 
 	void Move(const DirVector2D& diff_vec);

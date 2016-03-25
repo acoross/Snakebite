@@ -155,7 +155,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				size_t str_len = 0;
 				::StringCchLengthW(outBuf, 1000, &str_len);
 
-				::DrawTextW(wdc.Get(), outBuf, (int)str_len, &rect, DT_CENTER);
+				wdc.DrawTextW(std::wstring(outBuf), rect, DT_CENTER);
+				//::DrawTextW(wdc.Get(), outBuf, (int)str_len, &rect, DT_CENTER);
 			}
 
 			::EndPaint(hWnd, &ps);

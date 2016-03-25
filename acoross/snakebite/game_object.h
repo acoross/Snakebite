@@ -1,6 +1,8 @@
 #ifndef SNAKEBITE_GAME_OBJECT_H_
 #define SNAKEBITE_GAME_OBJECT_H_
 
+#include <string>
+
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_collider.h"
 
@@ -12,8 +14,8 @@ class GameObjectClone;
 class GameObject
 {
 public:
-	GameObject(MovingObjectContainer& container, ColliderBase* collider, Position2D pos, double radius)
-		: container_(container), collider_(collider), head_(pos, radius)
+	GameObject(MovingObjectContainer& container, ColliderBase* collider, Position2D pos, double radius, std::string name = "noname")
+		: container_(container), collider_(collider), head_(pos, radius), Name(name)
 	{}
 	virtual ~GameObject()
 	{
@@ -54,6 +56,7 @@ public:
 	MovingObjectContainer& container_;
 	MovingObject head_;
 	std::list<MovingObject> body_list_;
+	const std::string Name;
 };
 
 using GameObjectWP = std::weak_ptr<GameObject>;
@@ -64,10 +67,13 @@ public:
 	GameObjectClone(GameObject& lhs)
 		: head_(lhs.head_)
 		, body_list_(lhs.body_list_)
+		, Name(lhs.Name)
 	{}
 
 	MovingObject head_;
 	std::list<MovingObject> body_list_;
+
+	const std::string Name;
 };
 
 inline GameObjectClone GameObject::Clone()

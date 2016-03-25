@@ -7,8 +7,8 @@ namespace snakebite {
 
 Snake::Snake(GameSession& game_session, const Position2D & pos, double radius, 
 	const Degree & angle, double velocity, double ang_vel, int len, 
-	EventHandler onDie)
-	: GameObject(game_session.GetContainer(), new SnakeCollider(this), pos, radius)
+	EventHandler onDie, std::string name)
+	: GameObject(game_session.GetContainer(), new SnakeCollider(this), pos, radius, name)
 	, game_session_(game_session)
 	, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	, onDie_(onDie)
