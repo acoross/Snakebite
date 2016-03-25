@@ -29,7 +29,7 @@
 
 syntax = "proto3";
 
-package acoross.snakebite;
+package acoross.snakebite.messages;
 
 // The request message containing the user's name.
 message HelloRequest {

@@ -19,6 +19,7 @@
 
 namespace acoross {
 namespace snakebite {
+namespace messages {
 
 namespace {
 
@@ -190,13 +191,13 @@ void protobuf_AddDesc_snakebite_5fmessage_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\027snakebite_message.proto\022\021acoross.snake"
-    "bite\"\034\n\014HelloRequest\022\014\n\004name\030\001 \001(\t\"\035\n\nHe"
-    "lloReply\022\017\n\007message\030\001 \001(\t\"\030\n\tVoidReply\022\013"
-    "\n\003err\030\001 \001(\005\"&\n\026InitPlayerSnakeRequest\022\014\n"
-    "\004name\030\001 \001(\t\"!\n\022TurnKeyDownRequest\022\013\n\003key"
-    "\030\001 \001(\005\"\037\n\020TurnKeyUpRequest\022\013\n\003key\030\001 \001(\005b"
-    "\006proto3", 247);
+    "\n\027snakebite_message.proto\022\032acoross.snake"
+    "bite.messages\"\034\n\014HelloRequest\022\014\n\004name\030\001 "
+    "\001(\t\"\035\n\nHelloReply\022\017\n\007message\030\001 \001(\t\"\030\n\tVo"
+    "idReply\022\013\n\003err\030\001 \001(\005\"&\n\026InitPlayerSnakeR"
+    "equest\022\014\n\004name\030\001 \001(\t\"!\n\022TurnKeyDownReque"
+    "st\022\013\n\003key\030\001 \001(\005\"\037\n\020TurnKeyUpRequest\022\013\n\003k"
+    "ey\030\001 \001(\005b\006proto3", 256);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "snakebite_message.proto", &protobuf_RegisterTypes);
   HelloRequest::default_instance_ = new HelloRequest();
@@ -240,7 +241,7 @@ const int HelloRequest::kNameFieldNumber;
 HelloRequest::HelloRequest()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.HelloRequest)
 }
 
 void HelloRequest::InitAsDefaultInstance() {
@@ -252,7 +253,7 @@ HelloRequest::HelloRequest(const HelloRequest& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.HelloRequest)
 }
 
 void HelloRequest::SharedCtor() {
@@ -263,7 +264,7 @@ void HelloRequest::SharedCtor() {
 }
 
 HelloRequest::~HelloRequest() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.HelloRequest)
   SharedDtor();
 }
 
@@ -306,7 +307,7 @@ bool HelloRequest::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.HelloRequest)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -320,7 +321,7 @@ bool HelloRequest::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "acoross.snakebite.HelloRequest.name"));
+            "acoross.snakebite.messages.HelloRequest.name"));
         } else {
           goto handle_unusual;
         }
@@ -341,45 +342,45 @@ bool HelloRequest::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.HelloRequest)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.HelloRequest)
   return false;
 #undef DO_
 }
 
 void HelloRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.HelloRequest)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.HelloRequest.name");
+      "acoross.snakebite.messages.HelloRequest.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.HelloRequest)
 }
 
 ::google::protobuf::uint8* HelloRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.HelloRequest)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.HelloRequest.name");
+      "acoross.snakebite.messages.HelloRequest.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.HelloRequest)
   return target;
 }
 
@@ -462,28 +463,28 @@ void HelloRequest::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& HelloRequest::name() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.HelloRequest.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void HelloRequest::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.HelloRequest.name)
 }
  void HelloRequest::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.HelloRequest.name)
 }
  void HelloRequest::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.HelloRequest.name)
 }
  ::std::string* HelloRequest::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.HelloRequest.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* HelloRequest::release_name() {
@@ -497,7 +498,7 @@ void HelloRequest::clear_name() {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.HelloRequest.name)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -511,7 +512,7 @@ const int HelloReply::kMessageFieldNumber;
 HelloReply::HelloReply()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.HelloReply)
 }
 
 void HelloReply::InitAsDefaultInstance() {
@@ -523,7 +524,7 @@ HelloReply::HelloReply(const HelloReply& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.HelloReply)
 }
 
 void HelloReply::SharedCtor() {
@@ -534,7 +535,7 @@ void HelloReply::SharedCtor() {
 }
 
 HelloReply::~HelloReply() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.HelloReply)
   SharedDtor();
 }
 
@@ -577,7 +578,7 @@ bool HelloReply::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.HelloReply)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -591,7 +592,7 @@ bool HelloReply::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->message().data(), this->message().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "acoross.snakebite.HelloReply.message"));
+            "acoross.snakebite.messages.HelloReply.message"));
         } else {
           goto handle_unusual;
         }
@@ -612,45 +613,45 @@ bool HelloReply::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.HelloReply)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.HelloReply)
   return false;
 #undef DO_
 }
 
 void HelloReply::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.HelloReply)
   // optional string message = 1;
   if (this->message().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->message().data(), this->message().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.HelloReply.message");
+      "acoross.snakebite.messages.HelloReply.message");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->message(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.HelloReply)
 }
 
 ::google::protobuf::uint8* HelloReply::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.HelloReply)
   // optional string message = 1;
   if (this->message().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->message().data(), this->message().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.HelloReply.message");
+      "acoross.snakebite.messages.HelloReply.message");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->message(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.HelloReply)
   return target;
 }
 
@@ -733,28 +734,28 @@ void HelloReply::clear_message() {
   message_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& HelloReply::message() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.HelloReply.message)
   return message_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void HelloReply::set_message(const ::std::string& value) {
   
   message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.HelloReply.message)
 }
  void HelloReply::set_message(const char* value) {
   
   message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.HelloReply.message)
 }
  void HelloReply::set_message(const char* value, size_t size) {
   
   message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.HelloReply.message)
 }
  ::std::string* HelloReply::mutable_message() {
   
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.HelloReply.message)
   return message_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* HelloReply::release_message() {
@@ -768,7 +769,7 @@ void HelloReply::clear_message() {
     
   }
   message_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), message);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.HelloReply.message)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -782,7 +783,7 @@ const int VoidReply::kErrFieldNumber;
 VoidReply::VoidReply()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.VoidReply)
 }
 
 void VoidReply::InitAsDefaultInstance() {
@@ -794,7 +795,7 @@ VoidReply::VoidReply(const VoidReply& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.VoidReply)
 }
 
 void VoidReply::SharedCtor() {
@@ -804,7 +805,7 @@ void VoidReply::SharedCtor() {
 }
 
 VoidReply::~VoidReply() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.VoidReply)
   SharedDtor();
 }
 
@@ -846,7 +847,7 @@ bool VoidReply::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.VoidReply)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -879,34 +880,34 @@ bool VoidReply::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.VoidReply)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.VoidReply)
   return false;
 #undef DO_
 }
 
 void VoidReply::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.VoidReply)
   // optional int32 err = 1;
   if (this->err() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->err(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.VoidReply)
 }
 
 ::google::protobuf::uint8* VoidReply::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.VoidReply)
   // optional int32 err = 1;
   if (this->err() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->err(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.VoidReply)
   return target;
 }
 
@@ -988,13 +989,13 @@ void VoidReply::clear_err() {
   err_ = 0;
 }
  ::google::protobuf::int32 VoidReply::err() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.VoidReply.err)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.VoidReply.err)
   return err_;
 }
  void VoidReply::set_err(::google::protobuf::int32 value) {
   
   err_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.VoidReply.err)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.VoidReply.err)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1008,7 +1009,7 @@ const int InitPlayerSnakeRequest::kNameFieldNumber;
 InitPlayerSnakeRequest::InitPlayerSnakeRequest()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.InitPlayerSnakeRequest)
 }
 
 void InitPlayerSnakeRequest::InitAsDefaultInstance() {
@@ -1020,7 +1021,7 @@ InitPlayerSnakeRequest::InitPlayerSnakeRequest(const InitPlayerSnakeRequest& fro
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.InitPlayerSnakeRequest)
 }
 
 void InitPlayerSnakeRequest::SharedCtor() {
@@ -1031,7 +1032,7 @@ void InitPlayerSnakeRequest::SharedCtor() {
 }
 
 InitPlayerSnakeRequest::~InitPlayerSnakeRequest() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.InitPlayerSnakeRequest)
   SharedDtor();
 }
 
@@ -1074,7 +1075,7 @@ bool InitPlayerSnakeRequest::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.InitPlayerSnakeRequest)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1088,7 +1089,7 @@ bool InitPlayerSnakeRequest::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "acoross.snakebite.InitPlayerSnakeRequest.name"));
+            "acoross.snakebite.messages.InitPlayerSnakeRequest.name"));
         } else {
           goto handle_unusual;
         }
@@ -1109,45 +1110,45 @@ bool InitPlayerSnakeRequest::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.InitPlayerSnakeRequest)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.InitPlayerSnakeRequest)
   return false;
 #undef DO_
 }
 
 void InitPlayerSnakeRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.InitPlayerSnakeRequest)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.InitPlayerSnakeRequest.name");
+      "acoross.snakebite.messages.InitPlayerSnakeRequest.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.InitPlayerSnakeRequest)
 }
 
 ::google::protobuf::uint8* InitPlayerSnakeRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.InitPlayerSnakeRequest)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.InitPlayerSnakeRequest.name");
+      "acoross.snakebite.messages.InitPlayerSnakeRequest.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.InitPlayerSnakeRequest)
   return target;
 }
 
@@ -1230,28 +1231,28 @@ void InitPlayerSnakeRequest::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& InitPlayerSnakeRequest::name() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void InitPlayerSnakeRequest::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
  void InitPlayerSnakeRequest::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
  void InitPlayerSnakeRequest::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
  ::std::string* InitPlayerSnakeRequest::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* InitPlayerSnakeRequest::release_name() {
@@ -1265,7 +1266,7 @@ void InitPlayerSnakeRequest::clear_name() {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1279,7 +1280,7 @@ const int TurnKeyDownRequest::kKeyFieldNumber;
 TurnKeyDownRequest::TurnKeyDownRequest()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.TurnKeyDownRequest)
 }
 
 void TurnKeyDownRequest::InitAsDefaultInstance() {
@@ -1291,7 +1292,7 @@ TurnKeyDownRequest::TurnKeyDownRequest(const TurnKeyDownRequest& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.TurnKeyDownRequest)
 }
 
 void TurnKeyDownRequest::SharedCtor() {
@@ -1301,7 +1302,7 @@ void TurnKeyDownRequest::SharedCtor() {
 }
 
 TurnKeyDownRequest::~TurnKeyDownRequest() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.TurnKeyDownRequest)
   SharedDtor();
 }
 
@@ -1343,7 +1344,7 @@ bool TurnKeyDownRequest::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.TurnKeyDownRequest)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1376,34 +1377,34 @@ bool TurnKeyDownRequest::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.TurnKeyDownRequest)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.TurnKeyDownRequest)
   return false;
 #undef DO_
 }
 
 void TurnKeyDownRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.TurnKeyDownRequest)
   // optional int32 key = 1;
   if (this->key() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->key(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.TurnKeyDownRequest)
 }
 
 ::google::protobuf::uint8* TurnKeyDownRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.TurnKeyDownRequest)
   // optional int32 key = 1;
   if (this->key() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->key(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.TurnKeyDownRequest)
   return target;
 }
 
@@ -1485,13 +1486,13 @@ void TurnKeyDownRequest::clear_key() {
   key_ = 0;
 }
  ::google::protobuf::int32 TurnKeyDownRequest::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.TurnKeyDownRequest.key)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyDownRequest.key)
   return key_;
 }
  void TurnKeyDownRequest::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.TurnKeyDownRequest.key)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyDownRequest.key)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1505,7 +1506,7 @@ const int TurnKeyUpRequest::kKeyFieldNumber;
 TurnKeyUpRequest::TurnKeyUpRequest()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.TurnKeyUpRequest)
 }
 
 void TurnKeyUpRequest::InitAsDefaultInstance() {
@@ -1517,7 +1518,7 @@ TurnKeyUpRequest::TurnKeyUpRequest(const TurnKeyUpRequest& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.TurnKeyUpRequest)
 }
 
 void TurnKeyUpRequest::SharedCtor() {
@@ -1527,7 +1528,7 @@ void TurnKeyUpRequest::SharedCtor() {
 }
 
 TurnKeyUpRequest::~TurnKeyUpRequest() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.TurnKeyUpRequest)
   SharedDtor();
 }
 
@@ -1569,7 +1570,7 @@ bool TurnKeyUpRequest::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.TurnKeyUpRequest)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1602,34 +1603,34 @@ bool TurnKeyUpRequest::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.TurnKeyUpRequest)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.TurnKeyUpRequest)
   return false;
 #undef DO_
 }
 
 void TurnKeyUpRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.TurnKeyUpRequest)
   // optional int32 key = 1;
   if (this->key() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->key(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.TurnKeyUpRequest)
 }
 
 ::google::protobuf::uint8* TurnKeyUpRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.TurnKeyUpRequest)
   // optional int32 key = 1;
   if (this->key() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->key(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.TurnKeyUpRequest)
   return target;
 }
 
@@ -1711,19 +1712,20 @@ void TurnKeyUpRequest::clear_key() {
   key_ = 0;
 }
  ::google::protobuf::int32 TurnKeyUpRequest::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.TurnKeyUpRequest.key)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyUpRequest.key)
   return key_;
 }
  void TurnKeyUpRequest::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.TurnKeyUpRequest.key)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyUpRequest.key)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 
+}  // namespace messages
 }  // namespace snakebite
 }  // namespace acoross
 

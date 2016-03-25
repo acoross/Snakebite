@@ -1,13 +1,16 @@
 #include "snakebite_message_handler_table.h"
 
 #include "UserSession.h"
-#include "snakebite_message_type.h"
+#include <acoross/snakebite/protos/snakebite_message_type.h>
+#include <acoross/snakebite/protos/snakebite_message.h>
 
 namespace acoross {
 namespace snakebite {
 
 bool SnakebiteMessageHandlerTable::ProcessMessage(UserSession& session, const SnakebiteMessage& request, SnakebiteMessage* reply)
 {
+	using namespace messages;
+
 	if (reply == nullptr)
 	{
 		return false;
@@ -74,7 +77,7 @@ bool SnakebiteMessageHandlerTable::ProcessMessage(UserSession& session, const Sn
 	return ret;
 }
 
-bool SnakebiteMessageHandlerTable::TurnKeyDownMessage(UserSession& session, TurnKeyDownRequest& rq)
+bool SnakebiteMessageHandlerTable::TurnKeyDownMessage(UserSession& session, messages::TurnKeyDownRequest& rq)
 {
 	const int key = rq.key();
 	if (key < 0 || key >= PlayerKey::PK_MAX)
@@ -88,7 +91,7 @@ bool SnakebiteMessageHandlerTable::TurnKeyDownMessage(UserSession& session, Turn
 	return true;
 }
 
-bool SnakebiteMessageHandlerTable::TurnKeyUpMessage(UserSession& session, TurnKeyUpRequest& rq)
+bool SnakebiteMessageHandlerTable::TurnKeyUpMessage(UserSession& session, messages::TurnKeyUpRequest& rq)
 {
 	const int key = rq.key();
 	if (key < 0 || key >= PlayerKey::PK_MAX)
@@ -102,11 +105,11 @@ bool SnakebiteMessageHandlerTable::TurnKeyUpMessage(UserSession& session, TurnKe
 	return true;
 }
 
-bool SnakebiteMessageHandlerTable::InitPlayerSnakeMessage(UserSession& session, InitPlayerSnakeRequest& rq)
+bool SnakebiteMessageHandlerTable::InitPlayerSnakeMessage(UserSession& session, messages::InitPlayerSnakeRequest& rq)
 {
 	session.RequestInitPlayer(rq.name());
 
-	return false;
+	return true;
 }
 
 }

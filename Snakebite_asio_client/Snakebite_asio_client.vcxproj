@@ -36,9 +36,13 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\protobuf_debug.props" />
+    <Import Project="..\protobuf_common.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\protobuf_release.props" />
+    <Import Project="..\protobuf_common.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -47,7 +51,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src;</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -57,7 +63,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src;</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -65,30 +72,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\acoross\snakebite\chat_server.cpp" />
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\snake.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp" />
-    <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp" />
     <ClCompile Include="snakebite_asio_client.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\Apple.h" />
+    <ClInclude Include="..\acoross\snakebite\chat_message.hpp" />
     <ClInclude Include="..\acoross\snakebite\game_object.h" />
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
-    <ClInclude Include="..\acoross\snakebite\game_session_drawer.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
     <ClInclude Include="..\acoross\snakebite\snake.h" />
     <ClInclude Include="..\acoross\snakebite\snake_collider.h" />
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h" />
-    <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
-    <ClInclude Include="..\acoross\snakebite\win\targetver.h" />
-    <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
+    <ClInclude Include="..\acoross\snakebite\util.h" />
+    <ClInclude Include="game_client.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\acoross\snakebite\protos\snakebite_message.proto" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

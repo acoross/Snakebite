@@ -95,14 +95,8 @@
     <ClInclude Include="..\acoross\snakebite\util.h">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="snakebite_message.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="UserSession.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="snakebite_message_type.h">
-      <Filter>protos</Filter>
     </ClInclude>
     <ClInclude Include="snakebite_message_handler_table.h">
       <Filter>헤더 파일</Filter>
@@ -112,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="local_game_client.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h">
+      <Filter>protos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h">
+      <Filter>protos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

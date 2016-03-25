@@ -36,9 +36,13 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\protobuf_debug.props" />
+    <Import Project="..\protobuf_common.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\protobuf_release.props" />
+    <Import Project="..\protobuf_common.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -93,7 +97,9 @@
     <ClInclude Include="..\acoross\snakebite\apple.h" />
     <ClInclude Include="..\acoross\snakebite\game_object.h" />
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
     <ClInclude Include="..\acoross\snakebite\snake.h" />
     <ClInclude Include="..\acoross\snakebite\snake_collider.h" />
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h" />
@@ -103,9 +109,7 @@
     <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
     <ClInclude Include="local_game_client.h" />
     <ClInclude Include="game_server.h" />
-    <ClInclude Include="snakebite_message.h" />
     <ClInclude Include="snakebite_message_handler_table.h" />
-    <ClInclude Include="snakebite_message_type.h" />
     <ClInclude Include="UserSession.h" />
   </ItemGroup>
   <ItemGroup>

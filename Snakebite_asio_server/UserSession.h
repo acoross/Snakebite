@@ -7,10 +7,9 @@
 #include <boost/asio.hpp>
 #include <deque>
 
-#include "snakebite_message.h"
-#include "snakebite_message_handler_table.h"
-
+#include <acoross/snakebite/protos/snakebite_message.h>
 #include <acoross/snakebite/protos/snakebite_message.pb.h>
+#include "snakebite_message_handler_table.h"
 
 using boost::asio::ip::tcp;
 
@@ -131,12 +130,12 @@ private:
 		});
 	}
 
-	bool process_message(SnakebiteMessage msg)
+	bool process_message(SnakebiteMessage& msg)
 	{
 		SnakebiteMessage reply;
 		bool ret = message_handler_.ProcessMessage(*this, msg, &reply);
 
-		send(reply);
+		//send(reply);
 
 		return ret;
 	}

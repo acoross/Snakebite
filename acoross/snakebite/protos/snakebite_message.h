@@ -57,7 +57,7 @@ public:
 	bool decode_header()
 	{
 		// Ã¹ 2byte ´Â body length;
-		unsigned short body_length_ = *reinterpret_cast<unsigned short*>(data_);
+		body_length_ = *reinterpret_cast<unsigned short*>(data_);
 		if (body_length_ > max_body_length)
 		{
 			body_length_ = 0;

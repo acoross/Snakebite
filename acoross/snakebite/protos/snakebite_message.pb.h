@@ -31,6 +31,7 @@
 
 namespace acoross {
 namespace snakebite {
+namespace messages {
 
 // Internal implementation detail -- do not call these.
 void protobuf_AddDesc_snakebite_5fmessage_2eproto();
@@ -113,7 +114,7 @@ class HelloRequest : public ::google::protobuf::Message {
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.HelloRequest)
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.HelloRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -196,7 +197,7 @@ class HelloReply : public ::google::protobuf::Message {
   ::std::string* release_message();
   void set_allocated_message(::std::string* message);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.HelloReply)
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.HelloReply)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -274,7 +275,7 @@ class VoidReply : public ::google::protobuf::Message {
   ::google::protobuf::int32 err() const;
   void set_err(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.VoidReply)
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.VoidReply)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -357,7 +358,7 @@ class InitPlayerSnakeRequest : public ::google::protobuf::Message {
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.InitPlayerSnakeRequest)
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.InitPlayerSnakeRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -435,7 +436,7 @@ class TurnKeyDownRequest : public ::google::protobuf::Message {
   ::google::protobuf::int32 key() const;
   void set_key(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.TurnKeyDownRequest)
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.TurnKeyDownRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -513,7 +514,7 @@ class TurnKeyUpRequest : public ::google::protobuf::Message {
   ::google::protobuf::int32 key() const;
   void set_key(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.TurnKeyUpRequest)
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.TurnKeyUpRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -540,28 +541,28 @@ inline void HelloRequest::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& HelloRequest::name() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.HelloRequest.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void HelloRequest::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.HelloRequest.name)
 }
 inline void HelloRequest::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.HelloRequest.name)
 }
 inline void HelloRequest::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.HelloRequest.name)
 }
 inline ::std::string* HelloRequest::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.HelloRequest.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* HelloRequest::release_name() {
@@ -575,7 +576,7 @@ inline void HelloRequest::set_allocated_name(::std::string* name) {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.HelloRequest.name)
+  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.HelloRequest.name)
 }
 
 // -------------------------------------------------------------------
@@ -587,28 +588,28 @@ inline void HelloReply::clear_message() {
   message_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& HelloReply::message() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.HelloReply.message)
   return message_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void HelloReply::set_message(const ::std::string& value) {
   
   message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.HelloReply.message)
 }
 inline void HelloReply::set_message(const char* value) {
   
   message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.HelloReply.message)
 }
 inline void HelloReply::set_message(const char* value, size_t size) {
   
   message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.HelloReply.message)
 }
 inline ::std::string* HelloReply::mutable_message() {
   
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.HelloReply.message)
   return message_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* HelloReply::release_message() {
@@ -622,7 +623,7 @@ inline void HelloReply::set_allocated_message(::std::string* message) {
     
   }
   message_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), message);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.HelloReply.message)
+  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.HelloReply.message)
 }
 
 // -------------------------------------------------------------------
@@ -634,13 +635,13 @@ inline void VoidReply::clear_err() {
   err_ = 0;
 }
 inline ::google::protobuf::int32 VoidReply::err() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.VoidReply.err)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.VoidReply.err)
   return err_;
 }
 inline void VoidReply::set_err(::google::protobuf::int32 value) {
   
   err_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.VoidReply.err)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.VoidReply.err)
 }
 
 // -------------------------------------------------------------------
@@ -652,28 +653,28 @@ inline void InitPlayerSnakeRequest::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& InitPlayerSnakeRequest::name() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void InitPlayerSnakeRequest::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
 inline void InitPlayerSnakeRequest::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
 inline void InitPlayerSnakeRequest::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
 inline ::std::string* InitPlayerSnakeRequest::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* InitPlayerSnakeRequest::release_name() {
@@ -687,7 +688,7 @@ inline void InitPlayerSnakeRequest::set_allocated_name(::std::string* name) {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.InitPlayerSnakeRequest.name)
+  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
 
 // -------------------------------------------------------------------
@@ -699,13 +700,13 @@ inline void TurnKeyDownRequest::clear_key() {
   key_ = 0;
 }
 inline ::google::protobuf::int32 TurnKeyDownRequest::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.TurnKeyDownRequest.key)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyDownRequest.key)
   return key_;
 }
 inline void TurnKeyDownRequest::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.TurnKeyDownRequest.key)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyDownRequest.key)
 }
 
 // -------------------------------------------------------------------
@@ -717,13 +718,13 @@ inline void TurnKeyUpRequest::clear_key() {
   key_ = 0;
 }
 inline ::google::protobuf::int32 TurnKeyUpRequest::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.TurnKeyUpRequest.key)
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyUpRequest.key)
   return key_;
 }
 inline void TurnKeyUpRequest::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.TurnKeyUpRequest.key)
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyUpRequest.key)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -740,6 +741,7 @@ inline void TurnKeyUpRequest::set_key(::google::protobuf::int32 value) {
 
 // @@protoc_insertion_point(namespace_scope)
 
+}  // namespace messages
 }  // namespace snakebite
 }  // namespace acoross
 
