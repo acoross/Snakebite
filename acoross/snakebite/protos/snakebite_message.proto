@@ -27,34 +27,34 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-syntax = "proto2";
+syntax = "proto3";
 
 package acoross.snakebite;
 
 // The request message containing the user's name.
 message HelloRequest {
-  required string name = 1;
+  string name = 1;
 }
 
 // The response message containing the greetings
 message HelloReply {
-  required string message = 1;
+  string message = 1;
 }
 
 //------------------------------
 message TurnKeyDownRequest {
-  required int32 key = 1;
+  int32 key = 1;
 }
 
 message TurnKeyDownReply {
-  required int32 key = 1;
+  int32 key = 1;
 }
 
 //------------------------------
 message TurnKeyUpRequest {
-  required int32 key = 1;
+  int32 key = 1;
 }
 
 message TurnKeyUpReply {
-  required int32 key = 1;
+  int32 key = 1;
 }
