@@ -24,7 +24,7 @@ class UserSession
 	: public std::enable_shared_from_this<UserSession>
 {
 public:
-	UserSession(tcp::socket socket, std::shared_ptr<GameSession> game_session, GameServer& server)
+	UserSession(tcp::socket socket, std::shared_ptr<GameSession> game_session, std::shared_ptr<GameServer> server)
 		: socket_(std::move(socket))
 		, game_session_(game_session)
 		, game_server_(server)
@@ -148,7 +148,7 @@ private:
 	char data_[max_length];*/
 	std::weak_ptr<Snake> user_snake_;
 	std::shared_ptr<GameSession> game_session_;
-	GameServer& game_server_;
+	std::shared_ptr<GameServer> game_server_;
 
 	SnakebiteMessage read_msg_;
 	SnakebiteMessageQueue write_msgs_;

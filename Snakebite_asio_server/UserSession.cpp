@@ -12,7 +12,7 @@ void UserSession::start()
 {
 	std::string myid = std::to_string((uintptr_t)this);
 
-	game_server_.AddUpdateEventListner(
+	game_server_->AddUpdateEventListner(
 		myid, 
 		[us_wp = std::weak_ptr<UserSession>(shared_from_this())](std::shared_ptr<SnakebiteMessage>& msg)
 	{
@@ -33,7 +33,7 @@ void UserSession::end()
 	}
 	
 	std::string myid = std::to_string((uintptr_t)this);
-	game_server_.UnregisterEventListner(myid);
+	game_server_->UnregisterEventListner(myid);
 }
 
 void UserSession::RequestInitPlayer(std::string name)

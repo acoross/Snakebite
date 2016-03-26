@@ -24,7 +24,8 @@ namespace snakebite {
 
 //----------------------------------------------------------------------
 
-class GameServer
+class GameServer final
+	: public std::enable_shared_from_this<GameServer>
 {
 public:
 	using EventHandler = std::function<void(std::shared_ptr<SnakebiteMessage>&)>;
@@ -90,7 +91,7 @@ private:
 		{
 			if (!ec)
 			{
-				std::make_shared<UserSession>(std::move(socket_), game_session_, *this)->start();
+				std::make_shared<UserSession>(std::move(socket_), game_session_, shared_from_this())->start();
 			}
 
 			do_accept();
