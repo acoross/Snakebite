@@ -14,6 +14,7 @@
 #include <acoross/snakebite/util.h>
 #include <acoross/snakebite/game_session.h>
 #include <acoross/snakebite/snake.h>
+#include <acoross/snakebite/protos/snakebite_message.h>
 #include "UserSession.h"
 
 using boost::asio::ip::tcp;
@@ -26,7 +27,9 @@ namespace snakebite {
 class GameServer
 {
 public:
-	using EventHandler = std::function<void(GameSession&)>;
+	using EventHandler = std::function<void(std::shared_ptr<SnakebiteMessage>&)>;
+	using LocalUpdateListner = std::function
+		<void(std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>, std::list<GameObjectClone>)>;
 
 	GameServer(boost::asio::io_service& io_service
 		, short port
@@ -41,6 +44,11 @@ public:
 		do_accept();
 	}
 	
+	void SetLocalUpdateListner(LocalUpdateListner local_listner)
+	{
+		on_update_local_listner_ = local_listner;
+	}
+
 	void AddUpdateEventListner(std::string name, EventHandler on_update)
 	{
 		std::lock_guard<std::mutex> lock(update_handler_mutex_);
@@ -63,8 +71,8 @@ public:
 	}
 
 public:
-	const int Width{ 600 };
-	const int Height{ 600 };
+	const int Width{ 500 };
+	const int Height{ 500 };
 
 	std::atomic<double> mean_move_time_ms_{ 0 };
 	std::atomic<double> mean_collision_time_ms_{ 0 };
@@ -73,49 +81,7 @@ public:
 	std::atomic<double> mean_frame_tick_{ 0 };
 
 private:
-	void do_update_game_session()
-	{
-		MeanProcessTimeChecker mean_tick(mean_tick_time_ms_);
-		game_update_timer_.expires_from_now(boost::posix_time::milliseconds(FRAME_TICK));
-
-		static uint64_t last_tick = ::GetTickCount64();
-		uint64_t current_tick = ::GetTickCount64();
-		uint64_t diff = current_tick - last_tick;
-
-		double new_mean_time = mean_frame_tick_.load() * 0.9 + diff * 0.1;
-		mean_frame_tick_.store((double)new_mean_time);
-
-		{
-			MeanProcessTimeChecker mean_move(mean_move_time_ms_);
-			game_session_->UpdateMove(FRAME_TICK);
-		}
-		
-		{
-			MeanProcessTimeChecker mean_collision(mean_collision_time_ms_);
-			game_session_->ProcessCollisions();
-		}
-
-		{
-			std::lock_guard<std::mutex> lock(update_handler_mutex_);
-			MeanProcessTimeChecker mean_clone(mean_clone_object_time_ms_);
-			for (auto& pair : on_update_event_listeners_)
-			{
-				auto& listner = pair.second;
-				listner(*game_session_);
-			}
-		}
-
-		last_tick = current_tick;
-				
-		game_update_timer_.async_wait(
-			[this](boost::system::error_code ec)
-		{
-			if (!ec)
-			{
-				do_update_game_session();
-			}
-		});
-	}
+	void do_update_game_session();
 
 	void do_accept()
 	{
@@ -142,6 +108,7 @@ private:
 
 	std::mutex update_handler_mutex_;
 	std::map<std::string, EventHandler> on_update_event_listeners_;
+	LocalUpdateListner	on_update_local_listner_;
 };
 
 }

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <thread>
+#include <memory>
 #include <boost/asio.hpp>
 
 #include "game_client.h"
@@ -10,7 +11,7 @@
 using boost::asio::ip::tcp;
 using namespace acoross::snakebite;
 
-std::unique_ptr<GameClient> g_game_client;
+std::shared_ptr<GameClient> g_game_client;
 
 //
 //  ÇÔ¼ö: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -190,6 +191,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	catch (std::exception& e)
 	{
 		std::cerr << "Exception: " << e.what() << "\n";
+		::MessageBoxA(NULL, e.what(), "error", MB_OK);
 	}
 	/*
 	try

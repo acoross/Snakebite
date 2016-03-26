@@ -188,12 +188,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	g_game_client = std::make_unique<LocalGameClient>(*server);
 	g_game_server_wp = server;
 
-	server->AddUpdateEventListner(
-		"client",
-		[client = g_game_client.get()](GameSession& session)
+	server->SetLocalUpdateListner(
+		[client = g_game_client.get()]
+	(std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_list, std::list<GameObjectClone> apple_list)
 	{
-		auto snake_list = session.CloneSnakeList();
-		auto apple_list = session.CloneAppleList();
 		client->SetObjectList(std::move(snake_list), std::move(apple_list));
 	});
 

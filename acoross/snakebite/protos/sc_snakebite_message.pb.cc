@@ -32,6 +32,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* UpdateGameObjects_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   UpdateGameObjects_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* ObjType_descriptor_ = NULL;
 
 }  // namespace
 
@@ -60,11 +61,10 @@ void protobuf_AssignDesc_sc_5fsnakebite_5fmessage_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, _is_default_instance_));
   GameObjectClone_descriptor_ = file->message_type(1);
-  static const int GameObjectClone_offsets_[5] = {
+  static const int GameObjectClone_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, clone_type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, handle_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, head_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, body_count_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, body_),
   };
   GameObjectClone_reflection_ =
@@ -79,8 +79,7 @@ void protobuf_AssignDesc_sc_5fsnakebite_5fmessage_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, _is_default_instance_));
   UpdateGameObjects_descriptor_ = file->message_type(2);
-  static const int UpdateGameObjects_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjects, clone_count_),
+  static const int UpdateGameObjects_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjects, clone_),
   };
   UpdateGameObjects_reflection_ =
@@ -94,6 +93,7 @@ void protobuf_AssignDesc_sc_5fsnakebite_5fmessage_2eproto() {
       sizeof(UpdateGameObjects),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjects, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjects, _is_default_instance_));
+  ObjType_descriptor_ = file->enum_type(0);
 }
 
 namespace {
@@ -134,15 +134,15 @@ void protobuf_AddDesc_sc_5fsnakebite_5fmessage_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\032sc_snakebite_message.proto\022\035acoross.sn"
     "akebite.sc_messages\"4\n\014MovingObject\022\t\n\001x"
-    "\030\001 \001(\001\022\t\n\001y\030\002 \001(\001\022\016\n\006radius\030\003 \001(\001\"\277\001\n\017Ga"
+    "\030\001 \001(\001\022\t\n\001y\030\002 \001(\001\022\016\n\006radius\030\003 \001(\001\"\253\001\n\017Ga"
     "meObjectClone\022\022\n\nclone_type\030\001 \001(\005\022\016\n\006han"
     "dle\030\002 \001(\003\0229\n\004head\030\003 \001(\0132+.acoross.snakeb"
-    "ite.sc_messages.MovingObject\022\022\n\nbody_cou"
-    "nt\030\004 \001(\005\0229\n\004body\030\005 \003(\0132+.acoross.snakebi"
-    "te.sc_messages.MovingObject\"g\n\021UpdateGam"
-    "eObjects\022\023\n\013clone_count\030\001 \001(\005\022=\n\005clone\030\002"
-    " \003(\0132..acoross.snakebite.sc_messages.Gam"
-    "eObjectCloneb\006proto3", 420);
+    "ite.sc_messages.MovingObject\0229\n\004body\030\004 \003"
+    "(\0132+.acoross.snakebite.sc_messages.Movin"
+    "gObject\"R\n\021UpdateGameObjects\022=\n\005clone\030\001 "
+    "\003(\0132..acoross.snakebite.sc_messages.Game"
+    "ObjectClone*\037\n\007ObjType\022\t\n\005Snake\020\000\022\t\n\005App"
+    "le\020\001b\006proto3", 412);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "sc_snakebite_message.proto", &protobuf_RegisterTypes);
   MovingObject::default_instance_ = new MovingObject();
@@ -160,6 +160,20 @@ struct StaticDescriptorInitializer_sc_5fsnakebite_5fmessage_2eproto {
     protobuf_AddDesc_sc_5fsnakebite_5fmessage_2eproto();
   }
 } static_descriptor_initializer_sc_5fsnakebite_5fmessage_2eproto_;
+const ::google::protobuf::EnumDescriptor* ObjType_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ObjType_descriptor_;
+}
+bool ObjType_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 namespace {
 
@@ -513,7 +527,6 @@ void MovingObject::clear_radius() {
 const int GameObjectClone::kCloneTypeFieldNumber;
 const int GameObjectClone::kHandleFieldNumber;
 const int GameObjectClone::kHeadFieldNumber;
-const int GameObjectClone::kBodyCountFieldNumber;
 const int GameObjectClone::kBodyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -542,7 +555,6 @@ void GameObjectClone::SharedCtor() {
   clone_type_ = 0;
   handle_ = GOOGLE_LONGLONG(0);
   head_ = NULL;
-  body_count_ = 0;
 }
 
 GameObjectClone::~GameObjectClone() {
@@ -582,21 +594,10 @@ GameObjectClone* GameObjectClone::New(::google::protobuf::Arena* arena) const {
 }
 
 void GameObjectClone::Clear() {
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<GameObjectClone*>(16)->f)
-
-#define ZR_(first, last) do {\
-  ::memset(&first, 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(handle_, body_count_);
+  clone_type_ = 0;
+  handle_ = GOOGLE_LONGLONG(0);
   if (GetArenaNoVirtual() == NULL && head_ != NULL) delete head_;
   head_ = NULL;
-
-#undef ZR_HELPER_
-#undef ZR_
-
   body_.Clear();
 }
 
@@ -648,28 +649,13 @@ bool GameObjectClone::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_body_count;
+        if (input->ExpectTag(34)) goto parse_body;
         break;
       }
 
-      // optional int32 body_count = 4;
+      // repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
       case 4: {
-        if (tag == 32) {
-         parse_body_count:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &body_count_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(42)) goto parse_body;
-        break;
-      }
-
-      // repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
-      case 5: {
-        if (tag == 42) {
+        if (tag == 34) {
          parse_body:
           DO_(input->IncrementRecursionDepth());
          parse_loop_body:
@@ -678,7 +664,7 @@ bool GameObjectClone::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(42)) goto parse_loop_body;
+        if (input->ExpectTag(34)) goto parse_loop_body;
         input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
@@ -724,15 +710,10 @@ void GameObjectClone::SerializeWithCachedSizes(
       3, *this->head_, output);
   }
 
-  // optional int32 body_count = 4;
-  if (this->body_count() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->body_count(), output);
-  }
-
-  // repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
+  // repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
   for (unsigned int i = 0, n = this->body_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->body(i), output);
+      4, this->body(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:acoross.snakebite.sc_messages.GameObjectClone)
@@ -758,16 +739,11 @@ void GameObjectClone::SerializeWithCachedSizes(
         3, *this->head_, target);
   }
 
-  // optional int32 body_count = 4;
-  if (this->body_count() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->body_count(), target);
-  }
-
-  // repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
+  // repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
   for (unsigned int i = 0, n = this->body_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        5, this->body(i), target);
+        4, this->body(i), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.sc_messages.GameObjectClone)
@@ -798,14 +774,7 @@ int GameObjectClone::ByteSize() const {
         *this->head_);
   }
 
-  // optional int32 body_count = 4;
-  if (this->body_count() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->body_count());
-  }
-
-  // repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
+  // repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
   total_size += 1 * this->body_size();
   for (int i = 0; i < this->body_size(); i++) {
     total_size +=
@@ -843,9 +812,6 @@ void GameObjectClone::MergeFrom(const GameObjectClone& from) {
   if (from.has_head()) {
     mutable_head()->::acoross::snakebite::sc_messages::MovingObject::MergeFrom(from.head());
   }
-  if (from.body_count() != 0) {
-    set_body_count(from.body_count());
-  }
 }
 
 void GameObjectClone::CopyFrom(const ::google::protobuf::Message& from) {
@@ -873,7 +839,6 @@ void GameObjectClone::InternalSwap(GameObjectClone* other) {
   std::swap(clone_type_, other->clone_type_);
   std::swap(handle_, other->handle_);
   std::swap(head_, other->head_);
-  std::swap(body_count_, other->body_count_);
   body_.UnsafeArenaSwap(&other->body_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -955,21 +920,7 @@ void GameObjectClone::set_allocated_head(::acoross::snakebite::sc_messages::Movi
   // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.sc_messages.GameObjectClone.head)
 }
 
-// optional int32 body_count = 4;
-void GameObjectClone::clear_body_count() {
-  body_count_ = 0;
-}
- ::google::protobuf::int32 GameObjectClone::body_count() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.sc_messages.GameObjectClone.body_count)
-  return body_count_;
-}
- void GameObjectClone::set_body_count(::google::protobuf::int32 value) {
-  
-  body_count_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.sc_messages.GameObjectClone.body_count)
-}
-
-// repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
+// repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
 int GameObjectClone::body_size() const {
   return body_.size();
 }
@@ -1004,7 +955,6 @@ GameObjectClone::body() const {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int UpdateGameObjects::kCloneCountFieldNumber;
 const int UpdateGameObjects::kCloneFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -1029,7 +979,6 @@ UpdateGameObjects::UpdateGameObjects(const UpdateGameObjects& from)
 void UpdateGameObjects::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  clone_count_ = 0;
 }
 
 UpdateGameObjects::~UpdateGameObjects() {
@@ -1068,7 +1017,6 @@ UpdateGameObjects* UpdateGameObjects::New(::google::protobuf::Arena* arena) cons
 }
 
 void UpdateGameObjects::Clear() {
-  clone_count_ = 0;
   clone_.Clear();
 }
 
@@ -1082,24 +1030,9 @@ bool UpdateGameObjects::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 clone_count = 1;
+      // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 1;
       case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &clone_count_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(18)) goto parse_clone;
-        break;
-      }
-
-      // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 2;
-      case 2: {
-        if (tag == 18) {
-         parse_clone:
+        if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
          parse_loop_clone:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
@@ -1107,7 +1040,7 @@ bool UpdateGameObjects::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_loop_clone;
+        if (input->ExpectTag(10)) goto parse_loop_clone;
         input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
@@ -1137,15 +1070,10 @@ failure:
 void UpdateGameObjects::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:acoross.snakebite.sc_messages.UpdateGameObjects)
-  // optional int32 clone_count = 1;
-  if (this->clone_count() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->clone_count(), output);
-  }
-
-  // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 2;
+  // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 1;
   for (unsigned int i = 0, n = this->clone_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->clone(i), output);
+      1, this->clone(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:acoross.snakebite.sc_messages.UpdateGameObjects)
@@ -1154,16 +1082,11 @@ void UpdateGameObjects::SerializeWithCachedSizes(
 ::google::protobuf::uint8* UpdateGameObjects::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.sc_messages.UpdateGameObjects)
-  // optional int32 clone_count = 1;
-  if (this->clone_count() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->clone_count(), target);
-  }
-
-  // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 2;
+  // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 1;
   for (unsigned int i = 0, n = this->clone_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->clone(i), target);
+        1, this->clone(i), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.sc_messages.UpdateGameObjects)
@@ -1173,14 +1096,7 @@ void UpdateGameObjects::SerializeWithCachedSizes(
 int UpdateGameObjects::ByteSize() const {
   int total_size = 0;
 
-  // optional int32 clone_count = 1;
-  if (this->clone_count() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->clone_count());
-  }
-
-  // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 2;
+  // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 1;
   total_size += 1 * this->clone_size();
   for (int i = 0; i < this->clone_size(); i++) {
     total_size +=
@@ -1209,9 +1125,6 @@ void UpdateGameObjects::MergeFrom(const ::google::protobuf::Message& from) {
 void UpdateGameObjects::MergeFrom(const UpdateGameObjects& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   clone_.MergeFrom(from.clone_);
-  if (from.clone_count() != 0) {
-    set_clone_count(from.clone_count());
-  }
 }
 
 void UpdateGameObjects::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1236,7 +1149,6 @@ void UpdateGameObjects::Swap(UpdateGameObjects* other) {
   InternalSwap(other);
 }
 void UpdateGameObjects::InternalSwap(UpdateGameObjects* other) {
-  std::swap(clone_count_, other->clone_count_);
   clone_.UnsafeArenaSwap(&other->clone_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -1253,21 +1165,7 @@ void UpdateGameObjects::InternalSwap(UpdateGameObjects* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // UpdateGameObjects
 
-// optional int32 clone_count = 1;
-void UpdateGameObjects::clear_clone_count() {
-  clone_count_ = 0;
-}
- ::google::protobuf::int32 UpdateGameObjects::clone_count() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.sc_messages.UpdateGameObjects.clone_count)
-  return clone_count_;
-}
- void UpdateGameObjects::set_clone_count(::google::protobuf::int32 value) {
-  
-  clone_count_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.sc_messages.UpdateGameObjects.clone_count)
-}
-
-// repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 2;
+// repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 1;
 int UpdateGameObjects::clone_size() const {
   return clone_.size();
 }

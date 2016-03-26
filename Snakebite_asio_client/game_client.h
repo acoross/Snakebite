@@ -1,6 +1,7 @@
 #ifndef SNAKEBITE_GAME_CLIENT_H_
 #define SNAKEBITE_GAME_CLIENT_H_
 
+#include <acoross/snakebite/win/targetver.h>
 #include <boost/asio.hpp>
 
 #include <acoross/snakebite/protos/snakebite_message.h>
@@ -41,6 +42,8 @@ public:
 	{
 		tcp::resolver resolver(io_service_);
 		boost::asio::connect(socket_, resolver.resolve({ host, port }));
+
+		do_read_header();
 	}
 
 	virtual void InitPlayer() override

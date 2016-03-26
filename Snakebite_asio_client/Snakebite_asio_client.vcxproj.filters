@@ -33,9 +33,6 @@
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc">
       <Filter>protos</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\chat_server.cpp">
-      <Filter>game_session</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp">
       <Filter>game_session</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
       <Filter>protos</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\Apple.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\chat_message.hpp">
       <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_object.h">

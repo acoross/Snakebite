@@ -26,6 +26,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -42,6 +43,27 @@ class GameObjectClone;
 class MovingObject;
 class UpdateGameObjects;
 
+enum ObjType {
+  Snake = 0,
+  Apple = 1,
+  ObjType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  ObjType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool ObjType_IsValid(int value);
+const ObjType ObjType_MIN = Snake;
+const ObjType ObjType_MAX = Apple;
+const int ObjType_ARRAYSIZE = ObjType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* ObjType_descriptor();
+inline const ::std::string& ObjType_Name(ObjType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ObjType_descriptor(), value);
+}
+inline bool ObjType_Parse(
+    const ::std::string& name, ObjType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ObjType>(
+    ObjType_descriptor(), name, value);
+}
 // ===================================================================
 
 class MovingObject : public ::google::protobuf::Message {
@@ -213,16 +235,10 @@ class GameObjectClone : public ::google::protobuf::Message {
   ::acoross::snakebite::sc_messages::MovingObject* release_head();
   void set_allocated_head(::acoross::snakebite::sc_messages::MovingObject* head);
 
-  // optional int32 body_count = 4;
-  void clear_body_count();
-  static const int kBodyCountFieldNumber = 4;
-  ::google::protobuf::int32 body_count() const;
-  void set_body_count(::google::protobuf::int32 value);
-
-  // repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
+  // repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
   int body_size() const;
   void clear_body();
-  static const int kBodyFieldNumber = 5;
+  static const int kBodyFieldNumber = 4;
   const ::acoross::snakebite::sc_messages::MovingObject& body(int index) const;
   ::acoross::snakebite::sc_messages::MovingObject* mutable_body(int index);
   ::acoross::snakebite::sc_messages::MovingObject* add_body();
@@ -237,10 +253,9 @@ class GameObjectClone : public ::google::protobuf::Message {
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::int64 handle_;
-  ::google::protobuf::int32 clone_type_;
-  ::google::protobuf::int32 body_count_;
   ::acoross::snakebite::sc_messages::MovingObject* head_;
   ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::sc_messages::MovingObject > body_;
+  ::google::protobuf::int32 clone_type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_sc_5fsnakebite_5fmessage_2eproto();
   friend void protobuf_AssignDesc_sc_5fsnakebite_5fmessage_2eproto();
@@ -307,16 +322,10 @@ class UpdateGameObjects : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional int32 clone_count = 1;
-  void clear_clone_count();
-  static const int kCloneCountFieldNumber = 1;
-  ::google::protobuf::int32 clone_count() const;
-  void set_clone_count(::google::protobuf::int32 value);
-
-  // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 2;
+  // repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 1;
   int clone_size() const;
   void clear_clone();
-  static const int kCloneFieldNumber = 2;
+  static const int kCloneFieldNumber = 1;
   const ::acoross::snakebite::sc_messages::GameObjectClone& clone(int index) const;
   ::acoross::snakebite::sc_messages::GameObjectClone* mutable_clone(int index);
   ::acoross::snakebite::sc_messages::GameObjectClone* add_clone();
@@ -331,7 +340,6 @@ class UpdateGameObjects : public ::google::protobuf::Message {
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::sc_messages::GameObjectClone > clone_;
-  ::google::protobuf::int32 clone_count_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_sc_5fsnakebite_5fmessage_2eproto();
   friend void protobuf_AssignDesc_sc_5fsnakebite_5fmessage_2eproto();
@@ -459,21 +467,7 @@ inline void GameObjectClone::set_allocated_head(::acoross::snakebite::sc_message
   // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.sc_messages.GameObjectClone.head)
 }
 
-// optional int32 body_count = 4;
-inline void GameObjectClone::clear_body_count() {
-  body_count_ = 0;
-}
-inline ::google::protobuf::int32 GameObjectClone::body_count() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.sc_messages.GameObjectClone.body_count)
-  return body_count_;
-}
-inline void GameObjectClone::set_body_count(::google::protobuf::int32 value) {
-  
-  body_count_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.sc_messages.GameObjectClone.body_count)
-}
-
-// repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
+// repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
 inline int GameObjectClone::body_size() const {
   return body_.size();
 }
@@ -507,21 +501,7 @@ GameObjectClone::body() const {
 
 // UpdateGameObjects
 
-// optional int32 clone_count = 1;
-inline void UpdateGameObjects::clear_clone_count() {
-  clone_count_ = 0;
-}
-inline ::google::protobuf::int32 UpdateGameObjects::clone_count() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.sc_messages.UpdateGameObjects.clone_count)
-  return clone_count_;
-}
-inline void UpdateGameObjects::set_clone_count(::google::protobuf::int32 value) {
-  
-  clone_count_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.sc_messages.UpdateGameObjects.clone_count)
-}
-
-// repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 2;
+// repeated .acoross.snakebite.sc_messages.GameObjectClone clone = 1;
 inline int UpdateGameObjects::clone_size() const {
   return clone_.size();
 }
@@ -562,6 +542,20 @@ UpdateGameObjects::clone() const {
 }  // namespace sc_messages
 }  // namespace snakebite
 }  // namespace acoross
+
+#ifndef SWIG
+namespace google {
+namespace protobuf {
+
+template <> struct is_proto_enum< ::acoross::snakebite::sc_messages::ObjType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::acoross::snakebite::sc_messages::ObjType>() {
+  return ::acoross::snakebite::sc_messages::ObjType_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
+#endif  // SWIG
 
 // @@protoc_insertion_point(global_scope)
 

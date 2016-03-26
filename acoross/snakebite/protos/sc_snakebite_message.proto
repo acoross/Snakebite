@@ -32,6 +32,13 @@ syntax = "proto3";
 package acoross.snakebite.sc_messages;
 
 //------------------------------
+
+enum ObjType
+{
+	Snake = 0;
+	Apple = 1;
+};
+
 message MovingObject {
 	double x = 1;
 	double y = 2;
@@ -42,11 +49,9 @@ message GameObjectClone {
 	int32 clone_type = 1;
 	int64 handle = 2;
 	MovingObject head = 3;
-	int32 body_count = 4;
-	repeated MovingObject body = 5;
+	repeated MovingObject body = 4;
 }
 
 message UpdateGameObjects {
-	int32 clone_count = 1;
-	repeated GameObjectClone clone = 2;
+	repeated GameObjectClone clone = 1;
 }

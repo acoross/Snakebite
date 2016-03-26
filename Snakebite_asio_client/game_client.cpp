@@ -41,17 +41,16 @@ bool ClientMessageHandlerTable::UpdateGameObjectPositions(
 	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_clone_list;
 	std::list<GameObjectClone> apple_clone_list;
 
-	auto clone_count = got_msg.clone_count();
+	auto clone_count = got_msg.clone_size();
 	for (int i = 0; i < clone_count; ++i)
 	{
 		auto& clone = got_msg.clone(i);
 		
 		auto& pac_head = clone.head();
-			
 		MovingObject client_head(Position2D(pac_head.x(), pac_head.y()), pac_head.radius());
-		std::list<MovingObject> client_body_list;
 
-		for (int i = 0; i < clone.body_count(); ++i)
+		std::list<MovingObject> client_body_list;
+		for (int i = 0; i < clone.body_size(); ++i)
 		{
 			auto& pac_body = clone.body(i);
 			client_body_list.emplace_back(Position2D(pac_body.x(), pac_body.y()), pac_body.radius());

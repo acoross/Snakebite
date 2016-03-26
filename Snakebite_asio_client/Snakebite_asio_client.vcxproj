@@ -72,7 +72,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\chat_server.cpp" />
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
     <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
@@ -85,7 +84,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\Apple.h" />
-    <ClInclude Include="..\acoross\snakebite\chat_message.hpp" />
     <ClInclude Include="..\acoross\snakebite\game_client_base.h" />
     <ClInclude Include="..\acoross\snakebite\game_object.h" />
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
