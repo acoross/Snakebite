@@ -1,6 +1,8 @@
 # Snakebite
 snakebite game exercise
 
+![Image of Yaktocat](https://github.com/Acoross-Game-exercise/Snakebite/blob/master/screenshot.png)
+
 목적
 * 온라인 멀티플레이 게임 프로그래밍 연습
 * boost.asio 사용
