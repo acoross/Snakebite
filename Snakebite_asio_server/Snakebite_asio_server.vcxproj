@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
+    <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\snake.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp" />
@@ -90,13 +91,16 @@
     <ClCompile Include="UserSession.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\acoross\snakebite\protos\sc_snakebite_message.proto" />
     <None Include="..\acoross\snakebite\protos\snakebite_message.proto" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\apple.h" />
+    <ClInclude Include="..\acoross\snakebite\game_client_base.h" />
     <ClInclude Include="..\acoross\snakebite\game_object.h" />
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />

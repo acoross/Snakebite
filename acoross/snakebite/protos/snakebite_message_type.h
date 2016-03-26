@@ -13,6 +13,13 @@ enum class SnakebiteMessageType : unsigned short
 	Max
 };
 
+enum class SC_SnakebiteMessageType : unsigned short
+{
+	None = 0,
+	UpdateGameObjects,
+	Max
+};
+
 }
 }
 #endif //SNAKEBITE_SNAKEBITE_MESSAGE_TYPE_H_

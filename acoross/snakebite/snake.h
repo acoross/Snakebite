@@ -90,6 +90,8 @@ template <typename T>
 class Handle final
 {
 public:
+	using Type = uintptr_t;
+
 	Handle()
 		: handle(0)
 	{}
@@ -99,8 +101,10 @@ public:
 	Handle(T* ptr)
 		: handle(reinterpret_cast<uintptr_t>(ptr))
 	{}
+	Handle(Type handle)
+		: Handle::handle(handle)
+	{}
 	
-	using Type = uintptr_t;
 	Type handle;
 };
 

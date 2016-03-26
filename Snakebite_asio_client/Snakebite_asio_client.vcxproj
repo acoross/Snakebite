@@ -74,17 +74,22 @@
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\chat_server.cpp" />
     <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
+    <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\snake.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_collider.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp" />
+    <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp" />
+    <ClCompile Include="game_client.cpp" />
     <ClCompile Include="snakebite_asio_client.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\Apple.h" />
     <ClInclude Include="..\acoross\snakebite\chat_message.hpp" />
+    <ClInclude Include="..\acoross\snakebite\game_client_base.h" />
     <ClInclude Include="..\acoross\snakebite\game_object.h" />
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
@@ -92,11 +97,18 @@
     <ClInclude Include="..\acoross\snakebite\snake_collider.h" />
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h" />
     <ClInclude Include="..\acoross\snakebite\util.h" />
+    <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
+    <ClInclude Include="..\acoross\snakebite\win\targetver.h" />
+    <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
     <ClInclude Include="game_client.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\acoross\snakebite\protos\sc_snakebite_message.proto" />
     <None Include="..\acoross\snakebite\protos\snakebite_message.proto" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

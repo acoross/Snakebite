@@ -16,15 +16,18 @@ using boost::asio::ip::tcp;
 namespace acoross {
 namespace snakebite {
 
-using SnakebiteMessageQueue = std::deque<SnakebiteMessage>;
+using SnakebiteMessageQueue = std::deque<std::shared_ptr<SnakebiteMessage>>;
+
+class GameServer;
 
 class UserSession
 	: public std::enable_shared_from_this<UserSession>
 {
 public:
-	UserSession(tcp::socket socket, std::shared_ptr<GameSession> game_session)
+	UserSession(tcp::socket socket, std::shared_ptr<GameSession> game_session, GameServer& server)
 		: socket_(std::move(socket))
 		, game_session_(game_session)
+		, game_server_(server)
 	{}
 
 	~UserSession()
@@ -36,7 +39,7 @@ public:
 
 	void end();
 
-	void send(const SnakebiteMessage& msg)
+	void send(const std::shared_ptr<SnakebiteMessage>& msg)
 	{
 		bool write_in_progress = !write_msgs_.empty();
 		write_msgs_.push_back(msg);
@@ -110,8 +113,8 @@ private:
 	{
 		auto self(shared_from_this());
 		boost::asio::async_write(socket_,
-			boost::asio::buffer(write_msgs_.front().data(),
-				write_msgs_.front().length()),
+			boost::asio::buffer(write_msgs_.front()->data(),
+				write_msgs_.front()->length()),
 			[this, self](boost::system::error_code ec, std::size_t /*length*/)
 		{
 			if (!ec)
@@ -145,6 +148,7 @@ private:
 	char data_[max_length];*/
 	std::weak_ptr<Snake> user_snake_;
 	std::shared_ptr<GameSession> game_session_;
+	GameServer& game_server_;
 
 	SnakebiteMessage read_msg_;
 	SnakebiteMessageQueue write_msgs_;

@@ -54,10 +54,16 @@
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc">
       <Filter>protos</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc">
+      <Filter>protos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="..\acoross\snakebite\protos\snakebite_message.proto">
+      <Filter>protos</Filter>
+    </None>
+    <None Include="..\acoross\snakebite\protos\sc_snakebite_message.proto">
       <Filter>protos</Filter>
     </None>
   </ItemGroup>
@@ -111,6 +117,12 @@
       <Filter>protos</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h">
+      <Filter>protos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_client_base.h">
+      <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h">
       <Filter>protos</Filter>
     </ClInclude>
   </ItemGroup>

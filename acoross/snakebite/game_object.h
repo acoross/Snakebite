@@ -70,6 +70,12 @@ public:
 		, Name(lhs.Name)
 	{}
 
+	GameObjectClone(MovingObject head, std::list<MovingObject> body_list, std::string name)
+		: head_(head)
+		, body_list_(body_list)
+		, Name(name)
+	{}
+
 	MovingObject head_;
 	std::list<MovingObject> body_list_;
 

@@ -2,49 +2,25 @@
 #define SNAKEBITE_LOCAL_GAME_CLIENT_H_
 
 #include <acoross/snakebite/win/WinWrapper.h>
-#include <memory>
-#include <mutex>
-#include <atomic>
 
-#include <acoross/snakebite/util.h>
-#include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/snakebite/game_session.h>
-#include <acoross/snakebite/game_object.h>
-#include <acoross/snakebite/snake.h>
+#include <acoross/snakebite/game_client_base.h>
 #include "game_server.h"
 
 namespace acoross {
 namespace snakebite {
 
 class LocalGameClient final
+	: public GameClientBase
 {
 public:
 	LocalGameClient(GameServer& game_server)
-		: game_server_(game_server)
+		: GameClientBase()
+		, game_server_(game_server)
 	{}
 	virtual ~LocalGameClient(){}
-
-	void SetObjectList(
-		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&& snake_clone_list,
-		std::list<GameObjectClone>&& apple_clone_list)
-	{
-		std::lock_guard<std::mutex> lock(clone_list_mutex_);
-		snake_clone_list_ = std::move(snake_clone_list);
-		apple_clone_list_ = std::move(apple_clone_list);
-		clone_list_changed_.store(true);
-	}
-
-	void RetrieveObjectList(
-		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list,
-		std::list<GameObjectClone>& apple_clone_list)
-	{
-		std::lock_guard<std::mutex> lock(clone_list_mutex_);
-		snake_clone_list = std::move(snake_clone_list_);
-		apple_clone_list = std::move(apple_clone_list_);
-		clone_list_changed_.store(false);
-	}
-
-	void Draw(Win::WDC& wdc, RECT& client_rect)
+	
+	virtual void Draw(Win::WDC& wdc, RECT& client_rect) override
 	{
 		if (clone_list_changed_.load() == false)
 		{
@@ -102,7 +78,7 @@ public:
 	}
 
 	//@lock
-	void InitPlayer()
+	virtual void InitPlayer() override
 	{
 		game_server_.RequestToSession(
 			[_this = this](GameSession& session)
@@ -117,7 +93,7 @@ public:
 	//
 
 	//@atomic for Snake
-	void SetKeyDown(PlayerKey player_key)
+	virtual void SetKeyDown(PlayerKey player_key) override
 	{
 		if (auto player = player_.lock())
 		{
@@ -125,7 +101,7 @@ public:
 		}
 	}
 
-	void SetKeyUp(PlayerKey player_key)
+	virtual void SetKeyUp(PlayerKey player_key) override
 	{
 		if (auto player = player_.lock())
 		{
@@ -133,53 +109,13 @@ public:
 		}
 	}
 	//
-
-	std::atomic<size_t> snake_count_{ 0 };
-	std::atomic<size_t> apple_count_{ 0 };
-	std::atomic<double> mean_draw_time_ms_{ 0 };
+	
 private:
-	//@need GameSession::snakes_mutex_ locked
-	static void DrawSnake(Win::WDC& wdc, GameObjectClone& snake)
-	{
-		DrawSnakeName(wdc, snake);
-
-		DrawMovingObject(wdc, snake.head_);
-		for (auto& body : snake.body_list_)
-		{
-			DrawMovingObject(wdc, body);
-		}
-	}
-	static void DrawMovingObject(Win::WDC& wdc, MovingObject& mo)
-	{
-		const int radius = (int)mo.GetRadius();
-		const auto pos = mo.GetPosition();
-		const int center_x = (int)pos.x;
-		const int center_y = (int)pos.y;
-
-		wdc.Ellipse(center_x - radius, center_y - radius,
-			center_x + radius, center_y + radius);
-	}
-	static void DrawSnakeName(Win::WDC& wdc, GameObjectClone& snake)
-	{
-		auto pos = snake.head_.GetPosition();
-		RECT rect{ 
-			(long)pos.x - 50, (long)pos.y - 20, 
-			(long)pos.x + 50, (long)pos.y - 5
-		};
-		wdc.DrawTextA(snake.Name, rect, DT_CENTER | DT_VCENTER);
-	}
-	//
-
 	//FIXME: !!! player_ 의 exchange 가 atomic 해야함
 	// lock 을 추가하던지 뭔가 코드 수정 필요.
 	//std::atomic<std::weak_ptr<Snake>> player_;
 	std::weak_ptr<Snake> player_;
 	GameServer& game_server_;
-
-	std::mutex clone_list_mutex_;
-	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_clone_list_;
-	std::list<GameObjectClone> apple_clone_list_;
-	std::atomic<bool> clone_list_changed_{ false };
 };
 
 }

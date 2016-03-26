@@ -47,6 +47,12 @@ public:
 		on_update_event_listeners_[name] = on_update;
 	}
 
+	void UnregisterEventListner(std::string name)
+	{
+		std::lock_guard<std::mutex> lock(update_handler_mutex_);
+		on_update_event_listeners_.erase(name);
+	}
+
 	void RequestToSession(std::function<void(GameSession&)> request)
 	{
 		io_service_.post(
@@ -57,8 +63,8 @@ public:
 	}
 
 public:
-	const int Width{ 1000 };
-	const int Height{ 1000 };
+	const int Width{ 600 };
+	const int Height{ 600 };
 
 	std::atomic<double> mean_move_time_ms_{ 0 };
 	std::atomic<double> mean_collision_time_ms_{ 0 };
@@ -118,7 +124,7 @@ private:
 		{
 			if (!ec)
 			{
-				std::make_shared<UserSession>(std::move(socket_), game_session_)->start();
+				std::make_shared<UserSession>(std::move(socket_), game_session_, *this)->start();
 			}
 
 			do_accept();
