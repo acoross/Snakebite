@@ -25,9 +25,6 @@
     <Filter Include="lib\win">
       <UniqueIdentifier>{8178ebc6-e25b-4156-8b20-9e5fc5c7ff0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="game_session\details">
-      <UniqueIdentifier>{f59ea989-5321-4407-882f-d8c3f23a799b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="snakebite_asio_client.cpp">
@@ -47,15 +44,6 @@
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc">
       <Filter>protos</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\game_session\details\game_session.cpp">
-      <Filter>game_session\details</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\game_session\details\snake.cpp">
-      <Filter>game_session\details</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\game_session\details\snake_collider.cpp">
-      <Filter>game_session\details</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,24 +76,6 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h">
       <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\Apple.h">
-      <Filter>game_session\details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\game_object.h">
-      <Filter>game_session\details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\game_session.h">
-      <Filter>game_session\details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\handle.h">
-      <Filter>game_session\details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\snake.h">
-      <Filter>game_session\details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\snake_collider.h">
-      <Filter>game_session\details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h">
       <Filter>game_session</Filter>
