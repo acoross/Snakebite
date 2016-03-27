@@ -5,6 +5,8 @@
 
 #include <acoross/snakebite/game_session.h>
 #include <acoross/snakebite/game_client_base.h>
+#include <acoross/snakebite/handle.h>
+#include <acoross/snakebite/snake.h>
 #include "game_server.h"
 
 namespace acoross {
@@ -50,10 +52,9 @@ public:
 
 		{
 			MeanProcessTimeChecker mean_draw(mean_draw_time_ms_);
-			auto player = player_.lock();
 			for (auto& snake_pair : snake_pairs)
 			{
-				if (snake_pair.first == Handle<Snake>(player.get()).handle)
+				if (snake_pair.first == player_handle_)
 				{
 					HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(BLACK_BRUSH));
 					DrawSnake(memdc, snake_pair.second);
@@ -81,13 +82,10 @@ public:
 	virtual void InitPlayer() override
 	{
 		game_server_.RequestToSession(
-			[_this = this](GameSession& session)
+			[_this = this, handle = player_handle_](GameSession& session)
 		{
-			if (auto player = _this->player_.lock())
-			{
-				session.RemoveSnake(Handle<Snake>(player.get()).handle);
-			}
-			_this->player_ = session.AddSnake_old(Snake::EventHandler(), "local player");
+			session.RemoveSnake(_this->player_handle_);
+			_this->player_handle_ = session.AddSnake(Snake::EventHandler(), "local player");
 		});
 	}
 	//
@@ -95,26 +93,50 @@ public:
 	//@atomic for Snake
 	virtual void SetKeyDown(PlayerKey player_key) override
 	{
-		if (auto player = player_.lock())
+		if (player_key == player_key_)
 		{
-			player->SetKeyDown(player_key);
+			return;
 		}
+
+		player_key_ = player_key;
+
+		game_server_.RequestToSession(
+			[player_key, handle = player_handle_](GameSession& session)
+		{
+			session.RequestToSnake(handle, 
+				[player_key](Snake& snake)
+			{
+				snake.SetKeyDown(player_key);
+			});
+		});
 	}
 
 	virtual void SetKeyUp(PlayerKey player_key) override
 	{
-		if (auto player = player_.lock())
+		if (player_key != player_key_)
 		{
-			player->SetKeyUp(player_key);
+			return;
 		}
+
+		player_key_ = PlayerKey::PK_NONE;
+
+		game_server_.RequestToSession(
+			[player_key, handle = player_handle_](GameSession& session)
+		{
+			session.RequestToSnake(handle,
+				[player_key](Snake& snake)
+			{
+				snake.SetKeyUp(player_key);
+			});
+		});
 	}
 	//
 	
 private:
 	//FIXME: !!! player_ 의 exchange 가 atomic 해야함
 	// lock 을 추가하던지 뭔가 코드 수정 필요.
-	//std::atomic<std::weak_ptr<Snake>> player_;
-	std::weak_ptr<Snake> player_;
+	Handle<Snake>::Type player_handle_{ 0 };
+	PlayerKey player_key_{ PlayerKey::PK_NONE };
 	GameServer& game_server_;
 };
 
