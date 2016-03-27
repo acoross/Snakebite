@@ -29,9 +29,13 @@ class GameServer final
 {
 public:
 	using EventHandler = std::function<void(std::shared_ptr<SnakebiteMessage>&)>;
-	using LocalUpdateListner = std::function
+	using LocalUpdateListner = 
+		std::function
 		<void(std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>, std::list<GameObjectClone>)>;
+	
+	const int FRAME_TICK{ 33 };
 
+public:
 	GameServer(boost::asio::io_service& io_service
 		, short port
 		)
@@ -98,8 +102,7 @@ private:
 		});
 	}
 
-	const int FRAME_TICK{ 33 };
-
+private:
 	boost::asio::io_service& io_service_;
 	tcp::acceptor acceptor_;
 	tcp::socket socket_;

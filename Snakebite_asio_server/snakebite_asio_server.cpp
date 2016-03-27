@@ -10,7 +10,6 @@
 #include <strsafe.h>
 #include <atomic>
 
-#include <acoross/snakebite/game_session.h>
 #include "local_game_client.h"
 #include "game_server.h"
 
