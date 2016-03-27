@@ -19,8 +19,6 @@ class SnakeNpcControlManager final
 	: public std::enable_shared_from_this<SnakeNpcControlManager>
 {
 public:
-	/*using SnakeWP = std::weak_ptr<Snake>;
-	using MapSnakeWP = std::map<Handle<Snake>::Type, std::weak_ptr<Snake>>;*/
 	using SetSnakeHandle = std::set<Handle<Snake>::Type>;
 
 	SnakeNpcControlManager(SnakeNpcControlManager&) = delete;
@@ -42,7 +40,6 @@ private:
 	std::default_random_engine random_engine_;
 
 	std::recursive_mutex snake_npcs_mutex_;
-	//MapSnakeWP snake_npcs_;
 	SetSnakeHandle snake_npc_handles_;
 
 	std::weak_ptr<GameSession> game_session_wp_;

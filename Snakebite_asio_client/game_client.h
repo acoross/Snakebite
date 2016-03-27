@@ -9,7 +9,7 @@
 #include <acoross/snakebite/protos/snakebite_message.pb.h>
 #include <acoross/snakebite/protos/sc_snakebite_message.pb.h>
 
-#include <acoross/snakebite/snake.h>
+#include <acoross/snakebite/game_session/game_session_system.h>
 #include <acoross/snakebite/game_client_base.h>
 
 using boost::asio::ip::tcp;

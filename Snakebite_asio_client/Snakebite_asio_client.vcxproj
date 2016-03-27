@@ -72,27 +72,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\game_session.cpp" />
+    <ClCompile Include="..\acoross\snakebite\game_session\details\game_session.cpp" />
+    <ClCompile Include="..\acoross\snakebite\game_session\details\snake.cpp" />
+    <ClCompile Include="..\acoross\snakebite\game_session\details\snake_collider.cpp" />
     <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
-    <ClCompile Include="..\acoross\snakebite\snake.cpp" />
-    <ClCompile Include="..\acoross\snakebite\snake_collider.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp" />
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp" />
     <ClCompile Include="game_client.cpp" />
     <ClCompile Include="snakebite_asio_client.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\Apple.h" />
-    <ClInclude Include="..\acoross\snakebite\game_client_base.h" />
-    <ClInclude Include="..\acoross\snakebite\game_object.h" />
-    <ClInclude Include="..\acoross\snakebite\game_session.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session\details\Apple.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session\details\game_object.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session\details\game_session.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session\details\handle.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session\details\snake.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session\details\snake_collider.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h" />
     <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
-    <ClInclude Include="..\acoross\snakebite\snake.h" />
-    <ClInclude Include="..\acoross\snakebite\snake_collider.h" />
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h" />
     <ClInclude Include="..\acoross\snakebite\util.h" />
     <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
