@@ -30,7 +30,6 @@ public:
 	void UpdateMove(int64_t diff_in_ms);
 	void ProcessCollisions();
 	
-	SnakeWP AddSnake_old(Snake::EventHandler onDieHandler = Snake::EventHandler(), std::string name = "noname");
 	Handle<Snake>::Type AddSnake(Snake::EventHandler onDieHandler = Snake::EventHandler(), std::string name = "noname");
 	void AddApple();
 	bool RemoveSnake(Handle<Snake>::Type snake);
@@ -72,11 +71,6 @@ public:
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 		return apples_.size();
-	}
-
-	std::recursive_mutex& LockSnakes()
-	{
-		return snakes_mutex_;
 	}
 
 	void RequestToSnake(Handle<Snake>::Type handle, std::function<void(Snake&)> request)
