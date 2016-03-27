@@ -10,9 +10,7 @@
 
 #include <acoross/snakebite/util.h>
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
-#include <acoross/snakebite/game_session.h>
-#include <acoross/snakebite/game_object.h>
-#include <acoross/snakebite/snake.h>
+#include <acoross/snakebite/game_session/game_session_system.h>
 
 namespace acoross {
 namespace snakebite {

@@ -1,7 +1,7 @@
 #ifndef SNAKEBITE_SNAKEBITE_MESSAGE_HANDLER_TABLE_H_
 #define SNAKEBITE_SNAKEBITE_MESSAGE_HANDLER_TABLE_H_
 
-#include <acoross/snakebite/snake.h>
+#include <acoross/snakebite/game_session/game_session_system.h>
 #include <acoross/snakebite/protos/snakebite_message.h>
 #include <acoross/snakebite/protos/snakebite_message.pb.h>
 #include <acoross/snakebite/protos/sc_snakebite_message.pb.h>

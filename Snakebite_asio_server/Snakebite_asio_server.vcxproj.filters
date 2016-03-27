@@ -31,17 +31,11 @@
     <Filter Include="npc_control_manager">
       <UniqueIdentifier>{f338602e-7f63-4fe9-b430-d61df07d5cd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game_session\details">
+      <UniqueIdentifier>{b0a7f926-bcc3-4a68-aac2-5f750772f423}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\game_session.cpp">
-      <Filter>game_session</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\snake.cpp">
-      <Filter>game_session</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\snake_collider.cpp">
-      <Filter>game_session</Filter>
-    </ClCompile>
     <ClCompile Include="snakebite_asio_server.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -66,6 +60,15 @@
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp">
       <Filter>npc_control_manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\game_session\details\game_session.cpp">
+      <Filter>game_session\details</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\game_session\details\snake.cpp">
+      <Filter>game_session\details</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\game_session\details\snake_collider.cpp">
+      <Filter>game_session\details</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -77,18 +80,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\game_object.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\snake.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\snake_collider.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
     <ClInclude Include="game_server.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -100,9 +91,6 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\win\Resource.h">
       <Filter>lib\win</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\apple.h">
-      <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\util.h">
       <Filter>lib</Filter>
@@ -134,8 +122,26 @@
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h">
       <Filter>npc_control_manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\handle.h">
+    <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h">
       <Filter>game_session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\details\Apple.h">
+      <Filter>game_session\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\details\game_object.h">
+      <Filter>game_session\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\details\game_session.h">
+      <Filter>game_session\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\details\handle.h">
+      <Filter>game_session\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\details\snake.h">
+      <Filter>game_session\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\details\snake_collider.h">
+      <Filter>game_session\details</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

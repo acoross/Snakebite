@@ -7,7 +7,7 @@
 #include <map>
 #include <set>
 
-#include <acoross/snakebite/handle.h>
+#include <acoross/snakebite/game_session/game_session_system.h>
 
 namespace acoross {
 namespace snakebite {

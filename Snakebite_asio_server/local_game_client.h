@@ -3,10 +3,8 @@
 
 #include <acoross/snakebite/win/WinWrapper.h>
 
-#include <acoross/snakebite/game_session.h>
+#include <acoross/snakebite/game_session/game_session_system.h>
 #include <acoross/snakebite/game_client_base.h>
-#include <acoross/snakebite/handle.h>
-#include <acoross/snakebite/snake.h>
 #include "game_server.h"
 
 namespace acoross {

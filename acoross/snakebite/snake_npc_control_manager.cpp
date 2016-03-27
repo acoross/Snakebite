@@ -3,9 +3,6 @@
 #include <chrono>
 #include <algorithm>
 
-#include <acoross/snakebite/game_session.h>
-#include <acoross/snakebite/snake.h>
-
 namespace acoross {
 namespace snakebite {
 

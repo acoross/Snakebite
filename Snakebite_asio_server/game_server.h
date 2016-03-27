@@ -12,9 +12,8 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 #include <acoross/snakebite/util.h>
-#include <acoross/snakebite/game_session.h>
+#include <acoross/snakebite/game_session/game_session_system.h>
 #include <acoross/snakebite/snake_npc_control_manager.h>
-#include <acoross/snakebite/snake.h>
 #include <acoross/snakebite/protos/snakebite_message.h>
 #include "UserSession.h"
 

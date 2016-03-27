@@ -1,0 +1,6 @@
+#ifndef SNAKEBITE_GAME_SESSION_SYSTEM_H_
+#define SNAKEBITE_GAME_SESSION_SYSTEM_H_
+
+#include "details/game_session.h"
+
+#endif //SNAKEBITE_GAME_SESSION_SYSTEM_H_
