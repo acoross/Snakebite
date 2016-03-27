@@ -23,6 +23,9 @@ namespace sc_messages {
 
 namespace {
 
+const ::google::protobuf::Descriptor* InitPlayerSnakeReply_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  InitPlayerSnakeReply_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MovingObject_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MovingObject_reflection_ = NULL;
@@ -43,7 +46,22 @@ void protobuf_AssignDesc_sc_5fsnakebite_5fmessage_2eproto() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "sc_snakebite_message.proto");
   GOOGLE_CHECK(file != NULL);
-  MovingObject_descriptor_ = file->message_type(0);
+  InitPlayerSnakeReply_descriptor_ = file->message_type(0);
+  static const int InitPlayerSnakeReply_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeReply, handle_),
+  };
+  InitPlayerSnakeReply_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      InitPlayerSnakeReply_descriptor_,
+      InitPlayerSnakeReply::default_instance_,
+      InitPlayerSnakeReply_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(InitPlayerSnakeReply),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeReply, _internal_metadata_),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeReply, _is_default_instance_));
+  MovingObject_descriptor_ = file->message_type(1);
   static const int MovingObject_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, y_),
@@ -60,9 +78,10 @@ void protobuf_AssignDesc_sc_5fsnakebite_5fmessage_2eproto() {
       sizeof(MovingObject),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, _is_default_instance_));
-  GameObjectClone_descriptor_ = file->message_type(1);
-  static const int GameObjectClone_offsets_[4] = {
+  GameObjectClone_descriptor_ = file->message_type(2);
+  static const int GameObjectClone_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, clone_type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, obj_name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, handle_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, head_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, body_),
@@ -78,7 +97,7 @@ void protobuf_AssignDesc_sc_5fsnakebite_5fmessage_2eproto() {
       sizeof(GameObjectClone),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, _is_default_instance_));
-  UpdateGameObjects_descriptor_ = file->message_type(2);
+  UpdateGameObjects_descriptor_ = file->message_type(3);
   static const int UpdateGameObjects_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjects, clone_),
   };
@@ -107,6 +126,8 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      InitPlayerSnakeReply_descriptor_, &InitPlayerSnakeReply::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       MovingObject_descriptor_, &MovingObject::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       GameObjectClone_descriptor_, &GameObjectClone::default_instance());
@@ -117,6 +138,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
 }  // namespace
 
 void protobuf_ShutdownFile_sc_5fsnakebite_5fmessage_2eproto() {
+  delete InitPlayerSnakeReply::default_instance_;
+  delete InitPlayerSnakeReply_reflection_;
   delete MovingObject::default_instance_;
   delete MovingObject_reflection_;
   delete GameObjectClone::default_instance_;
@@ -133,21 +156,24 @@ void protobuf_AddDesc_sc_5fsnakebite_5fmessage_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\032sc_snakebite_message.proto\022\035acoross.sn"
-    "akebite.sc_messages\"4\n\014MovingObject\022\t\n\001x"
-    "\030\001 \001(\001\022\t\n\001y\030\002 \001(\001\022\016\n\006radius\030\003 \001(\001\"\253\001\n\017Ga"
-    "meObjectClone\022\022\n\nclone_type\030\001 \001(\005\022\016\n\006han"
-    "dle\030\002 \001(\003\0229\n\004head\030\003 \001(\0132+.acoross.snakeb"
-    "ite.sc_messages.MovingObject\0229\n\004body\030\004 \003"
-    "(\0132+.acoross.snakebite.sc_messages.Movin"
-    "gObject\"R\n\021UpdateGameObjects\022=\n\005clone\030\001 "
-    "\003(\0132..acoross.snakebite.sc_messages.Game"
-    "ObjectClone*\037\n\007ObjType\022\t\n\005Snake\020\000\022\t\n\005App"
-    "le\020\001b\006proto3", 412);
+    "akebite.sc_messages\"&\n\024InitPlayerSnakeRe"
+    "ply\022\016\n\006handle\030\001 \001(\003\"4\n\014MovingObject\022\t\n\001x"
+    "\030\001 \001(\001\022\t\n\001y\030\002 \001(\001\022\016\n\006radius\030\003 \001(\001\"\275\001\n\017Ga"
+    "meObjectClone\022\022\n\nclone_type\030\001 \001(\005\022\020\n\010obj"
+    "_name\030\002 \001(\t\022\016\n\006handle\030\003 \001(\003\0229\n\004head\030\004 \001("
+    "\0132+.acoross.snakebite.sc_messages.Moving"
+    "Object\0229\n\004body\030\005 \003(\0132+.acoross.snakebite"
+    ".sc_messages.MovingObject\"R\n\021UpdateGameO"
+    "bjects\022=\n\005clone\030\001 \003(\0132..acoross.snakebit"
+    "e.sc_messages.GameObjectClone*\037\n\007ObjType"
+    "\022\t\n\005Snake\020\000\022\t\n\005Apple\020\001b\006proto3", 470);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "sc_snakebite_message.proto", &protobuf_RegisterTypes);
+  InitPlayerSnakeReply::default_instance_ = new InitPlayerSnakeReply();
   MovingObject::default_instance_ = new MovingObject();
   GameObjectClone::default_instance_ = new GameObjectClone();
   UpdateGameObjects::default_instance_ = new UpdateGameObjects();
+  InitPlayerSnakeReply::default_instance_->InitAsDefaultInstance();
   MovingObject::default_instance_->InitAsDefaultInstance();
   GameObjectClone::default_instance_->InitAsDefaultInstance();
   UpdateGameObjects::default_instance_->InitAsDefaultInstance();
@@ -184,6 +210,232 @@ static void MergeFromFail(int line) {
 
 }  // namespace
 
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int InitPlayerSnakeReply::kHandleFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+InitPlayerSnakeReply::InitPlayerSnakeReply()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+}
+
+void InitPlayerSnakeReply::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+}
+
+InitPlayerSnakeReply::InitPlayerSnakeReply(const InitPlayerSnakeReply& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+}
+
+void InitPlayerSnakeReply::SharedCtor() {
+    _is_default_instance_ = false;
+  _cached_size_ = 0;
+  handle_ = GOOGLE_LONGLONG(0);
+}
+
+InitPlayerSnakeReply::~InitPlayerSnakeReply() {
+  // @@protoc_insertion_point(destructor:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+  SharedDtor();
+}
+
+void InitPlayerSnakeReply::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void InitPlayerSnakeReply::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* InitPlayerSnakeReply::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return InitPlayerSnakeReply_descriptor_;
+}
+
+const InitPlayerSnakeReply& InitPlayerSnakeReply::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_sc_5fsnakebite_5fmessage_2eproto();
+  return *default_instance_;
+}
+
+InitPlayerSnakeReply* InitPlayerSnakeReply::default_instance_ = NULL;
+
+InitPlayerSnakeReply* InitPlayerSnakeReply::New(::google::protobuf::Arena* arena) const {
+  InitPlayerSnakeReply* n = new InitPlayerSnakeReply;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void InitPlayerSnakeReply::Clear() {
+  handle_ = GOOGLE_LONGLONG(0);
+}
+
+bool InitPlayerSnakeReply::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int64 handle = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &handle_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+  return false;
+#undef DO_
+}
+
+void InitPlayerSnakeReply::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+  // optional int64 handle = 1;
+  if (this->handle() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->handle(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+}
+
+::google::protobuf::uint8* InitPlayerSnakeReply::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+  // optional int64 handle = 1;
+  if (this->handle() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->handle(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.sc_messages.InitPlayerSnakeReply)
+  return target;
+}
+
+int InitPlayerSnakeReply::ByteSize() const {
+  int total_size = 0;
+
+  // optional int64 handle = 1;
+  if (this->handle() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int64Size(
+        this->handle());
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void InitPlayerSnakeReply::MergeFrom(const ::google::protobuf::Message& from) {
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const InitPlayerSnakeReply* source = 
+      ::google::protobuf::internal::DynamicCastToGenerated<const InitPlayerSnakeReply>(
+          &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void InitPlayerSnakeReply::MergeFrom(const InitPlayerSnakeReply& from) {
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  if (from.handle() != 0) {
+    set_handle(from.handle());
+  }
+}
+
+void InitPlayerSnakeReply::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void InitPlayerSnakeReply::CopyFrom(const InitPlayerSnakeReply& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool InitPlayerSnakeReply::IsInitialized() const {
+
+  return true;
+}
+
+void InitPlayerSnakeReply::Swap(InitPlayerSnakeReply* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void InitPlayerSnakeReply::InternalSwap(InitPlayerSnakeReply* other) {
+  std::swap(handle_, other->handle_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata InitPlayerSnakeReply::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = InitPlayerSnakeReply_descriptor_;
+  metadata.reflection = InitPlayerSnakeReply_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// InitPlayerSnakeReply
+
+// optional int64 handle = 1;
+void InitPlayerSnakeReply::clear_handle() {
+  handle_ = GOOGLE_LONGLONG(0);
+}
+ ::google::protobuf::int64 InitPlayerSnakeReply::handle() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.sc_messages.InitPlayerSnakeReply.handle)
+  return handle_;
+}
+ void InitPlayerSnakeReply::set_handle(::google::protobuf::int64 value) {
+  
+  handle_ = value;
+  // @@protoc_insertion_point(field_set:acoross.snakebite.sc_messages.InitPlayerSnakeReply.handle)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
@@ -525,6 +777,7 @@ void MovingObject::clear_radius() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int GameObjectClone::kCloneTypeFieldNumber;
+const int GameObjectClone::kObjNameFieldNumber;
 const int GameObjectClone::kHandleFieldNumber;
 const int GameObjectClone::kHeadFieldNumber;
 const int GameObjectClone::kBodyFieldNumber;
@@ -551,8 +804,10 @@ GameObjectClone::GameObjectClone(const GameObjectClone& from)
 
 void GameObjectClone::SharedCtor() {
     _is_default_instance_ = false;
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   clone_type_ = 0;
+  obj_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   handle_ = GOOGLE_LONGLONG(0);
   head_ = NULL;
 }
@@ -563,6 +818,7 @@ GameObjectClone::~GameObjectClone() {
 }
 
 void GameObjectClone::SharedDtor() {
+  obj_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != default_instance_) {
     delete head_;
   }
@@ -595,6 +851,7 @@ GameObjectClone* GameObjectClone::New(::google::protobuf::Arena* arena) const {
 
 void GameObjectClone::Clear() {
   clone_type_ = 0;
+  obj_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   handle_ = GOOGLE_LONGLONG(0);
   if (GetArenaNoVirtual() == NULL && head_ != NULL) delete head_;
   head_ = NULL;
@@ -621,13 +878,30 @@ bool GameObjectClone::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_handle;
+        if (input->ExpectTag(18)) goto parse_obj_name;
         break;
       }
 
-      // optional int64 handle = 2;
+      // optional string obj_name = 2;
       case 2: {
-        if (tag == 16) {
+        if (tag == 18) {
+         parse_obj_name:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_obj_name()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->obj_name().data(), this->obj_name().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "acoross.snakebite.sc_messages.GameObjectClone.obj_name"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_handle;
+        break;
+      }
+
+      // optional int64 handle = 3;
+      case 3: {
+        if (tag == 24) {
          parse_handle:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -636,26 +910,26 @@ bool GameObjectClone::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_head;
+        if (input->ExpectTag(34)) goto parse_head;
         break;
       }
 
-      // optional .acoross.snakebite.sc_messages.MovingObject head = 3;
-      case 3: {
-        if (tag == 26) {
+      // optional .acoross.snakebite.sc_messages.MovingObject head = 4;
+      case 4: {
+        if (tag == 34) {
          parse_head:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_head()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_body;
+        if (input->ExpectTag(42)) goto parse_body;
         break;
       }
 
-      // repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
-      case 4: {
-        if (tag == 34) {
+      // repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
+      case 5: {
+        if (tag == 42) {
          parse_body:
           DO_(input->IncrementRecursionDepth());
          parse_loop_body:
@@ -664,7 +938,7 @@ bool GameObjectClone::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_loop_body;
+        if (input->ExpectTag(42)) goto parse_loop_body;
         input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
@@ -699,21 +973,31 @@ void GameObjectClone::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->clone_type(), output);
   }
 
-  // optional int64 handle = 2;
-  if (this->handle() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->handle(), output);
+  // optional string obj_name = 2;
+  if (this->obj_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->obj_name().data(), this->obj_name().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "acoross.snakebite.sc_messages.GameObjectClone.obj_name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->obj_name(), output);
   }
 
-  // optional .acoross.snakebite.sc_messages.MovingObject head = 3;
+  // optional int64 handle = 3;
+  if (this->handle() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->handle(), output);
+  }
+
+  // optional .acoross.snakebite.sc_messages.MovingObject head = 4;
   if (this->has_head()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, *this->head_, output);
+      4, *this->head_, output);
   }
 
-  // repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
+  // repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
   for (unsigned int i = 0, n = this->body_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, this->body(i), output);
+      5, this->body(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:acoross.snakebite.sc_messages.GameObjectClone)
@@ -727,23 +1011,34 @@ void GameObjectClone::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->clone_type(), target);
   }
 
-  // optional int64 handle = 2;
-  if (this->handle() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(2, this->handle(), target);
+  // optional string obj_name = 2;
+  if (this->obj_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->obj_name().data(), this->obj_name().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "acoross.snakebite.sc_messages.GameObjectClone.obj_name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->obj_name(), target);
   }
 
-  // optional .acoross.snakebite.sc_messages.MovingObject head = 3;
+  // optional int64 handle = 3;
+  if (this->handle() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(3, this->handle(), target);
+  }
+
+  // optional .acoross.snakebite.sc_messages.MovingObject head = 4;
   if (this->has_head()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, *this->head_, target);
+        4, *this->head_, target);
   }
 
-  // repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
+  // repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
   for (unsigned int i = 0, n = this->body_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        4, this->body(i), target);
+        5, this->body(i), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.sc_messages.GameObjectClone)
@@ -760,21 +1055,28 @@ int GameObjectClone::ByteSize() const {
         this->clone_type());
   }
 
-  // optional int64 handle = 2;
+  // optional string obj_name = 2;
+  if (this->obj_name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->obj_name());
+  }
+
+  // optional int64 handle = 3;
   if (this->handle() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int64Size(
         this->handle());
   }
 
-  // optional .acoross.snakebite.sc_messages.MovingObject head = 3;
+  // optional .acoross.snakebite.sc_messages.MovingObject head = 4;
   if (this->has_head()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->head_);
   }
 
-  // repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
+  // repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
   total_size += 1 * this->body_size();
   for (int i = 0; i < this->body_size(); i++) {
     total_size +=
@@ -805,6 +1107,10 @@ void GameObjectClone::MergeFrom(const GameObjectClone& from) {
   body_.MergeFrom(from.body_);
   if (from.clone_type() != 0) {
     set_clone_type(from.clone_type());
+  }
+  if (from.obj_name().size() > 0) {
+
+    obj_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.obj_name_);
   }
   if (from.handle() != 0) {
     set_handle(from.handle());
@@ -837,6 +1143,7 @@ void GameObjectClone::Swap(GameObjectClone* other) {
 }
 void GameObjectClone::InternalSwap(GameObjectClone* other) {
   std::swap(clone_type_, other->clone_type_);
+  obj_name_.Swap(&other->obj_name_);
   std::swap(handle_, other->handle_);
   std::swap(head_, other->head_);
   body_.UnsafeArenaSwap(&other->body_);
@@ -869,7 +1176,50 @@ void GameObjectClone::clear_clone_type() {
   // @@protoc_insertion_point(field_set:acoross.snakebite.sc_messages.GameObjectClone.clone_type)
 }
 
-// optional int64 handle = 2;
+// optional string obj_name = 2;
+void GameObjectClone::clear_obj_name() {
+  obj_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ const ::std::string& GameObjectClone::obj_name() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.sc_messages.GameObjectClone.obj_name)
+  return obj_name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void GameObjectClone::set_obj_name(const ::std::string& value) {
+  
+  obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:acoross.snakebite.sc_messages.GameObjectClone.obj_name)
+}
+ void GameObjectClone::set_obj_name(const char* value) {
+  
+  obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:acoross.snakebite.sc_messages.GameObjectClone.obj_name)
+}
+ void GameObjectClone::set_obj_name(const char* value, size_t size) {
+  
+  obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.sc_messages.GameObjectClone.obj_name)
+}
+ ::std::string* GameObjectClone::mutable_obj_name() {
+  
+  // @@protoc_insertion_point(field_mutable:acoross.snakebite.sc_messages.GameObjectClone.obj_name)
+  return obj_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* GameObjectClone::release_obj_name() {
+  
+  return obj_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void GameObjectClone::set_allocated_obj_name(::std::string* obj_name) {
+  if (obj_name != NULL) {
+    
+  } else {
+    
+  }
+  obj_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), obj_name);
+  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.sc_messages.GameObjectClone.obj_name)
+}
+
+// optional int64 handle = 3;
 void GameObjectClone::clear_handle() {
   handle_ = GOOGLE_LONGLONG(0);
 }
@@ -883,7 +1233,7 @@ void GameObjectClone::clear_handle() {
   // @@protoc_insertion_point(field_set:acoross.snakebite.sc_messages.GameObjectClone.handle)
 }
 
-// optional .acoross.snakebite.sc_messages.MovingObject head = 3;
+// optional .acoross.snakebite.sc_messages.MovingObject head = 4;
 bool GameObjectClone::has_head() const {
   return !_is_default_instance_ && head_ != NULL;
 }
@@ -920,7 +1270,7 @@ void GameObjectClone::set_allocated_head(::acoross::snakebite::sc_messages::Movi
   // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.sc_messages.GameObjectClone.head)
 }
 
-// repeated .acoross.snakebite.sc_messages.MovingObject body = 4;
+// repeated .acoross.snakebite.sc_messages.MovingObject body = 5;
 int GameObjectClone::body_size() const {
   return body_.size();
 }

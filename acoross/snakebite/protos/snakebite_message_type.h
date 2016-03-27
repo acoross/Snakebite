@@ -16,6 +16,7 @@ enum class SnakebiteMessageType : unsigned short
 enum class SC_SnakebiteMessageType : unsigned short
 {
 	None = 0,
+	ReplyInitPlayerSnake,
 	UpdateGameObjects,
 	Max
 };

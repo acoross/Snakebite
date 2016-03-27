@@ -7,6 +7,7 @@
 #include <boost/asio.hpp>
 #include <deque>
 
+#include <acoross/snakebite/snake.h>
 #include <acoross/snakebite/protos/snakebite_message.h>
 #include <acoross/snakebite/protos/snakebite_message.pb.h>
 #include "snakebite_message_handler_table.h"
@@ -67,7 +68,7 @@ public:
 	}
 	//
 
-	void RequestInitPlayer(std::string name);
+	Handle<Snake>::Type RequestInitPlayer(std::string name);
 
 private:
 	void do_read_header()
@@ -135,10 +136,13 @@ private:
 
 	bool process_message(SnakebiteMessage& msg)
 	{
-		SnakebiteMessage reply;
-		bool ret = message_handler_.ProcessMessage(*this, msg, &reply);
+		std::unique_ptr<SnakebiteMessage> reply = nullptr;
+		bool ret = message_handler_.ProcessMessage(*this, msg, reply);
 
-		//send(reply);
+		if (reply)
+		{
+			send(std::move(reply));
+		}
 
 		return ret;
 	}

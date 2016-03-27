@@ -36,13 +36,20 @@ void UserSession::end()
 	game_server_->UnregisterEventListner(myid);
 }
 
-void UserSession::RequestInitPlayer(std::string name)
+Handle<Snake>::Type UserSession::RequestInitPlayer(std::string name)
 {
 	if (auto player = user_snake_.lock())
 	{
 		game_session_->RemoveSnake(Handle<Snake>(player.get()).handle);
 	}
+	
 	user_snake_ = game_session_->AddSnake(Snake::EventHandler(), name);
+	if (auto player = user_snake_.lock())
+	{
+		return Handle<Snake>(player.get()).handle;
+	}
+
+	return 0;
 }
 
 }

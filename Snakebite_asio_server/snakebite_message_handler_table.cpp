@@ -3,25 +3,25 @@
 #include "UserSession.h"
 #include <acoross/snakebite/protos/snakebite_message_type.h>
 #include <acoross/snakebite/protos/snakebite_message.h>
+#include <acoross/snakebite/protos/sc_snakebite_message.pb.h>
 
 namespace acoross {
 namespace snakebite {
 
-bool SnakebiteMessageHandlerTable::ProcessMessage(UserSession& session, const SnakebiteMessage& request, SnakebiteMessage* reply)
+bool SnakebiteMessageHandlerTable::ProcessMessage(UserSession& session, const SnakebiteMessage& request, std::unique_ptr<SnakebiteMessage>& /*OUT*/ reply)
 {
 	using namespace messages;
 
-	if (reply == nullptr)
+	/*if (reply == nullptr)
 	{
 		return false;
-	}
+	}*/
 
 	if (request.message_type() >= static_cast<unsigned short>(SnakebiteMessageType::Max))
 	{
 		return false;
 	}
 
-	std::unique_ptr<::google::protobuf::Message> rp = nullptr;
 	bool ret = false;
 
 	auto message_type_typed = static_cast<SnakebiteMessageType>(request.message_type());
@@ -32,10 +32,15 @@ bool SnakebiteMessageHandlerTable::ProcessMessage(UserSession& session, const Sn
 		InitPlayerSnakeRequest rq;
 		rq.ParseFromArray(request.body(), request.body_length());
 
-		rp.reset(new VoidReply);
-		auto* rpp = (VoidReply*)rp.get();
-		ret = InitPlayerSnakeMessage(session, rq);
-		rpp->set_err(ret);
+		sc_messages::InitPlayerSnakeReply rp;
+		ret = InitPlayerSnakeMessage(session, rq, &rp);
+		{
+			reply.reset(new SnakebiteMessage);
+			int reply_length = 0;
+			rp.SerializeToArray(reply->body(), reply->max_body_length);
+			reply->body_length((unsigned short)rp.ByteSize());
+			reply->encode_header((unsigned short)SC_SnakebiteMessageType::ReplyInitPlayerSnake);
+		}
 
 		break;
 	}
@@ -43,11 +48,7 @@ bool SnakebiteMessageHandlerTable::ProcessMessage(UserSession& session, const Sn
 	{
 		TurnKeyDownRequest rq;
 		rq.ParseFromArray(request.body(), request.body_length());
-
-		rp.reset(new VoidReply);
-		auto* rpp = (VoidReply*)rp.get();
 		ret = TurnKeyDownMessage(session, rq);
-		rpp->set_err(ret);
 
 		break;
 	}
@@ -55,11 +56,7 @@ bool SnakebiteMessageHandlerTable::ProcessMessage(UserSession& session, const Sn
 	{
 		TurnKeyUpRequest rq;
 		rq.ParseFromArray(request.body(), request.body_length());
-
-		rp.reset(new VoidReply);
-		auto* rpp = (VoidReply*)rp.get();
 		ret = TurnKeyUpMessage(session, rq);
-		rpp->set_err(ret);
 
 		break;
 	}
@@ -67,13 +64,6 @@ bool SnakebiteMessageHandlerTable::ProcessMessage(UserSession& session, const Sn
 		break;
 	}
 
-	if (rp)
-	{
-		int reply_length = 0;
-		rp->SerializeToArray(reply->body(), reply_length);
-		reply->body_length((unsigned short)reply_length);
-	}
-	
 	return ret;
 }
 
@@ -105,9 +95,14 @@ bool SnakebiteMessageHandlerTable::TurnKeyUpMessage(UserSession& session, messag
 	return true;
 }
 
-bool SnakebiteMessageHandlerTable::InitPlayerSnakeMessage(UserSession& session, messages::InitPlayerSnakeRequest& rq)
+bool SnakebiteMessageHandlerTable::InitPlayerSnakeMessage(UserSession& session, messages::InitPlayerSnakeRequest& rq, sc_messages::InitPlayerSnakeReply* rp)
 {
-	session.RequestInitPlayer(rq.name());
+	auto handle = session.RequestInitPlayer(rq.name());
+
+	if (rp)
+	{
+		rp->set_handle(handle);
+	}
 
 	return true;
 }

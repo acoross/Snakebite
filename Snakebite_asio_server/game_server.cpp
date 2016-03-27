@@ -46,6 +46,7 @@ void acoross::snakebite::GameServer::do_update_game_session()
 
 				clone->set_clone_type(0);
 				clone->set_handle(Handle<Snake>(pair.first).handle);
+				clone->set_obj_name(snake_clone.Name);
 
 				auto* head = clone->mutable_head();
 				head->set_radius(snake_clone.head_.GetRadius());
@@ -66,6 +67,7 @@ void acoross::snakebite::GameServer::do_update_game_session()
 				auto* clone = game_objects.add_clone();
 				clone->set_clone_type(1);
 				clone->set_handle(0);
+				clone->set_obj_name(apple_clone.Name);
 
 				auto* head = clone->mutable_head();
 				head->set_radius(apple_clone.head_.GetRadius());

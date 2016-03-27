@@ -19,6 +19,15 @@ bool ClientMessageHandlerTable::ProcessMessage(
 	auto message_type_typed = static_cast<SC_SnakebiteMessageType>(msg.message_type());
 	switch (message_type_typed)
 	{
+	case SC_SnakebiteMessageType::ReplyInitPlayerSnake:
+	{
+		sc_messages::InitPlayerSnakeReply got_msg;
+		got_msg.ParseFromArray(msg.body(), msg.body_length());
+
+		ret = InitPlayerReply(client, got_msg);
+
+		break;
+	}
 	case SC_SnakebiteMessageType::UpdateGameObjects:
 	{
 		sc_messages::UpdateGameObjects got_msg;
@@ -33,6 +42,13 @@ bool ClientMessageHandlerTable::ProcessMessage(
 	}
 
 	return ret;
+}
+
+bool ClientMessageHandlerTable::InitPlayerReply(
+	GameClient& client, sc_messages::InitPlayerSnakeReply& got_msg)
+{
+	client.set_player_handle(got_msg.handle());
+	return true;
 }
 
 bool ClientMessageHandlerTable::UpdateGameObjectPositions(
@@ -56,7 +72,7 @@ bool ClientMessageHandlerTable::UpdateGameObjectPositions(
 			client_body_list.emplace_back(Position2D(pac_body.x(), pac_body.y()), pac_body.radius());
 		}
 
-		auto client_clone = GameObjectClone(client_head, client_body_list, std::string("noname"));
+		auto client_clone = GameObjectClone(client_head, client_body_list, clone.obj_name());
 
 		if (clone.clone_type() == 0) //snake
 		{

@@ -25,6 +25,8 @@ class ClientMessageHandlerTable final
 public:
 	bool ProcessMessage(GameClient& client, const SnakebiteMessage& msg);
 
+	bool InitPlayerReply(GameClient& client, sc_messages::InitPlayerSnakeReply& got_msg);
+
 	bool UpdateGameObjectPositions(GameClient& client, sc_messages::UpdateGameObjects& got_msg);
 };
 
@@ -194,13 +196,18 @@ public:
 		return ret;
 	}
 
+	void set_player_handle(uintptr_t handle)
+	{
+		player_handle = handle;
+	}
+
 private:
 	boost::asio::io_service& io_service_;
 	tcp::socket socket_;
 
 	int screen_width{ 500 };	// init value. set this by server value
 	int screen_height{ 500 };	// init value. set this by server value
-	Handle<Snake> player_handle;
+	Handle<Snake> player_handle{ nullptr };
 
 	SnakebiteMessage read_msg_;
 	ClientMessageHandlerTable message_handler_;
