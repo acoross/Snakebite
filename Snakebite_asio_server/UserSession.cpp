@@ -27,29 +27,39 @@ void UserSession::start()
 
 void UserSession::end()
 {
-	if (auto my_snake = user_snake_.lock())
-	{
-		game_session_->RemoveSnake(Handle<Snake>(my_snake.get()).handle);
-	}
-	
+	game_session_->RemoveSnake(user_snake_handle_);
+
 	std::string myid = std::to_string((uintptr_t)this);
 	game_server_->UnregisterEventListner(myid);
 }
 
+
+// @atomic
+
+void UserSession::TurnKeyDown(PlayerKey pk)
+{
+	game_session_->RequestToSnake(user_snake_handle_,
+		[pk](Snake& snake)
+	{
+		snake.SetKeyDown(pk);
+	});
+}
+
+void UserSession::TurnKeyUp(PlayerKey pk)
+{
+	game_session_->RequestToSnake(user_snake_handle_,
+		[pk](Snake& snake)
+	{
+		snake.SetKeyUp(pk);
+	});
+}
+
 Handle<Snake>::Type UserSession::RequestInitPlayer(std::string name)
 {
-	if (auto player = user_snake_.lock())
-	{
-		game_session_->RemoveSnake(Handle<Snake>(player.get()).handle);
-	}
+	game_session_->RemoveSnake(user_snake_handle_);
 	
-	user_snake_ = game_session_->AddSnake_old(Snake::EventHandler(), name);
-	if (auto player = user_snake_.lock())
-	{
-		return Handle<Snake>(player.get()).handle;
-	}
-
-	return 0;
+	user_snake_handle_ = game_session_->AddSnake(Snake::EventHandler(), name);
+	return user_snake_handle_;
 }
 
 }

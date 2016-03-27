@@ -51,23 +51,9 @@ public:
 		}
 	}
 
-	// @atomic
-	void TurnKeyDown(PlayerKey pk)
-	{
-		if (auto player = user_snake_.lock())
-		{
-			player->SetKeyDown(pk);
-		}
-	}
+	void TurnKeyDown(PlayerKey pk);
 
-	void TurnKeyUp(PlayerKey pk)
-	{
-		if (auto player = user_snake_.lock())
-		{
-			player->SetKeyUp(pk);
-		}
-	}
-	//
+	void TurnKeyUp(PlayerKey pk);
 
 	Handle<Snake>::Type RequestInitPlayer(std::string name);
 
@@ -149,9 +135,8 @@ private:
 	}
 
 	tcp::socket socket_;
-	/*enum { max_length = 1024 };
-	char data_[max_length];*/
-	std::weak_ptr<Snake> user_snake_;
+	
+	Handle<Snake>::Type user_snake_handle_;
 	std::shared_ptr<GameSession> game_session_;
 	std::shared_ptr<GameServer> game_server_;
 
