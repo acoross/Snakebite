@@ -11,7 +11,7 @@
 using boost::asio::ip::tcp;
 using namespace acoross::snakebite;
 
-std::shared_ptr<GameClient> g_game_client;
+std::weak_ptr<GameClient> g_game_client;
 
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -44,15 +44,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	{
 		if (wParam == VK_LEFT)
 		{
-			g_game_client->SetKeyDown(PK_LEFT);
+			if (auto game_client = g_game_client.lock())
+			{
+				game_client->SetKeyDown(PK_LEFT);
+			}
 		}
 		else if (wParam == VK_RIGHT)
 		{
-			g_game_client->SetKeyDown(PK_RIGHT);
+			if (auto game_client = g_game_client.lock())
+			{
+				game_client->SetKeyDown(PK_RIGHT);
+			}
 		}
 		else if (wParam == VK_F5)
 		{
-			g_game_client->InitPlayer();
+			if (auto game_client = g_game_client.lock())
+			{
+				game_client->InitPlayer();
+			}
 		}
 	}
 	break;
@@ -60,11 +69,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	{
 		if (wParam == VK_LEFT)
 		{
-			g_game_client->SetKeyUp(PK_LEFT);
+			if (auto game_client = g_game_client.lock())
+			{
+				game_client->SetKeyUp(PK_LEFT);
+			}
 		}
 		else if (wParam == VK_RIGHT)
 		{
-			g_game_client->SetKeyUp(PK_RIGHT);
+			if (auto game_client = g_game_client.lock())
+			{
+				game_client->SetKeyUp(PK_RIGHT);
+			}
 		}
 	}
 	case WM_PAINT:
@@ -78,7 +93,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
 		{
 			//MeanProcessTimeChecker mean_draw(mean_draw_time_ms);
-			g_game_client->Draw(wdc, client_rect);
+			if (auto game_client = g_game_client.lock())
+			{
+				game_client->Draw(wdc, client_rect);
+			}
 		}
 
 		/*
@@ -154,8 +172,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// TODO: 여기에 코드를 입력합니다.
 		boost::asio::io_service io_service;
 
-		g_game_client = std::make_unique<GameClient>(io_service);
-		g_game_client->ConnectToServer("localhost", "22000");
+		
+		auto game_client = std::make_shared<GameClient>(io_service);
+		game_client->ConnectToServer("192.168.0.7", "22000");
+
+		g_game_client = game_client;
 
 		std::thread game_thread(
 			[&io_service]()
