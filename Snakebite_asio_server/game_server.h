@@ -30,8 +30,7 @@ class GameServer final
 public:
 	using EventHandler = std::function<void(std::shared_ptr<SnakebiteMessage>&)>;
 	using LocalUpdateListner = 
-		std::function
-		<void(std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>, std::list<GameObjectClone>)>;
+		std::function<void(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, const std::list<GameObjectClone>&)>;
 	
 	const int FRAME_TICK{ 100 };
 
@@ -52,10 +51,15 @@ public:
 	
 	void SetLocalUpdateListner(LocalUpdateListner local_listner)
 	{
-		on_update_local_listner_ = local_listner;
+		game_session_->AddUpdateEventListner("local listner",
+			[local_listner]
+		(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, const std::list<GameObjectClone>& apple_clone_list)
+		{
+			local_listner(snake_clone_list, apple_clone_list);
+		});
 	}
 
-	void AddUpdateEventListner(std::string name, EventHandler on_update)
+	/*void AddUpdateEventListner(std::string name, EventHandler on_update)
 	{
 		std::lock_guard<std::mutex> lock(update_handler_mutex_);
 		on_update_event_listeners_[name] = on_update;
@@ -65,7 +69,7 @@ public:
 	{
 		std::lock_guard<std::mutex> lock(update_handler_mutex_);
 		on_update_event_listeners_.erase(name);
-	}
+	}*/
 
 	void RequestToSession(std::function<void(GameSession&)> request)
 	{
@@ -121,9 +125,9 @@ private:
 	std::shared_ptr<GameSession> game_session_;
 	std::shared_ptr<SnakeNpcControlManager> npc_controll_manager_;
 
-	std::mutex update_handler_mutex_;
+	/*std::mutex update_handler_mutex_;
 	std::map<std::string, EventHandler> on_update_event_listeners_;
-	LocalUpdateListner	on_update_local_listner_;
+	LocalUpdateListner	on_update_local_listner_;*/
 };
 
 }

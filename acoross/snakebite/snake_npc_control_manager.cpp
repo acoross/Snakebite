@@ -96,7 +96,7 @@ Handle<Snake>::Type SnakeNpcControlManager::AddSnakeNpc()
 {
 	if (auto game_session = game_session_wp_.lock())
 	{
-		auto handle = game_session->AddSnake(
+		auto handle = game_session->AddSnake("npc",
 			[self = shared_from_this()](Snake& snake)
 		{
 			// 이러면 die 에서도 RemoveNpc 되기 때문에 RemoveNpc 가 두번 불릴걸...?

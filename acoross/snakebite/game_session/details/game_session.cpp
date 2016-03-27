@@ -75,6 +75,17 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 	{
 		acoross::snakebite::updateMoveSnake(snake.second, diff_in_ms);
 	}
+
+	update_listner_mutex_.lock();
+	auto snake_list = CloneSnakeList();
+	auto apple_list = CloneAppleList();
+	update_listner_mutex_.unlock();
+
+	for (auto& pair : on_update_event_listeners_)
+	{
+		auto& listner = pair.second;
+		listner(snake_list, apple_list);
+	}
 }
 
 void GameSession::ProcessCollisions()
@@ -129,7 +140,7 @@ bool GameSession::RemoveApple(Apple * apple)
 	return false;
 }
 
-Handle<Snake>::Type GameSession::AddSnake(Snake::EventHandler onDieHandler, std::string name)
+Handle<Snake>::Type GameSession::AddSnake(std::string name, Snake::EventHandler onDieHandler)
 {
 	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
 	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);

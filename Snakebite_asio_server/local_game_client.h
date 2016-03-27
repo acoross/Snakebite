@@ -83,9 +83,19 @@ public:
 			[_this = this, handle = player_handle_](GameSession& session)
 		{
 			session.RemoveSnake(_this->player_handle_);
-			_this->player_handle_ = session.AddSnake(Snake::EventHandler(), "local player");
+			_this->player_handle_ = session.AddSnake("local player",
+				[_this](Snake& snake)
+			{
+				_this->SetPlayerHandleZero();
+			});
 		});
 	}
+
+	void SetPlayerHandleZero()
+	{
+		player_handle_ = 0;
+	}
+
 	//
 
 	//@atomic for Snake

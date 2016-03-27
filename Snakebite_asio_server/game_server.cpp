@@ -29,7 +29,7 @@ void acoross::snakebite::GameServer::do_update_game_session()
 		game_session_->ProcessCollisions();
 	}
 
-	{
+	/*{
 		std::lock_guard<std::mutex> lock(update_handler_mutex_);
 		MeanProcessTimeChecker mean_clone(mean_clone_object_time_ms_);
 
@@ -95,7 +95,7 @@ void acoross::snakebite::GameServer::do_update_game_session()
 				}
 			}
 		}
-	}
+	}*/
 
 	last_tick = current_tick;
 

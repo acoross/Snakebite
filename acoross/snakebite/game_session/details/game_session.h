@@ -21,6 +21,8 @@ namespace snakebite {
 class GameSession final
 {
 public:
+	using UpdateEventListner =
+		std::function<void(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, const std::list<GameObjectClone>&)>;
 	using ListMovingObject = MovingObjectContainer::ListMovingObject;
 	
 	explicit GameSession(unsigned int init_apple_count = 20, int width = 500, int height = 500);
@@ -30,7 +32,7 @@ public:
 	void UpdateMove(int64_t diff_in_ms);
 	void ProcessCollisions();
 	
-	Handle<Snake>::Type AddSnake(Snake::EventHandler onDieHandler = Snake::EventHandler(), std::string name = "noname");
+	Handle<Snake>::Type AddSnake(std::string name = "noname", Snake::EventHandler onDieHandler = Snake::EventHandler());
 	void AddApple();
 	bool RemoveSnake(Handle<Snake>::Type snake);
 	bool RemoveApple(Apple* apple);
@@ -82,6 +84,18 @@ public:
 		}
 	}
 
+	void AddUpdateEventListner(std::string name, UpdateEventListner on_update)
+	{
+		std::lock_guard<std::mutex> lock(update_listner_mutex_);
+		on_update_event_listeners_[name] = on_update;
+	}
+
+	void UnregisterEventListner(std::string name)
+	{
+		std::lock_guard<std::mutex> lock(update_listner_mutex_);
+		on_update_event_listeners_.erase(name);
+	}
+
 	//임시로 열어주는 API
 	MovingObjectContainer& GetContainer() { return container_; }
 	//
@@ -112,6 +126,9 @@ private:
 	const double radius{ 5. };		// UNIT
 	const double velocity{ 0.06 };	// UNIT/ms
 	const Position2D player_pos{ 100, 100 };
+
+	std::mutex update_listner_mutex_;
+	std::map<std::string, UpdateEventListner> on_update_event_listeners_;
 
 	//임시
 	friend class LocalGameClient;

@@ -29,7 +29,7 @@ public:
 	UserSession(tcp::socket socket, std::shared_ptr<GameSession> game_session, std::shared_ptr<GameServer> server)
 		: socket_(std::move(socket))
 		, game_session_(game_session)
-		, game_server_(server)
+		//, game_server_(server)
 	{}
 
 	~UserSession()
@@ -134,11 +134,15 @@ private:
 		return ret;
 	}
 
+	void send_update_game_object(
+		const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
+		const std::list<GameObjectClone>& apple_clone_list);
+
 	tcp::socket socket_;
 	
 	Handle<Snake>::Type user_snake_handle_;
 	std::shared_ptr<GameSession> game_session_;
-	std::shared_ptr<GameServer> game_server_;
+	//std::shared_ptr<GameServer> game_server_;
 
 	SnakebiteMessage read_msg_;
 	SnakebiteMessageQueue write_msgs_;
