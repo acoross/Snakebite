@@ -43,7 +43,7 @@ Handle<Snake>::Type UserSession::RequestInitPlayer(std::string name)
 		game_session_->RemoveSnake(Handle<Snake>(player.get()).handle);
 	}
 	
-	user_snake_ = game_session_->AddSnake(Snake::EventHandler(), name);
+	user_snake_ = game_session_->AddSnake_old(Snake::EventHandler(), name);
 	if (auto player = user_snake_.lock())
 	{
 		return Handle<Snake>(player.get()).handle;

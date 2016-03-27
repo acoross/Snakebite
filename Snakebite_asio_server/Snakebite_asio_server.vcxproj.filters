@@ -25,6 +25,12 @@
     <Filter Include="protos">
       <UniqueIdentifier>{d7610301-a541-4f6b-be9c-c243d0526d95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game_client_base">
+      <UniqueIdentifier>{0cd3b822-8636-44f6-a6da-939e79d6a2c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="npc_control_manager">
+      <UniqueIdentifier>{f338602e-7f63-4fe9-b430-d61df07d5cd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session.cpp">
@@ -42,9 +48,6 @@
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
       <Filter>lib\win</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp">
-      <Filter>game_session</Filter>
-    </ClCompile>
     <ClCompile Include="snakebite_message_handler_table.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -59,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="game_server.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp">
+      <Filter>npc_control_manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +104,6 @@
     <ClInclude Include="..\acoross\snakebite\apple.h">
       <Filter>game_session</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\util.h">
       <Filter>lib</Filter>
     </ClInclude>
@@ -122,11 +125,17 @@
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h">
       <Filter>protos</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_client_base.h">
-      <Filter>game_session</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h">
       <Filter>protos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_client_base.h">
+      <Filter>game_client_base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h">
+      <Filter>npc_control_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\handle.h">
+      <Filter>game_session</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

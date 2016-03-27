@@ -11,8 +11,8 @@
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake.h"
-#include "Apple.h"
-#include "snake_npc_control_manager.h"
+#include "apple.h"
+#include "handle.h"
 
 namespace acoross {
 namespace snakebite {
@@ -30,12 +30,8 @@ public:
 	void UpdateMove(int64_t diff_in_ms);
 	void ProcessCollisions();
 	
-	SnakeWP AddSnakeNpc()
-	{
-		return npc_controll_manager_.AddSnakeNpc();
-	}
-
-	SnakeWP AddSnake(Snake::EventHandler onDieHandler = Snake::EventHandler(), std::string name = "noname");
+	SnakeWP AddSnake_old(Snake::EventHandler onDieHandler = Snake::EventHandler(), std::string name = "noname");
+	Handle<Snake>::Type AddSnake(Snake::EventHandler onDieHandler = Snake::EventHandler(), std::string name = "noname");
 	void AddApple();
 	bool RemoveSnake(Handle<Snake>::Type snake);
 	bool RemoveApple(Apple* apple);
@@ -83,6 +79,15 @@ public:
 		return snakes_mutex_;
 	}
 
+	void RequestToSnake(Handle<Snake>::Type handle, std::function<void(Snake&)> request)
+	{
+		auto it = snakes_.find(handle);
+		if (it != snakes_.end())
+		{
+			request(*it->second.get());
+		}
+	}
+
 	//임시로 열어주는 API
 	MovingObjectContainer& GetContainer() { return container_; }
 	//
@@ -98,7 +103,6 @@ private:
 	CollisionSet wall_collision_set_;
 	CollisionMap collision_map_;
 	MovingObjectContainer container_;
-	SnakeNpcControlManager npc_controll_manager_;
 
 	std::default_random_engine random_engine_;
 

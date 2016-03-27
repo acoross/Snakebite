@@ -16,6 +16,10 @@ void acoross::snakebite::GameServer::do_update_game_session()
 	mean_frame_tick_.store((double)new_mean_time);
 
 	{
+		npc_controll_manager_->ChangeNpcDirection(FRAME_TICK);
+	}
+
+	{
 		MeanProcessTimeChecker mean_move(mean_move_time_ms_);
 		game_session_->UpdateMove(FRAME_TICK);
 	}

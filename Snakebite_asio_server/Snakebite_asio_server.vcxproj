@@ -101,6 +101,7 @@
     <ClInclude Include="..\acoross\snakebite\game_client_base.h" />
     <ClInclude Include="..\acoross\snakebite\game_object.h" />
     <ClInclude Include="..\acoross\snakebite\game_session.h" />
+    <ClInclude Include="..\acoross\snakebite\handle.h" />
     <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />

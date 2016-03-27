@@ -4,39 +4,48 @@
 #include <memory>
 #include <mutex>
 #include <random>
+#include <map>
+#include <set>
 
-#include <acoross/snakebite/snake.h>
+#include <acoross/snakebite/handle.h>
 
 namespace acoross {
 namespace snakebite {
 
 class GameSession;
+class Snake;
 
 class SnakeNpcControlManager final
+	: public std::enable_shared_from_this<SnakeNpcControlManager>
 {
 public:
-	using SnakeWP = std::weak_ptr<Snake>;
-	using MapSnakeWP = std::map<Handle<Snake>::Type, std::weak_ptr<Snake>>;
+	/*using SnakeWP = std::weak_ptr<Snake>;
+	using MapSnakeWP = std::map<Handle<Snake>::Type, std::weak_ptr<Snake>>;*/
+	using SetSnakeHandle = std::set<Handle<Snake>::Type>;
 
 	SnakeNpcControlManager(SnakeNpcControlManager&) = delete;
 	SnakeNpcControlManager& operator=(SnakeNpcControlManager&) = delete;
 
 public:
-	SnakeNpcControlManager(GameSession& game_session);
+	SnakeNpcControlManager(std::weak_ptr<GameSession> game_session_wp);
 	~SnakeNpcControlManager() {}
 
 	void ChangeNpcDirection(int64_t diff_in_ms);
 
-	std::weak_ptr<Snake> AddSnakeNpc();
-	bool RemoveSnakeNpc(Handle<Snake>::Type snake);
+	Handle<Snake>::Type AddSnakeNpc();
+	bool RemoveSnakeNpc(Handle<Snake>::Type handle);
+	void RemoveFirstSnakeNpc();
 
 private:
+	void UnregisterSnakeNpc(Handle<Snake>::Type handle);
+
 	std::default_random_engine random_engine_;
 
 	std::recursive_mutex snake_npcs_mutex_;
-	MapSnakeWP snake_npcs_;
+	//MapSnakeWP snake_npcs_;
+	SetSnakeHandle snake_npc_handles_;
 
-	GameSession& game_session_;
+	std::weak_ptr<GameSession> game_session_wp_;
 };
 
 }

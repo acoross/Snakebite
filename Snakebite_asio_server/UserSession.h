@@ -8,6 +8,7 @@
 #include <deque>
 
 #include <acoross/snakebite/snake.h>
+#include <acoross/snakebite/handle.h>
 #include <acoross/snakebite/protos/snakebite_message.h>
 #include <acoross/snakebite/protos/snakebite_message.pb.h>
 #include "snakebite_message_handler_table.h"

@@ -15,8 +15,7 @@ namespace snakebite {
 
 
 GameSession::GameSession(unsigned int init_apple_count, int width, int height)
-	: npc_controll_manager_(*this)
-	, container_(0, width, 0, height)	//container size
+	: container_(0, width, 0, height)	//container size
 {	
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
@@ -70,8 +69,6 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 	snakes_mutex_.lock();
 	auto snakes = snakes_;
 	snakes_mutex_.unlock();
-
-	npc_controll_manager_.ChangeNpcDirection(diff_in_ms);
 
 	// ÀüÁø
 	for (auto& snake : snakes)
@@ -132,7 +129,7 @@ bool GameSession::RemoveApple(Apple * apple)
 	return false;
 }
 
-SnakeWP GameSession::AddSnake(Snake::EventHandler onDieHandler, std::string name)
+SnakeWP GameSession::AddSnake_old(Snake::EventHandler onDieHandler, std::string name)
 {
 	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
 	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
@@ -154,6 +151,30 @@ SnakeWP GameSession::AddSnake(Snake::EventHandler onDieHandler, std::string name
 		snakes_.emplace(Handle<Snake>(snake.get()).handle, snake);
 	}
 	return snake;
+}
+
+Handle<Snake>::Type GameSession::AddSnake(Snake::EventHandler onDieHandler, std::string name)
+{
+	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
+	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
+	std::uniform_int_distribution<int> unin_degree(0, 360);
+
+	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
+
+	const double ang_vel{ 0.15 };		// degree/ms
+	const int body_len{ 1 };
+
+	auto snake = std::make_shared<Snake>(
+		*this
+		, init_pos, radius
+		, unin_degree(random_engine_), velocity, ang_vel, body_len
+		, onDieHandler, name);
+
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		snakes_.emplace(Handle<Snake>(snake.get()).handle, snake);
+	}
+	return Handle<Snake>(snake.get()).handle;
 }
 
 void GameSession::AddApple()

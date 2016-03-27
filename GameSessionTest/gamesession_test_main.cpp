@@ -4,6 +4,7 @@
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/snakebite/game_session.h>
+#include <acoross/snakebite/snake_npc_control_manager.h>
 
 int main(int argc, char* argv[])
 {
@@ -23,11 +24,12 @@ int main(int argc, char* argv[])
 		std::cout << "count: " << init_apple_count << std::endl;
 	}
 	
-	std::unique_ptr<GameSession> gamesession = std::make_unique<GameSession>(init_apple_count, 500, 500);
+	std::shared_ptr<GameSession> gamesession = std::make_unique<GameSession>(init_apple_count, 500, 500);
+	std::shared_ptr<SnakeNpcControlManager> npc_controller = std::make_unique<SnakeNpcControlManager>(gamesession);
 
 	for (unsigned int i = 0; i < init_snake_count; ++i)
 	{
-		gamesession->AddSnakeNpc();
+		npc_controller->AddSnakeNpc();
 	}
 
 	try
@@ -42,6 +44,8 @@ int main(int argc, char* argv[])
 			//for (;difftick > frametickdiff; difftick -= frametickdiff)
 			if (difftick > frametickdiff)
 			{
+				npc_controller->ChangeNpcDirection(frametickdiff);
+
 				static double mean_diff_tick_move = 0;
 				gamesession->UpdateMove(frametickdiff);
 				DWORD tick2 = ::GetTickCount();

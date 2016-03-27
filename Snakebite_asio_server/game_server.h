@@ -13,6 +13,7 @@
 
 #include <acoross/snakebite/util.h>
 #include <acoross/snakebite/game_session.h>
+#include <acoross/snakebite/snake_npc_control_manager.h>
 #include <acoross/snakebite/snake.h>
 #include <acoross/snakebite/protos/snakebite_message.h>
 #include "UserSession.h"
@@ -33,7 +34,7 @@ public:
 		std::function
 		<void(std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>, std::list<GameObjectClone>)>;
 	
-	const int FRAME_TICK{ 33 };
+	const int FRAME_TICK{ 100 };
 
 public:
 	GameServer(boost::asio::io_service& io_service
@@ -44,6 +45,7 @@ public:
 		, socket_(io_service)
 		, game_update_timer_(io_service, boost::posix_time::milliseconds(FRAME_TICK))
 		, game_session_(std::make_unique<GameSession>(20, Width, Height))
+		, npc_controll_manager_(std::make_unique<SnakeNpcControlManager>(game_session_))
 	{
 		do_update_game_session();
 		do_accept();
@@ -72,6 +74,15 @@ public:
 			[game_session = game_session_, request]()
 		{
 			request(*game_session);
+		});
+	}
+
+	void RequestToSessionNpcController(std::function<void(SnakeNpcControlManager&)> request)
+	{
+		io_service_.post(
+			[npc_controll_manager = npc_controll_manager_, request]()
+		{
+			request(*npc_controll_manager);
 		});
 	}
 
@@ -109,6 +120,7 @@ private:
 	
 	boost::asio::deadline_timer game_update_timer_;
 	std::shared_ptr<GameSession> game_session_;
+	std::shared_ptr<SnakeNpcControlManager> npc_controll_manager_;
 
 	std::mutex update_handler_mutex_;
 	std::map<std::string, EventHandler> on_update_event_listeners_;

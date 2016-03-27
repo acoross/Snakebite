@@ -87,7 +87,7 @@ public:
 			{
 				session.RemoveSnake(Handle<Snake>(player.get()).handle);
 			}
-			_this->player_ = session.AddSnake(Snake::EventHandler(), "local player");
+			_this->player_ = session.AddSnake_old(Snake::EventHandler(), "local player");
 		});
 	}
 	//

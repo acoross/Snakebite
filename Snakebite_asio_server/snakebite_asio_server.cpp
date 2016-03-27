@@ -63,10 +63,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			{
 				if (auto server = g_game_server_wp.lock())
 				{
-					server->RequestToSession(
-						[](GameSession& session)
+					server->RequestToSessionNpcController(
+						[](SnakeNpcControlManager& npc_controller)
 					{
-						session.AddSnakeNpc();
+						npc_controller.AddSnakeNpc();
+					});
+				}
+			}
+			else if (wParam == VK_BACK)
+			{
+				if (auto server = g_game_server_wp.lock())
+				{
+					server->RequestToSessionNpcController(
+						[](SnakeNpcControlManager& npc_controller)
+					{
+						npc_controller.RemoveFirstSnakeNpc();
 					});
 				}
 			}
