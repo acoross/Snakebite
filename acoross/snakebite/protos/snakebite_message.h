@@ -10,7 +10,7 @@ class SnakebiteMessage
 {
 public:
 	enum { header_length = 4 };
-	enum { max_body_length = 1024 * 8 };
+	enum { max_body_length = 1024 * 32 };
 
 	SnakebiteMessage()
 		: body_length_(0)

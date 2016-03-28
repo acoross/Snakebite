@@ -129,7 +129,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				RECT rect{
 					10,
 					10,
-					300,
+					250,
 					150
 				};
 

@@ -75,7 +75,10 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 	{
 		acoross::snakebite::updateMoveSnake(snake.second, diff_in_ms);
 	}
+}
 
+void GameSession::InvokeUpdateEvent()
+{
 	update_listner_mutex_.lock();
 	auto snake_list = CloneSnakeList();
 	auto apple_list = CloneAppleList();

@@ -30,6 +30,7 @@ public:
 
 	// use lock
 	void UpdateMove(int64_t diff_in_ms);
+	void InvokeUpdateEvent();
 	void ProcessCollisions();
 	
 	Handle<Snake>::Type AddSnake(std::string name = "noname", Snake::EventHandler onDieHandler = Snake::EventHandler());
