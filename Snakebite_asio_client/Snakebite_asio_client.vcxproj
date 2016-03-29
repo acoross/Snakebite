@@ -82,6 +82,7 @@
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp" />
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp" />
+    <ClCompile Include="asio_protobuf_rpc_stub.cpp" />
     <ClCompile Include="game_client.cpp" />
     <ClCompile Include="snakebite_asio_client.cpp" />
   </ItemGroup>
@@ -96,6 +97,7 @@
     <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
     <ClInclude Include="..\acoross\snakebite\win\targetver.h" />
     <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
+    <ClInclude Include="asio_protobuf_rpc_stub.h" />
     <ClInclude Include="game_client.h" />
   </ItemGroup>
   <ItemGroup>

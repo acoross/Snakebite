@@ -31,6 +31,13 @@ syntax = "proto3";
 
 package acoross.snakebite.messages;
 
+enum MessageType
+{
+	InitPlayerSnake = 0;
+	TurnKeyDown = 1;
+	TurnKeyUp = 2;
+};
+
 // The request message containing the user's name.
 message HelloRequest {
 	string name = 1;

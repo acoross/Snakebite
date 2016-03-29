@@ -26,6 +26,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -45,6 +46,28 @@ class TurnKeyDownRequest;
 class TurnKeyUpRequest;
 class VoidReply;
 
+enum MessageType {
+  InitPlayerSnake = 0,
+  TurnKeyDown = 1,
+  TurnKeyUp = 2,
+  MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool MessageType_IsValid(int value);
+const MessageType MessageType_MIN = InitPlayerSnake;
+const MessageType MessageType_MAX = TurnKeyUp;
+const int MessageType_ARRAYSIZE = MessageType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* MessageType_descriptor();
+inline const ::std::string& MessageType_Name(MessageType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MessageType_descriptor(), value);
+}
+inline bool MessageType_Parse(
+    const ::std::string& name, MessageType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MessageType>(
+    MessageType_descriptor(), name, value);
+}
 // ===================================================================
 
 class HelloRequest : public ::google::protobuf::Message {
@@ -744,6 +767,20 @@ inline void TurnKeyUpRequest::set_key(::google::protobuf::int32 value) {
 }  // namespace messages
 }  // namespace snakebite
 }  // namespace acoross
+
+#ifndef SWIG
+namespace google {
+namespace protobuf {
+
+template <> struct is_proto_enum< ::acoross::snakebite::messages::MessageType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::acoross::snakebite::messages::MessageType>() {
+  return ::acoross::snakebite::messages::MessageType_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
+#endif  // SWIG
 
 // @@protoc_insertion_point(global_scope)
 

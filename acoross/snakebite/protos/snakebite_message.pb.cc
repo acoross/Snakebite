@@ -41,6 +41,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* TurnKeyUpRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   TurnKeyUpRequest_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* MessageType_descriptor_ = NULL;
 
 }  // namespace
 
@@ -141,6 +142,7 @@ void protobuf_AssignDesc_snakebite_5fmessage_2eproto() {
       sizeof(TurnKeyUpRequest),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyUpRequest, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyUpRequest, _is_default_instance_));
+  MessageType_descriptor_ = file->enum_type(0);
 }
 
 namespace {
@@ -197,7 +199,9 @@ void protobuf_AddDesc_snakebite_5fmessage_2eproto() {
     "idReply\022\013\n\003err\030\001 \001(\005\"&\n\026InitPlayerSnakeR"
     "equest\022\014\n\004name\030\001 \001(\t\"!\n\022TurnKeyDownReque"
     "st\022\013\n\003key\030\001 \001(\005\"\037\n\020TurnKeyUpRequest\022\013\n\003k"
-    "ey\030\001 \001(\005b\006proto3", 256);
+    "ey\030\001 \001(\005*B\n\013MessageType\022\023\n\017InitPlayerSna"
+    "ke\020\000\022\017\n\013TurnKeyDown\020\001\022\r\n\tTurnKeyUp\020\002b\006pr"
+    "oto3", 324);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "snakebite_message.proto", &protobuf_RegisterTypes);
   HelloRequest::default_instance_ = new HelloRequest();
@@ -221,6 +225,21 @@ struct StaticDescriptorInitializer_snakebite_5fmessage_2eproto {
     protobuf_AddDesc_snakebite_5fmessage_2eproto();
   }
 } static_descriptor_initializer_snakebite_5fmessage_2eproto_;
+const ::google::protobuf::EnumDescriptor* MessageType_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MessageType_descriptor_;
+}
+bool MessageType_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 namespace {
 
