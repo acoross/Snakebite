@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0FB7CA49-205E-484F-99CC-DC08C78DECCB}</ProjectGuid>
-    <RootNamespace>Snakebite_asio_client</RootNamespace>
+    <ProjectGuid>{5F38677B-2E3F-45D3-9AC8-B6044E4D55CC}</ProjectGuid>
+    <RootNamespace>test_anything</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -51,13 +51,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\extern_lib;$(SolutionDir)\x64\debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GameSessionSystem.lib;libprotobufd.lib;libprotobuf-lited.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -67,47 +65,25 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src;$(AdditionalDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)\extern_lib;$(SolutionDir)\x64\release</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GameSessionSystem.lib;libprotobuf.lib;libprotobuf-lite.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc" />
-    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.cpp" />
-    <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp" />
-    <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp" />
-    <ClCompile Include="game_client.cpp" />
-    <ClCompile Include="snakebite_asio_client.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h" />
-    <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h" />
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
     <ClInclude Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.h" />
-    <ClInclude Include="..\acoross\snakebite\rpc\rpc_message.h" />
-    <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h" />
-    <ClInclude Include="..\acoross\snakebite\util.h" />
-    <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
-    <ClInclude Include="..\acoross\snakebite\win\targetver.h" />
-    <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
-    <ClInclude Include="game_client.h" />
+    <ClInclude Include="..\acoross\snakebite\rpc\rpc_packet.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\acoross\snakebite\protos\sc_snakebite_message.proto" />
-    <None Include="..\acoross\snakebite\protos\snakebite_message.proto" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

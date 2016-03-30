@@ -173,7 +173,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		boost::asio::io_service io_service;
 		
 		auto game_client = std::make_shared<GameClient>(io_service);
-		game_client->ConnectToServer("localhost", "22000");
+		game_client->ConnectToServer("192.168.0.12", "22000");
 
 		g_game_client = game_client;
 

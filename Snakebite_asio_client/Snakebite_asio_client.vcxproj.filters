@@ -25,6 +25,9 @@
     <Filter Include="lib\win">
       <UniqueIdentifier>{8178ebc6-e25b-4156-8b20-9e5fc5c7ff0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rpc">
+      <UniqueIdentifier>{958399c6-2a68-473b-b30e-18dae25698c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="snakebite_asio_client.cpp">
@@ -45,8 +48,8 @@
     <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc">
       <Filter>protos</Filter>
     </ClCompile>
-    <ClCompile Include="asio_protobuf_rpc_stub.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.cpp">
+      <Filter>rpc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,8 +86,11 @@
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h">
       <Filter>game_session</Filter>
     </ClInclude>
-    <ClInclude Include="asio_protobuf_rpc_stub.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.h">
+      <Filter>rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\rpc\rpc_message.h">
+      <Filter>rpc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
