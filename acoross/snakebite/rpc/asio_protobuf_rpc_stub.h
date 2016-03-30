@@ -10,7 +10,6 @@
 #include <atomic>
 
 #include <google/protobuf/message.h>
-
 #include "rpc_packet.h"
 
 namespace acoross {
@@ -34,16 +33,22 @@ public:
 	virtual ~RpcStub()
 	{}
 
+	void start()
+	{
+		do_read_header();
+	}
+
 	bool Connect(char* host, char* port);
 	
+protected:
+	template<typename ReplyMsgT>
+	void RpcCaller(unsigned short msg_type, const ::google::protobuf::Message& rq, std::function<void(ErrCode, ReplyMsgT&)> cb);
+
 private:
-	using ReplyCallbackF = std::function<void(unsigned short, const RpcPacket&)>;
+	using ReplyCallbackF = std::function<void(ErrCode, RpcPacket&)>;
 
-	bool AsyncInvoke(unsigned short msg_type, const ::google::protobuf::Message& rq, ReplyCallbackF&& cb);
+	void AsyncInvoke(unsigned short msg_type, const ::google::protobuf::Message& rq, ReplyCallbackF&& cb);
 	
-	template<typename T>
-	bool RpcCaller(unsigned short msg_type, const ::google::protobuf::Message& rq, std::function<void(unsigned short, T&)> cb);
-
 	void end()
 	{
 		_ASSERT(0);
@@ -54,13 +59,13 @@ private:
 	void do_read_header();
 	void do_read_body();
 	size_t RegisterReplyCallback(ReplyCallbackF&& cb);
-	bool process_reply(RpcPacket& msg);
+	bool process_reply(std::shared_ptr<RpcPacket> msg);
 
 private:
 	::boost::asio::io_service& io_service_;
 	tcp::socket socket_;	//rpc 전용 소켓
 
-	RpcPacket read_msg_;
+	std::shared_ptr<RpcPacket> read_msg_;
 	std::deque<std::shared_ptr<RpcPacket>> write_msgs_;
 
 	std::atomic<size_t> rpc_message_uid_{ 0 };
@@ -68,10 +73,10 @@ private:
 };
 
 template<typename ReplyMsgT>
-inline bool RpcStub::RpcCaller(unsigned short msg_type, const::google::protobuf::Message & rq, std::function<void(unsigned short, ReplyMsgT&)> cb)
+inline void RpcStub::RpcCaller(unsigned short msg_type, const::google::protobuf::Message& rq, std::function<void(ErrCode, ReplyMsgT&)> cb)
 {
 	AsyncInvoke(0, rq,
-		[msg_type_rp = msg_type](unsigned short err_code, RpcMessage&& reply_rpc_msg)
+		[msg_type_rp = msg_type, cb](ErrCode err_code, RpcPacket& reply_rpc_msg)
 	{
 		auto msg_type_rq = reply_rpc_msg.get_header().message_type_;
 		if (msg_type_rp != msg_type_rq)
@@ -79,7 +84,7 @@ inline bool RpcStub::RpcCaller(unsigned short msg_type, const::google::protobuf:
 			return;
 		}
 
-		T reply_msg;
+		ReplyMsgT reply_msg;
 		reply_msg.ParseFromArray(reply_rpc_msg.body(), reply_rpc_msg.body_length());
 		cb(err_code, reply_msg);
 	});

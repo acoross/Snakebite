@@ -89,7 +89,7 @@
     <ClInclude Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.h">
       <Filter>rpc</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\rpc\rpc_message.h">
+    <ClInclude Include="..\acoross\snakebite\rpc\rpc_packet.h">
       <Filter>rpc</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #include "asio_protobuf_rpc_stub.h"
 
+
 namespace acoross {
 namespace snakebite {
 namespace rpc {
@@ -12,7 +13,7 @@ bool RpcStub::Connect(char* host, char* port)
 	return false;
 }
 
-bool RpcStub::AsyncInvoke(unsigned short msg_type, const ::google::protobuf::Message& rq, ReplyCallbackF&& cb)
+void RpcStub::AsyncInvoke(unsigned short msg_type, const ::google::protobuf::Message& rq, ReplyCallbackF&& cb)
 {
 	auto msg = std::make_shared<RpcPacket>();
 
@@ -21,8 +22,6 @@ bool RpcStub::AsyncInvoke(unsigned short msg_type, const ::google::protobuf::Mes
 	msg->encode_header(msg_type, rq.ByteSize(), rpc_msg_uid);
 
 	send(msg);
-
-	return true;
 }
 
 void RpcStub::send(std::shared_ptr<RpcPacket> new_msg)
@@ -62,10 +61,10 @@ void RpcStub::do_read_header()
 {
 	auto self(shared_from_this());
 	boost::asio::async_read(socket_,
-		boost::asio::buffer(read_msg_.data(), RpcPacket::header_length),
+		boost::asio::buffer(read_msg_->data(), RpcPacket::header_length),
 		[this, self](boost::system::error_code ec, std::size_t /*length*/)
 	{
-		if (!ec && read_msg_.decode_header())
+		if (!ec && read_msg_->decode_header())
 		{
 			do_read_body();
 		}
@@ -80,7 +79,7 @@ void RpcStub::do_read_body()
 {
 	auto self(shared_from_this());
 	boost::asio::async_read(socket_,
-		boost::asio::buffer(read_msg_.body(), read_msg_.body_length()),
+		boost::asio::buffer(read_msg_->body(), read_msg_->body_length()),
 		[this, self](boost::system::error_code ec, std::size_t /*length*/)
 	{
 		if (!ec && process_reply(read_msg_))
@@ -102,11 +101,10 @@ size_t RpcStub::RegisterReplyCallback(ReplyCallbackF&& cb)
 	return uid;
 }
 
-bool RpcStub::process_reply(RpcPacket& msg)
+bool RpcStub::process_reply(std::shared_ptr<RpcPacket> msg)
 {
-	msg.decode_header();
-	auto rpc_msg_uid = msg.get_header().rpc_msg_uid_;	
-	auto err_code = msg.get_header().error_code_;
+	auto rpc_msg_uid = msg->get_header().rpc_msg_uid_;	
+	auto err_code = msg->get_header().error_code_;
 
 	auto it = wait_reply_queue_.find(rpc_msg_uid);
 	if (it != wait_reply_queue_.end())
@@ -114,7 +112,7 @@ bool RpcStub::process_reply(RpcPacket& msg)
 		auto callback = std::move(it->second);
 
 		wait_reply_queue_.erase(it);
-		callback(err_code, msg);
+		callback(err_code, *msg.get());
 	}
 
 	return false;

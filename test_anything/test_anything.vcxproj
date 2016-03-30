@@ -53,6 +53,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\extern_lib;$(SolutionDir)\x64\debug</AdditionalLibraryDirectories>
@@ -75,10 +76,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc" />
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
     <ClInclude Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.h" />
     <ClInclude Include="..\acoross\snakebite\rpc\rpc_packet.h" />
   </ItemGroup>

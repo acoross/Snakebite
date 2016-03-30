@@ -5,6 +5,11 @@ namespace acoross {
 namespace snakebite {
 namespace rpc {
 
+enum class ErrCode
+{
+	NoError = 0
+};
+
 class RpcPacket
 {
 public:
@@ -12,7 +17,7 @@ public:
 	{
 		unsigned short body_length_{ 0 };
 		unsigned short message_type_{ 0 };
-		unsigned short error_code_{ 0 }; //0:success
+		ErrCode error_code_{ ErrCode::NoError }; //0:success
 		size_t rpc_msg_uid_{ 0 };
 	};
 
@@ -69,7 +74,7 @@ public:
 	{
 		header_.body_length_ = new_length;
 		header_.message_type_ = message_type;
-		header_.error_code_ = 0;
+		header_.error_code_ = ErrCode::NoError;
 		header_.rpc_msg_uid_ = rpc_msg_uid;
 		
 		if (header_.body_length_ > max_body_length)

@@ -93,7 +93,7 @@
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
     <ClInclude Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.h" />
-    <ClInclude Include="..\acoross\snakebite\rpc\rpc_message.h" />
+    <ClInclude Include="..\acoross\snakebite\rpc\rpc_packet.h" />
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h" />
     <ClInclude Include="..\acoross\snakebite\util.h" />
     <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
