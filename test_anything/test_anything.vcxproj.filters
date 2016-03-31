@@ -24,9 +24,6 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\rpc\asio_protobuf_rpc_stub.cpp">
-      <Filter>rpc</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc">
       <Filter>protos</Filter>
     </ClCompile>
@@ -34,13 +31,16 @@
       <Filter>protos</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\rpc\rpc_socket.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\rpc\rpc_stub.cpp">
+      <Filter>rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\rpc\rpc_service.cpp">
+      <Filter>rpc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\rpc\asio_protobuf_rpc_stub.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\rpc\rpc_packet.h">
       <Filter>rpc</Filter>
     </ClInclude>
@@ -60,6 +60,12 @@
       <Filter>rpc</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\rpc\rpc_socket.h">
+      <Filter>rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\rpc\rpc_stub.h">
+      <Filter>rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\rpc\rpc_server.h">
       <Filter>rpc</Filter>
     </ClInclude>
   </ItemGroup>

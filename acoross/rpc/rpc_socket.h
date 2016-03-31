@@ -20,7 +20,8 @@ public:
 	RpcSocket(::boost::asio::io_service& io_service, tcp::socket&& socket)
 		: io_service_(io_service)
 		, socket_(std::move(socket))
-	{}
+	{
+	}
 
 	virtual ~RpcSocket(){}
 
@@ -38,13 +39,13 @@ public:
 	void do_write();
 	void do_read_header();
 	void do_read_body();
-	virtual bool process_msg(std::shared_ptr<RpcPacket> msg) = 0;
+	virtual bool process_msg(RpcPacket& msg) = 0;
 
 private:
 	::boost::asio::io_service& io_service_;
 	tcp::socket socket_;	//rpc 전용 소켓
 
-	std::shared_ptr<RpcPacket> read_msg_;
+	RpcPacket read_msg_;
 	std::deque<std::shared_ptr<RpcPacket>> write_msgs_;
 };
 
