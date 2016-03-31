@@ -4,7 +4,7 @@ namespace acoross {
 namespace rpc {
 
 
-void RpcStub::send(std::shared_ptr<RpcPacket> new_msg)
+void RpcSocket::send(std::shared_ptr<RpcPacket> new_msg)
 {
 	bool write_in_progress = !write_msgs_.empty();
 	write_msgs_.push_back(new_msg);
@@ -14,7 +14,7 @@ void RpcStub::send(std::shared_ptr<RpcPacket> new_msg)
 	}
 }
 
-void RpcStub::do_write()
+void RpcSocket::do_write()
 {
 	auto self(shared_from_this());
 	boost::asio::async_write(socket_,
@@ -37,7 +37,7 @@ void RpcStub::do_write()
 	});
 }
 
-void RpcStub::do_read_header()
+void RpcSocket::do_read_header()
 {
 	auto self(shared_from_this());
 	boost::asio::async_read(socket_,
@@ -55,7 +55,7 @@ void RpcStub::do_read_header()
 	});
 }
 
-void RpcStub::do_read_body()
+void RpcSocket::do_read_body()
 {
 	auto self(shared_from_this());
 	boost::asio::async_read(socket_,

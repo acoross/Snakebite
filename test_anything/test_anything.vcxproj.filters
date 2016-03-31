@@ -33,6 +33,9 @@
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc">
       <Filter>protos</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\rpc\rpc_socket.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\rpc\asio_protobuf_rpc_stub.h">
@@ -52,6 +55,12 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h">
       <Filter>protos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\rpc\rpc_service.h">
+      <Filter>rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\rpc\rpc_socket.h">
+      <Filter>rpc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
