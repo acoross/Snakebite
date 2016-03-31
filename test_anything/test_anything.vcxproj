@@ -76,18 +76,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\acoross\rpc\asio_protobuf_rpc_stub.cpp" />
     <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
-    <ClCompile Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\acoross\rpc\asio_protobuf_rpc_stub.h" />
+    <ClInclude Include="..\acoross\rpc\rpc_packet.h" />
     <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
-    <ClInclude Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.h" />
-    <ClInclude Include="..\acoross\snakebite\rpc\rpc_packet.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

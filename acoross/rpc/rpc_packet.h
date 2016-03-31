@@ -1,8 +1,7 @@
-#ifndef SNAKEBITE_RPC_MESSAGE_H_
-#define SNAKEBITE_RPC_MESSAGE_H_
+#ifndef ACOROSS_RPC_MESSAGE_H_
+#define ACOROSS_RPC_MESSAGE_H_
 
 namespace acoross {
-namespace snakebite {
 namespace rpc {
 
 enum class ErrCode
@@ -98,7 +97,6 @@ private:
 	header header_;
 };
 
-}
 }
 }
 #endif //SNAKEBITE_RPC_MESSAGE_H_

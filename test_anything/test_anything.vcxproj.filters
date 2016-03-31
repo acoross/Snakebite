@@ -13,39 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="protos">
+      <UniqueIdentifier>{a196721e-5a67-42fc-b1d9-ef8bc9b1c03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rpc">
+      <UniqueIdentifier>{98c3bf27-2a3b-4eb9-936f-1728e1dc9212}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\acoross\rpc\asio_protobuf_rpc_stub.cpp">
+      <Filter>rpc</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc">
-      <Filter>소스 파일</Filter>
+      <Filter>protos</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc">
-      <Filter>소스 파일</Filter>
+      <Filter>protos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\acoross\rpc\asio_protobuf_rpc_stub.h">
+      <Filter>rpc</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\rpc\rpc_packet.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\acoross\rpc\rpc_packet.h">
+      <Filter>rpc</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>protos</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>protos</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>protos</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>protos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

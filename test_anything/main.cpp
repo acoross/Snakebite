@@ -3,11 +3,14 @@
 
 #include <acoross/snakebite/win/targetver.h>
 #include <boost/asio.hpp>
-#include <acoross/snakebite/rpc/asio_protobuf_rpc_stub.h>
-
+#include <acoross/rpc/asio_protobuf_rpc_stub.h>
 #include <acoross/snakebite/protos/snakebite_message.pb.h>
 
 using namespace acoross::snakebite;
+using namespace acoross;
+
+namespace acoross {
+namespace snakebite {
 
 class MyRpc : public rpc::RpcStub
 {
@@ -35,6 +38,8 @@ public:
 	PROCEDURE_LIST
 	#undef DEF_PROCEDURE
 };
+}
+}
 
 int main()
 {

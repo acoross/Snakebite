@@ -1,5 +1,5 @@
-#ifndef SNAKEBITE_ASIO_PROTOBUF_RPC_STUB_H_
-#define SNAKEBITE_ASIO_PROTOBUF_RPC_STUB_H_
+#ifndef ACOROSS_ASIO_PROTOBUF_RPC_STUB_H_
+#define ACOROSS_ASIO_PROTOBUF_RPC_STUB_H_
 
 #include <acoross/snakebite/win/targetver.h>
 #include <boost/asio.hpp>
@@ -13,7 +13,6 @@
 #include "rpc_packet.h"
 
 namespace acoross {
-namespace snakebite {
 namespace rpc {
 
 using boost::asio::ip::tcp;
@@ -91,6 +90,5 @@ inline void RpcStub::RpcCaller(unsigned short msg_type, const::google::protobuf:
 }
 
 } //rpc
-} //snakebite
 } //acoross
-#endif //SNAKEBITE_ASIO_PROTOBUF_RPC_STUB_H_
+#endif //ACOROSS_ASIO_PROTOBUF_RPC_STUB_H_
