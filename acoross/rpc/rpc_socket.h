@@ -38,6 +38,7 @@ public:
 	void do_write();
 	void do_read_header();
 	void do_read_body();
+	virtual bool process_msg(std::shared_ptr<RpcPacket> msg) = 0;
 
 private:
 	::boost::asio::io_service& io_service_;
@@ -45,7 +46,6 @@ private:
 
 	std::shared_ptr<RpcPacket> read_msg_;
 	std::deque<std::shared_ptr<RpcPacket>> write_msgs_;
-
 };
 
 }

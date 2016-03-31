@@ -62,7 +62,7 @@ void RpcSocket::do_read_body()
 		boost::asio::buffer(read_msg_->body(), read_msg_->body_length()),
 		[this, self](boost::system::error_code ec, std::size_t /*length*/)
 	{
-		if (!ec && process_reply(read_msg_))
+		if (!ec && process_msg(read_msg_))
 		{
 			do_read_header();
 		}

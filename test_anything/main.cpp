@@ -8,6 +8,7 @@
 
 using namespace acoross::snakebite;
 using namespace acoross;
+using ::boost::asio::ip::tcp;
 
 namespace acoross {
 namespace snakebite {
@@ -15,8 +16,8 @@ namespace snakebite {
 class MyRpc : public rpc::RpcStub
 {
 public:
-	MyRpc(::boost::asio::io_service& io_service)
-		: rpc::RpcStub(io_service)
+	MyRpc(::boost::asio::io_service& io_service, tcp::socket socket)
+		: rpc::RpcStub(io_service, std::move(socket))
 	{}
 	virtual ~MyRpc() {}
 
@@ -46,15 +47,18 @@ int main()
 	try
 	{
 		::boost::asio::io_service io_service;
-		MyRpc rpc_stub(io_service);
-		if (rpc_stub.Connect("localhost", "22001"))
+		
+		tcp::socket socket(io_service);
 		{
-			rpc_stub.start();
+			tcp::resolver resolver(io_service);
+			boost::asio::connect(socket, resolver.resolve({ "localhost", "22001" }));
 		}
+
+		MyRpc rpc_stub(io_service, std::move(socket));
+		rpc_stub.start();
 
 		messages::HelloRequest rq;
 		rq.set_name("shin");
-
 		rpc_stub.Hello(rq,
 			[](rpc::ErrCode err_code, messages::HelloReply& rp)
 		{
