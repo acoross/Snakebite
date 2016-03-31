@@ -84,6 +84,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\acoross\rpc\rpc_macros.h" />
     <ClInclude Include="..\acoross\rpc\rpc_server.h" />
     <ClInclude Include="..\acoross\rpc\rpc_stub.h" />
     <ClInclude Include="..\acoross\rpc\rpc_packet.h" />
@@ -93,6 +94,9 @@
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
+    <ClInclude Include="myrpc.define.h" />
+    <ClInclude Include="myrpc.service.h" />
+    <ClInclude Include="myrpc.stub.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

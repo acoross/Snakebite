@@ -6,10 +6,12 @@
 
 #include <acoross/snakebite/win/targetver.h>
 #include <boost/asio.hpp>
-#include <acoross/rpc/rpc_stub.h>
-#include <acoross/rpc/rpc_service.h>
+
+#include "myrpc.stub.h"
+#include "myrpc.service.h"
 #include <acoross/rpc/rpc_server.h>
 #include <acoross/snakebite/protos/snakebite_message.pb.h>
+#include <acoross/rpc/rpc_macros.h>
 
 using namespace acoross::snakebite;
 using namespace acoross;
@@ -18,63 +20,7 @@ using ::boost::asio::ip::tcp;
 namespace acoross {
 namespace myrpc {
 
-#define DEF_END
-#define PROCEDURE_LIST \
-	DEF_PROCEDURE(Hello, messages::HelloRequest, messages::HelloReply)	\
-	DEF_END
-
-// enum
-enum Protocol
-{
-#define DEF_PROCEDURE(name, requestT, replyT) name##_type,
-	PROCEDURE_LIST
-#undef DEF_PROCEDURE
-};
-
-class MyRpcStub : public rpc::RpcStub
-{
-public:
-	MyRpcStub(::boost::asio::io_service& io_service, tcp::socket socket)
-		: rpc::RpcStub(io_service, std::move(socket))
-	{}
-	virtual ~MyRpcStub() {}
-
-	// member functions
-#define DEF_PROCEDURE(name, requestT, replyT)	\
-	void name(const requestT& rq, std::function<void(rpc::ErrCode, replyT&)> cb)\
-	{	RpcCaller<replyT>((unsigned short)Protocol::name##_type, rq, std::move(cb));	}
-
-	PROCEDURE_LIST
-
-#undef DEF_PROCEDURE
-};
-
-class MyRpcService : public rpc::RpcService
-{
-public:
-	MyRpcService(::boost::asio::io_service& io_service, tcp::socket socket)
-		: rpc::RpcService(io_service, std::move(socket))
-	{
-#define DEF_PROCEDURE(name, requestT, replyT)	\
-		procedures_[(unsigned short)Protocol::name##_type] = std::make_shared<rpc::ProcedureCaller<requestT, replyT>>(&name);
-
-		PROCEDURE_LIST
-
-#undef DEF_PROCEDURE
-	}
-	
-	virtual ~MyRpcService() {}
-
-private:
-#define DEF_PROCEDURE(name, requestT, replyT)	\
-	static rpc::ErrCode name(const requestT& rq, replyT* rp);
-
-	PROCEDURE_LIST
-
-#undef DEF_PROCEDURE
-};
-
-inline rpc::ErrCode MyRpcService::Hello(const messages::HelloRequest& rq, messages::HelloReply* rp)
+inline DEF_SERVICE_IMPL(MyRpcService, Hello, messages::HelloRequest, &rq, messages::HelloReply, *rp)
 {
 	std::cout << "request: " << rq.name() << std::endl;
 
@@ -88,9 +34,22 @@ inline rpc::ErrCode MyRpcService::Hello(const messages::HelloRequest& rq, messag
 	return rpc::ErrCode::NoError;
 }
 
-}
+inline DEF_SERVICE_IMPL(MyRpcService, Hello2, messages::HelloRequest, &rq, messages::HelloReply, *rp)
+{
+	std::cout << "request: " << rq.name() << std::endl;
+
+	if (rp)
+	{
+		std::string reply_str("hi, ");
+		reply_str += rq.name();
+		rp->set_message(reply_str.c_str());
+	}
+
+	return rpc::ErrCode::NoError;
 }
 
+}
+}
 
 using namespace acoross::myrpc;
 
@@ -98,7 +57,7 @@ void send_name(std::shared_ptr<MyRpcStub> rpc_stub, char* name)
 {
 	messages::HelloRequest rq;
 	rq.set_name(name);
-	rpc_stub->Hello(rq,
+	rpc_stub->Hello2(rq,
 		[rpc_stub](rpc::ErrCode err_code, messages::HelloReply& rp)
 	{
 		if (err_code == rpc::ErrCode::NoError)

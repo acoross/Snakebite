@@ -68,6 +68,18 @@
     <ClInclude Include="..\acoross\rpc\rpc_server.h">
       <Filter>rpc</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\rpc\rpc_macros.h">
+      <Filter>rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="myrpc.stub.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="myrpc.service.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="myrpc.define.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
