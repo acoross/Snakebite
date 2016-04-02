@@ -6,7 +6,8 @@
   <ItemDefinitionGroup>
     <Link>
       <AdditionalDependencies>libprotobuf.lib;libprotobuf-lite.lib;;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\x64\release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

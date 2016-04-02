@@ -6,7 +6,8 @@
   <ItemDefinitionGroup>
     <Link>
       <AdditionalDependencies>libprotobufd.lib;libprotobuf-lited.lib;;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\x64\debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
