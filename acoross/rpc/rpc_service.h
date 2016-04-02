@@ -63,7 +63,7 @@ class RpcService
 	: public RpcSocket
 {
 public:
-	RpcService(::boost::asio::io_service& io_service, tcp::socket socket)
+	RpcService(::boost::asio::io_service& io_service, tcp::socket&& socket)
 		: RpcSocket(io_service, std::move(socket))
 	{	
 	}

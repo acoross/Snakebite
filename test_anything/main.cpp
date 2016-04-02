@@ -7,11 +7,11 @@
 #include <acoross/snakebite/win/targetver.h>
 #include <boost/asio.hpp>
 
-#include "myrpc.stub.h"
-#include "myrpc.service.h"
 #include <acoross/rpc/rpc_server.h>
-#include <acoross/snakebite/protos/snakebite_message.pb.h>
 #include <acoross/rpc/rpc_macros.h>
+
+#include <acoross/snakebite/protos/snakebite_message.pb.h>
+#include <acoross/snakebite/protos/myrpc.rpc.h>
 
 using namespace acoross::snakebite;
 using namespace acoross;
@@ -20,44 +20,39 @@ using ::boost::asio::ip::tcp;
 namespace acoross {
 namespace myrpc {
 
-inline DEF_SERVICE_IMPL(MyRpcService, Hello, messages::HelloRequest, &rq, messages::HelloReply, *rp)
+class MyRpcImpl final
+	: public MyRpc::Service
 {
-	std::cout << "request: " << rq.name() << std::endl;
+public:
+	MyRpcImpl(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
+		: Service(io_service, std::move(socket))
+	{}
 
-	if (rp)
+	virtual rpc::ErrCode Hello(const messages::HelloRequest& rq, messages::HelloReply* rp) override
 	{
-		std::string reply_str("fuck you ");
-		reply_str += rq.name();
-		rp->set_message(reply_str.c_str());
+		std::cout << "request: " << rq.name() << std::endl;
+
+		if (rp)
+		{
+			std::string reply_str("fuck you ");
+			reply_str += rq.name();
+			rp->set_message(reply_str.c_str());
+		}
+
+		return rpc::ErrCode::NoError;
 	}
-
-	return rpc::ErrCode::NoError;
-}
-
-inline DEF_SERVICE_IMPL(MyRpcService, Hello2, messages::HelloRequest, &rq, messages::HelloReply, *rp)
-{
-	std::cout << "request: " << rq.name() << std::endl;
-
-	if (rp)
-	{
-		std::string reply_str("hi, ");
-		reply_str += rq.name();
-		rp->set_message(reply_str.c_str());
-	}
-
-	return rpc::ErrCode::NoError;
-}
+};
 
 }
 }
 
 using namespace acoross::myrpc;
 
-void send_name(std::shared_ptr<MyRpcStub> rpc_stub, char* name)
+void send_name(std::shared_ptr<MyRpc::Stub> rpc_stub, char* name)
 {
 	messages::HelloRequest rq;
 	rq.set_name(name);
-	rpc_stub->Hello2(rq,
+	rpc_stub->Hello(rq,
 		[rpc_stub](rpc::ErrCode err_code, messages::HelloReply& rp)
 	{
 		if (err_code == rpc::ErrCode::NoError)
@@ -84,7 +79,7 @@ void stub_thread_func()
 			boost::asio::connect(socket, resolver.resolve({ "localhost", "22001" }));
 		}
 
-		auto rpc_stub = std::make_shared<MyRpcStub>(io_service, std::move(socket));
+		auto rpc_stub = std::make_shared<MyRpc::Stub>(io_service, std::move(socket));
 		rpc_stub->start();
 
 		send_name(rpc_stub, "shin");
@@ -109,7 +104,7 @@ void service_thread_func()
 		rpc::RpcServer server(io_service, 22001, 
 			[](::boost::asio::io_service& io_service, tcp::socket&& socket)
 		{
-			std::make_shared<MyRpcService>(io_service, std::move(socket))->start();
+			std::make_shared<MyRpcImpl>(io_service, std::move(socket))->start();
 		});
 
 		server_start_cv.notify_all();

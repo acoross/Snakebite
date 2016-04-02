@@ -39,6 +39,9 @@
     <ClCompile Include="..\acoross\rpc\rpc_service.cpp">
       <Filter>rpc</Filter>
     </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\protos\myrpc.rpc.cpp">
+      <Filter>protos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\rpc\rpc_packet.h">
@@ -71,14 +74,11 @@
     <ClInclude Include="..\acoross\rpc\rpc_macros.h">
       <Filter>rpc</Filter>
     </ClInclude>
-    <ClInclude Include="myrpc.stub.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\acoross\snakebite\protos\myrpc.define.h">
+      <Filter>protos</Filter>
     </ClInclude>
-    <ClInclude Include="myrpc.service.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="myrpc.define.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\acoross\snakebite\protos\myrpc.rpc.h">
+      <Filter>protos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
