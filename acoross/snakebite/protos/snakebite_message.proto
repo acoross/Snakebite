@@ -31,6 +31,13 @@ syntax = "proto3";
 
 package acoross.snakebite.messages;
 
+// The MyRpc service definition.
+service MyRpc {
+  rpc Hello (HelloRequest) returns (HelloReply) {}
+  rpc TurnKeyDown (TurnKeyDownRequest) returns (VoidReply) {}
+  rpc TurnKeyUp (TurnKeyUpRequest) returns (VoidReply) {}
+}
+
 enum MessageType
 {
 	InitPlayerSnake = 0;

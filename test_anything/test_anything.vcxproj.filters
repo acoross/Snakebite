@@ -39,7 +39,7 @@
     <ClCompile Include="..\acoross\rpc\rpc_service.cpp">
       <Filter>rpc</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\protos\myrpc.rpc.cpp">
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.rpc.cpp">
       <Filter>protos</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,10 +74,7 @@
     <ClInclude Include="..\acoross\rpc\rpc_macros.h">
       <Filter>rpc</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\myrpc.define.h">
-      <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\myrpc.rpc.h">
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.rpc.h">
       <Filter>protos</Filter>
     </ClInclude>
   </ItemGroup>

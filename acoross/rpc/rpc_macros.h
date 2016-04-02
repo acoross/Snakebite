@@ -6,7 +6,7 @@
 #define DEF_STUB(name, requestT, replyT)\
 	void name(const requestT& rq, std::function<void(rpc::ErrCode, replyT&)> cb)\
 	{\
-		RpcCaller<replyT>((unsigned short)Protocol::name##_type, rq, std::move(cb));\
+		RpcCaller<replyT>((unsigned short)Protocol::name, rq, std::move(cb));\
 	}
 
 // DEF_SERVICE
@@ -19,7 +19,7 @@
 
 // REGISTER_SERVICE
 #define REGISTER_SERVICE(name, requestT, replyT)\
-	procedures_[(unsigned short)Protocol::name##_type] = \
+	procedures_[(unsigned short)Protocol::name] = \
 		std::make_shared<rpc::ProcedureCaller<requestT, replyT>>(	\
 			[this](requestT& rq, replyT* rp)->rpc::ErrCode	\
 		{\

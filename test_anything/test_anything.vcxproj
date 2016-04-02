@@ -79,9 +79,9 @@
     <ClCompile Include="..\acoross\rpc\rpc_service.cpp" />
     <ClCompile Include="..\acoross\rpc\rpc_stub.cpp" />
     <ClCompile Include="..\acoross\rpc\rpc_socket.cpp" />
-    <ClCompile Include="..\acoross\snakebite\protos\myrpc.rpc.cpp" />
     <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.rpc.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -91,11 +91,10 @@
     <ClInclude Include="..\acoross\rpc\rpc_packet.h" />
     <ClInclude Include="..\acoross\rpc\rpc_service.h" />
     <ClInclude Include="..\acoross\rpc\rpc_socket.h" />
-    <ClInclude Include="..\acoross\snakebite\protos\myrpc.define.h" />
-    <ClInclude Include="..\acoross\snakebite\protos\myrpc.rpc.h" />
     <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.rpc.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
   </ItemGroup>
   <ItemGroup>
