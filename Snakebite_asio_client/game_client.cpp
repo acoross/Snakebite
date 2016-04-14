@@ -1,58 +1,9 @@
 #include "game_client.h"
 
-#include <acoross/snakebite/protos/snakebite_message_type.h>
-#include <acoross/snakebite/protos/sc_snakebite_message.pb.h>
-
 namespace acoross {
 namespace snakebite {
 
-bool ClientMessageHandlerTable::ProcessMessage(
-	GameClient& client, const SnakebiteMessage& msg)
-{
-	if (msg.message_type() >= static_cast<unsigned short>(SnakebiteMessageType::Max))
-	{
-		return false;
-	}
-
-	bool ret = false;
-
-	auto message_type_typed = static_cast<SC_SnakebiteMessageType>(msg.message_type());
-	switch (message_type_typed)
-	{
-	case SC_SnakebiteMessageType::ReplyInitPlayerSnake:
-	{
-		sc_messages::InitPlayerSnakeReply got_msg;
-		got_msg.ParseFromArray(msg.body(), msg.body_length());
-
-		ret = InitPlayerReply(client, got_msg);
-
-		break;
-	}
-	case SC_SnakebiteMessageType::UpdateGameObjects:
-	{
-		sc_messages::UpdateGameObjects got_msg;
-		got_msg.ParseFromArray(msg.body(), msg.body_length());
-
-		ret = UpdateGameObjectPositions(client, got_msg);
-		
-		break;
-	}
-	default:
-		break;
-	}
-
-	return ret;
-}
-
-bool ClientMessageHandlerTable::InitPlayerReply(
-	GameClient& client, sc_messages::InitPlayerSnakeReply& got_msg)
-{
-	client.set_player_handle(got_msg.handle());
-	return true;
-}
-
-bool ClientMessageHandlerTable::UpdateGameObjectPositions(
-	GameClient& client, sc_messages::UpdateGameObjects& got_msg)
+bool GameClient::UpdateGameObjectPositions(messages::UpdateGameObjectsEvent& got_msg)
 {
 	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_clone_list;
 	std::list<GameObjectClone> apple_clone_list;
@@ -84,7 +35,7 @@ bool ClientMessageHandlerTable::UpdateGameObjectPositions(
 		}
 	}
 
-	client.SetObjectList(std::move(snake_clone_list), std::move(apple_clone_list));
+	this->SetObjectList(std::move(snake_clone_list), std::move(apple_clone_list));
 
 	return true;
 }

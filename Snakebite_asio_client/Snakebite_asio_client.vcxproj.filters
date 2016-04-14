@@ -25,9 +25,6 @@
     <Filter Include="lib\win">
       <UniqueIdentifier>{8178ebc6-e25b-4156-8b20-9e5fc5c7ff0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rpc">
-      <UniqueIdentifier>{958399c6-2a68-473b-b30e-18dae25698c0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="snakebite_asio_client.cpp">
@@ -45,11 +42,8 @@
     <ClCompile Include="game_client.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc">
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.rpc.cpp">
       <Filter>protos</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.cpp">
-      <Filter>rpc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,12 +51,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h">
-      <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h">
-      <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h">
       <Filter>protos</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h">
@@ -80,17 +68,11 @@
     <ClInclude Include="..\acoross\snakebite\win\targetver.h">
       <Filter>lib\win</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h">
-      <Filter>protos</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h">
       <Filter>game_session</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\rpc\asio_protobuf_rpc_stub.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\rpc\rpc_packet.h">
-      <Filter>rpc</Filter>
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.rpc.h">
+      <Filter>protos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

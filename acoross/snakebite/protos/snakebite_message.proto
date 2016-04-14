@@ -31,21 +31,11 @@ syntax = "proto3";
 
 package acoross.snakebite.messages;
 
-enum MessageType
-{
-	InitPlayerSnake = 0;
-	TurnKeyDown = 1;
-	TurnKeyUp = 2;
-};
-
-// The request message containing the user's name.
-message HelloRequest {
-	string name = 1;
-}
-
-// The response message containing the greetings
-message HelloReply {
-	string message = 1;
+service SnakebiteService {
+	rpc InitPlayer(InitPlayerSnakeRequest) returns (InitPlayerSnakeReply);
+	rpc SetKeyDown(TurnKeyDownRequest) returns (VoidReply);
+	rpc SetKeyUp(TurnKeyUpRequest) returns (VoidReply);
+	rpc ListenGameObjectUpdateEvent(ListenGameObjectUpdateRequest) returns(UpdateGameObjectsEvent);
 }
 
 //------------------------------
@@ -58,6 +48,10 @@ message InitPlayerSnakeRequest{
 	string name = 1;
 }
 
+message InitPlayerSnakeReply{
+	int64 handle = 1;
+}
+
 //------------------------------
 message TurnKeyDownRequest {
 	int32 key = 1;
@@ -66,4 +60,34 @@ message TurnKeyDownRequest {
 //------------------------------
 message TurnKeyUpRequest {
 	int32 key = 1;
+}
+
+
+//------------------------------
+
+message ListenGameObjectUpdateRequest {
+}
+
+enum ObjType
+{
+	Snake = 0;
+	Apple = 1;
+};
+
+message MovingObject {
+	double x = 1;
+	double y = 2;
+	double radius = 3;
+}
+
+message GameObjectClone {
+	int32 clone_type = 1;
+	string obj_name = 2;
+	int64 handle = 3;
+	MovingObject head = 4;
+	repeated MovingObject body = 5;
+}
+
+message UpdateGameObjectsEvent {
+	repeated GameObjectClone clone = 1;
 }

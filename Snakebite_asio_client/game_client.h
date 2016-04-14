@@ -4,10 +4,7 @@
 #include <acoross/snakebite/win/targetver.h>
 #include <boost/asio.hpp>
 
-#include <acoross/snakebite/protos/snakebite_message.h>
-#include <acoross/snakebite/protos/snakebite_message_type.h>
-#include <acoross/snakebite/protos/snakebite_message.pb.h>
-#include <acoross/snakebite/protos/sc_snakebite_message.pb.h>
+#include <acoross/snakebite/protos/snakebite_message.rpc.h>
 
 #include <acoross/snakebite/game_session/game_session_system.h>
 #include <acoross/snakebite/game_client_base.h>
@@ -18,79 +15,66 @@ enum { max_length = 1024 };
 namespace acoross {
 namespace snakebite {
 
-class GameClient;
-
-class ClientMessageHandlerTable final
-{
-public:
-	bool ProcessMessage(GameClient& client, const SnakebiteMessage& msg);
-
-	bool InitPlayerReply(GameClient& client, sc_messages::InitPlayerSnakeReply& got_msg);
-
-	bool UpdateGameObjectPositions(GameClient& client, sc_messages::UpdateGameObjects& got_msg);
-};
-
 class GameClient final
 	: public GameClientBase
 	, public std::enable_shared_from_this<GameClient>
 {
 public:
-	GameClient(boost::asio::io_service& io_service)
-		: io_service_(io_service)
-		, socket_(io_service)
-	{}
-
-	void ConnectToServer(char* host, char* port)
+	GameClient(boost::asio::io_service& io_service, tcp::socket&& socket)
+		: stub_(new messages::SnakebiteService::Stub(io_service, std::move(socket)))
 	{
-		tcp::resolver resolver(io_service_);
-		boost::asio::connect(socket_, resolver.resolve({ host, port }));
-
-		do_read_header();
+		ListenGameObjectUpdateEvent();
 	}
 
 	virtual void InitPlayer() override
 	{
-		SnakebiteMessage msg;
-		auto msg_type = SnakebiteMessageType::InitPlayerSnake;
-
 		messages::InitPlayerSnakeRequest rq;
 		rq.set_name("remote player");
-
-		rq.SerializeToArray(msg.body(), msg.max_body_length);
-		msg.body_length(rq.ByteSize());
-		msg.encode_header((unsigned short)msg_type);
-
-		boost::asio::write(socket_, boost::asio::buffer(msg.data(), msg.length()));
+		
+		stub_->InitPlayer(rq, 
+			[client = shared_from_this()](acoross::rpc::ErrCode ec, messages::InitPlayerSnakeReply& rp)
+		{
+			if (ec == acoross::rpc::ErrCode::NoError)
+			{
+				client->set_player_handle(rp.handle());
+			}
+			else
+			{
+				assert(false);
+			}
+		});
 	}
 
 	virtual void SetKeyDown(PlayerKey pk) override
 	{
-		SnakebiteMessage msg;
-		auto msg_type = SnakebiteMessageType::TurnKeyDown;
-
 		messages::TurnKeyDownRequest rq;
 		rq.set_key((google::protobuf::int32)pk);
 
-		rq.SerializeToArray(msg.body(), msg.max_body_length);
-		msg.body_length(rq.ByteSize());
-		msg.encode_header((unsigned short)msg_type);
-
-		boost::asio::write(socket_, boost::asio::buffer(msg.data(), msg.length()));
+		stub_->SetKeyDown(rq,
+			[client = shared_from_this()](acoross::rpc::ErrCode ec, messages::VoidReply&)
+		{});
 	}
 
 	virtual void SetKeyUp(PlayerKey pk) override
 	{
-		SnakebiteMessage msg;
-		auto msg_type = SnakebiteMessageType::TurnKeyUp;
-
 		messages::TurnKeyUpRequest rq;
 		rq.set_key((google::protobuf::int32)pk);
 
-		rq.SerializeToArray(msg.body(), msg.max_body_length);
-		msg.body_length(rq.ByteSize());
-		msg.encode_header((unsigned short)msg_type);
+		stub_->SetKeyUp(rq,
+			[client = shared_from_this()](acoross::rpc::ErrCode ec, messages::VoidReply&)
+		{});
+	}
 
-		boost::asio::write(socket_, boost::asio::buffer(msg.data(), msg.length()));
+	void ListenGameObjectUpdateEvent()
+	{
+		messages::ListenGameObjectUpdateRequest rq;
+		
+		stub_->ListenGameObjectUpdateEvent(rq, 
+			[client = shared_from_this()](acoross::rpc::ErrCode ec, messages::UpdateGameObjectsEvent& rp)
+		{
+			client->UpdateGameObjectPositions(rp);
+		});
+
 	}
 
 	virtual void Draw(Win::WDC& wdc, RECT& client_rect) override
@@ -149,68 +133,20 @@ public:
 		::SelectObject(memdc.Get(), oldbit);
 		::DeleteObject(memdc.Get());
 	}
-
-	void do_read_header()
-	{
-		auto self(shared_from_this());
-		boost::asio::async_read(socket_,
-			boost::asio::buffer(read_msg_.data(), SnakebiteMessage::header_length),
-			[this, self](boost::system::error_code ec, std::size_t /*length*/)
-		{
-			if (!ec && read_msg_.decode_header())
-			{
-				do_read_body();
-			}
-			else
-			{
-				//end();
-			}
-		});
-	}
-
-	void do_read_body()
-	{
-		auto self(shared_from_this());
-		boost::asio::async_read(socket_,
-			boost::asio::buffer(read_msg_.body(), read_msg_.body_length()),
-			[this, self](boost::system::error_code ec, std::size_t /*length*/)
-		{
-			if (!ec && process_message(read_msg_))
-			{
-				//room_.deliver(read_msg_);
-				do_read_header();
-			}
-			else
-			{
-				//end();
-			}
-		});
-	}
-
-	bool process_message(SnakebiteMessage& msg)
-	{
-		bool ret = message_handler_.ProcessMessage(*this, msg);
-
-		//send(reply);
-
-		return ret;
-	}
-
+	
 	void set_player_handle(uintptr_t handle)
 	{
 		player_handle = handle;
 	}
 
+	bool UpdateGameObjectPositions(messages::UpdateGameObjectsEvent& got_msg);
+
 private:
-	boost::asio::io_service& io_service_;
-	tcp::socket socket_;
+	std::shared_ptr<messages::SnakebiteService::Stub> stub_;
 
 	int screen_width{ 500 };	// init value. set this by server value
 	int screen_height{ 500 };	// init value. set this by server value
 	Handle<Snake> player_handle{ nullptr };
-
-	SnakebiteMessage read_msg_;
-	ClientMessageHandlerTable message_handler_;
 };
 
 }

@@ -171,10 +171,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	{
 		// TODO: 여기에 코드를 입력합니다.
 		boost::asio::io_service io_service;
-		
-		auto game_client = std::make_shared<GameClient>(io_service);
-		game_client->ConnectToServer("192.168.0.12", "22000");
-
+		boost::asio::ip::tcp::socket socket(io_service);
+		{
+			tcp::resolver resolver(io_service);
+			boost::asio::connect(socket, resolver.resolve({ "127.0.0.1", "22000" }));
+		}
+		auto game_client = std::make_shared<GameClient>(io_service, std::move(socket));
 		g_game_client = game_client;
 
 		std::thread game_thread(
