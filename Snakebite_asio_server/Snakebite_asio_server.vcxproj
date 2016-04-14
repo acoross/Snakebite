@@ -53,13 +53,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>GameSessionSystem.lib;libprotobufd.lib;libprotobuf-lited.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\extern_lib;$(SolutionDir)\x64\debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GameSessionSystem.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\extern_lib;$(SolutionDir)\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -69,39 +69,35 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>GameSessionSystem.lib;libprotobuf.lib;libprotobuf-lite.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\extern_lib;$(SolutionDir)\x64\release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GameSessionSystem.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\extern_lib;$(SolutionDir)\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc" />
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc" />
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.rpc.cpp" />
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp" />
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp" />
     <ClCompile Include="game_server.cpp" />
     <ClCompile Include="snakebite_asio_server.cpp" />
-    <ClCompile Include="snakebite_message_handler_table.cpp" />
     <ClCompile Include="UserSession.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\acoross\snakebite\protos\sc_snakebite_message.proto" />
     <None Include="..\acoross\snakebite\protos\snakebite_message.proto" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\game_client_base.h" />
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h" />
-    <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h" />
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h" />
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h" />
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h" />
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.rpc.h" />
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h" />
     <ClInclude Include="..\acoross\snakebite\util.h" />
     <ClInclude Include="..\acoross\snakebite\win\Resource.h" />
@@ -109,7 +105,6 @@
     <ClInclude Include="..\acoross\snakebite\win\WinWrapper.h" />
     <ClInclude Include="local_game_client.h" />
     <ClInclude Include="game_server.h" />
-    <ClInclude Include="snakebite_message_handler_table.h" />
     <ClInclude Include="UserSession.h" />
   </ItemGroup>
   <ItemGroup>

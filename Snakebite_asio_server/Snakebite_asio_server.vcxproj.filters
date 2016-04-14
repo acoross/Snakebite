@@ -45,28 +45,22 @@
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc">
       <Filter>lib\protos</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc">
-      <Filter>lib\protos</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp">
       <Filter>lib\npc_control_manager</Filter>
     </ClCompile>
     <ClCompile Include="game_server.cpp">
       <Filter>game_server</Filter>
     </ClCompile>
-    <ClCompile Include="snakebite_message_handler_table.cpp">
-      <Filter>game_server</Filter>
-    </ClCompile>
     <ClCompile Include="UserSession.cpp">
       <Filter>game_server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.rpc.cpp">
+      <Filter>lib\protos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="..\acoross\snakebite\protos\snakebite_message.proto">
-      <Filter>lib\protos</Filter>
-    </None>
-    <None Include="..\acoross\snakebite\protos\sc_snakebite_message.proto">
       <Filter>lib\protos</Filter>
     </None>
   </ItemGroup>
@@ -89,15 +83,6 @@
     <ClInclude Include="local_game_client.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h">
-      <Filter>lib\protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h">
-      <Filter>lib\protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h">
-      <Filter>lib\protos</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h">
       <Filter>lib\npc_control_manager</Filter>
     </ClInclude>
@@ -113,8 +98,8 @@
     <ClInclude Include="UserSession.h">
       <Filter>game_server</Filter>
     </ClInclude>
-    <ClInclude Include="snakebite_message_handler_table.h">
-      <Filter>game_server</Filter>
+    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.rpc.h">
+      <Filter>lib\protos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

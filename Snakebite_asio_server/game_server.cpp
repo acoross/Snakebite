@@ -1,8 +1,5 @@
 #include "game_server.h"
 
-#include <acoross/snakebite/protos/snakebite_message_type.h>
-#include <acoross/snakebite/protos/sc_snakebite_message.pb.h>
-
 void acoross::snakebite::GameServer::do_update_game_session()
 {
 	MeanProcessTimeChecker mean_tick(mean_tick_time_ms_);

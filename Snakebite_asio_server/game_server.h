@@ -14,7 +14,6 @@
 #include <acoross/snakebite/util.h>
 #include <acoross/snakebite/game_session/game_session_system.h>
 #include <acoross/snakebite/snake_npc_control_manager.h>
-#include <acoross/snakebite/protos/snakebite_message.h>
 #include "UserSession.h"
 
 using boost::asio::ip::tcp;
@@ -28,7 +27,7 @@ class GameServer final
 	: public std::enable_shared_from_this<GameServer>
 {
 public:
-	using EventHandler = std::function<void(std::shared_ptr<SnakebiteMessage>&)>;
+	//using EventHandler = std::function<void(std::shared_ptr<SnakebiteMessage>&)>;
 	using LocalUpdateListner = 
 		std::function<void(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, const std::list<GameObjectClone>&)>;
 	
@@ -109,7 +108,7 @@ private:
 		{
 			if (!ec)
 			{
-				std::make_shared<UserSession>(std::move(socket_), game_session_, shared_from_this())->start();
+				std::make_shared<UserSession>(io_service_, std::move(socket_), game_session_, shared_from_this())->start();
 			}
 
 			do_accept();

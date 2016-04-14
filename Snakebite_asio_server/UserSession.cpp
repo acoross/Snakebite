@@ -2,8 +2,6 @@
 
 #include "UserSession.h"
 #include "game_server.h"
-#include <acoross/snakebite/protos/sc_snakebite_message.pb.h>
-#include <acoross/snakebite/protos/snakebite_message_type.h>
 
 namespace acoross {
 namespace snakebite {
@@ -11,29 +9,19 @@ namespace snakebite {
 void UserSession::start()
 {
 	std::string myid = std::to_string((uintptr_t)this);
-
-	/*game_server_->AddUpdateEventListner(
-		myid, 
-		[us_wp = std::weak_ptr<UserSession>(shared_from_this())](std::shared_ptr<SnakebiteMessage>& msg)
-	{
-		if (auto us = us_wp.lock())
-		{
-			us->send(msg);
-		}
-	});*/
-	
+		
 	game_session_->AddUpdateEventListner(
 		myid,
-		[us_wp = std::weak_ptr<UserSession>(shared_from_this())]
+		[us = this, rpcsocket_wp = std::weak_ptr<rpc::RpcSocket>(shared_from_this())]
 	(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, const std::list<GameObjectClone>& apple_clone_list)
 	{
-		if (auto us = us_wp.lock())
+		if (auto rpcsocket = rpcsocket_wp.lock())
 		{
 			us->send_update_game_object(snake_clone_list, apple_clone_list);
 		}
 	});
 
-	do_read_header();
+	messages::SnakebiteService::Service::start();
 }
 
 void UserSession::end()
@@ -44,40 +32,11 @@ void UserSession::end()
 	game_session_->UnregisterEventListner(myid);
 }
 
-
-// @atomic
-
-void UserSession::TurnKeyDown(PlayerKey pk)
-{
-	game_session_->RequestToSnake(user_snake_handle_,
-		[pk](Snake& snake)
-	{
-		snake.SetKeyDown(pk);
-	});
-}
-
-void UserSession::TurnKeyUp(PlayerKey pk)
-{
-	game_session_->RequestToSnake(user_snake_handle_,
-		[pk](Snake& snake)
-	{
-		snake.SetKeyUp(pk);
-	});
-}
-
-Handle<Snake>::Type UserSession::RequestInitPlayer(std::string name)
-{
-	game_session_->RemoveSnake(user_snake_handle_);
-	
-	user_snake_handle_ = game_session_->AddSnake(name, Snake::EventHandler());
-	return user_snake_handle_;
-}
-
 void UserSession::send_update_game_object(
 	const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
 	const std::list<GameObjectClone>& apple_clone_list)
 {
-	sc_messages::UpdateGameObjects game_objects;
+	messages::UpdateGameObjectsEvent game_objects;
 	{
 		for (auto& pair : snake_clone_list)
 		{
@@ -118,16 +77,57 @@ void UserSession::send_update_game_object(
 
 	if (bool is_initialized = game_objects.IsInitialized())
 	{
-		auto msg = std::make_shared<SnakebiteMessage>();
+		/*auto msg = std::make_shared<SnakebiteMessage>();
 		if (bool is_serialize_success = game_objects.SerializeToArray(msg->body(), msg->max_body_length))
 		{
 			msg->body_length((unsigned short)game_objects.ByteSize());
 			msg->encode_header((unsigned short)SC_SnakebiteMessageType::UpdateGameObjects);
 
 			send(msg);
-		}
+		}*/
 	}
 }
+
+acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages::InitPlayerSnakeRequest &rq, acoross::snakebite::messages::InitPlayerSnakeReply *rp)
+{
+	game_session_->RemoveSnake(user_snake_handle_);
+
+	user_snake_handle_ = game_session_->AddSnake(rq.name(), Snake::EventHandler());
+	if (rp)
+	{
+		rp->set_handle(user_snake_handle_);
+	}
+
+	return acoross::rpc::ErrCode();
+}
+
+acoross::rpc::ErrCode UserSession::SetKeyDown(const acoross::snakebite::messages::TurnKeyDownRequest &rq, acoross::snakebite::messages::VoidReply *rp)
+{
+	game_session_->RequestToSnake(user_snake_handle_,
+		[pk = rq.key()](Snake& snake)
+	{
+		snake.SetKeyDown(PlayerKey(pk));
+	});
+
+	return acoross::rpc::ErrCode();
+}
+
+acoross::rpc::ErrCode UserSession::SetKeyUp(const acoross::snakebite::messages::TurnKeyUpRequest &rq, acoross::snakebite::messages::VoidReply *rp)
+{
+	game_session_->RequestToSnake(user_snake_handle_,
+		[pk = rq.key()](Snake& snake)
+	{
+		snake.SetKeyUp(PlayerKey(pk));
+	});
+
+	return acoross::rpc::ErrCode();
+}
+
+acoross::rpc::ErrCode UserSession::ListenGameObjectUpdateEvent(const acoross::snakebite::messages::ListenGameObjectUpdateRequest &rq, acoross::snakebite::messages::UpdateGameObjectsEvent *rp)
+{
+	return acoross::rpc::ErrCode();
+}
+
 
 }
 }
