@@ -1,3 +1,6 @@
 [submodule "protobuf"]
 	path = protobuf
 	url = http://github.com/google/protobuf
+[submodule "acoross-rpc"]
+	path = acoross-rpc
+	url = https://github.com/acoross-cpp14-lib/acoross-rpc
