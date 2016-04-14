@@ -178,6 +178,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		auto game_client = std::make_shared<GameClient>(io_service, std::move(socket));
 		g_game_client = game_client;
+		game_client->start();
 
 		std::thread game_thread(
 			[&io_service]()

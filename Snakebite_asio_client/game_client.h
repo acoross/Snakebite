@@ -22,8 +22,12 @@ class GameClient final
 public:
 	GameClient(boost::asio::io_service& io_service, tcp::socket&& socket)
 		: stub_(new messages::SnakebiteService::Stub(io_service, std::move(socket)))
+	{}
+
+	void start()
 	{
 		ListenGameObjectUpdateEvent();
+		stub_->start();
 	}
 
 	virtual void InitPlayer() override
