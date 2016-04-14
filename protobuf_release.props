@@ -6,7 +6,12 @@
   <ItemDefinitionGroup>
     <Link>
       <AdditionalDependencies>libprotobuf.lib;libprotobuf-lite.lib;;%(AdditionalDependencies)</AdditionalDependencies>
+<<<<<<< HEAD
       <AdditionalLibraryDirectories>$(SolutionDir)\x64\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+=======
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+>>>>>>> origin/master
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

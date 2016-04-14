@@ -9,6 +9,7 @@ namespace acoross {
 namespace snakebite {
 namespace messages {
 
+<<<<<<< HEAD
 SnakebiteService::Service::Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
 	: ::acoross::rpc::RpcService(io_service, std::move(socket))
 {
@@ -19,6 +20,17 @@ SnakebiteService::Service::Service(::boost::asio::io_service& io_service, ::boos
 }
 
 SnakebiteService::Stub::Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
+=======
+MyRpc::Service::Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
+	: ::acoross::rpc::RpcService(io_service, std::move(socket))
+{
+  REGISTER_SERVICE(Hello, ::acoross::snakebite::messages::HelloRequest, ::acoross::snakebite::messages::HelloReply)
+  REGISTER_SERVICE(TurnKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
+  REGISTER_SERVICE(TurnKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)
+}
+
+MyRpc::Stub::Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
+>>>>>>> origin/master
 	: ::acoross::rpc::RpcStub(io_service, std::move(socket))
 {}
 

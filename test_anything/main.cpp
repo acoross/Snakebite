@@ -10,14 +10,20 @@
 #include <acoross/rpc/rpc_server.h>
 #include <acoross/rpc/rpc_macros.h>
 
+<<<<<<< HEAD
 #include <acoross/snakebite/protos/test_rpc.rpc.h>
+=======
+#include <acoross/snakebite/protos/snakebite_message.pb.h>
+#include <acoross/snakebite/protos/snakebite_message.rpc.h>
+>>>>>>> origin/master
 
 using namespace acoross::rpc_test;
 using namespace acoross;
 using ::boost::asio::ip::tcp;
 
 namespace acoross {
-namespace myrpc {
+namespace snakebite {
+namespace messages {
 
 class MyRpcImpl final
 	: public TestRpc::Service
@@ -40,12 +46,23 @@ public:
 
 		return rpc::ErrCode::NoError;
 	}
+
+	virtual rpc::ErrCode TurnKeyDown(const messages::TurnKeyDownRequest& rq, messages::VoidReply* rp) override
+	{
+		return rpc::ErrCode::NoError;
+	}
+
+	virtual rpc::ErrCode TurnKeyUp(const messages::TurnKeyUpRequest& rq, messages::VoidReply* rp) override
+	{
+		return rpc::ErrCode::NoError;
+	}
 };
 
 }
 }
+}
 
-using namespace acoross::myrpc;
+using namespace acoross::snakebite::messages;
 
 void send_name(std::shared_ptr<TestRpc::Stub> rpc_stub, char* name)
 {

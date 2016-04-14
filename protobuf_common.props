@@ -8,7 +8,11 @@
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)\protobuf\src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+<<<<<<< HEAD
       <AdditionalLibraryDirectories>$(SolutionDir)\extern_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+=======
+      <AdditionalLibraryDirectories>$(SolutionDir)\extern_lib;$(SolutionDir)\x64\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+>>>>>>> origin/master
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
