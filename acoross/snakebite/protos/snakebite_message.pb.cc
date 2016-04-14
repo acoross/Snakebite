@@ -265,7 +265,6 @@ void protobuf_AddDesc_snakebite_5fmessage_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\027snakebite_message.proto\022\032acoross.snake"
-<<<<<<< HEAD
     "bite.messages\"\030\n\tVoidReply\022\013\n\003err\030\001 \001(\005\""
     "&\n\026InitPlayerSnakeRequest\022\014\n\004name\030\001 \001(\t\""
     "&\n\024InitPlayerSnakeReply\022\016\n\006handle\030\001 \001(\003\""
@@ -293,23 +292,6 @@ void protobuf_AddDesc_snakebite_5fmessage_2eproto() {
     "kebite.messages.ListenGameObjectUpdateRe"
     "quest\0322.acoross.snakebite.messages.Updat"
     "eGameObjectsEventb\006proto3", 1105);
-=======
-    "bite.messages\"\034\n\014HelloRequest\022\014\n\004name\030\001 "
-    "\001(\t\"\035\n\nHelloReply\022\017\n\007message\030\001 \001(\t\"\030\n\tVo"
-    "idReply\022\013\n\003err\030\001 \001(\005\"&\n\026InitPlayerSnakeR"
-    "equest\022\014\n\004name\030\001 \001(\t\"!\n\022TurnKeyDownReque"
-    "st\022\013\n\003key\030\001 \001(\005\"\037\n\020TurnKeyUpRequest\022\013\n\003k"
-    "ey\030\001 \001(\005*B\n\013MessageType\022\023\n\017InitPlayerSna"
-    "ke\020\000\022\017\n\013TurnKeyDown\020\001\022\r\n\tTurnKeyUp\020\0022\260\002\n"
-    "\005MyRpc\022[\n\005Hello\022(.acoross.snakebite.mess"
-    "ages.HelloRequest\032&.acoross.snakebite.me"
-    "ssages.HelloReply\"\000\022f\n\013TurnKeyDown\022..aco"
-    "ross.snakebite.messages.TurnKeyDownReque"
-    "st\032%.acoross.snakebite.messages.VoidRepl"
-    "y\"\000\022b\n\tTurnKeyUp\022,.acoross.snakebite.mes"
-    "sages.TurnKeyUpRequest\032%.acoross.snakebi"
-    "te.messages.VoidReply\"\000b\006proto3", 631);
->>>>>>> origin/master
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "snakebite_message.proto", &protobuf_RegisterTypes);
   VoidReply::default_instance_ = new VoidReply();

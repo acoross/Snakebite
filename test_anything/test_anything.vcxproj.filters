@@ -24,23 +24,7 @@
     <ClCompile Include="..\acoross\snakebite\protos\test_rpc.pb.cc">
       <Filter>protos</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="..\acoross\snakebite\protos\test_rpc.rpc.cpp">
-=======
-    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc">
-      <Filter>protos</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\rpc\rpc_socket.cpp">
-      <Filter>rpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\rpc\rpc_stub.cpp">
-      <Filter>rpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\rpc\rpc_service.cpp">
-      <Filter>rpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.rpc.cpp">
->>>>>>> origin/master
       <Filter>protos</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,7 +32,6 @@
     <None Include="packages.config" />
     <None Include="..\acoross\snakebite\protos\test_rpc.proto">
       <Filter>protos</Filter>
-<<<<<<< HEAD
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -56,25 +39,6 @@
       <Filter>protos</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\test_rpc.rpc.h">
-=======
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_service.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_socket.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_stub.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_server.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_macros.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.rpc.h">
->>>>>>> origin/master
       <Filter>protos</Filter>
     </ClInclude>
   </ItemGroup>
