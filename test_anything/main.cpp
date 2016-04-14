@@ -10,10 +10,9 @@
 #include <acoross/rpc/rpc_server.h>
 #include <acoross/rpc/rpc_macros.h>
 
-#include <acoross/snakebite/protos/snakebite_message.pb.h>
-#include <acoross/snakebite/protos/myrpc.rpc.h>
+#include <acoross/snakebite/protos/test_rpc.rpc.h>
 
-using namespace acoross::snakebite;
+using namespace acoross::rpc_test;
 using namespace acoross;
 using ::boost::asio::ip::tcp;
 
@@ -21,14 +20,14 @@ namespace acoross {
 namespace myrpc {
 
 class MyRpcImpl final
-	: public MyRpc::Service
+	: public TestRpc::Service
 {
 public:
 	MyRpcImpl(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
 		: Service(io_service, std::move(socket))
 	{}
 
-	virtual rpc::ErrCode Hello(const messages::HelloRequest& rq, messages::HelloReply* rp) override
+	virtual rpc::ErrCode Hello(const HelloRequest& rq, HelloReply* rp) override
 	{
 		std::cout << "request: " << rq.name() << std::endl;
 
@@ -48,12 +47,12 @@ public:
 
 using namespace acoross::myrpc;
 
-void send_name(std::shared_ptr<MyRpc::Stub> rpc_stub, char* name)
+void send_name(std::shared_ptr<TestRpc::Stub> rpc_stub, char* name)
 {
-	messages::HelloRequest rq;
+	HelloRequest rq;
 	rq.set_name(name);
 	rpc_stub->Hello(rq,
-		[rpc_stub](rpc::ErrCode err_code, messages::HelloReply& rp)
+		[rpc_stub](rpc::ErrCode err_code, HelloReply& rp)
 	{
 		if (err_code == rpc::ErrCode::NoError)
 		{
@@ -76,10 +75,10 @@ void stub_thread_func()
 		tcp::socket socket(io_service);
 		{
 			tcp::resolver resolver(io_service);
-			boost::asio::connect(socket, resolver.resolve({ "localhost", "22001" }));
+			boost::asio::connect(socket, resolver.resolve({ "127.0.0.1", "22001" }));
 		}
 
-		auto rpc_stub = std::make_shared<MyRpc::Stub>(io_service, std::move(socket));
+		auto rpc_stub = std::make_shared<TestRpc::Stub>(io_service, std::move(socket));
 		rpc_stub->start();
 
 		send_name(rpc_stub, "shin");

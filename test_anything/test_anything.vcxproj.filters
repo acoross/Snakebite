@@ -16,72 +16,30 @@
     <Filter Include="protos">
       <UniqueIdentifier>{a196721e-5a67-42fc-b1d9-ef8bc9b1c03d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rpc">
-      <UniqueIdentifier>{98c3bf27-2a3b-4eb9-936f-1728e1dc9212}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.cc">
+    <ClCompile Include="..\acoross\snakebite\protos\test_rpc.pb.cc">
       <Filter>protos</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc">
+    <ClCompile Include="..\acoross\snakebite\protos\test_rpc.rpc.cpp">
       <Filter>protos</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\rpc\rpc_socket.cpp">
-      <Filter>rpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\rpc\rpc_stub.cpp">
-      <Filter>rpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\rpc\rpc_service.cpp">
-      <Filter>rpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\protos\myrpc.rpc.cpp">
-      <Filter>protos</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\acoross\rpc\rpc_packet.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\sc_snakebite_message.pb.h">
-      <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.h">
-      <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h">
-      <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\snakebite_message_type.h">
-      <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_service.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_socket.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_stub.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_server.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\rpc\rpc_macros.h">
-      <Filter>rpc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\myrpc.define.h">
-      <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\protos\myrpc.rpc.h">
-      <Filter>protos</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\acoross\snakebite\protos\test_rpc.proto">
+      <Filter>protos</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\acoross\snakebite\protos\test_rpc.pb.h">
+      <Filter>protos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\protos\test_rpc.rpc.h">
+      <Filter>protos</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

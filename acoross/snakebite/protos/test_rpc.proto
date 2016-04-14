@@ -29,20 +29,12 @@
 
 syntax = "proto3";
 
-package acoross.snakebite.messages;
+package acoross.rpc_test;
 
-// The greeting service definition.
-service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+service TestRpc {
+	rpc Hello(HelloRequest) returns (HelloReply);
 }
 
-enum MessageType
-{
-	InitPlayerSnake = 0;
-	TurnKeyDown = 1;
-	TurnKeyUp = 2;
-};
 
 // The request message containing the user's name.
 message HelloRequest {
