@@ -14,11 +14,12 @@
 #include "snake.h"
 #include "apple.h"
 #include "handle.h"
+#include "game_geo_zone.h"
 
 namespace acoross {
 namespace snakebite {
 
-// 맵, MovingObject 로 구성되는 하나의 게임 단위.
+// 맵, GameObject 로 구성되는 하나의 게임 단위.
 class GameSession final
 {
 public:
@@ -46,14 +47,15 @@ public:
 
 	size_t CalculateSnakeCount() 
 	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		return snakes_.size();
+		/*std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		return snakes_.size();*/
+		return zone_.CalculateSnakeCount();
 	}
-
 	size_t CalculateAppleCount()
 	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		return apples_.size();
+		/*std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		return apples_.size();*/
+		return zone_.CalculateAppleCount();
 	}
 #pragma endregion use_snakes_mutex_
 
@@ -65,26 +67,21 @@ public:
 			request(*it->second.get());
 		}
 	}
-
 	void AddUpdateEventListner(std::string name, UpdateEventListner on_update)
 	{
 		std::lock_guard<std::mutex> lock(update_listner_mutex_);
+
 		on_update_event_listeners_[name] = on_update;
 	}
-
 	void UnregisterEventListner(std::string name)
 	{
 		std::lock_guard<std::mutex> lock(update_listner_mutex_);
 		on_update_event_listeners_.erase(name);
 	}
 
-	//임시로 열어주는 API
-	MovingObjectContainer& GetContainer() { return container_; }
-	//
-
 private:
 #pragma region use_snakes_mutex_
-	auto CloneSnakeList()
+	/*auto CloneSnakeList()
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snakes;
@@ -95,8 +92,8 @@ private:
 		}
 
 		return snakes;
-	}
-	std::list<GameObjectClone> CloneAppleList()
+	}*/
+	/*std::list<GameObjectClone> CloneAppleList()
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 		std::list<GameObjectClone> apples;
@@ -107,15 +104,10 @@ private:
 		}
 
 		return apples;
-	}
+	}*/
 #pragma endregion use_snakes_mutex_
 
 private:
-	using MapSnake = std::map<Handle<Snake>::Type, SnakeSP>;
-	using ListApple = std::list<AppleSP>;
-	using CollisionMap = std::map<Handle<Snake>::Type, GameObjectWP>;
-	using CollisionSet = std::set<Handle<Snake>::Type>;
-
 	void ProcessCollisionToWall(SnakeSP actor);
 
 	CollisionSet wall_collision_set_;
@@ -126,10 +118,7 @@ private:
 
 #pragma region snakes - use_snakes_mutex_
 	MapSnake snakes_;
-	ListApple apples_;
-
-	// 병신같지만 drawer 랑 동기화 하기 위해 추가한 lock 이다...
-	// 수정 필요.
+	//ListApple apples_;
 	std::recursive_mutex snakes_mutex_;
 #pragma endregion snakes - use_snakes_mutex_
 
@@ -139,6 +128,10 @@ private:
 
 	std::mutex update_listner_mutex_;
 	std::map<std::string, UpdateEventListner> on_update_event_listeners_;
+
+#pragma region zone
+	GameGeoZone zone_;
+#pragma endregion zone
 
 	//임시
 	friend class LocalGameClient;

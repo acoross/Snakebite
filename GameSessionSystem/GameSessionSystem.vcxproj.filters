@@ -39,6 +39,9 @@
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\details\game_geo_zone.h">
+      <Filter>details</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session\details\game_session.cpp">
@@ -49,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\game_session\details\snake_collider.cpp">
       <Filter>details</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\game_session\details\game_geo_zone.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

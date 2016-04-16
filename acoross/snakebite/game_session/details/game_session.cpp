@@ -13,9 +13,11 @@
 namespace acoross {
 namespace snakebite {
 
-
+/////////////////////////////////////////////////
+// GameSession
 GameSession::GameSession(unsigned int init_apple_count, int width, int height)
 	: container_(0, width, 0, height)	//container size
+	, zone_(0, width, 0, height)
 {	
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
@@ -31,58 +33,17 @@ GameSession::~GameSession()
 {
 }
 
-static void updateMoveSnake(std::shared_ptr<Snake>& snake, int64_t diff_in_ms, MovingObjectContainer& container)
-{
-	// change direction
-	{
-		auto last_pk = snake->GetPlayerKey();
-		if (last_pk == PK_RIGHT)
-		{
-			auto ang_vel = snake->GetAngVelocity();
-			auto diff_ang = ang_vel * diff_in_ms;
-			snake->Turn(diff_ang);
-		}
-		else if (last_pk == PK_LEFT)
-		{
-			auto ang_vel = snake->GetAngVelocity();
-			auto diff_ang = -ang_vel * diff_in_ms;
-			snake->Turn(diff_ang);
-		}
-	}
-
-	// move to forward
-	double diff_distance = snake->GetVelocity() * diff_in_ms;
-	Position2D pos_now = snake->GetPosition();
-	double angle_now_rad = snake->GetAngle().GetRad();
-
-	DirVector2D diff_vec{
-		diff_distance * std::cos(angle_now_rad),
-		diff_distance * std::sin(angle_now_rad)
-	};
-
-	snake->Move(diff_vec, container);
-}
-
 void GameSession::UpdateMove(int64_t diff_in_ms)
 {
-	//std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	snakes_mutex_.lock();
-	auto snakes = snakes_;
-	snakes_mutex_.unlock();
-
-	// ÀüÁø
-	for (auto& snake : snakes)
-	{
-		acoross::snakebite::updateMoveSnake(snake.second, diff_in_ms, container_);
-	}
+	zone_.UpdateMove(diff_in_ms);
 }
 
 void GameSession::InvokeUpdateEvent()
 {
-	snakes_mutex_.lock();
-	auto snake_list = CloneSnakeList();
-	auto apple_list = CloneAppleList();
-	snakes_mutex_.unlock();
+	auto snake_list = zone_.CloneSnakeList();
+	//auto snake_list = CloneSnakeList();
+	auto apple_list = zone_.CloneAppleList();
+	//auto apple_list = CloneAppleList();
 
 	update_listner_mutex_.lock();
 	auto event_listeners = on_update_event_listeners_;
@@ -97,54 +58,13 @@ void GameSession::InvokeUpdateEvent()
 
 void GameSession::ProcessCollisions()
 {
-	//std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	snakes_mutex_.lock();
-	MapSnake snakes = snakes_;
-	ListApple apples = apples_;
-	snakes_mutex_.unlock();
-
-	for (auto& snake1 : snakes)
-	{
-		for (auto& snake2 : snakes)
-		{
-			snake1.second->ProcessCollision(snake2.second);
-		}
-
-		ProcessCollisionToWall(snake1.second);
-
-		for (auto& apple : apples)
-		{
-			snake1.second->ProcessCollision(apple);
-		}
-	}
+	zone_.ProcessCollisions();
 }
 
-bool GameSession::RemoveSnake(Handle<Snake>::Type snake)
-{
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-
-	if (snakes_.erase(snake) > 0)
-	{
-		return true;
-	}
-	
-	return false;
-}
 
 bool GameSession::RemoveApple(Apple * apple)
 {
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-
-	for (auto it = apples_.begin(); it != apples_.end(); ++it)
-	{
-		if (it->get() == apple)
-		{
-			apples_.erase(it);
-			return true;
-		}
-	}
-
-	return false;
+	return zone_.RemoveApple(apple);
 }
 
 Handle<Snake>::Type GameSession::AddSnake(std::string name, Snake::EventHandler onDieHandler)
@@ -159,16 +79,21 @@ Handle<Snake>::Type GameSession::AddSnake(std::string name, Snake::EventHandler 
 	const int body_len{ 1 };
 
 	auto snake = std::make_shared<Snake>(
-		*this
-		, init_pos, radius
-		, unin_degree(random_engine_), velocity, ang_vel, body_len
-		, onDieHandler, name);
+	*this
+	, init_pos, radius
+	, unin_degree(random_engine_), velocity, ang_vel, body_len
+	, onDieHandler, name);
 
-	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		snakes_.emplace(Handle<Snake>(snake.get()).handle, snake);
-	}
-	return Handle<Snake>(snake.get()).handle;
+	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+	snakes_.emplace(Handle<Snake>(snake.get()).handle, snake);
+
+	//
+	return zone_.AddSnake(snake, name, onDieHandler);
+}
+
+bool GameSession::RemoveSnake(Handle<Snake>::Type snake)
+{
+	return zone_.RemoveSnake(snake);
 }
 
 void GameSession::AddApple()
@@ -180,10 +105,11 @@ void GameSession::AddApple()
 
 	auto apple = std::make_shared<Apple>(init_pos, radius * 2);
 
-	{
+	/*{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 		apples_.emplace_back(apple);
-	}
+	}*/
+	zone_.AddApple(apple);
 }
 
 void GameSession::ProcessCollisionToWall(SnakeSP actor)

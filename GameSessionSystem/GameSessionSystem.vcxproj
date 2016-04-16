@@ -68,6 +68,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\game_session\details\Apple.h" />
+    <ClInclude Include="..\acoross\snakebite\game_session\details\game_geo_zone.h" />
     <ClInclude Include="..\acoross\snakebite\game_session\details\game_object.h" />
     <ClInclude Include="..\acoross\snakebite\game_session\details\game_session.h" />
     <ClInclude Include="..\acoross\snakebite\game_session\details\handle.h" />
@@ -76,6 +77,7 @@
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\acoross\snakebite\game_session\details\game_geo_zone.cpp" />
     <ClCompile Include="..\acoross\snakebite\game_session\details\game_session.cpp" />
     <ClCompile Include="..\acoross\snakebite\game_session\details\snake.cpp" />
     <ClCompile Include="..\acoross\snakebite\game_session\details\snake_collider.cpp" />
