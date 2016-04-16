@@ -279,7 +279,7 @@ void protobuf_AddDesc_snakebite_5fmessage_2eproto() {
     "essages.MovingObject\"T\n\026UpdateGameObject"
     "sEvent\022:\n\005clone\030\001 \003(\0132+.acoross.snakebit"
     "e.messages.GameObjectClone*\037\n\007ObjType\022\t\n"
-    "\005Snake\020\000\022\t\n\005Apple\020\0012\333\003\n\020SnakebiteService"
+    "\005Snake\020\000\022\t\n\005Apple\020\0012\314\002\n\020SnakebiteService"
     "\022r\n\nInitPlayer\0222.acoross.snakebite.messa"
     "ges.InitPlayerSnakeRequest\0320.acoross.sna"
     "kebite.messages.InitPlayerSnakeReply\022c\n\n"
@@ -287,11 +287,8 @@ void protobuf_AddDesc_snakebite_5fmessage_2eproto() {
     "TurnKeyDownRequest\032%.acoross.snakebite.m"
     "essages.VoidReply\022_\n\010SetKeyUp\022,.acoross."
     "snakebite.messages.TurnKeyUpRequest\032%.ac"
-    "oross.snakebite.messages.VoidReply\022\214\001\n\033L"
-    "istenGameObjectUpdateEvent\0229.acoross.sna"
-    "kebite.messages.ListenGameObjectUpdateRe"
-    "quest\0322.acoross.snakebite.messages.Updat"
-    "eGameObjectsEventb\006proto3", 1105);
+    "oross.snakebite.messages.VoidReplyb\006prot"
+    "o3", 962);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "snakebite_message.proto", &protobuf_RegisterTypes);
   VoidReply::default_instance_ = new VoidReply();

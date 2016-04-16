@@ -99,7 +99,6 @@
     <ClInclude Include="game_client.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\acoross\snakebite\protos\sc_snakebite_message.proto" />
     <None Include="..\acoross\snakebite\protos\snakebite_message.proto" />
     <None Include="packages.config" />
   </ItemGroup>

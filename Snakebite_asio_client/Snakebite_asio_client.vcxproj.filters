@@ -80,9 +80,6 @@
     <None Include="..\acoross\snakebite\protos\snakebite_message.proto">
       <Filter>protos</Filter>
     </None>
-    <None Include="..\acoross\snakebite\protos\sc_snakebite_message.proto">
-      <Filter>protos</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\acoross\snakebite\win\SnakebiteM1.rc">

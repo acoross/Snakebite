@@ -35,7 +35,6 @@ service SnakebiteService {
 	rpc InitPlayer(InitPlayerSnakeRequest) returns (InitPlayerSnakeReply);
 	rpc SetKeyDown(TurnKeyDownRequest) returns (VoidReply);
 	rpc SetKeyUp(TurnKeyUpRequest) returns (VoidReply);
-	rpc ListenGameObjectUpdateEvent(ListenGameObjectUpdateRequest) returns(UpdateGameObjectsEvent);
 }
 
 //------------------------------

@@ -3,6 +3,7 @@
 
 #include <list>
 #include <map>
+#include <queue>
 #include <memory>
 #include <utility>
 #include <random>

@@ -8,8 +8,7 @@ namespace snakebite {
 
 void UserSession::start()
 {
-	std::string myid = std::to_string((uintptr_t)this);
-		
+	/*std::string myid = std::to_string((uintptr_t)this);
 	game_session_->AddUpdateEventListner(
 		myid,
 		[us = this, rpcsocket_wp = std::weak_ptr<rpc::RpcSocket>(shared_from_this())]
@@ -19,7 +18,7 @@ void UserSession::start()
 		{
 			us->send_update_game_object(snake_clone_list, apple_clone_list);
 		}
-	});
+	});*/
 
 	messages::SnakebiteService::Service::start();
 }
@@ -77,11 +76,11 @@ void UserSession::send_update_game_object(
 
 	if (bool is_initialized = game_objects.IsInitialized())
 	{
-		/*auto msg = std::make_shared<SnakebiteMessage>();
+		/*auto msg = std::make_shared<rpc::RpcPacket>();
 		if (bool is_serialize_success = game_objects.SerializeToArray(msg->body(), msg->max_body_length))
 		{
-			msg->body_length((unsigned short)game_objects.ByteSize());
-			msg->encode_header((unsigned short)SC_SnakebiteMessageType::UpdateGameObjects);
+			msg->encode_header((unsigned short)SC_SnakebiteMessageType::UpdateGameObjects, 
+				(unsigned short)game_objects.ByteSize(), 0);
 
 			send(msg);
 		}*/
@@ -122,12 +121,6 @@ acoross::rpc::ErrCode UserSession::SetKeyUp(const acoross::snakebite::messages::
 
 	return acoross::rpc::ErrCode();
 }
-
-acoross::rpc::ErrCode UserSession::ListenGameObjectUpdateEvent(const acoross::snakebite::messages::ListenGameObjectUpdateRequest &rq, acoross::snakebite::messages::UpdateGameObjectsEvent *rp)
-{
-	return acoross::rpc::ErrCode();
-}
-
 
 }
 }

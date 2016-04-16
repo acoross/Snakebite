@@ -26,7 +26,6 @@ public:
 
 	void start()
 	{
-		ListenGameObjectUpdateEvent();
 		stub_->start();
 	}
 
@@ -67,18 +66,6 @@ public:
 		stub_->SetKeyUp(rq,
 			[client = shared_from_this()](acoross::rpc::ErrCode ec, messages::VoidReply&)
 		{});
-	}
-
-	void ListenGameObjectUpdateEvent()
-	{
-		messages::ListenGameObjectUpdateRequest rq;
-		
-		stub_->ListenGameObjectUpdateEvent(rq, 
-			[client = shared_from_this()](acoross::rpc::ErrCode ec, messages::UpdateGameObjectsEvent& rp)
-		{
-			client->UpdateGameObjectPositions(rp);
-		});
-
 	}
 
 	virtual void Draw(Win::WDC& wdc, RECT& client_rect) override

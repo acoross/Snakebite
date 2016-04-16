@@ -79,12 +79,16 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 
 void GameSession::InvokeUpdateEvent()
 {
-	update_listner_mutex_.lock();
+	snakes_mutex_.lock();
 	auto snake_list = CloneSnakeList();
 	auto apple_list = CloneAppleList();
+	snakes_mutex_.unlock();
+
+	update_listner_mutex_.lock();
+	auto event_listeners = on_update_event_listeners_;
 	update_listner_mutex_.unlock();
 
-	for (auto& pair : on_update_event_listeners_)
+	for (auto& pair : event_listeners)
 	{
 		auto& listner = pair.second;
 		listner(snake_list, apple_list);

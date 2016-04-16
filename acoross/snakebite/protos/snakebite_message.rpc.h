@@ -22,7 +22,6 @@ class SnakebiteService final {
     InitPlayer,
     SetKeyDown,
     SetKeyUp,
-    ListenGameObjectUpdateEvent,
   };
 
   class Service : public ::acoross::rpc::RpcService 
@@ -35,7 +34,6 @@ class SnakebiteService final {
     DEF_SERVICE(InitPlayer, ::acoross::snakebite::messages::InitPlayerSnakeRequest, ::acoross::snakebite::messages::InitPlayerSnakeReply)
     DEF_SERVICE(SetKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
     DEF_SERVICE(SetKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)
-    DEF_SERVICE(ListenGameObjectUpdateEvent, ::acoross::snakebite::messages::ListenGameObjectUpdateRequest, ::acoross::snakebite::messages::UpdateGameObjectsEvent)
 
   };
 
@@ -47,7 +45,6 @@ class SnakebiteService final {
     DEF_STUB(InitPlayer, ::acoross::snakebite::messages::InitPlayerSnakeRequest, ::acoross::snakebite::messages::InitPlayerSnakeReply)
     DEF_STUB(SetKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
     DEF_STUB(SetKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)
-    DEF_STUB(ListenGameObjectUpdateEvent, ::acoross::snakebite::messages::ListenGameObjectUpdateRequest, ::acoross::snakebite::messages::UpdateGameObjectsEvent)
   };
 
 };

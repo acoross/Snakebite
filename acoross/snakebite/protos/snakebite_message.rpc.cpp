@@ -15,7 +15,6 @@ SnakebiteService::Service::Service(::boost::asio::io_service& io_service, ::boos
   REGISTER_SERVICE(InitPlayer, ::acoross::snakebite::messages::InitPlayerSnakeRequest, ::acoross::snakebite::messages::InitPlayerSnakeReply)
   REGISTER_SERVICE(SetKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
   REGISTER_SERVICE(SetKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)
-  REGISTER_SERVICE(ListenGameObjectUpdateEvent, ::acoross::snakebite::messages::ListenGameObjectUpdateRequest, ::acoross::snakebite::messages::UpdateGameObjectsEvent)
 }
 
 SnakebiteService::Stub::Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
