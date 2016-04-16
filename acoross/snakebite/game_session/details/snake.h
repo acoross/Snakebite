@@ -32,7 +32,7 @@ public:
 		, EventHandler onDie = EventHandler(), std::string name = "noname");
 	virtual ~Snake();
 
-	void Move(const DirVector2D& diff_vec);
+	void Move(const DirVector2D& diff_vec, MovingObjectContainer& container);
 
 	//@thread-safe: atomic once
 	void Die();

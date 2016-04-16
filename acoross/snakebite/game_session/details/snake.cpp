@@ -8,7 +8,7 @@ namespace snakebite {
 Snake::Snake(GameSession& game_session, const Position2D & pos, double radius, 
 	const Degree & angle, double velocity, double ang_vel, int len, 
 	EventHandler onDie, std::string name)
-	: GameObject(game_session.GetContainer(), new SnakeCollider(this), pos, radius, name)
+	: GameObject(new SnakeCollider(this), pos, radius, name)
 	, game_session_(game_session)
 	, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	, onDie_(onDie)
@@ -24,12 +24,12 @@ Snake::~Snake()
 
 }
 
-void Snake::Move(const DirVector2D & diff_vec)
+void Snake::Move(const DirVector2D & diff_vec, MovingObjectContainer& container)
 {
 	const double dist_mov = diff_vec.Length();
 
 	Position2D pos_prev_node = head_.GetPosition();
-	head_.Move(diff_vec, container_);
+	head_.Move(diff_vec, container);
 
 	//DirVector2D diff_prev = diff_vec;
 
@@ -52,7 +52,7 @@ void Snake::Move(const DirVector2D & diff_vec)
 		diff_move.y *= dist_mov;
 
 		pos_prev_node = mo.GetPosition();
-		mo.Move(diff_move, container_);
+		mo.Move(diff_move, container);
 	}
 }
 

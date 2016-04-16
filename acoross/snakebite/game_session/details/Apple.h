@@ -9,9 +9,8 @@ namespace snakebite {
 class Apple : public GameObject
 {
 public:
-	Apple(MovingObjectContainer& container
-		, const Position2D& pos, double radius)
-		: GameObject(container, new AppleCollider(this), pos, radius)
+	Apple(const Position2D& pos, double radius)
+		: GameObject(new AppleCollider(this), pos, radius)
 	{
 		//container.RegisterMovingObject(mo);
 	}

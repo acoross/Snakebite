@@ -66,12 +66,12 @@ public:
 	void SetLocalUpdateListner(LocalUpdateListner local_listner)
 	{
 		game_session_->AddUpdateEventListner("local listner",
-			[local_listner]
-		(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
-			const std::list<GameObjectClone>& apple_clone_list)
-		{
-			local_listner(snake_clone_list, apple_clone_list);
-		});
+			[local_listner]	(
+				const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
+				const std::list<GameObjectClone>& apple_clone_list)
+			{
+				local_listner(snake_clone_list, apple_clone_list);
+			});
 	}
 
 	void RequestToSession(std::function<void(GameSession&)> request)

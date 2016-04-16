@@ -31,7 +31,7 @@ GameSession::~GameSession()
 {
 }
 
-static void updateMoveSnake(std::shared_ptr<Snake>& snake, int64_t diff_in_ms)
+static void updateMoveSnake(std::shared_ptr<Snake>& snake, int64_t diff_in_ms, MovingObjectContainer& container)
 {
 	// change direction
 	{
@@ -60,7 +60,7 @@ static void updateMoveSnake(std::shared_ptr<Snake>& snake, int64_t diff_in_ms)
 		diff_distance * std::sin(angle_now_rad)
 	};
 
-	snake->Move(diff_vec);
+	snake->Move(diff_vec, container);
 }
 
 void GameSession::UpdateMove(int64_t diff_in_ms)
@@ -73,7 +73,7 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 	// ÀüÁø
 	for (auto& snake : snakes)
 	{
-		acoross::snakebite::updateMoveSnake(snake.second, diff_in_ms);
+		acoross::snakebite::updateMoveSnake(snake.second, diff_in_ms, container_);
 	}
 }
 
@@ -178,7 +178,7 @@ void GameSession::AddApple()
 
 	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
 
-	auto apple = std::make_shared<Apple>(container_, init_pos, radius * 2);
+	auto apple = std::make_shared<Apple>(init_pos, radius * 2);
 
 	{
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);

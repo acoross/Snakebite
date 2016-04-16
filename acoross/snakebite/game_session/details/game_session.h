@@ -29,41 +29,20 @@ public:
 	explicit GameSession(unsigned int init_apple_count = 20, int width = 500, int height = 500);
 	~GameSession();
 
-	// use lock
+#pragma region use_snakes_mutex_
+	// update every object in this zone
 	void UpdateMove(int64_t diff_in_ms);
+	// clone every object and invoke listening update event handlers.
 	void InvokeUpdateEvent();
+	// check collision and handle collsion event for every objects.
 	void ProcessCollisions();
 	
-	Handle<Snake>::Type AddSnake(std::string name = "noname", Snake::EventHandler onDieHandler = Snake::EventHandler());
+	Handle<Snake>::Type AddSnake(
+		std::string name = "noname", 
+		Snake::EventHandler onDieHandler = Snake::EventHandler());
 	void AddApple();
 	bool RemoveSnake(Handle<Snake>::Type snake);
 	bool RemoveApple(Apple* apple);
-
-	auto CloneSnakeList()
-	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snakes;
-		
-		for (auto pair : snakes_)
-		{
-			snakes.push_back(std::make_pair(pair.first, pair.second->Clone()));
-		}
-
-		return snakes;
-	}
-	std::list<GameObjectClone> CloneAppleList()
-	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		std::list<GameObjectClone> apples;
-
-		for (auto apple : apples_)
-		{
-			apples.push_back(apple->Clone());
-		}
-
-		return apples;
-	}
-	//
 
 	size_t CalculateSnakeCount() 
 	{
@@ -76,6 +55,7 @@ public:
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 		return apples_.size();
 	}
+#pragma endregion use_snakes_mutex_
 
 	void RequestToSnake(Handle<Snake>::Type handle, std::function<void(Snake&)> request)
 	{
@@ -103,6 +83,34 @@ public:
 	//
 
 private:
+#pragma region use_snakes_mutex_
+	auto CloneSnakeList()
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snakes;
+
+		for (auto pair : snakes_)
+		{
+			snakes.push_back(std::make_pair(pair.first, pair.second->Clone()));
+		}
+
+		return snakes;
+	}
+	std::list<GameObjectClone> CloneAppleList()
+	{
+		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		std::list<GameObjectClone> apples;
+
+		for (auto apple : apples_)
+		{
+			apples.push_back(apple->Clone());
+		}
+
+		return apples;
+	}
+#pragma endregion use_snakes_mutex_
+
+private:
 	using MapSnake = std::map<Handle<Snake>::Type, SnakeSP>;
 	using ListApple = std::list<AppleSP>;
 	using CollisionMap = std::map<Handle<Snake>::Type, GameObjectWP>;
@@ -116,14 +124,14 @@ private:
 
 	std::default_random_engine random_engine_;
 
-#pragma region snakes
+#pragma region snakes - use_snakes_mutex_
 	MapSnake snakes_;
 	ListApple apples_;
 
 	// 병신같지만 drawer 랑 동기화 하기 위해 추가한 lock 이다...
 	// 수정 필요.
 	std::recursive_mutex snakes_mutex_;
-#pragma endregion snakes
+#pragma endregion snakes - use_snakes_mutex_
 
 	const double radius{ 5. };		// UNIT
 	const double velocity{ 0.06 };	// UNIT/ms

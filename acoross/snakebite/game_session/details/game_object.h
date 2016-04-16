@@ -14,17 +14,11 @@ class GameObjectClone;
 class GameObject
 {
 public:
-	GameObject(MovingObjectContainer& container, ColliderBase* collider, Position2D pos, double radius, std::string name = "noname")
-		: container_(container), collider_(collider), head_(pos, radius), Name(name)
+	GameObject(ColliderBase* collider, Position2D pos, double radius, std::string name = "noname")
+		: collider_(collider), head_(pos, radius), Name(name)
 	{}
 	virtual ~GameObject()
-	{
-		/*container_.DeleteObject(head_);
-		for (auto mo : body_list_)
-		{
-			container_.DeleteObject(mo);
-		}*/
-	}
+	{}
 	
 	GameObjectClone Clone();
 
@@ -53,7 +47,6 @@ public:
 
 public:
 	std::unique_ptr<ColliderBase> collider_;
-	MovingObjectContainer& container_;
 	MovingObject head_;
 	std::list<MovingObject> body_list_;
 	const std::string Name;
