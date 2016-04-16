@@ -7,6 +7,7 @@
 #include <memory>
 #include <atomic>
 #include <deque>
+#include <map>
 
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -29,30 +30,37 @@ class GameServer final
 public:
 	//using EventHandler = std::function<void(std::shared_ptr<SnakebiteMessage>&)>;
 	using LocalUpdateListner = 
-		std::function<void(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, const std::list<GameObjectClone>&)>;
+		std::function<void(
+			const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, 
+			const std::list<GameObjectClone>&)>;
 	
 	const int FRAME_TICK{ 100 };
 
 public:
 	GameServer(boost::asio::io_service& io_service
 		, short port
+		, short push_port
 		)
 		: io_service_(io_service)
 		, acceptor_(io_service, tcp::endpoint(tcp::v4(), port))
 		, socket_(io_service)
+		, push_acceptor_(io_service, tcp::endpoint(tcp::v4(), push_port))
+		, push_socket_(io_service)
 		, game_update_timer_(io_service, boost::posix_time::milliseconds(FRAME_TICK))
 		, game_session_(std::make_unique<GameSession>(20, Width, Height))
 		, npc_controll_manager_(std::make_unique<SnakeNpcControlManager>(game_session_))
 	{
 		do_update_game_session();
 		do_accept();
+		do_accept_push_service();
 	}
 	
 	void SetLocalUpdateListner(LocalUpdateListner local_listner)
 	{
 		game_session_->AddUpdateEventListner("local listner",
 			[local_listner]
-		(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, const std::list<GameObjectClone>& apple_clone_list)
+		(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
+			const std::list<GameObjectClone>& apple_clone_list)
 		{
 			local_listner(snake_clone_list, apple_clone_list);
 		});
@@ -88,6 +96,12 @@ public:
 		});
 	}
 
+	void UnregisterUserSession(std::string addr)
+	{
+		std::lock_guard<std::recursive_mutex> lock(user_session_mutex_);
+		user_session_map_.erase(addr);
+	}
+
 public:
 	const int Width{ 500 };
 	const int Height{ 500 };
@@ -108,10 +122,44 @@ private:
 		{
 			if (!ec)
 			{
-				std::make_shared<UserSession>(io_service_, std::move(socket_), game_session_, shared_from_this())->start();
+				auto addr = socket_.remote_endpoint().address().to_string();
+				auto us = std::make_shared<UserSession>(
+					io_service_,
+					std::move(socket_),
+					game_session_,
+					shared_from_this(),
+					[gs_wp = std::weak_ptr<GameServer>(shared_from_this()), addr]
+				{
+					if (auto gs = gs_wp.lock())
+					{
+						gs->UnregisterUserSession(addr);
+					}
+				});
+				user_session_map_[addr] = us;
+				us->start();
 			}
 
 			do_accept();
+		});
+	}
+
+	void do_accept_push_service()
+	{
+		push_acceptor_.async_accept(push_socket_,
+			[this](boost::system::error_code ec)
+		{
+			auto addr = push_socket_.remote_endpoint().address().to_string();
+			std::lock_guard<std::recursive_mutex> lock(user_session_mutex_);
+			auto it = user_session_map_.find(addr);
+			if (it != user_session_map_.end())
+			{
+				if (auto us = it->second.lock())
+				{
+					us->init_push_stub_socket(io_service_, std::move(push_socket_));
+				}
+			}
+
+			do_accept_push_service();
 		});
 	}
 
@@ -120,6 +168,12 @@ private:
 	tcp::acceptor acceptor_;
 	tcp::socket socket_;
 	
+	tcp::acceptor push_acceptor_;
+	tcp::socket push_socket_;
+
+	std::recursive_mutex user_session_mutex_;
+	std::map<std::string, std::weak_ptr<UserSession>> user_session_map_;
+
 	boost::asio::deadline_timer game_update_timer_;
 	std::shared_ptr<GameSession> game_session_;
 	std::shared_ptr<SnakeNpcControlManager> npc_controll_manager_;

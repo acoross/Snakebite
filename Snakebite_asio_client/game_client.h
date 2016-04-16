@@ -15,12 +15,35 @@ enum { max_length = 1024 };
 namespace acoross {
 namespace snakebite {
 
+class GameClient;
+
+class SC_PushServiceImpl final
+	: public messages::SC_PushService::Service
+{
+public:
+	SC_PushServiceImpl(::boost::asio::io_service& io_service,
+		::boost::asio::ip::tcp::socket&& socket,
+		std::shared_ptr<GameClient> owner)
+		: messages::SC_PushService::Service(io_service, std::move(socket))
+		, owner_(owner)
+	{}
+
+	// Service을(를) 통해 상속됨
+	virtual acoross::rpc::ErrCode UpdateGameObjects(
+		const acoross::snakebite::messages::UpdateGameObjectsEvent &rq, 
+		acoross::snakebite::messages::VoidReply *rp) override;
+
+private:
+	std::shared_ptr<GameClient> owner_;
+};
+
 class GameClient final
 	: public GameClientBase
 	, public std::enable_shared_from_this<GameClient>
 {
 public:
-	GameClient(boost::asio::io_service& io_service, tcp::socket&& socket)
+	GameClient(boost::asio::io_service& io_service,
+		tcp::socket&& socket)
 		: stub_(new messages::SnakebiteService::Stub(io_service, std::move(socket)))
 	{}
 
@@ -130,7 +153,7 @@ public:
 		player_handle = handle;
 	}
 
-	bool UpdateGameObjectPositions(messages::UpdateGameObjectsEvent& got_msg);
+	bool UpdateGameObjectPositions(const messages::UpdateGameObjectsEvent& got_msg);
 
 private:
 	std::shared_ptr<messages::SnakebiteService::Stub> stub_;

@@ -8,17 +8,18 @@ namespace snakebite {
 
 void UserSession::start()
 {
-	/*std::string myid = std::to_string((uintptr_t)this);
+	std::string myid = std::to_string((uintptr_t)this);
 	game_session_->AddUpdateEventListner(
 		myid,
 		[us = this, rpcsocket_wp = std::weak_ptr<rpc::RpcSocket>(shared_from_this())]
-	(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, const std::list<GameObjectClone>& apple_clone_list)
+	(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
+		const std::list<GameObjectClone>& apple_clone_list)
 	{
 		if (auto rpcsocket = rpcsocket_wp.lock())
 		{
 			us->send_update_game_object(snake_clone_list, apple_clone_list);
 		}
-	});*/
+	});
 
 	messages::SnakebiteService::Service::start();
 }
@@ -35,6 +36,11 @@ void UserSession::send_update_game_object(
 	const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
 	const std::list<GameObjectClone>& apple_clone_list)
 {
+	if (!push_stub_)
+	{
+		return;
+	}
+
 	messages::UpdateGameObjectsEvent game_objects;
 	{
 		for (auto& pair : snake_clone_list)
@@ -76,14 +82,9 @@ void UserSession::send_update_game_object(
 
 	if (bool is_initialized = game_objects.IsInitialized())
 	{
-		/*auto msg = std::make_shared<rpc::RpcPacket>();
-		if (bool is_serialize_success = game_objects.SerializeToArray(msg->body(), msg->max_body_length))
-		{
-			msg->encode_header((unsigned short)SC_SnakebiteMessageType::UpdateGameObjects, 
-				(unsigned short)game_objects.ByteSize(), 0);
-
-			send(msg);
-		}*/
+		push_stub_->UpdateGameObjects(game_objects, 
+			[](rpc::ErrCode ec, messages::VoidReply&)
+		{});
 	}
 }
 

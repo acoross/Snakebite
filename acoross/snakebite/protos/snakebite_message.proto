@@ -31,6 +31,39 @@ syntax = "proto3";
 
 package acoross.snakebite.messages;
 
+//------------------------------
+//------------------------------
+service SC_PushService {
+	rpc UpdateGameObjects(UpdateGameObjectsEvent) returns (VoidReply);
+}
+
+//------------------------------
+enum ObjType
+{
+	Snake = 0;
+	Apple = 1;
+};
+
+message MovingObject {
+	double x = 1;
+	double y = 2;
+	double radius = 3;
+}
+
+message GameObjectClone {
+	int32 clone_type = 1;
+	string obj_name = 2;
+	int64 handle = 3;
+	MovingObject head = 4;
+	repeated MovingObject body = 5;
+}
+
+message UpdateGameObjectsEvent {
+	repeated GameObjectClone clone = 1;
+}
+
+//------------------------------
+//------------------------------
 service SnakebiteService {
 	rpc InitPlayer(InitPlayerSnakeRequest) returns (InitPlayerSnakeReply);
 	rpc SetKeyDown(TurnKeyDownRequest) returns (VoidReply);
@@ -59,34 +92,4 @@ message TurnKeyDownRequest {
 //------------------------------
 message TurnKeyUpRequest {
 	int32 key = 1;
-}
-
-
-//------------------------------
-
-message ListenGameObjectUpdateRequest {
-}
-
-enum ObjType
-{
-	Snake = 0;
-	Apple = 1;
-};
-
-message MovingObject {
-	double x = 1;
-	double y = 2;
-	double radius = 3;
-}
-
-message GameObjectClone {
-	int32 clone_type = 1;
-	string obj_name = 2;
-	int64 handle = 3;
-	MovingObject head = 4;
-	repeated MovingObject body = 5;
-}
-
-message UpdateGameObjectsEvent {
-	repeated GameObjectClone clone = 1;
 }

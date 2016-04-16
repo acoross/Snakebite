@@ -15,6 +15,35 @@ namespace acoross {
 namespace snakebite {
 namespace messages {
 
+class SC_PushService final {
+ public:
+  enum Protocol
+  {
+    UpdateGameObjects,
+  };
+
+  class Service : public ::acoross::rpc::RpcService 
+  {
+  public:
+    Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
+    virtual ~Service() {}
+
+  private:
+    DEF_SERVICE(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
+
+  };
+
+  class Stub : public ::acoross::rpc::RpcStub
+  {
+  public:
+    Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
+    virtual ~Stub() {}
+    DEF_STUB(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
+  };
+
+};
+
+
 class SnakebiteService final {
  public:
   enum Protocol

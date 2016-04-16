@@ -6,6 +6,7 @@
 #include <memory>
 #include <boost/asio.hpp>
 
+#include <acoross/rpc/rpc_server.h>
 #include "game_client.h"
 
 using boost::asio::ip::tcp;
@@ -170,15 +171,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	try
 	{
 		// TODO: 여기에 코드를 입력합니다.
-		boost::asio::io_service io_service;
-		boost::asio::ip::tcp::socket socket(io_service);
+		using namespace ::boost::asio;
+		io_service io_service;
+		ip::tcp::socket socket(io_service);
+		ip::tcp::socket push_service_socket(io_service);
 		{
 			tcp::resolver resolver(io_service);
 			boost::asio::connect(socket, resolver.resolve({ "127.0.0.1", "22000" }));
+			boost::asio::connect(push_service_socket, resolver.resolve({ "127.0.0.1", "22001" }));
 		}
+		
 		auto game_client = std::make_shared<GameClient>(io_service, std::move(socket));
 		g_game_client = game_client;
 		game_client->start();
+
+		auto push_service = std::make_shared<SC_PushServiceImpl>(
+			io_service, 
+			std::move(push_service_socket), 
+			game_client);
+		push_service->start();
 
 		std::thread game_thread(
 			[&io_service]()

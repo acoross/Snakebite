@@ -3,7 +3,15 @@
 namespace acoross {
 namespace snakebite {
 
-bool GameClient::UpdateGameObjectPositions(messages::UpdateGameObjectsEvent& got_msg)
+acoross::rpc::ErrCode SC_PushServiceImpl::UpdateGameObjects(
+	const messages::UpdateGameObjectsEvent &rq, 
+	messages::VoidReply *rp)
+{
+	owner_->UpdateGameObjectPositions(rq);
+	return acoross::rpc::ErrCode::NoError;
+}
+
+bool GameClient::UpdateGameObjectPositions(const messages::UpdateGameObjectsEvent& got_msg)
 {
 	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_clone_list;
 	std::list<GameObjectClone> apple_clone_list;

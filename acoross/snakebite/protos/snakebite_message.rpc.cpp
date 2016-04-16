@@ -9,6 +9,17 @@ namespace acoross {
 namespace snakebite {
 namespace messages {
 
+SC_PushService::Service::Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
+	: ::acoross::rpc::RpcService(io_service, std::move(socket))
+{
+  REGISTER_SERVICE(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
+}
+
+SC_PushService::Stub::Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
+	: ::acoross::rpc::RpcStub(io_service, std::move(socket))
+{}
+
+
 SnakebiteService::Service::Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
 	: ::acoross::rpc::RpcService(io_service, std::move(socket))
 {
