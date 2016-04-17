@@ -88,7 +88,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					server->RequestToSession(
 						[](GameSession& session)
 					{
-						session.AddApple();
+						session.MakeNewApple();
 					});
 				}
 			}

@@ -92,7 +92,7 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 {
 	game_session_->RemoveSnake(user_snake_handle_);
 
-	user_snake_handle_ = game_session_->AddSnake(rq.name(), Snake::EventHandler());
+	user_snake_handle_ = game_session_->MakeNewSnake(rq.name(), Snake::EventHandler());
 	if (rp)
 	{
 		rp->set_handle(user_snake_handle_);

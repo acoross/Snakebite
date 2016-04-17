@@ -32,6 +32,8 @@ public:
 		, EventHandler onDie = EventHandler(), std::string name = "noname");
 	virtual ~Snake();
 
+	void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container);
+
 	void Move(const DirVector2D& diff_vec, MovingObjectContainer& container);
 
 	//@thread-safe: atomic once

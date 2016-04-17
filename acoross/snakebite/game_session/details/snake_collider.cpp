@@ -28,7 +28,7 @@ void SnakeCollider::Collide(AppleCollider& other, int cnt)
 {
 	if (owner_->game_session_.RemoveApple(other.owner_))
 	{
-		owner_->game_session_.AddApple();
+		owner_->game_session_.MakeNewApple();
 		owner_->AddBody();
 	}
 

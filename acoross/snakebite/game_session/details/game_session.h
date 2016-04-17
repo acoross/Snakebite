@@ -14,7 +14,7 @@
 #include "snake.h"
 #include "apple.h"
 #include "handle.h"
-#include "game_geo_zone.h"
+#include "game_geo_zone_grid.h"
 
 namespace acoross {
 namespace snakebite {
@@ -24,13 +24,14 @@ class GameSession final
 {
 public:
 	using UpdateEventListner =
-		std::function<void(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, const std::list<GameObjectClone>&)>;
+		std::function<void(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, 
+			const std::list<GameObjectClone>&)>;
 	using ListMovingObject = MovingObjectContainer::ListMovingObject;
 	
-	explicit GameSession(unsigned int init_apple_count = 20, int width = 500, int height = 500);
+	explicit GameSession(
+		unsigned int init_apple_count, int zone_width, int zone_height, int n_x, int n_y);
 	~GameSession();
 
-#pragma region use_snakes_mutex_
 	// update every object in this zone
 	void UpdateMove(int64_t diff_in_ms);
 	// clone every object and invoke listening update event handlers.
@@ -38,39 +39,21 @@ public:
 	// check collision and handle collsion event for every objects.
 	void ProcessCollisions();
 	
-	Handle<Snake>::Type AddSnake(
+	Handle<Snake>::Type MakeNewSnake(
 		std::string name = "noname", 
 		Snake::EventHandler onDieHandler = Snake::EventHandler());
-	void AddApple();
+	void MakeNewApple();
 	bool RemoveSnake(Handle<Snake>::Type snake);
 	bool RemoveApple(Apple* apple);
 
-	size_t CalculateSnakeCount() 
-	{
-		/*std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		return snakes_.size();*/
-		return zone_.CalculateSnakeCount();
-	}
-	size_t CalculateAppleCount()
-	{
-		/*std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		return apples_.size();*/
-		return zone_.CalculateAppleCount();
-	}
-#pragma endregion use_snakes_mutex_
+	size_t CalculateSnakeCount();
+	size_t CalculateAppleCount();
 
-	void RequestToSnake(Handle<Snake>::Type handle, std::function<void(Snake&)> request)
-	{
-		auto it = snakes_.find(handle);
-		if (it != snakes_.end())
-		{
-			request(*it->second.get());
-		}
-	}
+	void RequestToSnake(Handle<Snake>::Type handle, std::function<void(Snake&)> request);
+
 	void AddUpdateEventListner(std::string name, UpdateEventListner on_update)
 	{
 		std::lock_guard<std::mutex> lock(update_listner_mutex_);
-
 		on_update_event_listeners_[name] = on_update;
 	}
 	void UnregisterEventListner(std::string name)
@@ -80,48 +63,15 @@ public:
 	}
 
 private:
-#pragma region use_snakes_mutex_
-	/*auto CloneSnakeList()
-	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snakes;
-
-		for (auto pair : snakes_)
-		{
-			snakes.push_back(std::make_pair(pair.first, pair.second->Clone()));
-		}
-
-		return snakes;
-	}*/
-	/*std::list<GameObjectClone> CloneAppleList()
-	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		std::list<GameObjectClone> apples;
-
-		for (auto apple : apples_)
-		{
-			apples.push_back(apple->Clone());
-		}
-
-		return apples;
-	}*/
-#pragma endregion use_snakes_mutex_
-
-private:
-	void ProcessCollisionToWall(SnakeSP actor);
-
-	CollisionSet wall_collision_set_;
-	CollisionMap collision_map_;
-	MovingObjectContainer container_;
-
 	std::default_random_engine random_engine_;
 
-#pragma region snakes - use_snakes_mutex_
-	MapSnake snakes_;
-	//ListApple apples_;
-	std::recursive_mutex snakes_mutex_;
-#pragma endregion snakes - use_snakes_mutex_
+//#pragma region snakes - use_snakes_mutex_
+//	MapSnake snakes_;
+//	//ListApple apples_;
+//	std::recursive_mutex snakes_mutex_;
+//#pragma endregion snakes - use_snakes_mutex_
 
+	// to make new snake...
 	const double radius{ 5. };		// UNIT
 	const double velocity{ 0.06 };	// UNIT/ms
 	const Position2D player_pos{ 100, 100 };
@@ -129,9 +79,7 @@ private:
 	std::mutex update_listner_mutex_;
 	std::map<std::string, UpdateEventListner> on_update_event_listeners_;
 
-#pragma region zone
-	GameGeoZone zone_;
-#pragma endregion zone
+	GameGeoZoneGrid zone_grid_;
 
 	//юс╫ц
 	friend class LocalGameClient;

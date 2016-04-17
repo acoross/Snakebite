@@ -158,8 +158,8 @@ public:
 private:
 	std::shared_ptr<messages::SnakebiteService::Stub> stub_;
 
-	int screen_width{ 500 };	// init value. set this by server value
-	int screen_height{ 500 };	// init value. set this by server value
+	int screen_width{ 1000 };	// init value. set this by server value
+	int screen_height{ 1000 };	// init value. set this by server value
 	Handle<Snake> player_handle{ nullptr };
 };
 

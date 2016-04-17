@@ -56,8 +56,8 @@ inline void MovingObject::Move(const DirVector2D & diff, MovingObjectContainer& 
 	pos_new.x += diff.x;
 	pos_new.y += diff.y;
 	
-	pos_new.x = Trim<double>(pos_new.x, container.Left, container.Right);
-	pos_new.y = Trim<double>(pos_new.y, container.Top, container.Bottom);
+	pos_new.x = Trim<double>(pos_new.x, container.Left, container.Right - 1);
+	pos_new.y = Trim<double>(pos_new.y, container.Top, container.Bottom - 1);
 
 	pos_ = pos_new;
 }

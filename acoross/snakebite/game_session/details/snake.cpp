@@ -24,6 +24,39 @@ Snake::~Snake()
 
 }
 
+void Snake::UpdateMove(int64_t diff_in_ms, MovingObjectContainer & container)
+{
+	// change direction
+	{
+		auto last_pk = GetPlayerKey();
+		if (last_pk == PK_RIGHT)
+		{
+			auto ang_vel = GetAngVelocity();
+			auto diff_ang = ang_vel * diff_in_ms;
+			Turn(diff_ang);
+		}
+		else if (last_pk == PK_LEFT)
+		{
+			auto ang_vel = GetAngVelocity();
+			auto diff_ang = -ang_vel * diff_in_ms;
+			Turn(diff_ang);
+		}
+	}
+
+	// move to forward
+	double diff_distance = GetVelocity() * diff_in_ms;
+	Position2D pos_now = GetPosition();
+	double angle_now_rad = GetAngle().GetRad();
+
+	DirVector2D diff_vec{
+		diff_distance * std::cos(angle_now_rad),
+		diff_distance * std::sin(angle_now_rad)
+	};
+
+	Move(diff_vec, container);
+}
+
+
 void Snake::Move(const DirVector2D & diff_vec, MovingObjectContainer& container)
 {
 	const double dist_mov = diff_vec.Length();

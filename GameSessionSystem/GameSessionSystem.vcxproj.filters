@@ -42,6 +42,12 @@
     <ClInclude Include="..\acoross\snakebite\game_session\details\game_geo_zone.h">
       <Filter>details</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\details\game_geo_zone_grid.h">
+      <Filter>details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\details\game_geo_zone_define.h">
+      <Filter>details</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session\details\game_session.cpp">
@@ -54,7 +60,10 @@
       <Filter>details</Filter>
     </ClCompile>
     <ClCompile Include="..\acoross\snakebite\game_session\details\game_geo_zone.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>details</Filter>
+    </ClCompile>
+    <ClCompile Include="..\acoross\snakebite\game_session\details\game_geo_zone_grid.cpp">
+      <Filter>details</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

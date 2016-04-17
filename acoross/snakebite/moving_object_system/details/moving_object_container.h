@@ -30,7 +30,7 @@ public:
 	const int Bottom{ 500 };
 
 	int Width() const { return Right - Left; }
-	int Height() const { return Top - Bottom; }
+	int Height() const { return Bottom - Top; }
 
 //private:	// deprecate
 //	void RegisterMovingObject(MovingObjectSP mo)

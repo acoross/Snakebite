@@ -9,15 +9,16 @@
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_collider.h"
 #include "game_object.h"
+#include "game_geo_zone.h"
 
 namespace acoross {
 namespace snakebite {
 
 /////////////////////////////////////////////////
 // GameSession
-GameSession::GameSession(unsigned int init_apple_count, int width, int height)
-	: container_(0, width, 0, height)	//container size
-	, zone_(0, width, 0, height)
+GameSession::GameSession(
+	unsigned int init_apple_count, int zone_width, int zone_height, int n_x, int n_y)
+	: zone_grid_(zone_width, zone_height, n_x, n_y)
 {	
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
@@ -25,7 +26,7 @@ GameSession::GameSession(unsigned int init_apple_count, int width, int height)
 
 	for (unsigned int i = 0; i < init_apple_count; ++i)
 	{
-		AddApple();
+		MakeNewApple();
 	}
 }
 
@@ -35,15 +36,32 @@ GameSession::~GameSession()
 
 void GameSession::UpdateMove(int64_t diff_in_ms)
 {
-	zone_.UpdateMove(diff_in_ms);
+	zone_grid_.ProcessAllZone(
+		[&game_boundary = zone_grid_.GetBoundaryContainer(), 
+		diff_in_ms](auto& zone)->bool
+	{
+		zone.UpdateMove(diff_in_ms);
+		//zone.CheckAndRequestChangeZone();
+		return true;
+	});
 }
 
 void GameSession::InvokeUpdateEvent()
 {
-	auto snake_list = zone_.CloneSnakeList();
-	//auto snake_list = CloneSnakeList();
-	auto apple_list = zone_.CloneAppleList();
-	//auto apple_list = CloneAppleList();
+	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snakes;
+	std::list<GameObjectClone> apples;
+	zone_grid_.ProcessAllZone(
+		[&snakes, &apples](GameGeoZone& zone)->bool
+	{
+		auto snake_list = zone.CloneSnakeList();
+		snakes.insert(snakes.end(), snake_list.begin(), snake_list.end());
+
+		auto apple_list = zone.CloneAppleList();
+		apples.insert(apples.end(), apple_list.begin(), apple_list.end());
+		
+		return true;
+	}
+	);
 
 	update_listner_mutex_.lock();
 	auto event_listeners = on_update_event_listeners_;
@@ -52,25 +70,96 @@ void GameSession::InvokeUpdateEvent()
 	for (auto& pair : event_listeners)
 	{
 		auto& listner = pair.second;
-		listner(snake_list, apple_list);
+		listner(snakes, apples);
 	}
 }
 
 void GameSession::ProcessCollisions()
 {
-	zone_.ProcessCollisions();
-}
+	zone_grid_.ProcessAllZone(
+		[](GameGeoZone& zone)->bool
+		{
+			/*zone.ProcessAllEnterZoneRequests();
+			zone.ProcessAllLeaaveRequests();*/
+			return true;
+		});
 
+	std::map<std::pair<int, int>, std::pair<MapSnake, ListApple>> zone_grid_objects;
+	zone_grid_.ProcessAllZone(
+		[&zone_grid_objects](GameGeoZone& zone)->bool
+		{
+			zone_grid_objects[std::make_pair(zone.IDX_ZONE_X, zone.IDX_ZONE_Y)]
+				= std::make_pair(zone.GetSnakes(), zone.GetApples());
+			return true;
+		});
+
+	zone_grid_.ProcessAllZone(
+		[&zone_grid_objects](GameGeoZone& zone)->bool
+		{
+			zone.ProcessCollisions(zone_grid_objects);
+			return true;
+		});
+}
 
 bool GameSession::RemoveApple(Apple * apple)
 {
-	return zone_.RemoveApple(apple);
+	return zone_grid_.ProcessAllZone(
+		[apple](GameGeoZone& zone)->bool
+	{
+		return zone.RemoveApple(apple);
+	}
+		, true	// stop when success
+	);
 }
 
-Handle<Snake>::Type GameSession::AddSnake(std::string name, Snake::EventHandler onDieHandler)
+size_t GameSession::CalculateSnakeCount()
 {
-	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
-	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
+	size_t count = 0;
+	zone_grid_.ProcessAllZone(
+		[&count](GameGeoZone& zone)->bool
+	{
+		count += zone.CalculateSnakeCount();
+		return true;
+	}
+	);
+	return count;
+}
+
+size_t GameSession::CalculateAppleCount()
+{
+	size_t count = 0;
+	zone_grid_.ProcessAllZone(
+		[&count](GameGeoZone& zone)->bool
+	{
+		count += zone.CalculateAppleCount();
+		return true;
+	}
+	);
+	return count;
+}
+
+void GameSession::RequestToSnake(Handle<Snake>::Type handle, std::function<void(Snake&)> request)
+{
+	zone_grid_.ProcessAllZone(
+		[handle, request](GameGeoZone& zone)->bool
+	{
+		auto snake = zone.GetSnakes();
+
+		auto it = snake.find(handle);
+		if (it != snake.end())
+		{
+			request(*it->second.get());
+		}
+		return true;
+	}
+	);
+}
+
+Handle<Snake>::Type GameSession::MakeNewSnake(std::string name, Snake::EventHandler onDieHandler)
+{
+	auto& game_boundary = zone_grid_.GetBoundaryContainer();
+	std::uniform_int_distribution<int> unin_x(game_boundary.Left, game_boundary.Right - 1);
+	std::uniform_int_distribution<int> unin_y(game_boundary.Top, game_boundary.Bottom - 1);
 	std::uniform_int_distribution<int> unin_degree(0, 360);
 
 	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
@@ -79,27 +168,37 @@ Handle<Snake>::Type GameSession::AddSnake(std::string name, Snake::EventHandler 
 	const int body_len{ 1 };
 
 	auto snake = std::make_shared<Snake>(
-	*this
-	, init_pos, radius
-	, unin_degree(random_engine_), velocity, ang_vel, body_len
-	, onDieHandler, name);
+			*this
+			, init_pos, radius
+			, unin_degree(random_engine_), velocity, ang_vel, body_len
+			, onDieHandler, name
+			);
 
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	snakes_.emplace(Handle<Snake>(snake.get()).handle, snake);
+	auto zone = zone_grid_.get_zone(snake->GetPosition().x, snake->GetPosition().x);
+	if (zone)
+	{
+		return zone->AddSnake(snake);
+	}
 
-	//
-	return zone_.AddSnake(snake, name, onDieHandler);
+	return Handle<Snake>::Type(0);
 }
 
 bool GameSession::RemoveSnake(Handle<Snake>::Type snake)
 {
-	return zone_.RemoveSnake(snake);
+	return zone_grid_.ProcessAllZone(
+		[snake](GameGeoZone& zone)
+		{
+			return zone.RemoveSnake(snake);
+		}, 
+		true
+		);
 }
 
-void GameSession::AddApple()
+void GameSession::MakeNewApple()
 {
-	std::uniform_int_distribution<int> unin_x(container_.Left, container_.Right);
-	std::uniform_int_distribution<int> unin_y(container_.Top, container_.Bottom);
+	auto& game_boundary = zone_grid_.GetBoundaryContainer();
+	std::uniform_int_distribution<int> unin_x(game_boundary.Left, game_boundary.Right - 1);
+	std::uniform_int_distribution<int> unin_y(game_boundary.Top, game_boundary.Bottom - 1);
 
 	Position2D init_pos(unin_x(random_engine_), unin_y(random_engine_));
 
@@ -109,40 +208,12 @@ void GameSession::AddApple()
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 		apples_.emplace_back(apple);
 	}*/
-	zone_.AddApple(apple);
-}
-
-void GameSession::ProcessCollisionToWall(SnakeSP actor)
-{
-	auto& pos = actor->GetPosition();
-	if (pos.x <= container_.Left + 1 || pos.x >= container_.Right - 1
-		|| pos.y <= container_.Top + 1 || pos.y >= container_.Bottom - 1)
+	auto zone = zone_grid_.get_zone(init_pos.x, init_pos.y);
+	if (zone)
 	{
-		auto ret = wall_collision_set_.insert(Handle<Snake>(actor.get()).handle);
-		if (ret.second == true)
-		{
-			// onCollideBegin
-			if (pos.x <= container_.Left + 1 || pos.x >= container_.Right - 1)
-			{
-				actor->SetAngle(180. - actor->GetAngle().Get());
-			}
-			else if (pos.y <= container_.Top + 1 || pos.y >= container_.Bottom - 1)
-			{
-				actor->SetAngle(-1 * actor->GetAngle().Get());
-			}
-		}
-		else
-		{
-			// onColliding
-		}
+		zone->AddApple(apple);
 	}
-	else
-	{
-		if (wall_collision_set_.erase(Handle<Snake>(actor.get()).handle) > 0)
-		{
-			// onCollideEnd
-		}
-	}
+	//zone_.AddApple(apple);
 }
 
 }
