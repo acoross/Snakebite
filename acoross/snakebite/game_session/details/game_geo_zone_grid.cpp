@@ -6,7 +6,9 @@ namespace snakebite {
 
 /////////////////////////////////////////////
 // GameGeoZoneGrid
-GameGeoZoneGrid::GameGeoZoneGrid(int zone_width, int zone_height, int n_x, int n_y)
+GameGeoZoneGrid::GameGeoZoneGrid(
+	::boost::asio::io_service& io_service, 
+	int zone_width, int zone_height, int n_x, int n_y)
 	: game_boundary_(0, n_x * zone_width, 0, n_y * zone_height)
 	, ZoneWidth(zone_width), ZoneHeight(zone_height)
 	, N_X(n_x), N_Y(n_y)
@@ -19,17 +21,17 @@ GameGeoZoneGrid::GameGeoZoneGrid(int zone_width, int zone_height, int n_x, int n
 		for (int j = 0; j < N_Y; ++j)
 		{
 			int zone_top = j * zone_height;
-			zone_grid_[i].push_back(
+			zone_grid_[i].emplace_back(
 				std::make_shared<GameGeoZone>
 				(
-					*this,
+					io_service,
 					i, j,
 					game_boundary_,
 					zone_left,
 					zone_top,
 					zone_width,
 					zone_height
-					)
+				)
 			);
 		}
 	}

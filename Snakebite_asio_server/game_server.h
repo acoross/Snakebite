@@ -57,7 +57,7 @@ public:
 			}
 		)
 		, game_update_timer_(io_service, boost::posix_time::milliseconds(FRAME_TICK))
-		, game_session_(std::make_unique<GameSession>(20, ZoneWidth, ZoneHeight, COUNT_ZONE_X, COUNT_ZONE_Y))
+		, game_session_(std::make_unique<GameSession>(io_service, ZoneWidth, ZoneHeight, COUNT_ZONE_X, COUNT_ZONE_Y))
 		, npc_controll_manager_(std::make_unique<SnakeNpcControlManager>(game_session_))
 	{
 		do_update_game_session();
@@ -99,10 +99,10 @@ public:
 	}
 
 public:
-	const int COUNT_ZONE_X = 3;
-	const int COUNT_ZONE_Y = 3;
-	const int ZoneWidth{ 166 };
-	const int ZoneHeight{ 166 };
+	const int COUNT_ZONE_X = 1;
+	const int COUNT_ZONE_Y = 1;
+	const int ZoneWidth{ 600 };
+	const int ZoneHeight{ 600 };
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };
 	const int ZoneGridHeight{ ZoneHeight * COUNT_ZONE_X };
 	

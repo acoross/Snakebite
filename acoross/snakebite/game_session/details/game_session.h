@@ -2,7 +2,7 @@
 #define SNAKEBITE_GAME_SESSION_H_
 
 #include <list>
-#include <map>
+#include <unordered_map>
 #include <queue>
 #include <memory>
 #include <utility>
@@ -29,7 +29,8 @@ public:
 	using ListMovingObject = MovingObjectContainer::ListMovingObject;
 	
 	explicit GameSession(
-		unsigned int init_apple_count, int zone_width, int zone_height, int n_x, int n_y);
+		::boost::asio::io_service& io_service,
+		int zone_width, int zone_height, int n_x, int n_y);
 	~GameSession();
 
 	// update every object in this zone
@@ -66,9 +67,9 @@ private:
 	std::default_random_engine random_engine_;
 
 //#pragma region snakes - use_snakes_mutex_
-//	MapSnake snakes_;
-//	//ListApple apples_;
-//	std::recursive_mutex snakes_mutex_;
+	MapSnake snakes_;
+	//ListApple apples_;
+	std::recursive_mutex snakes_mutex_;
 //#pragma endregion snakes - use_snakes_mutex_
 
 	// to make new snake...
@@ -77,7 +78,7 @@ private:
 	const Position2D player_pos{ 100, 100 };
 
 	std::mutex update_listner_mutex_;
-	std::map<std::string, UpdateEventListner> on_update_event_listeners_;
+	std::unordered_map<std::string, UpdateEventListner> on_update_event_listeners_;
 
 	GameGeoZoneGrid zone_grid_;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <list>
 #include <set>
 
@@ -11,9 +11,9 @@
 namespace acoross {
 namespace snakebite {
 
-using MapSnake = std::map<Handle<Snake>::Type, SnakeSP>;
+using MapSnake = std::unordered_map<Handle<Snake>::Type, SnakeSP>;
 using ListApple = std::list<AppleSP>;
-using CollisionMap = std::map<Handle<Snake>::Type, GameObjectWP>;
+using CollisionMap = std::unordered_map<Handle<Snake>::Type, GameObjectWP>;
 using CollisionSet = std::set<Handle<Snake>::Type>;
 
 }

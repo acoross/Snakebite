@@ -11,26 +11,7 @@
 namespace acoross {
 namespace snakebite {
 
-/////////////////////////////////////////////////
-// GameGeoZone
-GameGeoZone::GameGeoZone(
-	GameGeoZoneGrid& owner_zone_grid,
-	int idx_zone_x, int idx_zone_y,
-	MovingObjectContainer& game_boundary, 
-	int left, int top, int width, int height)
-	: zone_grid_(owner_zone_grid)
-	, IDX_ZONE_X(idx_zone_x)
-	, IDX_ZONE_Y(idx_zone_y)
-	, game_boundary_(game_boundary)
-	, zone_boundary_(left, width + left, top, top + height)
-{
-}
-
-GameGeoZone::~GameGeoZone()
-{
-}
-
-void ProcessCollisionFor2Mapsnake(MapSnake& src_snakes, MapSnake& target_snakes, ListApple& apples)
+void process_collision_2mapsnake(MapSnake& src_snakes, MapSnake& target_snakes, ListApple apples)
 {
 	for (auto& snake1 : src_snakes)
 	{
@@ -46,90 +27,141 @@ void ProcessCollisionFor2Mapsnake(MapSnake& src_snakes, MapSnake& target_snakes,
 	}
 }
 
+/////////////////////////////////////////////////
+// GameGeoZone
+GameGeoZone::GameGeoZone(
+	::boost::asio::io_service& io_service,
+	int idx_zone_x, int idx_zone_y,
+	MovingObjectContainer& game_boundary, 
+	int left, int top, int width, int height)
+	: strand_(io_service)
+	, IDX_ZONE_X(idx_zone_x)
+	, IDX_ZONE_Y(idx_zone_y)
+	, game_boundary_(game_boundary)
+	, zone_boundary_(left, width + left, top, top + height)
+{
+}
+
+GameGeoZone::~GameGeoZone()
+{
+}
 
 // update every snake position
-
 void GameGeoZone::UpdateMove(int64_t diff_in_ms)
 {
-	snakes_mutex_.lock();
-	auto snakes = snakes_;
-	snakes_mutex_.unlock();
-
-	for (auto& snake : snakes)
+	shared_post(
+		[this, diff_in_ms]()
 	{
-		snake.second->UpdateMove(diff_in_ms, game_boundary_);
-		ProcessCollisionToWall(snake.second);
-	}
-}
+		//snakes_mutex_.lock();
+		auto snakes = snakes_;
+		//snakes_mutex_.unlock();
 
-void GameGeoZone::ProcessCollisions(
-	std::map<std::pair<int, int>, std::pair<MapSnake, ListApple>>& zone_grid_objects)
-{
-	auto it_src = zone_grid_objects.find(std::make_pair(IDX_ZONE_X, IDX_ZONE_Y));
-	if (it_src == zone_grid_objects.end())
-	{
-		return;
-	}
-
-	MapSnake& src_snakes = it_src->second.first;
-	if (src_snakes.empty())
-	{
-		return;
-	}
-
-	// 이 geo zone 의 snakes 와
-	// 주변 zone 의 snakes + apples 에 대해 충돌체크한다.
-	// 주변 zone 의 범위: 주변 9칸
-	for (int i = -1; i <= 1; ++i)
-	{
-		for (int j = -1; j <= 1; ++j)
+		for (auto& snake : snakes)
 		{
-			if (IDX_ZONE_X + i < 0 
-				|| IDX_ZONE_X + i >= zone_grid_.N_X
-				|| IDX_ZONE_Y + j < 0
-				|| IDX_ZONE_Y + j >= zone_grid_.N_Y)
-			{
-				continue;
-			}
-
-			auto it = zone_grid_objects.find(std::make_pair(IDX_ZONE_X, IDX_ZONE_Y));
-			if (it != zone_grid_objects.end())
-			{
-				auto& target_snakes = it->second.first;
-				auto& target_apples = it->second.second;
-
-				ProcessCollisionFor2Mapsnake(
-					src_snakes,
-					target_snakes,
-					target_apples);
-			}
+			snake.second->UpdateMove(diff_in_ms, game_boundary_);
+			process_collision_to_wall(snake.second);
 		}
 	}
+	);
 }
 
+// process collision with neighbor zones
+void GameGeoZone::ProcessCollision(GameGeoZoneGrid & neighbors_)
+{
+	shared_post(
+		[this, &nb = neighbors_]()
+	{
+		auto shared_src_snakes = std::make_shared<MapSnake>(snakes_);
+
+		for (int x = -1; x <= 1; ++x)
+		{
+			for (int y = -1; y <= 1; ++y)
+			{
+				auto neighbor_zone = nb.get_zone_by_idx(IDX_ZONE_X + x, IDX_ZONE_Y + y);
+				if (neighbor_zone)
+				{
+					neighbor_zone->ProcessCollisionTo(shared_src_snakes);
+				}
+			}
+		}
+	});
+}
 
 // 다른 존하고의 충돌체크
-
-void GameGeoZone::ProcessCollisionToOtherZone(GameGeoZone & other_zone)
+void GameGeoZone::ProcessCollisionTo(
+	std::shared_ptr<MapSnake> shared_other_snakes)
 {
-	auto& this_zone = *this;
-
-	MapSnake& src_snakes = this_zone.GetSnakes();
-	if (src_snakes.empty())
+	shared_post(
+		[this, shared_other_snakes]()
 	{
-		return;
-	}
+		MapSnake src_snakes = snakes_;
+		if (src_snakes.empty())
+		{
+			return;
+		}
+		auto src_apples = apples_;
 
-	auto& target_snakes = other_zone.GetSnakes();
-	auto& target_apples = other_zone.GetApples();
-
-	ProcessCollisionFor2Mapsnake(
-		src_snakes,
-		target_snakes,
-		target_apples);
+		process_collision_2mapsnake(
+			*shared_other_snakes,
+			src_snakes,
+			src_apples);
+	});
 }
 
-void GameGeoZone::ProcessCollisionToWall(SnakeSP actor)
+void GameGeoZone::AddApple(std::shared_ptr<Apple> apple)
+{
+	shared_post(
+		[this, apple]()
+	{
+		apples_.emplace_back(apple);
+		cached_apple_cnt_.fetch_add(1);
+	});
+}
+
+void GameGeoZone::RemoveApple(Apple* apple)
+{
+	shared_post(
+		[&, this, apple]()
+	{
+		for (auto it = apples_.begin(); it != apples_.end(); ++it)
+		{
+			if (it->get() == apple)
+			{
+				apples_.erase(it);
+				cached_apple_cnt_.fetch_sub(1);
+				break;
+			}
+		}
+	});
+}
+
+void GameGeoZone::AddSnake(std::shared_ptr<Snake> snake)
+{
+	shared_post(
+		[this, snake]()
+	{
+		auto it = snakes_.emplace(Handle<Snake>(snake.get()).handle, snake);
+		if (it.second)
+		{
+			cached_snake_cnt_.fetch_add(1);
+		}
+	});
+}
+
+void GameGeoZone::RemoveSnake(Handle<Snake>::Type snake)
+{
+	shared_post(
+		[this, snake]()
+	{
+		if (snakes_.erase(snake) > 0)
+		{
+			cached_snake_cnt_.fetch_sub(1);
+		}
+	});
+}
+
+//serialized
+void GameGeoZone::process_collision_to_wall(SnakeSP actor)
 {
 	auto& pos = actor->GetPosition();
 	
@@ -163,83 +195,42 @@ void GameGeoZone::ProcessCollisionToWall(SnakeSP actor)
 	}
 }
 
-bool GameGeoZone::AddApple(std::shared_ptr<Apple> apple)
+void GameGeoZone::AsyncCloneSnakeList(CloneSnakelistCallback func)
 {
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	apples_.emplace_back(apple);
-	return true;
-}
-
-bool GameGeoZone::RemoveApple(Apple * apple)
-{
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	for (auto it = apples_.begin(); it != apples_.end(); ++it)
+	shared_post(
+		[this, func]()
 	{
-		if (it->get() == apple)
+		auto snakes = std::make_shared<CloneSnakelistT>();
+		for (auto pair : snakes_)
 		{
-			apples_.erase(it);
-			return true;
+			snakes->push_back(std::make_pair(pair.first, pair.second->Clone()));
 		}
-	}
-
-	return false;
+		func(snakes);
+	});
 }
 
-bool GameGeoZone::AddSnake(std::shared_ptr<Snake> snake)
+void GameGeoZone::AsyncCloneAppleList(CloneApplelistCallback func)
 {
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	auto it = snakes_.emplace(Handle<Snake>(snake.get()).handle, snake);
-	return it.second;
-}
-
-bool GameGeoZone::RemoveSnake(Handle<Snake>::Type snake)
-{
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	if (snakes_.erase(snake) > 0)
+	shared_post(
+		[this, func]()
 	{
-		return true;
-	}
-
-	return false;
+		auto apples = std::make_shared<CloneApplelistT>();
+		for (auto apple : apples_)
+		{
+			apples->push_back(apple->Clone());
+		}
+		func(apples);
+	});
 }
 
-std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>
-	GameGeoZone::CloneSnakeList()
+size_t GameGeoZone::AppleCount() const
 {
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snakes;
-
-	for (auto pair : snakes_)
-	{
-		snakes.push_back(std::make_pair(pair.first, pair.second->Clone()));
-	}
-
-	return snakes;
+	return cached_apple_cnt_.load();
 }
 
-std::list<GameObjectClone> GameGeoZone::CloneAppleList()
+size_t GameGeoZone::SnakeCount() const
 {
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	std::list<GameObjectClone> apples;
-
-	for (auto apple : apples_)
-	{
-		apples.push_back(apple->Clone());
-	}
-
-	return apples;
-}
-
-size_t GameGeoZone::CalculateSnakeCount()
-{
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	return snakes_.size();
-}
-
-size_t GameGeoZone::CalculateAppleCount()
-{
-	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	return apples_.size();
+	return cached_snake_cnt_.load();
 }
 
 //void GameGeoZone::RequestEnterZone(std::shared_ptr<Snake> snake, int org_idx_zone_x, int org_idx_zone_y)

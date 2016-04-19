@@ -4,6 +4,7 @@
 #include <mutex>
 #include <vector>
 #include <queue>
+#include <boost/asio.hpp>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "game_geo_zone_define.h"
@@ -17,7 +18,8 @@ class GameGeoZone;
 class GameGeoZoneGrid final
 {
 public:
-	GameGeoZoneGrid(int zone_width, int zone_height, int n_x, int n_y);
+	GameGeoZoneGrid(::boost::asio::io_service& io_service, 
+		int zone_width, int zone_height, int n_x, int n_y);
 	~GameGeoZoneGrid() {};
 
 	bool ProcessAllZone(std::function<bool(GameGeoZone&)> func, bool stop_condition = false);

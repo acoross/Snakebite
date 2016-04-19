@@ -59,7 +59,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			{
 				g_game_client->SetKeyDown(PK_RIGHT);
 			}
-			else if (wParam == VK_RETURN)
+			else if (wParam == VK_DOWN)
 			{
 				if (auto server = g_game_server_wp.lock())
 				{
@@ -81,7 +81,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					});
 				}
 			}
-			else if (wParam == VK_SPACE)
+			else if (wParam == VK_UP)
 			{
 				if (auto server = g_game_server_wp.lock())
 				{

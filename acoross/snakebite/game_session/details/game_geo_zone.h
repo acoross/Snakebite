@@ -4,6 +4,7 @@
 #include <mutex>
 #include <vector>
 #include <queue>
+#include <boost/asio.hpp>
 
 #include "game_geo_zone_define.h"
 
@@ -15,40 +16,41 @@ namespace snakebite {
 class GameGeoZoneGrid;
 
 // 하나의 GameZone 는 serializer 이용해 싱글스레드로 동작하게 해보자.
+// serialized by strand
 class GameGeoZone
+	: public std::enable_shared_from_this<GameGeoZone>
 {
 public:
-	explicit GameGeoZone(GameGeoZoneGrid& owner_zone_grid, int idx_zone_x, int idx_zone_y, 
-		MovingObjectContainer& game_boundary, int left, int top, int width, int height);
+	using CloneSnakelistT = std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>;
+	using SharedCloneSnakelistT = std::shared_ptr<CloneSnakelistT>;
+	using CloneSnakelistCallback = std::function<void(SharedCloneSnakelistT)>;
+	using CloneApplelistT = std::list<GameObjectClone>;
+	using SharedCloneApplelistT = std::shared_ptr<CloneApplelistT>;
+	using CloneApplelistCallback = std::function<void(SharedCloneApplelistT)>;
+
+	explicit GameGeoZone(
+		::boost::asio::io_service& io_service,
+		int idx_zone_x, int idx_zone_y, 
+		MovingObjectContainer& game_boundary, 
+		int left, int top, int width, int height);
 	~GameGeoZone();
 
 #pragma region use_snakes_mutex_
 	// update every snake position
 	void UpdateMove(int64_t diff_in_ms);
-	// check collision and handle collsion event for objects in near zone.
-	void ProcessCollisions(
-		std::map<std::pair<int, int>, std::pair<MapSnake, ListApple>>& zone_grid_objects);
+	// process collision with neighbor zones
+	void ProcessCollision(GameGeoZoneGrid& neighbors_);
 
-	bool AddApple(std::shared_ptr<Apple> apple);
-	bool RemoveApple(Apple* apple);
-	bool AddSnake(std::shared_ptr<Snake> snake);
-	bool RemoveSnake(Handle<Snake>::Type snake);
+	void AddApple(std::shared_ptr<Apple> apple);
+	void RemoveApple(Apple* apple);
+	void AddSnake(std::shared_ptr<Snake> snake);
+	void RemoveSnake(Handle<Snake>::Type snake);
 
-	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>
-		CloneSnakeList();
-	std::list<GameObjectClone> CloneAppleList();
-	size_t CalculateSnakeCount();
-	size_t CalculateAppleCount();
-	auto& GetSnakes()
-	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		return snakes_;
-	}
-	auto& GetApples()
-	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		return apples_;
-	}
+	size_t AppleCount() const;
+	size_t SnakeCount() const;
+
+	void AsyncCloneSnakeList(CloneSnakelistCallback func);
+	void AsyncCloneAppleList(CloneApplelistCallback func);
 #pragma endregion use_snakes_mutex_
 
 	/*void CheckAndRequestChangeZone();
@@ -65,21 +67,32 @@ public:
 
 private:
 	// 다른 존하고의 충돌체크
-	void ProcessCollisionToOtherZone(GameGeoZone& other_zone);
+	void ProcessCollisionTo(
+		std::shared_ptr<MapSnake> shared_snakes);
 
 	// 벽에 충돌했는지 체크.
 	// 벽에 충돌하면 튕겨나옴.
-	void ProcessCollisionToWall(SnakeSP actor);
+	void process_collision_to_wall(SnakeSP actor);
 
+	void shared_post(std::function<void()> func)
+	{
+		auto self(shared_from_this());
+		strand_.post([func, self]()
+		{
+			func();
+		});
+	}
 private:
-	GameGeoZoneGrid& zone_grid_;
+	::boost::asio::strand strand_;
+
 	MovingObjectContainer zone_boundary_;
 	MovingObjectContainer& game_boundary_;
 
 #pragma region snakes - use_snakes_mutex_
 	MapSnake snakes_;
 	ListApple apples_;
-	std::recursive_mutex snakes_mutex_;
+	std::atomic<int> cached_snake_cnt_{ 0 };
+	std::atomic<int> cached_apple_cnt_{ 0 };
 #pragma endregion snakes - use_snakes_mutex_
 
 	CollisionSet wall_collision_set_;
