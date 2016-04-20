@@ -42,7 +42,7 @@ public:
 	void ProcessCollision(GameGeoZoneGrid& neighbors_);
 
 	void AddApple(std::shared_ptr<Apple> apple);
-	void RemoveApple(Apple* apple);
+	void RemoveApple(Apple* apple, std::function<void(bool result)> func);
 	void AddSnake(std::shared_ptr<Snake> snake);
 	void RemoveSnake(Handle<Snake>::Type snake);
 

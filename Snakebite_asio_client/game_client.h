@@ -93,7 +93,19 @@ public:
 
 	virtual void Draw(Win::WDC& wdc, RECT& client_rect) override
 	{
-		if (clone_list_changed_.load() == false)
+		for (int idx_x = 0; idx_x < limit_idx_x_; ++idx_x)
+		{
+			for (int idx_y = 0; idx_y < limit_idx_y_; ++idx_y)
+			{
+				DrawZone(wdc, client_rect, idx_x, idx_y);
+			}
+		}
+	}
+
+	void DrawZone(Win::WDC& wdc, RECT& client_rect, int idx_x, int idx_y)
+	{
+		auto it = zone_clone_list_changed_.find(std::make_pair(idx_x, idx_y));
+		if (it == zone_clone_list_changed_.end())
 		{
 			return;
 		}
@@ -102,7 +114,7 @@ public:
 		// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
 		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_pairs;
 		std::list<GameObjectClone> apples;
-		RetrieveObjectList(snake_pairs, apples);
+		RetrieveObjectList(idx_x, idx_y, snake_pairs, apples);
 		//
 
 		acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
@@ -154,7 +166,7 @@ public:
 	}
 
 	bool UpdateGameObjectPositions(const messages::UpdateGameObjectsEvent& got_msg);
-
+	
 private:
 	std::shared_ptr<messages::SnakebiteService::Stub> stub_;
 

@@ -26,11 +26,22 @@ void SnakeCollider::Collide(SnakeCollider& other, int cnt)
 }
 void SnakeCollider::Collide(AppleCollider& other, int cnt)
 {
-	if (owner_->game_session_.RemoveApple(other.owner_))
+	auto handle = Handle<Snake>(owner_).handle;
+	owner_->game_session_.RemoveApple(
+		other.owner_,
+		[handle, &gs = owner_->game_session_](bool ret)
 	{
-		owner_->game_session_.MakeNewApple();
-		owner_->AddBody();
-	}
+		if (ret)
+		{
+			gs.MakeNewApple();
+			gs.RequestToSnake(
+				handle,
+				[](Snake& owner)
+			{
+				owner.AddBody();
+			});
+		}
+	});
 
 	return;
 }

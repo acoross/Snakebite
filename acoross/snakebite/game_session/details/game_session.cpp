@@ -61,7 +61,7 @@ void GameSession::InvokeUpdateEvent()
 				for (auto& pair : event_listeners)
 				{
 					auto& listner = pair.second;
-					listner(*snakes, *apples);
+					listner(zone.IDX_ZONE_X, zone.IDX_ZONE_Y, *snakes, *apples);
 				}
 			});
 		});
@@ -89,12 +89,12 @@ void GameSession::ProcessCollisions()
 		});
 }
 
-bool GameSession::RemoveApple(Apple * apple)
+void GameSession::RemoveApple(Apple* apple, std::function<void(bool result)> func)
 {
-	return zone_grid_.ProcessAllZone(
-		[apple](GameGeoZone& zone)->bool
+	zone_grid_.ProcessAllZone(
+		[apple, func](GameGeoZone& zone)->bool
 	{
-		zone.RemoveApple(apple);
+		zone.RemoveApple(apple, func);
 		return true;
 	}
 	);

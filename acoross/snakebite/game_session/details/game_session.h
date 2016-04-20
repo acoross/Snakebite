@@ -24,7 +24,8 @@ class GameSession final
 {
 public:
 	using UpdateEventListner =
-		std::function<void(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, 
+		std::function<void(int idx_x, int idx_y, 
+			const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, 
 			const std::list<GameObjectClone>&)>;
 	using ListMovingObject = MovingObjectContainer::ListMovingObject;
 	
@@ -45,7 +46,7 @@ public:
 		Snake::EventHandler onDieHandler = Snake::EventHandler());
 	void MakeNewApple();
 	bool RemoveSnake(Handle<Snake>::Type snake);
-	bool RemoveApple(Apple* apple);
+	void RemoveApple(Apple* apple, std::function<void(bool result)> func);
 
 	size_t CalculateSnakeCount();
 	size_t CalculateAppleCount();

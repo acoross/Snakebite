@@ -30,6 +30,7 @@ class GameServer final
 public:
 	using LocalUpdateListner = 
 		std::function<void(
+			int idx_x, int idx_y, 
 			const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, 
 			const std::list<GameObjectClone>&
 		)>;
@@ -67,10 +68,12 @@ public:
 	{
 		game_session_->AddUpdateEventListner("local listner",
 			[local_listner]	(
+				int idx_x, int idx_y, 
 				const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
 				const std::list<GameObjectClone>& apple_clone_list)
 			{
-				local_listner(snake_clone_list, apple_clone_list);
+				local_listner(idx_x, idx_y, 
+					snake_clone_list, apple_clone_list);
 			});
 	}
 
@@ -99,10 +102,10 @@ public:
 	}
 
 public:
-	const int COUNT_ZONE_X = 1;
-	const int COUNT_ZONE_Y = 1;
-	const int ZoneWidth{ 600 };
-	const int ZoneHeight{ 600 };
+	const int COUNT_ZONE_X = 6;
+	const int COUNT_ZONE_Y = 6;
+	const int ZoneWidth{ 200 };
+	const int ZoneHeight{ 200 };
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };
 	const int ZoneGridHeight{ ZoneHeight * COUNT_ZONE_X };
 	

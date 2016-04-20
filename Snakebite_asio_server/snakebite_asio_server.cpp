@@ -200,17 +200,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	server->SetLocalUpdateListner(
 		[client = g_game_client.get()]
-	(std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_list, std::list<GameObjectClone> apple_list)
+	(
+		int idx_x, int idx_y, 
+		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_list, std::list<GameObjectClone> apple_list)
 	{
-		client->SetObjectList(std::move(snake_list), std::move(apple_list));
+		client->SetObjectList(idx_x, idx_y, std::move(snake_list), std::move(apple_list));
 	});
 
-	std::thread game_thread(
-		[&io_service]()
+	std::thread game_threads[3];
+	
+	for (auto& game_thread : game_threads)
 	{
-		io_service.run();
+		game_thread = std::thread(
+			[&io_service]()
+		{
+			io_service.run();
+		});
 	}
-	);
 	
 	// 응용 프로그램 초기화를 수행합니다.
 	acoross::Win::Window window(hInstance);
@@ -234,7 +240,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	window.PeekMessegeLoop(loop);
 
 	io_service.stop();
-	game_thread.join();
+	for (auto& game_thread : game_threads)
+	{
+		game_thread.join();
+	}
 
 	return 0;
 }

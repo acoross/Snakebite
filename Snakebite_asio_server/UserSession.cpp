@@ -12,7 +12,9 @@ void UserSession::start()
 	game_session_->AddUpdateEventListner(
 		myid,
 		[us = this, rpcsocket_wp = std::weak_ptr<rpc::RpcSocket>(shared_from_this())]
-	(const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
+	(
+		int idx_x, int idx_y, 
+		const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
 		const std::list<GameObjectClone>& apple_clone_list)
 	{
 		if (auto rpcsocket = rpcsocket_wp.lock())

@@ -17,12 +17,68 @@ public:
 	LocalGameClient(GameServer& game_server)
 		: GameClientBase()
 		, game_server_(game_server)
-	{}
+	{
+		RequestZoneInfo();
+	}
 	virtual ~LocalGameClient(){}
 	
 	virtual void Draw(Win::WDC& wdc, RECT& client_rect) override
 	{
-		if (clone_list_changed_.load() == false)
+		acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
+		static HBITMAP hbitmap = ::CreateCompatibleBitmap(wdc.Get(), client_rect.right, client_rect.bottom);
+		HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
+
+		double ratio = 1.0;
+
+		for (int idx_x = 0; idx_x < limit_idx_x_; ++idx_x)
+		{
+			for (int idx_y = 0; idx_y < limit_idx_y_; ++idx_y)
+			{
+				DrawGrid(memdc, idx_x, idx_y);
+			}
+		}
+
+		for (int idx_x = 0; idx_x < limit_idx_x_; ++idx_x)
+		{
+			for (int idx_y = 0; idx_y < limit_idx_y_; ++idx_y)
+			{
+				DrawZone(memdc, idx_x, idx_y);
+			}
+		}
+
+		::BitBlt(wdc.Get(), 0, 0, client_rect.right, client_rect.bottom, memdc.Get(), 0, 0, SRCCOPY);
+
+		::SelectObject(memdc.Get(), oldbit);
+		::DeleteObject(memdc.Get());
+	}
+
+	void DrawGrid(Win::WDC& memdc, int idx_x, int idx_y)
+	{
+		auto it = zone_clone_list_changed_.find(std::make_pair(idx_x, idx_y));
+		if (it == zone_clone_list_changed_.end() || it->second == false)
+		{
+			return;
+		}
+
+		// 테두리 그리기
+		if (idx_zone_player_x == idx_x && idx_zone_player_y == idx_y)
+		{
+			HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(GRAY_BRUSH));
+			memdc.Rectangle(zone_width_ * idx_x, zone_height_ * idx_y,
+				zone_width_ * (idx_x + 1), zone_height_ * (idx_y + 1));
+			(HBRUSH)::SelectObject(memdc.Get(), oldbrush);
+		}
+		else
+		{
+			memdc.Rectangle(zone_width_ * idx_x, zone_height_ * idx_y,
+				zone_width_ * (idx_x + 1), zone_height_ * (idx_y + 1));
+		}
+	}
+
+	void DrawZone(Win::WDC& memdc, int idx_x, int idx_y)
+	{
+		auto it = zone_clone_list_changed_.find(std::make_pair(idx_x, idx_y));
+		if (it == zone_clone_list_changed_.end() || it->second == false)
 		{
 			return;
 		}
@@ -31,44 +87,9 @@ public:
 		// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
 		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_pairs;
 		std::list<GameObjectClone> apples;
-		RetrieveObjectList(snake_pairs, apples);
+		RetrieveObjectList(idx_x, idx_y, snake_pairs, apples);
 		//
 
-		acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
-		static HBITMAP hbitmap = ::CreateCompatibleBitmap(memdc.Get(), client_rect.right, client_rect.bottom);
-		HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
-
-		double ratio = 1.0;
-
-		memdc.Rectangle(0, 0,
-			game_server_.ZoneGridWidth, game_server_.ZoneGridHeight);
-
-		// 테두리 그리기
-		for (int i = 0; i < game_server_.COUNT_ZONE_X; ++i)
-		{
-			for (int j = 0; j < game_server_.COUNT_ZONE_Y; ++j)
-			{
-				if (idx_zone_player_x == i && idx_zone_player_y == j)
-				{
-					HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(GRAY_BRUSH));
-					memdc.Rectangle(
-						game_server_.ZoneWidth * i,
-						game_server_.ZoneHeight * j,
-						game_server_.ZoneWidth * (i + 1),
-						game_server_.ZoneHeight * (j + 1));
-					(HBRUSH)::SelectObject(memdc.Get(), oldbrush);
-				}
-				else
-				{
-					memdc.Rectangle(
-						game_server_.ZoneWidth * i,
-						game_server_.ZoneHeight * j,
-						game_server_.ZoneWidth * (i + 1),
-						game_server_.ZoneHeight * (j + 1));
-				}
-			}
-		}
-		
 		// TODO
 		// 화면과 game_session 크기를 고려해 ratio 를 정한 뒤,
 		// ratio 에 따라 크기를 조절해서 그린다.
@@ -98,11 +119,14 @@ public:
 				DrawMovingObject(memdc, apple.head_);
 			}
 		}
+	}
 
-		::BitBlt(wdc.Get(), 0, 0, client_rect.right, client_rect.bottom, memdc.Get(), 0, 0, SRCCOPY);
-
-		::SelectObject(memdc.Get(), oldbit);
-		::DeleteObject(memdc.Get());
+	void RequestZoneInfo()
+	{
+		limit_idx_x_ = game_server_.COUNT_ZONE_X;
+		limit_idx_y_ = game_server_.COUNT_ZONE_Y;
+		zone_width_ = game_server_.ZoneWidth;
+		zone_height_ = game_server_.ZoneHeight;
 	}
 
 	//@lock

@@ -21,23 +21,34 @@ public:
 	virtual ~GameClientBase() {}
 
 	void SetObjectList(
+		int idx_x, int idx_y, 
 		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&& snake_clone_list,
 		std::list<GameObjectClone>&& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
-		snake_clone_list_ = std::move(snake_clone_list);
-		apple_clone_list_ = std::move(apple_clone_list);
-		clone_list_changed_.store(true);
+		zone_snake_clone_list_[std::make_pair(idx_x, idx_y)] = std::move(snake_clone_list);
+		zone_apple_clone_list_[std::make_pair(idx_x, idx_y)] = std::move(apple_clone_list);
+		zone_clone_list_changed_[std::make_pair(idx_x, idx_y)].store(true);
 	}
 
 	void RetrieveObjectList(
+		int idx_x, int idx_y, 
 		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list,
 		std::list<GameObjectClone>& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
-		snake_clone_list = std::move(snake_clone_list_);
-		apple_clone_list = std::move(apple_clone_list_);
-		clone_list_changed_.store(false);
+		
+		auto it_zone_snakes = zone_snake_clone_list_.find(std::make_pair(idx_x, idx_y));
+		if (it_zone_snakes != zone_snake_clone_list_.end())
+		{
+			snake_clone_list = it_zone_snakes->second;
+		}
+
+		auto it_zone_apples = zone_apple_clone_list_.find(std::make_pair(idx_x, idx_y));
+		if (it_zone_apples != zone_apple_clone_list_.end())
+		{
+			apple_clone_list = it_zone_apples->second;
+		}
 	}
 
 	virtual void Draw(Win::WDC& wdc, RECT& client_rect) = 0;
@@ -86,10 +97,17 @@ protected:
 	//
 
 protected:
+	using CloneSnakeList = std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>;
+	using CloneAppleList = std::list<GameObjectClone>;
 	std::mutex clone_list_mutex_;
-	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_clone_list_;
-	std::list<GameObjectClone> apple_clone_list_;
-	std::atomic<bool> clone_list_changed_{ false };
+	std::map<std::pair<int, int>, CloneSnakeList> zone_snake_clone_list_;
+	std::map<std::pair<int, int>, CloneAppleList> zone_apple_clone_list_;
+	std::map<std::pair<int, int>, std::atomic<bool>> zone_clone_list_changed_;
+
+	int limit_idx_x_{ 1 };
+	int limit_idx_y_{ 1 };
+	int zone_width_{ 1 };
+	int zone_height_{ 1 };
 };
 
 }
