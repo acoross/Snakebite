@@ -180,6 +180,7 @@ bool GameSession::RemoveSnake(Handle<Snake>::Type snake)
 		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 		snakes_.erase(snake);
 	}
+
 	return zone_grid_.ProcessAllZone(
 		[snake](GameGeoZone& zone)->bool
 		{

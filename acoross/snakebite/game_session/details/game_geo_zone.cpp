@@ -68,8 +68,9 @@ void GameGeoZone::ProcessCollision(GameGeoZoneGrid& neighbors_)
 	shared_post(
 		[this, &nb = neighbors_]()
 	{
-		auto snakes = snakes_;
-		for (auto& pair : snakes)
+		auto shared_src_snakes = std::make_shared<MapSnake>(snakes_);
+
+		for (auto& pair : *shared_src_snakes)
 		{
 			auto& snake = pair.second;
 			auto& pos = snake->GetPosition();
@@ -83,14 +84,17 @@ void GameGeoZone::ProcessCollision(GameGeoZoneGrid& neighbors_)
 				auto& dest_zone = nb.get_zone(pos.x, pos.y);
 				if (dest_zone)
 				{
-					cached_snake_cnt_.fetch_sub(1);
-					snakes_.erase(pair.first);
+					auto it = snakes_.find(pair.first);
+					if (it != snakes_.end())
+					{
+						it->second->AtomicZoneIdx(0, 0);
+						snakes_.erase(it);
+						cached_snake_cnt_.fetch_sub(1);
+					}
 					dest_zone->AddSnake(snake);
 				}
 			}
 		}
-
-		auto shared_src_snakes = std::make_shared<MapSnake>(snakes_);
 
 		for (int x = -1; x <= 1; ++x)
 		{
@@ -114,11 +118,12 @@ void GameGeoZone::ProcessCollisionTo(
 		[this, shared_other_snakes]()
 	{
 		MapSnake src_snakes = snakes_;
-		if (src_snakes.empty())
+		auto src_apples = apples_;
+
+		if (src_snakes.empty() && src_apples.empty())
 		{
 			return;
 		}
-		auto src_apples = apples_;
 
 		process_collision_2mapsnake(
 			*shared_other_snakes,
@@ -134,6 +139,7 @@ void GameGeoZone::AddApple(std::shared_ptr<Apple> apple)
 	{
 		apples_.emplace_back(apple);
 		cached_apple_cnt_.fetch_add(1);
+		apple->AtomicZoneIdx(IDX_ZONE_X, IDX_ZONE_Y);
 	});
 }
 
@@ -146,6 +152,8 @@ void GameGeoZone::RemoveApple(Apple* apple, std::function<void(bool result)> fun
 		{
 			if (it->get() == apple)
 			{
+				apple->AtomicZoneIdx(0, 0);
+
 				apples_.erase(it);
 				cached_apple_cnt_.fetch_sub(1);
 				
@@ -165,6 +173,7 @@ void GameGeoZone::AddSnake(std::shared_ptr<Snake> snake)
 		auto it = snakes_.emplace(Handle<Snake>(snake.get()).handle, snake);
 		if (it.second)
 		{
+			it.first->second->AtomicZoneIdx(IDX_ZONE_X, IDX_ZONE_Y);
 			cached_snake_cnt_.fetch_add(1);
 		}
 	});
@@ -175,8 +184,11 @@ void GameGeoZone::RemoveSnake(Handle<Snake>::Type snake)
 	shared_post(
 		[this, snake]()
 	{
-		if (snakes_.erase(snake) > 0)
+		auto it = snakes_.find(snake);
+		if (it != snakes_.end())
 		{
+			it->second->AtomicZoneIdx(0, 0);
+			snakes_.erase(it);
 			cached_snake_cnt_.fetch_sub(1);
 		}
 	});

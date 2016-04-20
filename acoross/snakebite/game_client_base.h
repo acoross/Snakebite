@@ -68,6 +68,7 @@ protected:
 	static void DrawSnake(Win::WDC& wdc, GameObjectClone& snake)
 	{
 		DrawSnakeName(wdc, snake);
+		DrawObjectZoneIdx(wdc, snake, 35);
 
 		DrawMovingObject(wdc, snake.head_);
 		for (auto& body : snake.body_list_)
@@ -92,7 +93,18 @@ protected:
 			(long)pos.x - 50, (long)pos.y - 20,
 			(long)pos.x + 50, (long)pos.y - 5
 		};
-		wdc.DrawTextA(snake.Name, rect, DT_CENTER | DT_VCENTER);
+		wdc.DrawTextA(snake.Name, rect, DT_CENTER);
+	}
+	static void DrawObjectZoneIdx(Win::WDC& wdc, GameObjectClone& obj, int top)
+	{
+		auto pos = obj.head_.GetPosition();
+		RECT rect{
+			(long)pos.x - 50, (long)pos.y - top,
+			(long)pos.x + 50, (long)pos.y - top + 15
+		};
+		char buf[20]{ 0, };
+		::StringCchPrintfA(buf, _countof(buf), "%d, %d", obj.zone_idx_x_, obj.zone_idx_y_);
+		wdc.DrawTextA(buf, rect, DT_CENTER);
 	}
 	//
 

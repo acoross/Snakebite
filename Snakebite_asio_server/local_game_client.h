@@ -60,18 +60,27 @@ public:
 			return;
 		}
 
+		RECT zone_rect = { zone_width_ * idx_x, zone_height_ * idx_y,
+			zone_width_ * (idx_x + 1), zone_height_ * (idx_y + 1) };
+
 		// 테두리 그리기
 		if (idx_zone_player_x == idx_x && idx_zone_player_y == idx_y)
 		{
 			HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(GRAY_BRUSH));
-			memdc.Rectangle(zone_width_ * idx_x, zone_height_ * idx_y,
-				zone_width_ * (idx_x + 1), zone_height_ * (idx_y + 1));
+			memdc.Rectangle(zone_rect.left, zone_rect.top, zone_rect.right, zone_rect.bottom);
 			(HBRUSH)::SelectObject(memdc.Get(), oldbrush);
 		}
 		else
 		{
-			memdc.Rectangle(zone_width_ * idx_x, zone_height_ * idx_y,
-				zone_width_ * (idx_x + 1), zone_height_ * (idx_y + 1));
+			memdc.Rectangle(zone_rect.left, zone_rect.top, zone_rect.right, zone_rect.bottom);
+		}
+
+		{
+			wchar_t buf[100]{ 0, };
+			::StringCchPrintfW(buf, _countof(buf), L"%d, %d", idx_x, idx_y);
+			auto orgcolor = SetTextColor(memdc.Get(), RGB(255, 0, 0));
+			memdc.DrawTextW(buf, zone_rect, DT_CENTER);
+			::SetTextColor(memdc.Get(), orgcolor);
 		}
 	}
 
@@ -100,9 +109,8 @@ public:
 			{
 				if (snake_pair.first == player_handle_)
 				{
-					auto& pos = snake_pair.second.body_list_.begin()->GetPosition();
-					idx_zone_player_x = int(pos.x / game_server_.ZoneWidth);
-					idx_zone_player_y = int(pos.y / game_server_.ZoneHeight);
+					idx_zone_player_x = snake_pair.second.zone_idx_x_;
+					idx_zone_player_y = snake_pair.second.zone_idx_y_;
 
 					HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(BLACK_BRUSH));
 					DrawSnake(memdc, snake_pair.second);
@@ -117,6 +125,7 @@ public:
 			for (auto& apple : apples)
 			{
 				DrawMovingObject(memdc, apple.head_);
+				DrawObjectZoneIdx(memdc, apple, 7);
 			}
 		}
 	}
