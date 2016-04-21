@@ -116,10 +116,15 @@ protected:
 	std::map<std::pair<int, int>, CloneAppleList> zone_apple_clone_list_;
 	std::map<std::pair<int, int>, std::atomic<bool>> zone_clone_list_changed_;
 
-	int limit_idx_x_{ 1 };
-	int limit_idx_y_{ 1 };
-	int zone_width_{ 1 };
-	int zone_height_{ 1 };
+	struct ZoneInfo
+	{
+		std::atomic<bool> initialized{ false };
+		int limit_idx_x{ 1 };
+		int limit_idx_y{ 1 };
+		int w{ 1 };
+		int h{ 1 };
+	} zone_info_;
+	
 };
 
 }

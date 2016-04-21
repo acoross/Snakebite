@@ -102,8 +102,8 @@ public:
 	}
 
 public:
-	const int COUNT_ZONE_X = 6;
-	const int COUNT_ZONE_Y = 6;
+	const int COUNT_ZONE_X = 20;
+	const int COUNT_ZONE_Y = 20;
 	const int ZoneWidth{ 200 };
 	const int ZoneHeight{ 200 };
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };

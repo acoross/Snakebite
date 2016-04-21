@@ -24,29 +24,52 @@ public:
 	
 	virtual void Draw(Win::WDC& wdc, RECT& client_rect) override
 	{
-		acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
-		static HBITMAP hbitmap = ::CreateCompatibleBitmap(wdc.Get(), client_rect.right, client_rect.bottom);
-		HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
-
-		double ratio = 1.0;
-
-		for (int idx_x = 0; idx_x < limit_idx_x_; ++idx_x)
+		if (zone_info_.initialized.load() == false)
 		{
-			for (int idx_y = 0; idx_y < limit_idx_y_; ++idx_y)
+			return;
+		}
+
+		double scale_ratio = scale_pcnt_ / 100.;
+
+		// client_rect 와 scale, zone grid size 를 비교하여 몇칸의 zone 을 그릴 지 결정한다.
+		auto draw_zone_cnt_x = int(client_rect.right / (zone_info_.w * scale_ratio)) + 1;
+		auto draw_zone_cnt_y = int(client_rect.bottom / (zone_info_.h * scale_ratio)) + 1;
+
+		draw_zone_cnt_x = min(draw_zone_cnt_x, zone_info_.limit_idx_x);
+		draw_zone_cnt_y = min(draw_zone_cnt_y, zone_info_.limit_idx_y);
+
+		acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
+		static HBITMAP hbitmap = ::CreateCompatibleBitmap(wdc.Get(), 
+			zone_info_.w * zone_info_.limit_idx_x, zone_info_.h * zone_info_.limit_idx_y);
+		HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
+		
+		for (int idx_x = 0; idx_x < draw_zone_cnt_x; ++idx_x)
+		{
+			for (int idx_y = 0; idx_y < draw_zone_cnt_y; ++idx_y)
 			{
 				DrawGrid(memdc, idx_x, idx_y);
 			}
 		}
 
-		for (int idx_x = 0; idx_x < limit_idx_x_; ++idx_x)
+		for (int idx_x = 0; idx_x < draw_zone_cnt_x; ++idx_x)
 		{
-			for (int idx_y = 0; idx_y < limit_idx_y_; ++idx_y)
+			for (int idx_y = 0; idx_y < draw_zone_cnt_y; ++idx_y)
 			{
 				DrawZone(memdc, idx_x, idx_y);
 			}
 		}
 
-		::BitBlt(wdc.Get(), 0, 0, client_rect.right, client_rect.bottom, memdc.Get(), 0, 0, SRCCOPY);
+		::StretchBlt(
+			wdc.Get(), 
+			0, 0, 
+			int(scale_ratio * zone_info_.w * draw_zone_cnt_x),
+			int(scale_ratio * zone_info_.h * draw_zone_cnt_y),
+			memdc.Get(), 
+			0, 0, 
+			zone_info_.w * draw_zone_cnt_x, 
+			zone_info_.h * draw_zone_cnt_y,
+			SRCCOPY);
+		//::BitBlt(wdc.Get(), 0, 0, client_rect.right, client_rect.bottom, memdc.Get(), 0, 0, SRCCOPY);
 
 		::SelectObject(memdc.Get(), oldbit);
 		::DeleteObject(memdc.Get());
@@ -54,14 +77,19 @@ public:
 
 	void DrawGrid(Win::WDC& memdc, int idx_x, int idx_y)
 	{
+		if (zone_info_.initialized.load() == false)
+		{
+			return;
+		}
+
 		auto it = zone_clone_list_changed_.find(std::make_pair(idx_x, idx_y));
 		if (it == zone_clone_list_changed_.end() || it->second == false)
 		{
 			return;
 		}
 
-		RECT zone_rect = { zone_width_ * idx_x, zone_height_ * idx_y,
-			zone_width_ * (idx_x + 1), zone_height_ * (idx_y + 1) };
+		RECT zone_rect = { zone_info_.w * idx_x, zone_info_.h * idx_y,
+			zone_info_.w * (idx_x + 1), zone_info_.h * (idx_y + 1) };
 
 		// 테두리 그리기
 		if (idx_zone_player_x == idx_x && idx_zone_player_y == idx_y)
@@ -86,6 +114,11 @@ public:
 
 	void DrawZone(Win::WDC& memdc, int idx_x, int idx_y)
 	{
+		if (zone_info_.initialized.load() == false)
+		{
+			return;
+		}
+
 		auto it = zone_clone_list_changed_.find(std::make_pair(idx_x, idx_y));
 		if (it == zone_clone_list_changed_.end() || it->second == false)
 		{
@@ -132,10 +165,11 @@ public:
 
 	void RequestZoneInfo()
 	{
-		limit_idx_x_ = game_server_.COUNT_ZONE_X;
-		limit_idx_y_ = game_server_.COUNT_ZONE_Y;
-		zone_width_ = game_server_.ZoneWidth;
-		zone_height_ = game_server_.ZoneHeight;
+		zone_info_.limit_idx_x = game_server_.COUNT_ZONE_X;
+		zone_info_.limit_idx_y = game_server_.COUNT_ZONE_Y;
+		zone_info_.w = game_server_.ZoneWidth;
+		zone_info_.h = game_server_.ZoneHeight;
+		zone_info_.initialized.store(true);
 	}
 
 	//@lock
@@ -202,7 +236,21 @@ public:
 	}
 	//
 	
+	int FetchAddScalePcnt(int val)
+	{
+		auto ret = scale_pcnt_.fetch_add(val);
+		if (ret < 0)
+		{
+			return scale_pcnt_.compare_exchange_strong(ret, 0);
+		}
+		if (ret >= 100)
+		{
+			return scale_pcnt_.compare_exchange_strong(ret, 100);
+		}
+		return ret;
+	}
 private:
+	std::atomic<int> scale_pcnt_{ 100 };
 	int idx_zone_player_x{ -1 };
 	int idx_zone_player_y{ -1 };
 

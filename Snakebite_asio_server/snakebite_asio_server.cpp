@@ -96,6 +96,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			{
 				g_game_client->InitPlayer();
 			}
+			else if (wParam == 'M')	// 'M' or 'm'
+			{
+				if (auto server = g_game_server_wp.lock())
+				{
+					server->RequestToSession(
+						[](GameSession& session)
+					{
+						for (int i = 0; i < 1000; ++i)
+						{
+							session.MakeNewApple();
+						}
+					});
+
+					server->RequestToSessionNpcController(
+						[](SnakeNpcControlManager& npc_controller)
+					{
+						for (int i = 0; i < 1000; ++i)
+						{
+							npc_controller.AddSnakeNpc();
+						}
+					});
+				}
+			}
 		}
 		break;
 	case WM_KEYUP:
@@ -109,6 +132,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				g_game_client->SetKeyUp(PK_RIGHT);
 			}
 		}
+		break;
+	case WM_MOUSEWHEEL:
+		{
+			if (g_game_client)
+			{
+				short hword = HIWORD(wParam);
+				short lword = LOWORD(wParam);
+				if (lword == 0)
+				{
+					g_game_client->FetchAddScalePcnt(hword > 0 ? 2 : -2);
+					::InvalidateRect(hWnd, nullptr, true);
+				}
+			}
+		}
+		break;
 	case WM_PAINT:
 		{
 			RECT client_rect;
