@@ -101,45 +101,31 @@ void Snake::Die()
 			onDie_(*this);
 		}
 
-		game_session_.RemoveSnake(Handle<Snake>(this).handle);
+		game_session_.AsyncRemoveSnake(Handle<Snake>(this).handle);
 	}
-}
-
-void Snake::AddBody()
-{
-	//container_.RegisterMovingObject(mo);
-	body_list_.emplace_back(head_.GetPosition(), head_.GetRadius());
 }
 
 bool Snake::ProcessCollision(std::shared_ptr<ZoneObject> target)
 {
-	//TODO: !!!! collision_set_ 에 삽입된 snake 가 죽으면 맵에서 빠지지 않게 됨.
-	// 하지만 그것 때문에 느려지는 건 아닌것 같고.
-	if (IsCollidingTo(target))
+	if (target == nullptr)
 	{
-		//auto ret = collision_set_.insert(target.get());
-		//if (ret.second == true)
-		{
-			// onCollideBegin
-			//OnCollideStart(target.get());
-			target->collider_->Collide(*this->collider_, 0);
-		}
-		//else
-		{
-			// onColliding
-		}
-
-		return true;
-	}
-	else
-	{
-		//if (collision_set_.erase(target.get()) > 0)
-		{
-			// onCollideEnd
-		}
-
+		_ASSERT(0);
 		return false;
 	}
+
+	if (IsCollidingTo(target))
+	{
+		if (this->collider_)
+		{
+			target->collider_->Collide(*this->collider_, 0);
+		}
+		else
+		{
+			_ASSERT(0);
+		}
+		return true;
+	}
+	return false;
 }
 
 }

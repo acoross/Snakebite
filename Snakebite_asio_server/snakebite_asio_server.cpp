@@ -70,7 +70,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					server->RequestToSessionNpcController(
 						[](SnakeNpcControlManager& npc_controller)
 					{
-						npc_controller.AddSnakeNpc();
+						npc_controller.AsyncAddSnakeNpc();
 					});
 				}
 			}
@@ -81,7 +81,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					server->RequestToSessionNpcController(
 						[](SnakeNpcControlManager& npc_controller)
 					{
-						npc_controller.RemoveFirstSnakeNpc();
+						npc_controller.AsyncRemoveFirstSnakeNpc();
 					});
 				}
 			}
@@ -118,7 +118,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					{
 						for (int i = 0; i < 1000; ++i)
 						{
-							npc_controller.AddSnakeNpc();
+							npc_controller.AsyncAddSnakeNpc();
 						}
 					});
 				}
@@ -256,10 +256,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		game_thread = std::thread(
 			[&io_service]()
 		{
-			io_service.run();
+			try
+			{
+				io_service.run();
+			}
+			catch (std::exception& exp)
+			{
+				::MessageBoxA(nullptr, exp.what(), "shit", MB_OK);
+			}
 		});
 	}
-	
+
 	// 응용 프로그램 초기화를 수행합니다.
 	acoross::Win::Window window(hInstance);
 	window.MyRegisterClass(WndProc);

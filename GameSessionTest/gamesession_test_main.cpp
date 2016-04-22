@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
 	for (unsigned int i = 0; i < init_snake_count; ++i)
 	{
-		npc_controller->AddSnakeNpc();
+		npc_controller->AsyncAddSnakeNpc();
 	}
 
 	try
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 			//for (;difftick > frametickdiff; difftick -= frametickdiff)
 			if (difftick > frametickdiff)
 			{
-				npc_controller->ChangeNpcDirection(frametickdiff);
+				npc_controller->AsyncChangeNpcDirection(frametickdiff);
 
 				static double mean_diff_tick_move = 0;
 				gamesession->UpdateMove(frametickdiff);

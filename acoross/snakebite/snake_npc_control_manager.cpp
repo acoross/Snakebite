@@ -48,97 +48,98 @@ static void changeDirection(std::default_random_engine& re, std::shared_ptr<Game
 				snake.SetKeyUp(PK_RIGHT);
 			}
 		});
-
-		//if (auto snake = snake_wp.second.lock())
-		//{
-		//	int p = unin(re);
-		//	if (p < 15) // 5 percent
-		//	{
-		//		snake->SetKeyDown(PK_LEFT);
-		//	}
-		//	else if (p < 30) // another 5 percent
-		//	{
-		//		snake->SetKeyDown(PK_RIGHT);
-		//	}
-		//	else if (p < 45)
-		//	{
-		//		snake->SetKeyUp(PK_LEFT);
-		//		snake->SetKeyUp(PK_RIGHT);
-		//	}
-		//}
 	}
 }
 
-SnakeNpcControlManager::SnakeNpcControlManager(std::weak_ptr<GameSession> game_session_wp)
-	: game_session_wp_(game_session_wp)
+SnakeNpcControlManager::SnakeNpcControlManager(
+	::boost::asio::io_service& io_service, 
+	std::weak_ptr<GameSession> game_session_wp)
+	: strand_(io_service)
+	, game_session_wp_(game_session_wp)
 {
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
 	random_engine_.seed((unsigned int)t.time_since_epoch().count());
 }
 
-void SnakeNpcControlManager::ChangeNpcDirection(int64_t diff_in_ms)
+void SnakeNpcControlManager::AsyncChangeNpcDirection(int64_t diff_in_ms)
 {
-	std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
+	//std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
 
-	if (auto game_session = game_session_wp_.lock())
-	// 임시:
-	// 랜덤하게 방향을 변경.
-	// UpdatteMove 가 불린 횟수와 관계없이,
-	// 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
-	if (checkChangeDirection(diff_in_ms))
+	strand_.post(
+		[this, diff_in_ms]()
 	{
-		changeDirection(random_engine_, game_session, snake_npc_handles_, diff_in_ms);
-	}
-}
-
-Handle<Snake>::Type SnakeNpcControlManager::AddSnakeNpc()
-{
-	if (auto game_session = game_session_wp_.lock())
-	{
-		auto handle = game_session->MakeNewSnake("npc",
-			[self = shared_from_this()](Snake& snake)
+		// 임시:
+		// 랜덤하게 방향을 변경.
+		// UpdatteMove 가 불린 횟수와 관계없이,
+		// 시간당 방향전환 횟수가 랜덤하도록 방향을 설정.
+		if (checkChangeDirection(diff_in_ms))
 		{
-			// 이러면 die 에서도 RemoveNpc 되기 때문에 RemoveNpc 가 두번 불릴걸...?
-			self->UnregisterSnakeNpc(Handle<Snake>(snake).handle);
-			self->AddSnakeNpc();	// 죽으면 다음꺼 생성
-		});
-				
-		std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
-		snake_npc_handles_.emplace(handle);
-		return handle;
-	}
-	
-	return 0;
+			if (auto game_session = game_session_wp_.lock())
+			{
+				changeDirection(random_engine_, game_session, snake_npc_handles_, diff_in_ms);
+			}
+		}
+	});
 }
 
-bool SnakeNpcControlManager::RemoveSnakeNpc(Handle<Snake>::Type handle)
+void SnakeNpcControlManager::AsyncAddSnakeNpc()
 {
+	strand_.post(
+		[this]()
 	{
-		std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
+		if (auto game_session = game_session_wp_.lock())
+		{
+			auto handle = game_session->AsyncMakeNewSnake(
+				"npc",
+				[self = shared_from_this()](Snake& snake)
+			{
+				// 이러면 die 에서도 RemoveNpc 되기 때문에 RemoveNpc 가 두번 불릴걸...?
+				self->async_unregister_snake_npc(Handle<Snake>(snake).handle);
+				self->AsyncAddSnakeNpc();	// 죽으면 다음꺼 생성
+			});
+
+			//std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
+			snake_npc_handles_.emplace(handle);
+		}
+	});
+}
+
+void SnakeNpcControlManager::AsyncRemoveSnakeNpc(Handle<Snake>::Type handle)
+{
+	strand_.post(
+		[this, handle]()
+	{
 		snake_npc_handles_.erase(handle);
-	}
+
+		if (auto game_session = game_session_wp_.lock())
+		{
+			game_session->AsyncRemoveSnake(handle);
+		}
+	});
+}
+
+void SnakeNpcControlManager::async_unregister_snake_npc(Handle<Snake>::Type handle)
+{
+	//std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
+
+	strand_.post(
+		[this, handle]()
+	{
+		snake_npc_handles_.erase(handle);
+	});
 	
-	if (auto game_session = game_session_wp_.lock())
-	{
-		return game_session->RemoveSnake(handle);
-	}
-
-	return false;
 }
 
-void SnakeNpcControlManager::UnregisterSnakeNpc(Handle<Snake>::Type handle)
+void SnakeNpcControlManager::AsyncRemoveFirstSnakeNpc()
 {
-	std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
-	snake_npc_handles_.erase(handle);
-}
-
-void SnakeNpcControlManager::RemoveFirstSnakeNpc()
-{
-	bool erase_snake = false;
-	Handle<Snake>::Type handle = 0;
+	strand_.post(
+		[this]()
 	{
-		std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
+		bool erase_snake = false;
+		Handle<Snake>::Type handle = 0;
+
+		//std::lock_guard<std::recursive_mutex> lock(snake_npcs_mutex_);
 		auto it = snake_npc_handles_.begin();
 		if (it != snake_npc_handles_.end())
 		{
@@ -146,15 +147,15 @@ void SnakeNpcControlManager::RemoveFirstSnakeNpc()
 			snake_npc_handles_.erase(snake_npc_handles_.begin());
 			erase_snake = true;
 		}
-	}
 
-	if (erase_snake)
-	{
-		if (auto game_session = game_session_wp_.lock())
+		if (erase_snake)
 		{
-			game_session->RemoveSnake(handle);
+			if (auto game_session = game_session_wp_.lock())
+			{
+				game_session->AsyncRemoveSnake(handle);
+			}
 		}
-	}
+	});
 }
 
 }//namespace snakebite

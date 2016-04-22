@@ -25,6 +25,7 @@ GameGeoZoneGrid::GameGeoZoneGrid(
 				std::make_shared<GameGeoZone>
 				(
 					io_service,
+					*this,
 					i, j,
 					game_boundary_,
 					zone_left,

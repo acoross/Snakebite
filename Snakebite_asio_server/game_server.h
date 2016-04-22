@@ -36,35 +36,13 @@ public:
 			const std::list<ZoneObjectClone>&
 		)>;
 	
-	const int FRAME_TICK{ 100 };
-
 public:
 	GameServer(boost::asio::io_service& io_service
 		, short port
 		, short push_port
-		)
-		: io_service_(io_service)
-		, rpc_server_(
-			io_service, 
-			port, 
-			[this](boost::asio::io_service& ios, tcp::socket&& socket) { 
-				on_accept(ios, std::move(socket)); 
-			}
-		)
-		, push_server_(
-			io_service, 
-			push_port, 
-			[this](boost::asio::io_service& ios, tcp::socket&& socket) { 
-				on_accept_push_socket(ios, std::move(socket)); 
-			}
-		)
-		, game_update_timer_(io_service, boost::posix_time::milliseconds(FRAME_TICK))
-		, game_session_(std::make_unique<GameSession>(io_service, ZoneWidth, ZoneHeight, COUNT_ZONE_X, COUNT_ZONE_Y))
-		, npc_controll_manager_(std::make_unique<SnakeNpcControlManager>(game_session_))
-	{
-		do_update_game_session();
-	}
-	
+	);
+	~GameServer() {}
+
 	void SetLocalUpdateListner(LocalUpdateListner local_listner)
 	{
 		game_session_->AddUpdateEventListner("local listner",
@@ -80,20 +58,12 @@ public:
 
 	void RequestToSession(std::function<void(GameSession&)> request)
 	{
-		io_service_.post(
-			[game_session = game_session_, request]()
-		{
-			request(*game_session);
-		});
+		request(*game_session_);
 	}
 
 	void RequestToSessionNpcController(std::function<void(SnakeNpcControlManager&)> request)
 	{
-		io_service_.post(
-			[npc_controll_manager = npc_controll_manager_, request]()
-		{
-			request(*npc_controll_manager);
-		});
+		request(*npc_controll_manager_);
 	}
 
 	void UnregisterUserSession(std::string addr)
@@ -103,6 +73,7 @@ public:
 	}
 
 public:
+	const int FRAME_TICK{ 100 };
 	const int COUNT_ZONE_X = 8;
 	const int COUNT_ZONE_Y = 8;
 	const int ZoneWidth{ 500 };
@@ -121,40 +92,11 @@ private:
 
 	void on_accept(
 		boost::asio::io_service& io_service, 
-		tcp::socket&& socket)
-	{
-		auto addr = socket.remote_endpoint().address().to_string();
-		auto us = std::make_shared<UserSession>(
-			io_service,
-			std::move(socket),
-			game_session_,
-			shared_from_this(),
-			[gs_wp = std::weak_ptr<GameServer>(shared_from_this()), addr]
-			{
-				if (auto gs = gs_wp.lock())
-				{
-					gs->UnregisterUserSession(addr);
-				}
-			});
-		user_session_map_[addr] = us;
-		us->start();
-	}
+		tcp::socket&& socket);
 
 	void on_accept_push_socket(
 		boost::asio::io_service& io_service, 
-		tcp::socket&& push_socket)
-	{
-		auto addr = push_socket.remote_endpoint().address().to_string();
-		std::lock_guard<std::recursive_mutex> lock(user_session_mutex_);
-		auto it = user_session_map_.find(addr);
-		if (it != user_session_map_.end())
-		{
-			if (auto us = it->second.lock())
-			{
-				us->init_push_stub_socket(io_service, std::move(push_socket));
-			}
-		}
-	}
+		tcp::socket&& push_socket);
 
 private:
 	boost::asio::io_service& io_service_;

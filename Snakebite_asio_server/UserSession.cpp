@@ -28,7 +28,7 @@ void UserSession::start()
 
 void UserSession::end()
 {
-	game_session_->RemoveSnake(user_snake_handle_);
+	game_session_->AsyncRemoveSnake(user_snake_handle_);
 
 	std::string myid = std::to_string((uintptr_t)this);
 	game_session_->UnregisterEventListner(myid);
@@ -92,9 +92,9 @@ void UserSession::send_update_game_object(
 
 acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages::InitPlayerSnakeRequest &rq, acoross::snakebite::messages::InitPlayerSnakeReply *rp)
 {
-	game_session_->RemoveSnake(user_snake_handle_);
+	game_session_->AsyncRemoveSnake(user_snake_handle_);
 
-	user_snake_handle_ = game_session_->MakeNewSnake(rq.name(), Snake::EventHandler());
+	user_snake_handle_ = game_session_->AsyncMakeNewSnake(rq.name(), Snake::EventHandler());
 	if (rp)
 	{
 		rp->set_handle(user_snake_handle_);

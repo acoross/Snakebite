@@ -15,9 +15,12 @@
 #include "apple.h"
 #include "handle.h"
 #include "game_geo_zone_grid.h"
+#include "game_geo_zone.h"
 
 namespace acoross {
 namespace snakebite {
+
+class GameGeoZone;
 
 // 맵, GameObject 로 구성되는 하나의 게임 단위.
 class GameSession final
@@ -33,19 +36,14 @@ public:
 		::boost::asio::io_service& io_service,
 		int zone_width, int zone_height, int n_x, int n_y);
 	~GameSession();
-
-	// update every object in this zone
-	void UpdateMove(int64_t diff_in_ms);
-	// clone every object and invoke listening update event handlers.
-	void InvokeUpdateEvent();
-	// check collision and handle collsion event for every objects.
-	void ProcessCollisions();
 	
-	Handle<Snake>::Type MakeNewSnake(
+	void StartZone(int frame_tick);
+
+	Handle<Snake>::Type AsyncMakeNewSnake(
 		std::string name = "noname", 
 		Snake::EventHandler onDieHandler = Snake::EventHandler());
 	void MakeNewApple();
-	bool RemoveSnake(Handle<Snake>::Type snake);
+	void AsyncRemoveSnake(Handle<Snake>::Type snake);
 	void RemoveApple(Apple* apple, std::function<void(bool result)> func);
 
 	size_t CalculateSnakeCount();
@@ -65,13 +63,13 @@ public:
 	}
 
 private:
-	std::default_random_engine random_engine_;
-
-//#pragma region snakes - use_snakes_mutex_
+	//<snakes>
+	::boost::asio::strand strand_;
 	MapSnake snakes_;
 	//ListApple apples_;
-	std::recursive_mutex snakes_mutex_;
-//#pragma endregion snakes - use_snakes_mutex_
+	//</snakes>
+
+	std::default_random_engine random_engine_;
 
 	// to make new snake...
 	const double radius{ 5. };		// UNIT

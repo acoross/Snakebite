@@ -25,7 +25,6 @@ class Snake : public ZoneObject
 {
 public:
 	using EventHandler = std::function<void(Snake&)>;
-	using CollisionSet = std::set<ZoneObject*>;
 
 	Snake(GameSession& game_session, const Position2D& pos, double radius
 		, const Degree& angle, double velocity, double ang_vel, int len
@@ -51,9 +50,7 @@ public:
 	double GetVelocity() const { return velocity_; }
 	double GetAngVelocity() const { return ang_vel_; }
 	Position2D GetPosition() const { return head_.GetPosition(); }
-
-	void AddBody();
-
+	
 	bool ProcessCollision(std::shared_ptr<ZoneObject> target);
 
 #pragma region key_input
@@ -77,8 +74,6 @@ private:
 	Degree angle_; // degree
 	double velocity_; // UNIT/ms
 	double ang_vel_;	// degree/ms
-
-	//CollisionSet collision_set_;
 
 	std::atomic<PlayerKey> last_pk_{ PK_NONE };
 

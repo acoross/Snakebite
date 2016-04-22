@@ -7,6 +7,8 @@
 #include <map>
 #include <set>
 
+#include <sdkddkver.h>
+#include <boost/asio.hpp>
 #include <acoross/snakebite/game_session/game_session_system.h>
 
 namespace acoross {
@@ -25,23 +27,23 @@ public:
 	SnakeNpcControlManager& operator=(SnakeNpcControlManager&) = delete;
 
 public:
-	SnakeNpcControlManager(std::weak_ptr<GameSession> game_session_wp);
+	SnakeNpcControlManager(::boost::asio::io_service& io_service,
+		std::weak_ptr<GameSession> game_session_wp);
 	~SnakeNpcControlManager() {}
 
-	void ChangeNpcDirection(int64_t diff_in_ms);
-
-	Handle<Snake>::Type AddSnakeNpc();
-	bool RemoveSnakeNpc(Handle<Snake>::Type handle);
-	void RemoveFirstSnakeNpc();
+	void AsyncChangeNpcDirection(int64_t diff_in_ms);
+	void AsyncAddSnakeNpc();
+	void AsyncRemoveSnakeNpc(Handle<Snake>::Type handle);
+	void AsyncRemoveFirstSnakeNpc();
 
 private:
-	void UnregisterSnakeNpc(Handle<Snake>::Type handle);
+	void async_unregister_snake_npc(Handle<Snake>::Type handle);
 
-	std::default_random_engine random_engine_;
-
-	std::recursive_mutex snake_npcs_mutex_;
+	//std::recursive_mutex snake_npcs_mutex_;
+	::boost::asio::strand strand_;
 	SetSnakeHandle snake_npc_handles_;
 
+	std::default_random_engine random_engine_;
 	std::weak_ptr<GameSession> game_session_wp_;
 };
 

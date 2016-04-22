@@ -2,6 +2,7 @@
 #define SNAKEBITE_GAME_OBJECT_H_
 
 #include <string>
+#include <mutex>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_collider.h"
@@ -34,6 +35,7 @@ public:
 			return true;
 		}
 
+		std::lock_guard<std::recursive_mutex> lock(body_list_lock_);
 		for (auto mo : other->body_list_)
 		{
 			if (IsCrashed(head_, mo))
@@ -55,12 +57,20 @@ public:
 		return std::make_pair(zone_idx_x_.exchange(idx_x), zone_idx_y_.exchange(idx_y));
 	}
 
+	void AddBody()
+	{
+		std::lock_guard<std::recursive_mutex> lock(body_list_lock_);
+		body_list_.emplace_back(head_.GetPosition(), head_.GetRadius());
+	}
+
 public:
 	std::atomic<int> zone_idx_x_;
 	std::atomic<int> zone_idx_y_;
 	std::unique_ptr<ColliderBase> collider_;
 	MovingObject head_;
 	std::list<MovingObject> body_list_;
+	mutable std::recursive_mutex body_list_lock_;
+
 	const std::string Name;
 	std::atomic<bool> remove_this_from_zone_{ false };
 };

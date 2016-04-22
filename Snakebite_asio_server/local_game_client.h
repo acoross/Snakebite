@@ -185,8 +185,8 @@ public:
 		game_server_.RequestToSession(
 			[_this = this, handle = player_handle_](GameSession& session)
 		{
-			session.RemoveSnake(_this->player_handle_);
-			_this->player_handle_ = session.MakeNewSnake("local player",
+			session.AsyncRemoveSnake(_this->player_handle_);
+			_this->player_handle_ = session.AsyncMakeNewSnake("local player",
 				[_this](Snake& snake)
 			{
 				_this->SetPlayerHandleZero();
