@@ -73,9 +73,9 @@ public:
 	}
 
 public:
-	const int FRAME_TICK{ 100 };
-	const int COUNT_ZONE_X = 8;
-	const int COUNT_ZONE_Y = 8;
+	const int FRAME_TICK{ 200 };
+	const int COUNT_ZONE_X = 20;
+	const int COUNT_ZONE_Y = 20;
 	const int ZoneWidth{ 500 };
 	const int ZoneHeight{ 500 };
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };
@@ -99,7 +99,6 @@ private:
 		tcp::socket&& push_socket);
 
 private:
-	boost::asio::io_service& io_service_;
 	rpc::RpcServer rpc_server_;
 	rpc::RpcServer push_server_;
 

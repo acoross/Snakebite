@@ -55,11 +55,21 @@ SnakeNpcControlManager::SnakeNpcControlManager(
 	::boost::asio::io_service& io_service, 
 	std::weak_ptr<GameSession> game_session_wp)
 	: strand_(io_service)
+	, npc_change_dir_timer_(io_service)
 	, game_session_wp_(game_session_wp)
 {
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
 	random_engine_.seed((unsigned int)t.time_since_epoch().count());
+}
+
+void SnakeNpcControlManager::Start(int frametick)
+{
+	bool exp = false;
+	if (is_started.compare_exchange_strong(exp, true))
+	{
+		AsyncChangeNpcDirection(frametick);
+	}
 }
 
 void SnakeNpcControlManager::AsyncChangeNpcDirection(int64_t diff_in_ms)
@@ -69,6 +79,8 @@ void SnakeNpcControlManager::AsyncChangeNpcDirection(int64_t diff_in_ms)
 	strand_.post(
 		[this, diff_in_ms]()
 	{
+		npc_change_dir_timer_.expires_from_now(boost::posix_time::milliseconds(diff_in_ms));
+
 		// 임시:
 		// 랜덤하게 방향을 변경.
 		// UpdatteMove 가 불린 횟수와 관계없이,
@@ -80,6 +92,15 @@ void SnakeNpcControlManager::AsyncChangeNpcDirection(int64_t diff_in_ms)
 				changeDirection(random_engine_, game_session, snake_npc_handles_, diff_in_ms);
 			}
 		}
+
+		npc_change_dir_timer_.async_wait(
+			[this, diff_in_ms](boost::system::error_code ec)
+		{
+			if (!ec)
+			{
+				AsyncChangeNpcDirection(diff_in_ms);
+			}
+		});
 	});
 }
 
