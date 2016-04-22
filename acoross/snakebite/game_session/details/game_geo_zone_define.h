@@ -13,7 +13,7 @@ namespace snakebite {
 
 using MapSnake = std::unordered_map<Handle<Snake>::Type, SnakeSP>;
 using ListApple = std::list<AppleSP>;
-using CollisionMap = std::unordered_map<Handle<Snake>::Type, GameObjectWP>;
+using CollisionMap = std::unordered_map<Handle<Snake>::Type, ZoneObjectWP>;
 using CollisionSet = std::set<Handle<Snake>::Type>;
 
 }

@@ -25,8 +25,8 @@ class GameSession final
 public:
 	using UpdateEventListner =
 		std::function<void(int idx_x, int idx_y, 
-			const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, 
-			const std::list<GameObjectClone>&)>;
+			const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>&, 
+			const std::list<ZoneObjectClone>&)>;
 	using ListMovingObject = MovingObjectContainer::ListMovingObject;
 	
 	explicit GameSession(

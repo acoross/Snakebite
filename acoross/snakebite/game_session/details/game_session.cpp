@@ -38,7 +38,7 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 		[&game_boundary = zone_grid_.GetBoundaryContainer(), 
 		diff_in_ms](auto& zone)->bool
 	{
-		zone.AsyncUpdateMove(diff_in_ms);
+		zone.AsyncUpdateMovObjPosition(diff_in_ms);
 		return true;
 	});
 }
@@ -171,20 +171,17 @@ Handle<Snake>::Type GameSession::MakeNewSnake(std::string name, Snake::EventHand
 	return Handle<Snake>(snake.get()).handle;
 }
 
-bool GameSession::RemoveSnake(Handle<Snake>::Type snake)
+bool GameSession::RemoveSnake(Handle<Snake>::Type handle)
 {
+	std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+	auto it = snakes_.find(handle);
+	if (it != snakes_.end())
 	{
-		std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-		snakes_.erase(snake);
+		it->second->remove_this_from_zone_.store(true);
+		snakes_.erase(it);
+		return true;
 	}
-
-	return zone_grid_.ProcessAllZone(
-		[snake](GameGeoZone& zone)->bool
-		{
-			zone.AsyncRemoveMovObj(snake);
-			return true;
-		}
-		);
+	return false;
 }
 
 void GameSession::MakeNewApple()

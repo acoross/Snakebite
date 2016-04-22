@@ -8,7 +8,7 @@ namespace snakebite {
 Snake::Snake(GameSession& game_session, const Position2D & pos, double radius, 
 	const Degree & angle, double velocity, double ang_vel, int len, 
 	EventHandler onDie, std::string name)
-	: GameObject(new SnakeCollider(this), pos, radius, name)
+	: ZoneObject(new SnakeCollider(this), pos, radius, name)
 	, game_session_(game_session)
 	, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	, onDie_(onDie)
@@ -111,7 +111,7 @@ void Snake::AddBody()
 	body_list_.emplace_back(head_.GetPosition(), head_.GetRadius());
 }
 
-bool Snake::ProcessCollision(std::shared_ptr<GameObject> target)
+bool Snake::ProcessCollision(std::shared_ptr<ZoneObject> target)
 {
 	//TODO: !!!! collision_set_ 에 삽입된 snake 가 죽으면 맵에서 빠지지 않게 됨.
 	// 하지만 그것 때문에 느려지는 건 아닌것 같고.

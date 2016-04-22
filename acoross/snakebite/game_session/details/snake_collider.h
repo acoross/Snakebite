@@ -7,7 +7,7 @@
 namespace acoross {
 namespace snakebite {
 
-class GameObject;
+class ZoneObject;
 class Snake;
 class Apple;
 
@@ -43,7 +43,7 @@ public:	\
 
 ColliderImpl(SnakeCollider, Snake)
 ColliderImpl(AppleCollider, Apple)
-ColliderImpl(DummyCollider, GameObject)
+ColliderImpl(DummyCollider, ZoneObject)
 
 #undef ColliderImpl
 

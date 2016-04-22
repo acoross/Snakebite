@@ -16,27 +16,15 @@ namespace snakebite {
 // 단일 게임을 여러개의 zone 으로 쪼개어 쓴다.
 class GameGeoZoneGrid;
 
-class ZoneObjectBase
-{
-public:
-
-};
-
-template <typename T>
-class ZoneObject : ZoneObjectBase
-{
-
-};
-
 // serialized by strand
 class GameGeoZone
 	: public std::enable_shared_from_this<GameGeoZone>
 {
 public:
-	using CloneSnakelistT = std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>;
+	using CloneSnakelistT = std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>;
 	using SharedCloneSnakelistT = std::shared_ptr<CloneSnakelistT>;
 	using CloneSnakelistCallback = std::function<void(SharedCloneSnakelistT)>;
-	using CloneApplelistT = std::list<GameObjectClone>;
+	using CloneApplelistT = std::list<ZoneObjectClone>;
 	using SharedCloneApplelistT = std::shared_ptr<CloneApplelistT>;
 	using CloneApplelistCallback = std::function<void(SharedCloneApplelistT)>;
 
@@ -48,14 +36,14 @@ public:
 	~GameGeoZone();
 
 	// update every snake position
-	void AsyncUpdateMove(int64_t diff_in_ms);
+	void AsyncUpdateMovObjPosition(int64_t diff_in_ms);
 	// process collision with neighbor zones
 	void AsyncProcessCollision(GameGeoZoneGrid& neighbors_);
 
 	void AsyncAddStaticObj(std::shared_ptr<Apple> apple);
 	void AsyncRemoveStaticObj(Apple* apple, std::function<void(bool result)> func);
 	void AsyncAddMovObj(std::shared_ptr<Snake> snake);
-	void AsyncRemoveMovObj(Handle<Snake>::Type snake);
+	//void AsyncRemoveMovObj(Handle<Snake>::Type snake);
 
 	size_t AtomicStaticObjCount() const;
 	size_t AtomicMovObjCount() const;
@@ -93,12 +81,6 @@ private:
 	CollisionSet wall_collision_set_;
 };
 //
-
-
-class SnakebiteGeoZone
-{
-
-};
 
 }
 }

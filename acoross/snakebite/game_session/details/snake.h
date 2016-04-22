@@ -21,11 +21,11 @@ enum PlayerKey
 
 class GameSession;
 
-class Snake : public GameObject
+class Snake : public ZoneObject
 {
 public:
 	using EventHandler = std::function<void(Snake&)>;
-	using CollisionSet = std::set<GameObject*>;
+	using CollisionSet = std::set<ZoneObject*>;
 
 	Snake(GameSession& game_session, const Position2D& pos, double radius
 		, const Degree& angle, double velocity, double ang_vel, int len
@@ -54,7 +54,7 @@ public:
 
 	void AddBody();
 
-	bool ProcessCollision(std::shared_ptr<GameObject> target);
+	bool ProcessCollision(std::shared_ptr<ZoneObject> target);
 
 #pragma region key_input
 	//@atomic

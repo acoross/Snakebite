@@ -48,8 +48,8 @@ public:
 
 private:
 	void send_update_game_object(
-		const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
-		const std::list<GameObjectClone>& apple_clone_list);
+		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
+		const std::list<ZoneObjectClone>& apple_clone_list);
 	
 	Handle<Snake>::Type user_snake_handle_;
 	std::shared_ptr<GameSession> game_session_;

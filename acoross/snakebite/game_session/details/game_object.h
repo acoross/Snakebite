@@ -9,20 +9,20 @@
 namespace acoross {
 namespace snakebite {
 
-class GameObjectClone;
+class ZoneObjectClone;
 
-class GameObject
+class ZoneObject
 {
 public:
-	GameObject(ColliderBase* collider, Position2D pos, double radius, std::string name = "noname")
+	ZoneObject(ColliderBase* collider, Position2D pos, double radius, std::string name = "noname")
 		: collider_(collider), head_(pos, radius), Name(name), zone_idx_x_(0), zone_idx_y_(0)
 	{}
-	virtual ~GameObject()
+	virtual ~ZoneObject()
 	{}
 	
-	GameObjectClone Clone();
+	ZoneObjectClone Clone();
 
-	bool IsCollidingTo(std::shared_ptr<GameObject> other) const
+	bool IsCollidingTo(std::shared_ptr<ZoneObject> other) const
 	{
 		if (this == other.get())
 		{
@@ -62,14 +62,15 @@ public:
 	MovingObject head_;
 	std::list<MovingObject> body_list_;
 	const std::string Name;
+	std::atomic<bool> remove_this_from_zone_{ false };
 };
 
-using GameObjectWP = std::weak_ptr<GameObject>;
+using ZoneObjectWP = std::weak_ptr<ZoneObject>;
 
-class GameObjectClone
+class ZoneObjectClone
 {
 public:
-	GameObjectClone(GameObject& lhs)
+	ZoneObjectClone(ZoneObject& lhs)
 		: head_(lhs.head_)
 		, body_list_(lhs.body_list_)
 		, Name(lhs.Name)
@@ -77,7 +78,7 @@ public:
 		, zone_idx_y_(lhs.zone_idx_y_.load())
 	{}
 
-	GameObjectClone(MovingObject head, std::list<MovingObject> body_list, std::string name, int zone_idx_x, int zone_idx_y)
+	ZoneObjectClone(MovingObject head, std::list<MovingObject> body_list, std::string name, int zone_idx_x, int zone_idx_y)
 		: head_(head)
 		, body_list_(body_list)
 		, Name(name)
@@ -94,9 +95,9 @@ public:
 	int zone_idx_y_;
 };
 
-inline GameObjectClone GameObject::Clone()
+inline ZoneObjectClone ZoneObject::Clone()
 {
-	return GameObjectClone(*this);
+	return ZoneObjectClone(*this);
 }
 
 }

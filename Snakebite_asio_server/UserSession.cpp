@@ -14,8 +14,8 @@ void UserSession::start()
 		[us = this, rpcsocket_wp = std::weak_ptr<rpc::RpcSocket>(shared_from_this())]
 	(
 		int idx_x, int idx_y, 
-		const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
-		const std::list<GameObjectClone>& apple_clone_list)
+		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
+		const std::list<ZoneObjectClone>& apple_clone_list)
 	{
 		if (auto rpcsocket = rpcsocket_wp.lock())
 		{
@@ -35,8 +35,8 @@ void UserSession::end()
 }
 
 void UserSession::send_update_game_object(
-	const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
-	const std::list<GameObjectClone>& apple_clone_list)
+	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
+	const std::list<ZoneObjectClone>& apple_clone_list)
 {
 	if (!push_stub_)
 	{

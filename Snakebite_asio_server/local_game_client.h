@@ -127,8 +127,8 @@ public:
 
 		// snake 와 apple 의 복제본 리스트를 받아온 뒤 화면에 그린다.
 		// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
-		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_pairs;
-		std::list<GameObjectClone> apples;
+		std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>> snake_pairs;
+		std::list<ZoneObjectClone> apples;
 		RetrieveObjectList(idx_x, idx_y, snake_pairs, apples);
 		//
 

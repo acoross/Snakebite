@@ -13,8 +13,8 @@ acoross::rpc::ErrCode SC_PushServiceImpl::UpdateGameObjects(
 
 bool GameClient::UpdateGameObjectPositions(const messages::UpdateGameObjectsEvent& got_msg)
 {
-	std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_clone_list;
-	std::list<GameObjectClone> apple_clone_list;
+	std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>> snake_clone_list;
+	std::list<ZoneObjectClone> apple_clone_list;
 
 	auto clone_count = got_msg.clone_size();
 	for (int i = 0; i < clone_count; ++i)
@@ -31,7 +31,7 @@ bool GameClient::UpdateGameObjectPositions(const messages::UpdateGameObjectsEven
 			client_body_list.emplace_back(Position2D(pac_body.x(), pac_body.y()), pac_body.radius());
 		}
 
-		auto client_clone = GameObjectClone(client_head, client_body_list, clone.obj_name());
+		auto client_clone = ZoneObjectClone(client_head, client_body_list, clone.obj_name());
 
 		if (clone.clone_type() == 0) //snake
 		{

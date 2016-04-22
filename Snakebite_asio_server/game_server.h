@@ -32,8 +32,8 @@ public:
 	using LocalUpdateListner = 
 		std::function<void(
 			int idx_x, int idx_y, 
-			const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&, 
-			const std::list<GameObjectClone>&
+			const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>&, 
+			const std::list<ZoneObjectClone>&
 		)>;
 	
 	const int FRAME_TICK{ 100 };
@@ -70,8 +70,8 @@ public:
 		game_session_->AddUpdateEventListner("local listner",
 			[local_listner]	(
 				int idx_x, int idx_y, 
-				const std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list, 
-				const std::list<GameObjectClone>& apple_clone_list)
+				const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
+				const std::list<ZoneObjectClone>& apple_clone_list)
 			{
 				local_listner(idx_x, idx_y, 
 					snake_clone_list, apple_clone_list);

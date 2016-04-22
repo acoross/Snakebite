@@ -22,8 +22,8 @@ public:
 
 	void SetObjectList(
 		int idx_x, int idx_y, 
-		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>&& snake_clone_list,
-		std::list<GameObjectClone>&& apple_clone_list)
+		std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>&& snake_clone_list,
+		std::list<ZoneObjectClone>&& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
 		zone_snake_clone_list_[std::make_pair(idx_x, idx_y)] = std::move(snake_clone_list);
@@ -33,8 +33,8 @@ public:
 
 	void RetrieveObjectList(
 		int idx_x, int idx_y, 
-		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>& snake_clone_list,
-		std::list<GameObjectClone>& apple_clone_list)
+		std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list,
+		std::list<ZoneObjectClone>& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
 		
@@ -65,7 +65,7 @@ public:
 
 protected:
 	//@need GameSession::snakes_mutex_ locked
-	static void DrawSnake(Win::WDC& wdc, GameObjectClone& snake)
+	static void DrawSnake(Win::WDC& wdc, ZoneObjectClone& snake)
 	{
 		DrawSnakeName(wdc, snake);
 		DrawObjectZoneIdx(wdc, snake, 35);
@@ -86,7 +86,7 @@ protected:
 		wdc.Ellipse(center_x - radius, center_y - radius,
 			center_x + radius, center_y + radius);
 	}
-	static void DrawSnakeName(Win::WDC& wdc, GameObjectClone& snake)
+	static void DrawSnakeName(Win::WDC& wdc, ZoneObjectClone& snake)
 	{
 		auto pos = snake.head_.GetPosition();
 		RECT rect{
@@ -95,7 +95,7 @@ protected:
 		};
 		wdc.DrawTextA(snake.Name, rect, DT_CENTER);
 	}
-	static void DrawObjectZoneIdx(Win::WDC& wdc, GameObjectClone& obj, int top)
+	static void DrawObjectZoneIdx(Win::WDC& wdc, ZoneObjectClone& obj, int top)
 	{
 		auto pos = obj.head_.GetPosition();
 		RECT rect{
@@ -110,8 +110,8 @@ protected:
 	//
 
 protected:
-	using CloneSnakeList = std::list<std::pair<Handle<Snake>::Type, GameObjectClone>>;
-	using CloneAppleList = std::list<GameObjectClone>;
+	using CloneSnakeList = std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>;
+	using CloneAppleList = std::list<ZoneObjectClone>;
 	std::mutex clone_list_mutex_;
 	std::map<std::pair<int, int>, CloneSnakeList> zone_snake_clone_list_;
 	std::map<std::pair<int, int>, CloneAppleList> zone_apple_clone_list_;

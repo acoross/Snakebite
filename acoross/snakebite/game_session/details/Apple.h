@@ -6,11 +6,11 @@
 namespace acoross {
 namespace snakebite {
 
-class Apple : public GameObject
+class Apple : public ZoneObject
 {
 public:
 	Apple(const Position2D& pos, double radius)
-		: GameObject(new AppleCollider(this), pos, radius)
+		: ZoneObject(new AppleCollider(this), pos, radius)
 	{
 		//container.RegisterMovingObject(mo);
 	}

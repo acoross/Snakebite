@@ -244,7 +244,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		[client = g_game_client.get()]
 	(
 		int idx_x, int idx_y, 
-		std::list<std::pair<Handle<Snake>::Type, GameObjectClone>> snake_list, std::list<GameObjectClone> apple_list)
+		std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>> snake_list, std::list<ZoneObjectClone> apple_list)
 	{
 		client->SetObjectList(idx_x, idx_y, std::move(snake_list), std::move(apple_list));
 	});
