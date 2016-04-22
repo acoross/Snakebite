@@ -8,8 +8,7 @@ GameServer::GameServer(
 	short port, 
 	short push_port
 	)
-	: io_service_(io_service)
-	, rpc_server_(io_service, port,
+	: rpc_server_(io_service, port,
 		[this](boost::asio::io_service& ios, tcp::socket&& socket) {
 			on_accept(ios, std::move(socket));
 		})
@@ -24,37 +23,9 @@ GameServer::GameServer(
 	, npc_controll_manager_(
 		std::make_unique<SnakeNpcControlManager>(
 			io_service, game_session_))
-	{
-		game_session_->StartZone(FRAME_TICK);
-		do_update_game_session();
-	}
-
-void GameServer::do_update_game_session()
 {
-	MeanProcessTimeChecker mean_tick(mean_tick_time_ms_);
-	game_update_timer_.expires_from_now(boost::posix_time::milliseconds(FRAME_TICK));
-
-	static uint64_t last_tick = ::GetTickCount64();
-	uint64_t current_tick = ::GetTickCount64();
-	uint64_t diff = current_tick - last_tick;
-
-	double new_mean_time = mean_frame_tick_.load() * 0.9 + diff * 0.1;
-	mean_frame_tick_.store((double)new_mean_time);
-
-	{
-		npc_controll_manager_->AsyncChangeNpcDirection(FRAME_TICK);
-	}
-
-	last_tick = current_tick;
-
-	game_update_timer_.async_wait(
-		[this](boost::system::error_code ec)
-	{
-		if (!ec)
-		{
-			do_update_game_session();
-		}
-	});
+	game_session_->StartZone(FRAME_TICK);
+	npc_controll_manager_->Start(FRAME_TICK);
 }
 
 void GameServer::on_accept(boost::asio::io_service & io_service, tcp::socket && socket)
@@ -72,7 +43,11 @@ void GameServer::on_accept(boost::asio::io_service & io_service, tcp::socket && 
 					gs->UnregisterUserSession(addr);
 				}
 			});
-	user_session_map_[addr] = us;
+	
+	{
+		std::lock_guard<std::recursive_mutex> lock(user_session_mutex_);
+		user_session_map_[addr] = us;
+	}
 	us->start();
 }
 

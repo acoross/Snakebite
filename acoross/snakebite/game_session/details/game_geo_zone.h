@@ -59,7 +59,7 @@ private:
 		std::shared_ptr<MapSnake> shared_snakes);
 
 	// update loop, using timer
-	void do_update();
+	void AsyncDoUpdate();
 	// @use in serializer
 	// update every snake position
 	void update_movobj_position(int64_t diff_in_ms);

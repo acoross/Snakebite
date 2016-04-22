@@ -31,17 +31,22 @@ public:
 		std::weak_ptr<GameSession> game_session_wp);
 	~SnakeNpcControlManager() {}
 
-	void AsyncChangeNpcDirection(int64_t diff_in_ms);
+	void Start(int frametick);
+	
 	void AsyncAddSnakeNpc();
 	void AsyncRemoveSnakeNpc(Handle<Snake>::Type handle);
 	void AsyncRemoveFirstSnakeNpc();
 
 private:
+	void AsyncChangeNpcDirection(int64_t diff_in_ms);
 	void async_unregister_snake_npc(Handle<Snake>::Type handle);
 
 	//std::recursive_mutex snake_npcs_mutex_;
+	::boost::asio::deadline_timer npc_change_dir_timer_;
 	::boost::asio::strand strand_;
 	SetSnakeHandle snake_npc_handles_;
+
+	std::atomic<bool> is_started{ false };
 
 	std::default_random_engine random_engine_;
 	std::weak_ptr<GameSession> game_session_wp_;

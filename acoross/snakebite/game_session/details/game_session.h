@@ -63,11 +63,9 @@ public:
 	}
 
 private:
-	//<snakes>
 	::boost::asio::strand strand_;
 	MapSnake snakes_;
 	//ListApple apples_;
-	//</snakes>
 
 	std::default_random_engine random_engine_;
 

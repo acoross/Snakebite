@@ -56,11 +56,11 @@ void GameGeoZone::Run(int frame_tick)
 	bool exp = false;
 	if (is_running_.compare_exchange_strong(exp, true))
 	{
-		do_update();
+		AsyncDoUpdate();
 	}
 }
 
-void GameGeoZone::do_update()
+void GameGeoZone::AsyncDoUpdate()
 {
 	strand_.post(
 		[this]()
@@ -76,7 +76,7 @@ void GameGeoZone::do_update()
 		{
 			if (!ec)
 			{
-				do_update();
+				AsyncDoUpdate();
 			}
 		});
 	});
@@ -119,14 +119,14 @@ void GameGeoZone::process_collision(GameGeoZoneGrid& neighbors_)
 		auto width = zone_boundary_.Width();
 		auto height = zone_boundary_.Height();
 
-		/*if (pos.x < zone_boundary_.Left - width / 4
+		if (pos.x < zone_boundary_.Left - width / 4
 		|| pos.x >= zone_boundary_.Right + width / 4
 		|| pos.y < zone_boundary_.Top - height / 4
-		|| pos.y >= zone_boundary_.Bottom + height / 4)*/
-		if (pos.x < zone_boundary_.Left
+		|| pos.y >= zone_boundary_.Bottom + height / 4)
+		/*if (pos.x < zone_boundary_.Left
 			|| pos.x >= zone_boundary_.Right
 			|| pos.y < zone_boundary_.Top
-			|| pos.y >= zone_boundary_.Bottom)
+			|| pos.y >= zone_boundary_.Bottom)*/
 		{
 			auto& dest_zone = owner_zone_grid_.get_zone(pos.x, pos.y);
 			if (dest_zone)
@@ -145,8 +145,8 @@ void GameGeoZone::process_collision(GameGeoZoneGrid& neighbors_)
 	}
 
 	//// snake 를 한 존에서만 접근하려고 수정...
-	this->AsyncProcessCollisionTo(shared_src_snakes);
-	/*for (int x = -1; x <= 1; ++x)
+	//this->AsyncProcessCollisionTo(shared_src_snakes);
+	for (int x = -1; x <= 1; ++x)
 	{
 		for (int y = -1; y <= 1; ++y)
 		{
@@ -156,7 +156,7 @@ void GameGeoZone::process_collision(GameGeoZoneGrid& neighbors_)
 				neighbor_zone->AsyncProcessCollisionTo(shared_src_snakes);
 			}
 		}
-	}*/
+	}
 }
 
 // 다른 존하고의 충돌체크
