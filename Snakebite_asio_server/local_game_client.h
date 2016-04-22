@@ -138,6 +138,19 @@ public:
 
 		{
 			MeanProcessTimeChecker mean_draw(mean_draw_time_ms_);
+
+			
+			HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(DC_BRUSH));
+			auto oldcol = ::SetDCBrushColor(memdc.Get(), RGB(0, 0, 255));
+			auto oldtextcol = ::SetTextColor(memdc.Get(), RGB(0, 0, 255));
+			for (auto& apple : apples)
+			{
+				DrawMovingObject(memdc, apple.head_);
+				DrawObjectZoneIdx(memdc, apple, 7);
+			}
+			::SetTextColor(memdc.Get(), oldtextcol);
+			::SelectObject(memdc.Get(), oldbrush);
+
 			for (auto& snake_pair : snake_pairs)
 			{
 				if (snake_pair.first == player_handle_)
@@ -153,12 +166,6 @@ public:
 				{
 					DrawSnake(memdc, snake_pair.second);
 				}
-			}
-
-			for (auto& apple : apples)
-			{
-				DrawMovingObject(memdc, apple.head_);
-				DrawObjectZoneIdx(memdc, apple, 7);
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 #include <memory>
 
 #include <acoross/snakebite/win/targetver.h>
+#include <SDKDDKVer.h>
 #include <boost/asio.hpp>
 #include <queue>
 #include <functional>

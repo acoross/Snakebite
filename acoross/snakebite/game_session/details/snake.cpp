@@ -24,7 +24,7 @@ Snake::~Snake()
 
 }
 
-void Snake::UpdateMove(int64_t diff_in_ms, MovingObjectContainer & container)
+void Snake::UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container)
 {
 	// change direction
 	{

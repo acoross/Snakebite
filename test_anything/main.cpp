@@ -4,7 +4,7 @@
 #include <condition_variable>
 #include <mutex>
 
-#include <acoross/snakebite/win/targetver.h>
+#include <SDKDDKVer.h>
 #include <boost/asio.hpp>
 
 #include <acoross/rpc/rpc_server.h>

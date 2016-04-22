@@ -5,6 +5,7 @@
 #include <mutex>
 #include <chrono>
 #include <algorithm>
+#include <SDKDDKVer.h>
 #include <boost/asio.hpp>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
@@ -37,8 +38,7 @@ void GameSession::UpdateMove(int64_t diff_in_ms)
 		[&game_boundary = zone_grid_.GetBoundaryContainer(), 
 		diff_in_ms](auto& zone)->bool
 	{
-		zone.UpdateMove(diff_in_ms);
-		//zone.CheckAndRequestChangeZone();
+		zone.AsyncUpdateMove(diff_in_ms);
 		return true;
 	});
 }
@@ -49,13 +49,18 @@ void GameSession::InvokeUpdateEvent()
 	auto event_listeners = on_update_event_listeners_;
 	update_listner_mutex_.unlock();
 	
+	if (event_listeners.empty())
+	{
+		return;
+	}
+
 	zone_grid_.ProcessAllZone(
 		[event_listeners](GameGeoZone& zone)->bool
 	{
-		zone.AsyncCloneSnakeList(
+		zone.AsyncCloneMovObjList(
 			[&zone, event_listeners](GameGeoZone::SharedCloneSnakelistT snakes)
 		{
-			zone.AsyncCloneAppleList(
+			zone.AsyncCloneStaticObjList(
 				[&zone, event_listeners, snakes](GameGeoZone::SharedCloneApplelistT apples)
 			{
 				for (auto& pair : event_listeners)
@@ -73,18 +78,10 @@ void GameSession::InvokeUpdateEvent()
 
 void GameSession::ProcessCollisions()
 {
-	//zone_grid_.ProcessAllZone(
-	//	[](GameGeoZone& zone)->bool
-	//	{
-	//		/*zone.ProcessAllEnterZoneRequests();
-	//		zone.ProcessAllLeaaveRequests();*/
-	//		return true;
-	//	});
-
 	zone_grid_.ProcessAllZone(
 		[this](GameGeoZone& zone)->bool
 		{
-			zone.ProcessCollision(zone_grid_);
+			zone.AsyncProcessCollision(zone_grid_);
 			return true;
 		});
 }
@@ -94,7 +91,7 @@ void GameSession::RemoveApple(Apple* apple, std::function<void(bool result)> fun
 	zone_grid_.ProcessAllZone(
 		[apple, func](GameGeoZone& zone)->bool
 	{
-		zone.RemoveApple(apple, func);
+		zone.AsyncRemoveStaticObj(apple, func);
 		return true;
 	}
 	);
@@ -106,7 +103,7 @@ size_t GameSession::CalculateSnakeCount()
 	zone_grid_.ProcessAllZone(
 		[&count](GameGeoZone& zone)->bool
 	{
-		count += zone.SnakeCount();
+		count += zone.AtomicMovObjCount();
 		return true;
 	}
 	);
@@ -119,7 +116,7 @@ size_t GameSession::CalculateAppleCount()
 	zone_grid_.ProcessAllZone(
 		[&count](GameGeoZone& zone)->bool
 	{
-		count += zone.AppleCount();
+		count += zone.AtomicStaticObjCount();
 		return true;
 	}
 	);
@@ -170,7 +167,7 @@ Handle<Snake>::Type GameSession::MakeNewSnake(std::string name, Snake::EventHand
 		return Handle<Snake>::Type();
 	}
 
-	zone->AddSnake(snake);
+	zone->AsyncAddMovObj(snake);
 	return Handle<Snake>(snake.get()).handle;
 }
 
@@ -184,7 +181,7 @@ bool GameSession::RemoveSnake(Handle<Snake>::Type snake)
 	return zone_grid_.ProcessAllZone(
 		[snake](GameGeoZone& zone)->bool
 		{
-			zone.RemoveSnake(snake);
+			zone.AsyncRemoveMovObj(snake);
 			return true;
 		}
 		);
@@ -202,7 +199,7 @@ void GameSession::MakeNewApple()
 	auto zone = zone_grid_.get_zone(init_pos.x, init_pos.y);
 	if (zone)
 	{
-		zone->AddApple(apple);
+		zone->AsyncAddStaticObj(apple);
 	}
 }
 

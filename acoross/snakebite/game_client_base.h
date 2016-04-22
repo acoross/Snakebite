@@ -104,6 +104,7 @@ protected:
 		};
 		char buf[20]{ 0, };
 		::StringCchPrintfA(buf, _countof(buf), "%d, %d", obj.zone_idx_x_, obj.zone_idx_y_);
+
 		wdc.DrawTextA(buf, rect, DT_CENTER);
 	}
 	//

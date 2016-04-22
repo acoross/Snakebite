@@ -1,10 +1,11 @@
 #ifndef ACOROSS_GAME_GEO_ZONE_GRID_H_
 #define ACOROSS_GAME_GEO_ZONE_GRID_H_
 
+#include <SDKDDKVer.h>
+#include <boost/asio.hpp>
 #include <mutex>
 #include <vector>
 #include <queue>
-#include <boost/asio.hpp>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "game_geo_zone_define.h"
@@ -15,6 +16,9 @@ namespace snakebite {
 ///////////////////////////////////////////////////////////////////
 class GameGeoZone;
 
+// GeoZone 에 대한 const container
+// @thread-safe: containing-geo zone 에 대한 접근은 constant 하므로 thread-safe
+//	내용물은 geo zone 의 멤버함수 호출은 geo zone 구현에 따라 다름.
 class GameGeoZoneGrid final
 {
 public:

@@ -1,7 +1,7 @@
 #ifndef SNAKEBITE_GAME_CLIENT_H_
 #define SNAKEBITE_GAME_CLIENT_H_
 
-#include <acoross/snakebite/win/targetver.h>
+#include <SDKDDKVer.h>
 #include <boost/asio.hpp>
 
 #include <acoross/snakebite/protos/snakebite_message.rpc.h>

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <thread>
 #include <memory>
+#include <SDKDDKVer.h>
 #include <boost/asio.hpp>
 
 #include <acoross/rpc/rpc_server.h>

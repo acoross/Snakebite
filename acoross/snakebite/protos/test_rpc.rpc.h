@@ -6,6 +6,7 @@
 
 #include "test_rpc.pb.h"
 
+#include <SDKDDKVer.h>
 #include <boost/asio.hpp>
 #include <acoross/rpc/rpc_service.h>
 #include <acoross/rpc/rpc_stub.h>

@@ -1,10 +1,11 @@
 #include <acoross/snakebite/win/Resource.h>
 #include <acoross/snakebite/win/WinWrapper.h>
 
+#include <SDKDDKVer.h>
+#include <boost/asio.hpp>
 #include <memory>
 #include <functional>
 #include <thread>
-#include <boost/asio.hpp>
 #include <string>
 #include <sstream>
 #include <strsafe.h>
@@ -12,6 +13,9 @@
 
 #include "local_game_client.h"
 #include "game_server.h"
+
+#ifdef _WIN32_WINNT
+#endif
 
 using namespace acoross::snakebite;
 

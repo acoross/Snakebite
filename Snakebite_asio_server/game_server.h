@@ -9,6 +9,7 @@
 #include <deque>
 #include <map>
 
+#include <SDKDDKVer.h>
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
@@ -102,10 +103,10 @@ public:
 	}
 
 public:
-	const int COUNT_ZONE_X = 20;
-	const int COUNT_ZONE_Y = 20;
-	const int ZoneWidth{ 200 };
-	const int ZoneHeight{ 200 };
+	const int COUNT_ZONE_X = 8;
+	const int COUNT_ZONE_Y = 8;
+	const int ZoneWidth{ 500 };
+	const int ZoneHeight{ 500 };
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };
 	const int ZoneGridHeight{ ZoneHeight * COUNT_ZONE_X };
 	
