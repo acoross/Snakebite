@@ -6,7 +6,7 @@
 #include <string>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
-#include "game_object.h"
+#include "sb_zone_object.h"
 
 namespace acoross {
 namespace snakebite {
@@ -21,7 +21,7 @@ enum PlayerKey
 
 class GameSession;
 
-class Snake : public ZoneObject
+class Snake : public SbZoneObject
 {
 public:
 	using EventHandler = std::function<void(Snake&)>;
@@ -31,7 +31,7 @@ public:
 		, EventHandler onDie = EventHandler(), std::string name = "noname");
 	virtual ~Snake();
 
-	void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container);
+	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override;
 
 	void Move(const DirVector2D& diff_vec, MovingObjectContainer& container);
 
@@ -49,9 +49,6 @@ public:
 	Degree GetAngle() const { return angle_; }
 	double GetVelocity() const { return velocity_; }
 	double GetAngVelocity() const { return ang_vel_; }
-	Position2D GetPosition() const { return head_.GetPosition(); }
-	
-	bool ProcessCollision(std::shared_ptr<ZoneObject> target);
 
 #pragma region key_input
 	//@atomic

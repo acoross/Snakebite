@@ -14,12 +14,14 @@ void UserSession::start()
 		[us = this, rpcsocket_wp = std::weak_ptr<rpc::RpcSocket>(shared_from_this())]
 	(
 		int idx_x, int idx_y, 
-		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
-		const std::list<ZoneObjectClone>& apple_clone_list)
+		SbGeoZone::CloneZoneObjListT& snake_clone_list,
+		SbGeoZone::CloneZoneObjListT& apple_clone_list)
 	{
 		if (auto rpcsocket = rpcsocket_wp.lock())
 		{
-			us->send_update_game_object(snake_clone_list, apple_clone_list);
+			_ASSERT(0);
+			//FIXME!!!!!!
+			//us->send_update_game_object(snake_clone_list, apple_clone_list);
 		}
 	});
 
@@ -93,8 +95,26 @@ void UserSession::send_update_game_object(
 acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages::InitPlayerSnakeRequest &rq, acoross::snakebite::messages::InitPlayerSnakeReply *rp)
 {
 	game_session_->AsyncRemoveSnake(user_snake_handle_);
+	
+	auto self_wp = std::weak_ptr<RpcSocket>(shared_from_this());
+	user_snake_handle_ = game_session_->AsyncMakeNewSnake(rq.name(),
+		[self_wp, this](Snake& snake)	//die callback
+	{
+		if (auto self = self_wp.lock())
+		{
+			user_snake_handle_ = 0;
+			if (push_stub_)
+			{
+				messages::VoidReply vr;
+				vr.set_err(0);
 
-	user_snake_handle_ = game_session_->AsyncMakeNewSnake(rq.name(), Snake::EventHandler());
+				push_stub_->ResetPlayer(vr,
+					[](rpc::ErrCode ec, messages::VoidReply&)
+				{});
+			}
+		}
+	});
+
 	if (rp)
 	{
 		rp->set_handle(user_snake_handle_);

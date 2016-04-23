@@ -2,8 +2,8 @@
 #include <memory>
 #include <Windows.h>
 
-#include <acoross/snakebite/moving_object_system/moving_object_system.h>
-#include <acoross/snakebite/game_session.h>
+#include <acoross/snakebite/game_session/details/moving_object_system/moving_object_system.h>
+#include <acoross/snakebite/game_session/game_session_system.h>
 #include <acoross/snakebite/snake_npc_control_manager.h>
 
 int main(int argc, char* argv[])

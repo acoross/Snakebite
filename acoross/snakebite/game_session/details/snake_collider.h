@@ -4,46 +4,21 @@
 #include <set>
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 
+#include "collider_base.h"
+
 namespace acoross {
 namespace snakebite {
 
-class ZoneObject;
 class Snake;
 class Apple;
 
-class SnakeCollider;
-class AppleCollider;
-class DummyCollider;
-
-class ColliderBase
-{
-public:
-	virtual ~ColliderBase(){}
-
-	virtual void Collide(ColliderBase& other, int cnt) = 0;
-	virtual void Collide(SnakeCollider& other, int cnt) {}
-	virtual void Collide(AppleCollider& other, int cnt) {}
-	virtual void Collide(DummyCollider& other, int cnt) {}
-};
-
-#define ColliderImpl(T, OwnerT) \
-class T : public ColliderBase \
-{	\
-public:	\
-	T(OwnerT* owner) : owner_(owner){}	\
-	virtual void Collide(ColliderBase& other, int cnt) override	\
-	{	\
-		other.Collide(*this, cnt + 1);	\
-	}	\
-	virtual void Collide(SnakeCollider& other, int cnt) override;	\
-	virtual void Collide(AppleCollider& other, int cnt) override;	\
-\
-	OwnerT* owner_;	\
-};
+template <typename T>
+class ZoneObjectEx;
+using SbZoneObject = ZoneObjectEx<SbColliderBase>;
 
 ColliderImpl(SnakeCollider, Snake)
 ColliderImpl(AppleCollider, Apple)
-ColliderImpl(DummyCollider, ZoneObject)
+ColliderImpl(DummyCollider, SbZoneObject)
 
 #undef ColliderImpl
 

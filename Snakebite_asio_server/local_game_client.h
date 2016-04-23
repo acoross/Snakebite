@@ -43,6 +43,10 @@ public:
 			zone_info_.w * zone_info_.limit_idx_x, zone_info_.h * zone_info_.limit_idx_y);
 		HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
 		
+		memdc.Rectangle(0, 0, 
+			zone_info_.w * draw_zone_cnt_x,
+			zone_info_.h * draw_zone_cnt_y);
+
 		for (int idx_x = 0; idx_x < draw_zone_cnt_x; ++idx_x)
 		{
 			for (int idx_y = 0; idx_y < draw_zone_cnt_y; ++idx_y)
@@ -127,8 +131,8 @@ public:
 
 		// snake 와 apple 의 복제본 리스트를 받아온 뒤 화면에 그린다.
 		// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
-		std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>> snake_pairs;
-		std::list<ZoneObjectClone> apples;
+		SbGeoZone::CloneZoneObjListT snake_pairs;
+		SbGeoZone::CloneZoneObjListT apples;
 		RetrieveObjectList(idx_x, idx_y, snake_pairs, apples);
 		//
 
@@ -143,10 +147,10 @@ public:
 			HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(DC_BRUSH));
 			auto oldcol = ::SetDCBrushColor(memdc.Get(), RGB(0, 0, 255));
 			auto oldtextcol = ::SetTextColor(memdc.Get(), RGB(0, 0, 255));
-			for (auto& apple : apples)
+			for (auto& pair : apples)
 			{
-				DrawMovingObject(memdc, apple.head_);
-				DrawObjectZoneIdx(memdc, apple, 7);
+				DrawMovingObject(memdc, pair.second.head_);
+				DrawObjectZoneIdx(memdc, pair.second, 7);
 			}
 			::SetTextColor(memdc.Get(), oldtextcol);
 			::SelectObject(memdc.Get(), oldbrush);
@@ -197,6 +201,8 @@ public:
 	void SetPlayerHandleZero()
 	{
 		player_handle_ = 0;
+		idx_zone_player_x = -1;
+		idx_zone_player_y = -1;
 	}
 
 	//

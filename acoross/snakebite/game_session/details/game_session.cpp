@@ -10,7 +10,7 @@
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_collider.h"
-#include "game_object.h"
+#include "sb_zone_object.h"
 
 namespace acoross {
 namespace snakebite {
@@ -40,8 +40,8 @@ void GameSession::StartZone(int frame_tick)
 		zone.AsyncAddObserver(
 			"GameSession",
 			[&](int idx_zone_x, int idx_zone_y,
-				GameGeoZone::SharedCloneSnakelistT snakes, 
-				GameGeoZone::SharedCloneApplelistT apples)
+				SbGeoZone::SharedCloneZoneObjlistT snakes, 
+				SbGeoZone::SharedCloneZoneObjlistT apples)
 		{
 			update_listner_mutex_.lock();
 			auto event_listeners = on_update_event_listeners_;
@@ -65,12 +65,12 @@ void GameSession::StartZone(int frame_tick)
 	});
 }
 
-void GameSession::RemoveApple(Apple* apple, std::function<void(bool result)> func)
+void GameSession::RequestRemoveApple(HandleT apple_handle, std::function<void(bool result)> func)
 {
 	zone_grid_.ProcessAllZone(
-		[apple, func](GameGeoZone& zone)->bool
+		[apple_handle, func](SbGeoZone& zone)->bool
 	{
-		zone.AsyncRemoveStaticObj(apple, func);
+		zone.AsyncRemoveStaticObj(apple_handle, func);
 		return true;
 	}
 	);
@@ -80,7 +80,7 @@ size_t GameSession::CalculateSnakeCount()
 {
 	size_t count = 0;
 	zone_grid_.ProcessAllZone(
-		[&count](GameGeoZone& zone)->bool
+		[&count](SbGeoZone& zone)->bool
 	{
 		count += zone.AtomicMovObjCount();
 		return true;
@@ -93,7 +93,7 @@ size_t GameSession::CalculateAppleCount()
 {
 	size_t count = 0;
 	zone_grid_.ProcessAllZone(
-		[&count](GameGeoZone& zone)->bool
+		[&count](SbGeoZone& zone)->bool
 	{
 		count += zone.AtomicStaticObjCount();
 		return true;
@@ -169,7 +169,7 @@ void GameSession::AsyncRemoveSnake(Handle<Snake>::Type handle)
 	});
 }
 
-void GameSession::MakeNewApple()
+void GameSession::RequestMakeNewApple()
 {
 	auto& game_boundary = zone_grid_.GetBoundaryContainer();
 	std::uniform_int_distribution<int> unin_x(game_boundary.Left, game_boundary.Right - 1);

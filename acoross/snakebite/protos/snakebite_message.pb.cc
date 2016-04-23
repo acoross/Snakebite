@@ -257,19 +257,21 @@ void protobuf_AddDesc_snakebite_5fmessage_2eproto() {
     "\001 \001(\t\"&\n\024InitPlayerSnakeReply\022\016\n\006handle\030"
     "\001 \001(\003\"!\n\022TurnKeyDownRequest\022\013\n\003key\030\001 \001(\005"
     "\"\037\n\020TurnKeyUpRequest\022\013\n\003key\030\001 \001(\005*\037\n\007Obj"
-    "Type\022\t\n\005Snake\020\000\022\t\n\005Apple\020\0012\200\001\n\016SC_PushSe"
+    "Type\022\t\n\005Snake\020\000\022\t\n\005Apple\020\0012\335\001\n\016SC_PushSe"
     "rvice\022n\n\021UpdateGameObjects\0222.acoross.sna"
     "kebite.messages.UpdateGameObjectsEvent\032%"
-    ".acoross.snakebite.messages.VoidReply2\314\002"
-    "\n\020SnakebiteService\022r\n\nInitPlayer\0222.acoro"
-    "ss.snakebite.messages.InitPlayerSnakeReq"
-    "uest\0320.acoross.snakebite.messages.InitPl"
-    "ayerSnakeReply\022c\n\nSetKeyDown\022..acoross.s"
-    "nakebite.messages.TurnKeyDownRequest\032%.a"
-    "coross.snakebite.messages.VoidReply\022_\n\010S"
-    "etKeyUp\022,.acoross.snakebite.messages.Tur"
-    "nKeyUpRequest\032%.acoross.snakebite.messag"
-    "es.VoidReplyb\006proto3", 1060);
+    ".acoross.snakebite.messages.VoidReply\022[\n"
+    "\013ResetPlayer\022%.acoross.snakebite.message"
+    "s.VoidReply\032%.acoross.snakebite.messages"
+    ".VoidReply2\314\002\n\020SnakebiteService\022r\n\nInitP"
+    "layer\0222.acoross.snakebite.messages.InitP"
+    "layerSnakeRequest\0320.acoross.snakebite.me"
+    "ssages.InitPlayerSnakeReply\022c\n\nSetKeyDow"
+    "n\022..acoross.snakebite.messages.TurnKeyDo"
+    "wnRequest\032%.acoross.snakebite.messages.V"
+    "oidReply\022_\n\010SetKeyUp\022,.acoross.snakebite"
+    ".messages.TurnKeyUpRequest\032%.acoross.sna"
+    "kebite.messages.VoidReplyb\006proto3", 1153);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "snakebite_message.proto", &protobuf_RegisterTypes);
   MovingObject::default_instance_ = new MovingObject();

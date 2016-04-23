@@ -1,16 +1,17 @@
 #ifndef SNAKEBITE_APPLE_H_
 #define SNAKEBITE_APPLE_H_
 
-#include "game_object.h"
+#include "sb_zone_object.h"
+#include "snake_collider.h"
 
 namespace acoross {
 namespace snakebite {
 
-class Apple : public ZoneObject
+class Apple : public SbZoneObject
 {
 public:
 	Apple(const Position2D& pos, double radius)
-		: ZoneObject(new AppleCollider(this), pos, radius)
+		: SbZoneObject(new AppleCollider(this), pos, radius)
 	{
 		//container.RegisterMovingObject(mo);
 	}

@@ -16,6 +16,7 @@
 #include <acoross/snakebite/util.h>
 #include <acoross/snakebite/game_session/game_session_system.h>
 #include <acoross/snakebite/snake_npc_control_manager.h>
+#include <acoross/snakebite/zone_system/zone_system.h>
 #include "UserSession.h"
 
 using boost::asio::ip::tcp;
@@ -32,8 +33,8 @@ public:
 	using LocalUpdateListner = 
 		std::function<void(
 			int idx_x, int idx_y, 
-			const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>&, 
-			const std::list<ZoneObjectClone>&
+			SbGeoZone::CloneZoneObjListT&,
+			SbGeoZone::CloneZoneObjListT&
 		)>;
 	
 public:
@@ -48,8 +49,8 @@ public:
 		game_session_->AddUpdateEventListner("local listner",
 			[local_listner]	(
 				int idx_x, int idx_y, 
-				const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
-				const std::list<ZoneObjectClone>& apple_clone_list)
+				SbGeoZone::CloneZoneObjListT& snake_clone_list, 
+				SbGeoZone::CloneZoneObjListT& apple_clone_list)
 			{
 				local_listner(idx_x, idx_y, 
 					snake_clone_list, apple_clone_list);
@@ -73,9 +74,9 @@ public:
 	}
 
 public:
-	const int FRAME_TICK{ 200 };
-	const int COUNT_ZONE_X = 20;
-	const int COUNT_ZONE_Y = 20;
+	const int FRAME_TICK{ 100 };
+	const int COUNT_ZONE_X = 2;
+	const int COUNT_ZONE_Y = 2;
 	const int ZoneWidth{ 500 };
 	const int ZoneHeight{ 500 };
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };

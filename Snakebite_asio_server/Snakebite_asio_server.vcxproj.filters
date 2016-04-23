@@ -89,9 +89,6 @@
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h">
       <Filter>lib\game_session</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_client_base.h">
-      <Filter>lib</Filter>
-    </ClInclude>
     <ClInclude Include="game_server.h">
       <Filter>game_server</Filter>
     </ClInclude>
@@ -100,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.rpc.h">
       <Filter>lib\protos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_client_base.h">
+      <Filter>lib\game_client_base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

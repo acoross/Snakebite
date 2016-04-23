@@ -11,16 +11,15 @@
 #include <string>
 
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
+#include "sb_zone_object.h"
 #include "snake.h"
 #include "apple.h"
-#include "handle.h"
-#include "game_geo_zone_grid.h"
-#include "game_geo_zone.h"
 
 namespace acoross {
 namespace snakebite {
 
-class GameGeoZone;
+using MapSnake = std::unordered_map<Handle<Snake>::Type, SnakeSP>;
+using ListApple = std::list<AppleSP>;
 
 // 맵, GameObject 로 구성되는 하나의 게임 단위.
 class GameSession final
@@ -28,8 +27,8 @@ class GameSession final
 public:
 	using UpdateEventListner =
 		std::function<void(int idx_x, int idx_y, 
-			const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>&, 
-			const std::list<ZoneObjectClone>&)>;
+			SbGeoZone::CloneZoneObjListT&,
+			SbGeoZone::CloneZoneObjListT&)>;
 	using ListMovingObject = MovingObjectContainer::ListMovingObject;
 	
 	explicit GameSession(
@@ -42,13 +41,14 @@ public:
 	Handle<Snake>::Type AsyncMakeNewSnake(
 		std::string name = "noname", 
 		Snake::EventHandler onDieHandler = Snake::EventHandler());
-	void MakeNewApple();
+	void RequestMakeNewApple();
 	void AsyncRemoveSnake(Handle<Snake>::Type snake);
-	void RemoveApple(Apple* apple, std::function<void(bool result)> func);
+	void RequestRemoveApple(HandleT apple_handle, std::function<void(bool result)> func);
 
 	size_t CalculateSnakeCount();
 	size_t CalculateAppleCount();
 
+	// 이 함수는 refactoring 필요.
 	void RequestToSnake(Handle<Snake>::Type handle, std::function<void(Snake&)> request);
 
 	void AddUpdateEventListner(std::string name, UpdateEventListner on_update)
@@ -77,7 +77,7 @@ private:
 	std::mutex update_listner_mutex_;
 	std::unordered_map<std::string, UpdateEventListner> on_update_event_listeners_;
 
-	GameGeoZoneGrid zone_grid_;
+	SbGeoZoneGrid zone_grid_;
 
 	//임시
 	friend class LocalGameClient;

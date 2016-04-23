@@ -11,6 +11,7 @@
 #include <acoross/snakebite/util.h>
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include <acoross/snakebite/game_session/game_session_system.h>
+#include <acoross/snakebite/zone_system/zone_system.h>
 
 namespace acoross {
 namespace snakebite {
@@ -22,8 +23,8 @@ public:
 
 	void SetObjectList(
 		int idx_x, int idx_y, 
-		std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>&& snake_clone_list,
-		std::list<ZoneObjectClone>&& apple_clone_list)
+		SbGeoZone::CloneZoneObjListT&& snake_clone_list,
+		SbGeoZone::CloneZoneObjListT&& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
 		zone_snake_clone_list_[std::make_pair(idx_x, idx_y)] = std::move(snake_clone_list);
@@ -33,8 +34,8 @@ public:
 
 	void RetrieveObjectList(
 		int idx_x, int idx_y, 
-		std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list,
-		std::list<ZoneObjectClone>& apple_clone_list)
+		SbGeoZone::CloneZoneObjListT& snake_clone_list,
+		SbGeoZone::CloneZoneObjListT& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
 		
@@ -110,8 +111,8 @@ protected:
 	//
 
 protected:
-	using CloneSnakeList = std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>;
-	using CloneAppleList = std::list<ZoneObjectClone>;
+	using CloneSnakeList = SbGeoZone::CloneZoneObjListT;
+	using CloneAppleList = SbGeoZone::CloneZoneObjListT;
 	std::mutex clone_list_mutex_;
 	std::map<std::pair<int, int>, CloneSnakeList> zone_snake_clone_list_;
 	std::map<std::pair<int, int>, CloneAppleList> zone_apple_clone_list_;

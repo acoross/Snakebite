@@ -1,33 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="헤더 파일">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="details">
       <UniqueIdentifier>{b8de2bb3-b341-4f9b-8048-f4133b5f83e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zone_system">
+      <UniqueIdentifier>{b061af5f-c933-410f-9ecf-d84a972afb51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zone_system\details">
+      <UniqueIdentifier>{4bc58143-2bc5-4806-9a3a-46a415ec8dfc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\game_session\details\Apple.h">
       <Filter>details</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\game_object.h">
-      <Filter>details</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session\details\game_session.h">
-      <Filter>details</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\handle.h">
       <Filter>details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session\details\snake.h">
@@ -39,14 +31,26 @@
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\game_geo_zone.h">
+    <ClInclude Include="..\acoross\snakebite\game_session\details\collider_base.h">
       <Filter>details</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\game_geo_zone_grid.h">
+    <ClInclude Include="..\acoross\snakebite\game_session\details\sb_zone_object.h">
       <Filter>details</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\details\game_geo_zone_define.h">
-      <Filter>details</Filter>
+    <ClInclude Include="..\acoross\snakebite\zone_system\zone_system.h">
+      <Filter>zone_system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\zone_system\details\geo_zone.h">
+      <Filter>zone_system\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\zone_system\details\geo_zone_grid.h">
+      <Filter>zone_system\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\zone_system\details\handle.h">
+      <Filter>zone_system\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\zone_system\details\zone_object.h">
+      <Filter>zone_system\details</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -59,14 +63,14 @@
     <ClCompile Include="..\acoross\snakebite\game_session\details\snake_collider.cpp">
       <Filter>details</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\game_session\details\game_geo_zone.cpp">
-      <Filter>details</Filter>
-    </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\game_session\details\game_geo_zone_grid.cpp">
-      <Filter>details</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\acoross\snakebite\zone_system\details\geo_zone.ipp">
+      <Filter>zone_system\details</Filter>
+    </None>
+    <None Include="..\acoross\snakebite\zone_system\details\geo_zone_grid.ipp">
+      <Filter>zone_system\details</Filter>
+    </None>
   </ItemGroup>
 </Project>

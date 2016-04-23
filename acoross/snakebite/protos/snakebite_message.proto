@@ -35,6 +35,7 @@ package acoross.snakebite.messages;
 //------------------------------
 service SC_PushService {
 	rpc UpdateGameObjects(UpdateGameObjectsEvent) returns (VoidReply);
+	rpc ResetPlayer(VoidReply) returns (VoidReply);
 }
 
 //------------------------------

@@ -11,11 +11,13 @@
 #include <strsafe.h>
 #include <atomic>
 
+#define ACOROSS_USE_TBB
+#ifdef ACOROSS_USE_TBB
+#include "tbb/tbbmalloc_proxy.h"
+#endif
+
 #include "local_game_client.h"
 #include "game_server.h"
-
-#ifdef _WIN32_WINNT
-#endif
 
 using namespace acoross::snakebite;
 
@@ -92,7 +94,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					server->RequestToSession(
 						[](GameSession& session)
 					{
-						session.MakeNewApple();
+						session.RequestMakeNewApple();
 					});
 				}
 			}
@@ -109,7 +111,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					{
 						for (int i = 0; i < 1000; ++i)
 						{
-							session.MakeNewApple();
+							session.RequestMakeNewApple();
 						}
 					});
 
@@ -244,7 +246,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		[client = g_game_client.get()]
 	(
 		int idx_x, int idx_y, 
-		std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>> snake_list, std::list<ZoneObjectClone> apple_list)
+		SbGeoZone::CloneZoneObjListT snake_list,
+		SbGeoZone::CloneZoneObjListT apple_list)
 	{
 		client->SetObjectList(idx_x, idx_y, std::move(snake_list), std::move(apple_list));
 	});

@@ -8,7 +8,7 @@ namespace snakebite {
 Snake::Snake(GameSession& game_session, const Position2D & pos, double radius, 
 	const Degree & angle, double velocity, double ang_vel, int len, 
 	EventHandler onDie, std::string name)
-	: ZoneObject(new SnakeCollider(this), pos, radius, name)
+	: SbZoneObject(new SnakeCollider(this), pos, radius, name)
 	, game_session_(game_session)
 	, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	, onDie_(onDie)
@@ -103,29 +103,6 @@ void Snake::Die()
 
 		game_session_.AsyncRemoveSnake(Handle<Snake>(this).handle);
 	}
-}
-
-bool Snake::ProcessCollision(std::shared_ptr<ZoneObject> target)
-{
-	if (target == nullptr)
-	{
-		_ASSERT(0);
-		return false;
-	}
-
-	if (IsCollidingTo(target))
-	{
-		if (this->collider_)
-		{
-			target->collider_->Collide(*this->collider_, 0);
-		}
-		else
-		{
-			_ASSERT(0);
-		}
-		return true;
-	}
-	return false;
 }
 
 }

@@ -6,7 +6,6 @@
 
 #include "snakebite_message.pb.h"
 
-#include <SDKDDKVer.h>
 #include <boost/asio.hpp>
 #include <acoross/rpc/rpc_service.h>
 #include <acoross/rpc/rpc_stub.h>
@@ -21,6 +20,7 @@ class SC_PushService final {
   enum Protocol
   {
     UpdateGameObjects,
+    ResetPlayer,
   };
 
   class Service : public ::acoross::rpc::RpcService 
@@ -31,6 +31,7 @@ class SC_PushService final {
 
   private:
     DEF_SERVICE(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
+    DEF_SERVICE(ResetPlayer, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::VoidReply)
 
   };
 
@@ -40,6 +41,7 @@ class SC_PushService final {
     Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
     virtual ~Stub() {}
     DEF_STUB(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
+    DEF_STUB(ResetPlayer, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::VoidReply)
   };
 
 };

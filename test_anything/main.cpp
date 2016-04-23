@@ -9,7 +9,6 @@
 
 #include <acoross/rpc/rpc_server.h>
 #include <acoross/rpc/rpc_macros.h>
-
 #include <acoross/snakebite/protos/test_rpc.rpc.h>
 
 using namespace acoross::rpc_test;

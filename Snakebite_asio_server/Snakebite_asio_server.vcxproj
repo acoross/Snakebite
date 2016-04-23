@@ -39,12 +39,14 @@
     <Import Project="..\protobuf_debug.props" />
     <Import Project="..\protobuf_common.props" />
     <Import Project="..\acoross_rpc_common.props" />
+    <Import Project="..\tbb.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\protobuf_release.props" />
     <Import Project="..\protobuf_common.props" />
     <Import Project="..\acoross_rpc_common.props" />
+    <Import Project="..\tbb.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />

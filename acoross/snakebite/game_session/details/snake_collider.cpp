@@ -3,6 +3,7 @@
 #include "snake.h"
 #include "Apple.h"
 #include "game_session.h"
+#include "sb_zone_object.h"
 
 namespace acoross {
 namespace snakebite {
@@ -27,13 +28,13 @@ void SnakeCollider::Collide(SnakeCollider& other, int cnt)
 void SnakeCollider::Collide(AppleCollider& other, int cnt)
 {
 	auto handle = Handle<Snake>(owner_).handle;
-	owner_->game_session_.RemoveApple(
-		other.owner_,
+	owner_->game_session_.RequestRemoveApple(
+		Handle<SbZoneObject>(other.owner_).handle,
 		[handle, &gs = owner_->game_session_](bool ret)
 	{
 		if (ret)
 		{
-			gs.MakeNewApple();
+			gs.RequestMakeNewApple();
 			gs.RequestToSnake(
 				handle,
 				[](Snake& owner)
