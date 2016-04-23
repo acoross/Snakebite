@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="details">
       <UniqueIdentifier>{b8de2bb3-b341-4f9b-8048-f4133b5f83e7}</UniqueIdentifier>
     </Filter>
@@ -28,9 +24,6 @@
     <ClInclude Include="..\acoross\snakebite\game_session\details\snake_collider.h">
       <Filter>details</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session\details\collider_base.h">
       <Filter>details</Filter>
     </ClInclude>
@@ -52,6 +45,7 @@
     <ClInclude Include="..\acoross\snakebite\zone_system\details\zone_object.h">
       <Filter>zone_system\details</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session\details\game_session.cpp">

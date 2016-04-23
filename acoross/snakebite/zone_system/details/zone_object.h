@@ -95,6 +95,7 @@ public:
 		return std::make_pair(zone_idx_x_.exchange(idx_x), zone_idx_y_.exchange(idx_y));
 	}
 
+	//@lock
 	void AddBody()
 	{
 		std::lock_guard<std::recursive_mutex> lock(body_list_lock_);
@@ -108,8 +109,10 @@ public:
 	std::atomic<int> zone_idx_y_;
 	std::unique_ptr<ColliderT> collider_;
 	MovingObject head_;
-	std::list<MovingObject> body_list_;
+	//@lock
 	mutable std::recursive_mutex body_list_lock_;
+	std::list<MovingObject> body_list_;
+	//
 
 	const std::string Name;
 	std::atomic<bool> remove_this_from_zone_{ false };

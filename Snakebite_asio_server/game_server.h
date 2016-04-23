@@ -89,8 +89,6 @@ public:
 	std::atomic<double> mean_frame_tick_{ 0 };
 
 private:
-	void do_update_game_session();
-
 	void on_accept(
 		boost::asio::io_service& io_service, 
 		tcp::socket&& socket);
