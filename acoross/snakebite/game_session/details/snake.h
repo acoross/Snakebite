@@ -21,7 +21,54 @@ enum PlayerKey
 
 class GameSession;
 
-class Snake : public SbZoneObject
+class SnakeNode
+	: public SbZoneObject
+{
+public:
+	SnakeNode(GameSession& game_session, HandleT owner, SbColliderBase* collider, const Position2D& pos, double radius, std::string name);
+	virtual ~SnakeNode();
+
+	// snake 가 알아서 움직인다.
+	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override = 0;
+	
+	// snake 를 지정한 diff_vec 만큼 이동시킨다.
+	Position2D Move(const DirVector2D& diff_vec, MovingObjectContainer& container);
+
+	//@lock
+	void AddBody();
+	//
+
+	void SetLastPrevPosition(std::shared_ptr<Position2D> prev_last_pos)
+	{
+		std::atomic_store(&prev_last_pos_, prev_last_pos);
+	}
+
+public:
+	GameSession& game_session_;
+	const HandleT owner_handle_;
+
+protected:
+	const int max_internal_body_len_{ 5 };
+	std::shared_ptr<SnakeNode> next_;
+	std::shared_ptr<Position2D> prev_last_pos_;
+};
+
+///////////////////////////////////////////////////
+
+class SnakeTail
+	: public SnakeNode
+{
+public:
+	SnakeTail(GameSession& game_session, HandleT owner, const Position2D& pos, double radius);
+	virtual ~SnakeTail();
+
+	// 앞 snake 를 따라서 이동한다.
+	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override;
+};
+
+///////////////////////////////////////////////////
+class Snake
+	: public SnakeNode
 {
 public:
 	using EventHandler = std::function<void(Snake&)>;
@@ -32,9 +79,7 @@ public:
 	virtual ~Snake();
 
 	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override;
-
-	void Move(const DirVector2D& diff_vec, MovingObjectContainer& container);
-
+	
 	//@thread-safe: atomic once
 	void Die();
 
@@ -63,9 +108,6 @@ public:
 	PlayerKey GetPlayerKey() const { return last_pk_.load(); }
 	//
 #pragma endregion key_input
-
-public:
-	GameSession& game_session_;
 
 private:
 	Degree angle_; // degree

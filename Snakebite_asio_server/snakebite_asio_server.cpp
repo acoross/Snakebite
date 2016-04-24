@@ -102,6 +102,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			{
 				g_game_client->InitPlayer();
 			}
+			else if (wParam == 'G')
+			{
+				g_game_client->SetGridOn(false);
+			}
 			else if (wParam == 'M')	// 'M' or 'm'
 			{
 				if (auto server = g_game_server_wp.lock())
@@ -109,7 +113,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					server->RequestToSession(
 						[](GameSession& session)
 					{
-						for (int i = 0; i < 1000; ++i)
+#ifdef _DEBUG
+						for (int i = 0; i < 200; ++i)
+#else
+						for (int i = 0; i < 2000; ++i)
+#endif
 						{
 							session.RequestMakeNewApple();
 						}
@@ -118,7 +126,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					server->RequestToSessionNpcController(
 						[](SnakeNpcControlManager& npc_controller)
 					{
+#ifdef _DEBUG
+						for (int i = 0; i < 100; ++i)
+#else
 						for (int i = 0; i < 1000; ++i)
+#endif
 						{
 							npc_controller.AsyncAddSnakeNpc();
 						}

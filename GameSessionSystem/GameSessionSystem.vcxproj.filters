@@ -10,6 +10,12 @@
     <Filter Include="zone_system\details">
       <UniqueIdentifier>{4bc58143-2bc5-4806-9a3a-46a415ec8dfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="moving_object_system">
+      <UniqueIdentifier>{ff82ae5d-0ba7-465a-8f39-524845d8ac3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="moving_object_system\details">
+      <UniqueIdentifier>{1e5835ab-efd8-4067-94fc-f749fc4cf326}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\acoross\snakebite\game_session\details\Apple.h">
@@ -46,6 +52,18 @@
       <Filter>zone_system\details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h" />
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h">
+      <Filter>moving_object_system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h">
+      <Filter>moving_object_system\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object.h">
+      <Filter>moving_object_system\details</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
+      <Filter>moving_object_system\details</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session\details\game_session.cpp">

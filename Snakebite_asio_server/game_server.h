@@ -75,10 +75,17 @@ public:
 
 public:
 	const int FRAME_TICK{ 100 };
-	const int COUNT_ZONE_X = 2;
-	const int COUNT_ZONE_Y = 2;
-	const int ZoneWidth{ 500 };
-	const int ZoneHeight{ 500 };
+#ifdef _DEBUG
+	const int COUNT_ZONE_X = 20;
+	const int COUNT_ZONE_Y = 20;
+	const int ZoneWidth{ 100 };
+	const int ZoneHeight{ 100 };
+#else
+	const int COUNT_ZONE_X = 40;
+	const int COUNT_ZONE_Y = 40;
+	const int ZoneWidth{ 100 };
+	const int ZoneHeight{ 100 };
+#endif
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };
 	const int ZoneGridHeight{ ZoneHeight * COUNT_ZONE_X };
 	

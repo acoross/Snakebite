@@ -116,6 +116,25 @@ void GameSession::RequestToSnake(Handle<Snake>::Type handle, std::function<void(
 	});
 }
 
+
+void GameSession::AsyncAddSnakeTail(std::shared_ptr<SnakeNode> snake)
+{
+	auto zone = zone_grid_.get_zone(snake->GetPosition().x, snake->GetPosition().x);
+	if (!zone)
+	{
+		_ASSERT(0);
+		return;
+	}
+
+	strand_.post(
+		[this, snake, zone]()
+	{
+		{
+			zone->AsyncAddMovObj(snake);
+		}
+	});
+}
+
 Handle<Snake>::Type GameSession::AsyncMakeNewSnake(std::string name, Snake::EventHandler onDieHandler)
 {
 	auto& game_boundary = zone_grid_.GetBoundaryContainer();
@@ -161,6 +180,8 @@ void GameSession::AsyncRemoveSnake(Handle<Snake>::Type handle)
 	{
 		//std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
 		auto it = snakes_.find(handle);
+
+		//FIXME!!!!!!! 임시로 이렇게 한거고.... 추후 수정 요망
 		if (it != snakes_.end())
 		{
 			it->second->remove_this_from_zone_.store(true);

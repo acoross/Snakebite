@@ -6,6 +6,7 @@
 
 #include "snakebite_message.pb.h"
 
+#include <sdkddkver.h>
 #include <boost/asio.hpp>
 #include <acoross/rpc/rpc_service.h>
 #include <acoross/rpc/rpc_stub.h>

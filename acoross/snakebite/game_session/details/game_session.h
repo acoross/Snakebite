@@ -18,7 +18,7 @@
 namespace acoross {
 namespace snakebite {
 
-using MapSnake = std::unordered_map<Handle<Snake>::Type, SnakeSP>;
+using MapSnake = std::unordered_map<Handle<Snake>::Type, std::shared_ptr<Snake>>;
 using ListApple = std::list<AppleSP>;
 
 // 맵, GameObject 로 구성되는 하나의 게임 단위.
@@ -44,6 +44,8 @@ public:
 	void RequestMakeNewApple();
 	void AsyncRemoveSnake(Handle<Snake>::Type snake);
 	void RequestRemoveApple(HandleT apple_handle, std::function<void(bool result)> func);
+
+	void AsyncAddSnakeTail(std::shared_ptr<SnakeNode> snake);
 
 	size_t CalculateSnakeCount();
 	size_t CalculateAppleCount();

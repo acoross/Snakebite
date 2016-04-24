@@ -10,6 +10,7 @@ namespace acoross {
 namespace snakebite {
 
 class Snake;
+class SnakeTail;
 class Apple;
 
 template <typename T>
@@ -17,6 +18,7 @@ class ZoneObjectEx;
 using SbZoneObject = ZoneObjectEx<SbColliderBase>;
 
 ColliderImpl(SnakeCollider, Snake)
+ColliderImpl(SnakeTailCollider, SnakeTail)
 ColliderImpl(AppleCollider, Apple)
 ColliderImpl(DummyCollider, SbZoneObject)
 

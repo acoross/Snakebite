@@ -79,8 +79,18 @@ public:
 		::DeleteObject(memdc.Get());
 	}
 
+	void SetGridOn(bool on)
+	{
+		bGridOn_ = on;
+	}
+
 	void DrawGrid(Win::WDC& memdc, int idx_x, int idx_y)
 	{
+		if (bGridOn_ == false)
+		{
+			return;
+		}
+
 		if (zone_info_.initialized.load() == false)
 		{
 			return;
@@ -272,6 +282,9 @@ private:
 	Handle<Snake>::Type player_handle_{ 0 };
 	PlayerKey player_key_{ PlayerKey::PK_NONE };
 	GameServer& game_server_;
+
+	//
+	bool bGridOn_{ true };
 };
 
 }

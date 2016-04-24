@@ -5,6 +5,7 @@ namespace acoross {
 namespace snakebite {
 
 class SnakeCollider;
+class SnakeTailCollider;
 class AppleCollider;
 class DummyCollider;
 
@@ -15,6 +16,7 @@ public:
 
 	virtual void Collide(SbColliderBase& other, int cnt) = 0;
 	virtual void Collide(SnakeCollider& other, int cnt) {}
+	virtual void Collide(SnakeTailCollider& other, int cnt) {}
 	virtual void Collide(AppleCollider& other, int cnt) {}
 	virtual void Collide(DummyCollider& other, int cnt) {}
 };
@@ -29,6 +31,7 @@ public:	\
 		other.Collide(*this, cnt + 1);	\
 	}	\
 	virtual void Collide(SnakeCollider& other, int cnt) override;	\
+	virtual void Collide(SnakeTailCollider& other, int cnt) override;	\
 	virtual void Collide(AppleCollider& other, int cnt) override;	\
 \
 	OwnerT* owner_;	\

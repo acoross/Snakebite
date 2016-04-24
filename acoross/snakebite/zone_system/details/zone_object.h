@@ -95,13 +95,6 @@ public:
 		return std::make_pair(zone_idx_x_.exchange(idx_x), zone_idx_y_.exchange(idx_y));
 	}
 
-	//@lock
-	void AddBody()
-	{
-		std::lock_guard<std::recursive_mutex> lock(body_list_lock_);
-		body_list_.emplace_back(head_.GetPosition(), head_.GetRadius());
-	}
-
 	Position2D GetPosition() const { return head_.GetPosition(); }
 
 public:
