@@ -81,10 +81,10 @@ public:
 	const int ZoneWidth{ 100 };
 	const int ZoneHeight{ 100 };
 #else
-	const int COUNT_ZONE_X = 40;
-	const int COUNT_ZONE_Y = 40;
-	const int ZoneWidth{ 100 };
-	const int ZoneHeight{ 100 };
+	const int COUNT_ZONE_X = 5;
+	const int COUNT_ZONE_Y = 5;
+	const int ZoneWidth{ 500 };
+	const int ZoneHeight{ 500 };
 #endif
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };
 	const int ZoneGridHeight{ ZoneHeight * COUNT_ZONE_X };

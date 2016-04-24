@@ -116,7 +116,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 #ifdef _DEBUG
 						for (int i = 0; i < 200; ++i)
 #else
-						for (int i = 0; i < 2000; ++i)
+						for (int i = 0; i < 400; ++i)
 #endif
 						{
 							session.RequestMakeNewApple();
@@ -129,7 +129,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 #ifdef _DEBUG
 						for (int i = 0; i < 100; ++i)
 #else
-						for (int i = 0; i < 1000; ++i)
+						for (int i = 0; i < 100; ++i)
 #endif
 						{
 							npc_controller.AsyncAddSnakeNpc();
