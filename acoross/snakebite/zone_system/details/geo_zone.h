@@ -189,7 +189,7 @@ public:
 	{
 		return cached_mov_object_cnt_.load();
 	}
-
+	
 public:
 	const int IDX_ZONE_X;
 	const int IDX_ZONE_Y;

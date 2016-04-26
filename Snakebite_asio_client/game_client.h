@@ -32,7 +32,11 @@ public:
 	virtual acoross::rpc::ErrCode UpdateGameObjects(
 		const acoross::snakebite::messages::UpdateGameObjectsEvent &rq, 
 		acoross::snakebite::messages::VoidReply *rp) override;
-
+	
+	virtual acoross::rpc::ErrCode ResetPlayer(
+		const acoross::snakebite::messages::VoidReply &rq, 
+		acoross::snakebite::messages::VoidReply *rp) override;
+	//
 private:
 	std::shared_ptr<GameClient> owner_;
 };
@@ -44,12 +48,49 @@ class GameClient final
 public:
 	GameClient(boost::asio::io_service& io_service,
 		tcp::socket&& socket)
-		: stub_(new messages::SnakebiteService::Stub(io_service, std::move(socket)))
+		: io_service_(io_service)
+		, stub_(new messages::SnakebiteService::Stub(io_service, std::move(socket)))
 	{}
 
 	void start()
 	{
 		stub_->start();
+		this->RequestZoneInfo();
+	}
+
+	virtual void RequestZoneInfo() override
+	{
+		messages::VoidReply rq;
+
+		stub_->RequestZoneInfo(
+			rq,
+			[this, client = shared_from_this()](acoross::rpc::ErrCode ec, messages::ZoneInfoReply& rp)
+		{
+			if (ec == acoross::rpc::ErrCode::NoError)
+			{
+				zone_info_.h = rp.height();
+				zone_info_.w = rp.width();
+				zone_info_.limit_idx_x = rp.limit_idx_x();
+				zone_info_.limit_idx_y = rp.limit_idx_y();
+				zone_info_.initialized.store(true);
+
+				{
+					tcp::resolver resolver(io_service_);
+					boost::asio::ip::tcp::socket push_service_socket(io_service_);
+
+					boost::asio::connect(push_service_socket, resolver.resolve({ "127.0.0.1", "22001" }));
+					push_service_ = std::make_shared<SC_PushServiceImpl>(
+						io_service_,
+						std::move(push_service_socket),
+						shared_from_this());
+					push_service_->start();
+				}
+			}
+			else
+			{
+				assert(false);
+			}
+		});
 	}
 
 	virtual void InitPlayer() override
@@ -90,89 +131,13 @@ public:
 			[client = shared_from_this()](acoross::rpc::ErrCode ec, messages::VoidReply&)
 		{});
 	}
-
-	virtual void Draw(Win::WDC& wdc, RECT& client_rect) override
-	{
-		for (int idx_x = 0; idx_x < limit_idx_x_; ++idx_x)
-		{
-			for (int idx_y = 0; idx_y < limit_idx_y_; ++idx_y)
-			{
-				DrawZone(wdc, client_rect, idx_x, idx_y);
-			}
-		}
-	}
-
-	void DrawZone(Win::WDC& wdc, RECT& client_rect, int idx_x, int idx_y)
-	{
-		auto it = zone_clone_list_changed_.find(std::make_pair(idx_x, idx_y));
-		if (it == zone_clone_list_changed_.end())
-		{
-			return;
-		}
-
-		// snake 와 apple 의 복제본 리스트를 받아온 뒤 화면에 그린다.
-		// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
-		std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>> snake_pairs;
-		std::list<ZoneObjectClone> apples;
-		RetrieveObjectList(idx_x, idx_y, snake_pairs, apples);
-		//
-
-		acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
-		static HBITMAP hbitmap = ::CreateCompatibleBitmap(memdc.Get(), client_rect.right, client_rect.bottom);
-		HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
-
-		double ratio = 1.0;
-
-		// 테두리 그리기
-		memdc.Rectangle(0, 0,
-			screen_width, screen_height);
-
-		// TODO
-		// 화면과 game_session 크기를 고려해 ratio 를 정한 뒤,
-		// ratio 에 따라 크기를 조절해서 그린다.
-
-		{
-			MeanProcessTimeChecker mean_draw(mean_draw_time_ms_);
-			//auto player = player_.lock();
-			for (auto& snake_pair : snake_pairs)
-			{
-				if (snake_pair.first == player_handle.handle)
-				{
-					HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(BLACK_BRUSH));
-					DrawSnake(memdc, snake_pair.second);
-					(HBRUSH)::SelectObject(memdc.Get(), oldbrush);
-				}
-				else
-				{
-					DrawSnake(memdc, snake_pair.second);
-				}
-			}
-
-			for (auto& apple : apples)
-			{
-				DrawMovingObject(memdc, apple.head_);
-			}
-		}
-
-		::BitBlt(wdc.Get(), 0, 0, client_rect.right, client_rect.bottom, memdc.Get(), 0, 0, SRCCOPY);
-
-		::SelectObject(memdc.Get(), oldbit);
-		::DeleteObject(memdc.Get());
-	}
 	
-	void set_player_handle(uintptr_t handle)
-	{
-		player_handle = handle;
-	}
-
 	bool UpdateGameObjectPositions(const messages::UpdateGameObjectsEvent& got_msg);
 	
 private:
+	boost::asio::io_service& io_service_;
 	std::shared_ptr<messages::SnakebiteService::Stub> stub_;
-
-	int screen_width{ 1000 };	// init value. set this by server value
-	int screen_height{ 1000 };	// init value. set this by server value
-	Handle<Snake> player_handle{ nullptr };
+	std::shared_ptr<SC_PushServiceImpl> push_service_;
 };
 
 }

@@ -67,19 +67,37 @@ public:
 		request(*npc_controll_manager_);
 	}
 
+	void RegisterUserSession(std::string addr, std::shared_ptr<UserSession> us)
+	{
+		std::lock_guard<std::recursive_mutex> lock(user_session_mutex_);
+		user_session_map_[addr] = us;
+	}
 	void UnregisterUserSession(std::string addr)
 	{
 		std::lock_guard<std::recursive_mutex> lock(user_session_mutex_);
 		user_session_map_.erase(addr);
 	}
+	std::shared_ptr<UserSession> FindUserSession(std::string addr)
+	{
+		std::lock_guard<std::recursive_mutex> lock(user_session_mutex_);
+		auto it = user_session_map_.find(addr);
+		if (it != user_session_map_.end())
+		{
+			if (auto us = it->second.lock())
+			{
+				return us;
+			}
+		}
+		return std::shared_ptr<UserSession>();
+	}
 
 public:
 	const int FRAME_TICK{ 100 };
 #ifdef _DEBUG
-	const int COUNT_ZONE_X = 20;
-	const int COUNT_ZONE_Y = 20;
-	const int ZoneWidth{ 100 };
-	const int ZoneHeight{ 100 };
+	const int COUNT_ZONE_X = 5;
+	const int COUNT_ZONE_Y = 5;
+	const int ZoneWidth{ 500 };
+	const int ZoneHeight{ 500 };
 #else
 	const int COUNT_ZONE_X = 5;
 	const int COUNT_ZONE_Y = 5;

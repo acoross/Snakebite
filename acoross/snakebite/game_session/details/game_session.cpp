@@ -43,15 +43,7 @@ void GameSession::StartZone(int frame_tick)
 				SbGeoZone::SharedCloneZoneObjlistT snakes, 
 				SbGeoZone::SharedCloneZoneObjlistT apples)
 		{
-			update_listner_mutex_.lock();
-			auto event_listeners = on_update_event_listeners_;
-			update_listner_mutex_.unlock();
-
-			for (auto& pair : event_listeners)
-			{
-				auto& listner = pair.second;
-				listner(idx_zone_x, idx_zone_y, *snakes, *apples);
-			}
+			InvokeEventListners(idx_zone_x, idx_zone_y, snakes, apples);
 		});
 
 		return true;

@@ -33,9 +33,6 @@
     <ClCompile Include="..\acoross\snakebite\protos\snakebite_message.pb.cc">
       <Filter>protos</Filter>
     </ClCompile>
-    <ClCompile Include="..\acoross\snakebite\snake_npc_control_manager.cpp">
-      <Filter>game_session</Filter>
-    </ClCompile>
     <ClCompile Include="..\acoross\snakebite\win\WinWrapper.cpp">
       <Filter>lib\win</Filter>
     </ClCompile>
@@ -52,9 +49,6 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.pb.h">
       <Filter>protos</Filter>
-    </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\snake_npc_control_manager.h">
-      <Filter>game_session</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\util.h">
       <Filter>game_session</Filter>
@@ -73,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\protos\snakebite_message.rpc.h">
       <Filter>protos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\game_client_base.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

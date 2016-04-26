@@ -11,7 +11,7 @@ void UserSession::start()
 	std::string myid = std::to_string((uintptr_t)this);
 	game_session_->AddUpdateEventListner(
 		myid,
-		[us = this, rpcsocket_wp = std::weak_ptr<rpc::RpcSocket>(shared_from_this())]
+		[this, rpcsocket_wp = std::weak_ptr<rpc::RpcSocket>(shared_from_this())]
 	(
 		int idx_x, int idx_y, 
 		SbGeoZone::CloneZoneObjListT& snake_clone_list,
@@ -19,9 +19,10 @@ void UserSession::start()
 	{
 		if (auto rpcsocket = rpcsocket_wp.lock())
 		{
-			_ASSERT(0);
-			//FIXME!!!!!!
-			//us->send_update_game_object(snake_clone_list, apple_clone_list);
+			if (game_session_->GetZoneGrid().IsNeighborZone(player_idx_x_.load(), player_idx_y_.load(), idx_x, idx_y))
+			{
+				send_update_game_object(idx_x, idx_y, snake_clone_list, apple_clone_list);
+			}
 		}
 	});
 
@@ -37,15 +38,25 @@ void UserSession::end()
 }
 
 void UserSession::send_update_game_object(
+	int idx_x, int idx_y,
 	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
-	const std::list<ZoneObjectClone>& apple_clone_list)
+	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& apple_clone_list)
 {
-	if (!push_stub_)
+	if (!std::atomic_load(&push_stub_))
 	{
 		return;
 	}
 
+	static std::atomic<int> cnt = 0;
+	if (cnt.fetch_add(1) > 0)
+	{
+		cnt.fetch_sub(1);
+		return;
+	}
+
 	messages::UpdateGameObjectsEvent game_objects;
+	game_objects.set_idx_x(idx_x);
+	game_objects.set_idx_y(idx_y);
 	{
 		for (auto& pair : snake_clone_list)
 		{
@@ -70,26 +81,55 @@ void UserSession::send_update_game_object(
 			}
 		}
 
-		for (auto& apple_clone : apple_clone_list)
+		for (auto& pair : apple_clone_list)
 		{
+			auto& apple_clone = pair.second;
 			auto* clone = game_objects.add_clone();
+
 			clone->set_clone_type(1);
-			clone->set_handle(0);
+			clone->set_handle(pair.first);
 			clone->set_obj_name(apple_clone.Name);
 
 			auto* head = clone->mutable_head();
 			head->set_radius(apple_clone.head_.GetRadius());
 			head->set_x(apple_clone.head_.GetPosition().x);
 			head->set_y(apple_clone.head_.GetPosition().y);
+
+			for (auto& body : apple_clone.body_list_)
+			{
+				auto* pac_body = clone->add_body();
+				pac_body->set_radius(body.GetRadius());
+				pac_body->set_x(body.GetPosition().x);
+				pac_body->set_y(body.GetPosition().y);
+			}
 		}
 	}
 
 	if (bool is_initialized = game_objects.IsInitialized())
 	{
-		push_stub_->UpdateGameObjects(game_objects, 
-			[](rpc::ErrCode ec, messages::VoidReply&)
-		{});
+		if (push_stub_)
+		{
+			push_stub_->UpdateGameObjects(game_objects,
+				[this](rpc::ErrCode ec, messages::VoidReply&)
+			{
+				cnt.fetch_sub(1);
+			});
+		}
 	}
+}
+
+//////////////////////////////////////
+// rpc methods
+
+acoross::rpc::ErrCode UserSession::RequestZoneInfo(const acoross::snakebite::messages::VoidReply &rq, acoross::snakebite::messages::ZoneInfoReply *rp)
+{
+	const auto& zone_grid = game_session_->GetZoneGrid();
+	rp->set_limit_idx_x(zone_grid.N_X);
+	rp->set_limit_idx_y(zone_grid.N_Y);
+	rp->set_height(zone_grid.ZoneHeight);
+	rp->set_width(zone_grid.ZoneWidth);
+
+	return acoross::rpc::ErrCode();
 }
 
 acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages::InitPlayerSnakeRequest &rq, acoross::snakebite::messages::InitPlayerSnakeReply *rp)
@@ -103,7 +143,7 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 		if (auto self = self_wp.lock())
 		{
 			user_snake_handle_ = 0;
-			if (push_stub_)
+			if (std::atomic_load(&push_stub_))
 			{
 				messages::VoidReply vr;
 				vr.set_err(0);

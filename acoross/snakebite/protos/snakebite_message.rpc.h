@@ -6,7 +6,6 @@
 
 #include "snakebite_message.pb.h"
 
-#include <sdkddkver.h>
 #include <boost/asio.hpp>
 #include <acoross/rpc/rpc_service.h>
 #include <acoross/rpc/rpc_stub.h>
@@ -52,6 +51,7 @@ class SnakebiteService final {
  public:
   enum Protocol
   {
+    RequestZoneInfo,
     InitPlayer,
     SetKeyDown,
     SetKeyUp,
@@ -64,6 +64,7 @@ class SnakebiteService final {
     virtual ~Service() {}
 
   private:
+    DEF_SERVICE(RequestZoneInfo, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::ZoneInfoReply)
     DEF_SERVICE(InitPlayer, ::acoross::snakebite::messages::InitPlayerSnakeRequest, ::acoross::snakebite::messages::InitPlayerSnakeReply)
     DEF_SERVICE(SetKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
     DEF_SERVICE(SetKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)
@@ -75,6 +76,7 @@ class SnakebiteService final {
   public:
     Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
     virtual ~Stub() {}
+    DEF_STUB(RequestZoneInfo, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::ZoneInfoReply)
     DEF_STUB(InitPlayer, ::acoross::snakebite::messages::InitPlayerSnakeRequest, ::acoross::snakebite::messages::InitPlayerSnakeReply)
     DEF_STUB(SetKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
     DEF_STUB(SetKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)

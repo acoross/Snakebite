@@ -47,6 +47,7 @@ class TurnKeyDownRequest;
 class TurnKeyUpRequest;
 class UpdateGameObjectsEvent;
 class VoidReply;
+class ZoneInfoReply;
 
 enum ObjType {
   Snake = 0,
@@ -339,10 +340,22 @@ class UpdateGameObjectsEvent : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .acoross.snakebite.messages.GameObjectClone clone = 1;
+  // optional int32 idx_x = 1;
+  void clear_idx_x();
+  static const int kIdxXFieldNumber = 1;
+  ::google::protobuf::int32 idx_x() const;
+  void set_idx_x(::google::protobuf::int32 value);
+
+  // optional int32 idx_y = 2;
+  void clear_idx_y();
+  static const int kIdxYFieldNumber = 2;
+  ::google::protobuf::int32 idx_y() const;
+  void set_idx_y(::google::protobuf::int32 value);
+
+  // repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
   int clone_size() const;
   void clear_clone();
-  static const int kCloneFieldNumber = 1;
+  static const int kCloneFieldNumber = 3;
   const ::acoross::snakebite::messages::GameObjectClone& clone(int index) const;
   ::acoross::snakebite::messages::GameObjectClone* mutable_clone(int index);
   ::acoross::snakebite::messages::GameObjectClone* add_clone();
@@ -356,6 +369,8 @@ class UpdateGameObjectsEvent : public ::google::protobuf::Message {
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
+  ::google::protobuf::int32 idx_x_;
+  ::google::protobuf::int32 idx_y_;
   ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone > clone_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
@@ -442,6 +457,105 @@ class VoidReply : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static VoidReply* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ZoneInfoReply : public ::google::protobuf::Message {
+ public:
+  ZoneInfoReply();
+  virtual ~ZoneInfoReply();
+
+  ZoneInfoReply(const ZoneInfoReply& from);
+
+  inline ZoneInfoReply& operator=(const ZoneInfoReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ZoneInfoReply& default_instance();
+
+  void Swap(ZoneInfoReply* other);
+
+  // implements Message ----------------------------------------------
+
+  inline ZoneInfoReply* New() const { return New(NULL); }
+
+  ZoneInfoReply* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ZoneInfoReply& from);
+  void MergeFrom(const ZoneInfoReply& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(ZoneInfoReply* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 height = 1;
+  void clear_height();
+  static const int kHeightFieldNumber = 1;
+  ::google::protobuf::int32 height() const;
+  void set_height(::google::protobuf::int32 value);
+
+  // optional int32 width = 2;
+  void clear_width();
+  static const int kWidthFieldNumber = 2;
+  ::google::protobuf::int32 width() const;
+  void set_width(::google::protobuf::int32 value);
+
+  // optional int32 limit_idx_x = 3;
+  void clear_limit_idx_x();
+  static const int kLimitIdxXFieldNumber = 3;
+  ::google::protobuf::int32 limit_idx_x() const;
+  void set_limit_idx_x(::google::protobuf::int32 value);
+
+  // optional int32 limit_idx_y = 4;
+  void clear_limit_idx_y();
+  static const int kLimitIdxYFieldNumber = 4;
+  ::google::protobuf::int32 limit_idx_y() const;
+  void set_limit_idx_y(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.ZoneInfoReply)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::int32 height_;
+  ::google::protobuf::int32 width_;
+  ::google::protobuf::int32 limit_idx_x_;
+  ::google::protobuf::int32 limit_idx_y_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static ZoneInfoReply* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -956,7 +1070,35 @@ GameObjectClone::body() const {
 
 // UpdateGameObjectsEvent
 
-// repeated .acoross.snakebite.messages.GameObjectClone clone = 1;
+// optional int32 idx_x = 1;
+inline void UpdateGameObjectsEvent::clear_idx_x() {
+  idx_x_ = 0;
+}
+inline ::google::protobuf::int32 UpdateGameObjectsEvent::idx_x() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
+  return idx_x_;
+}
+inline void UpdateGameObjectsEvent::set_idx_x(::google::protobuf::int32 value) {
+  
+  idx_x_ = value;
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
+}
+
+// optional int32 idx_y = 2;
+inline void UpdateGameObjectsEvent::clear_idx_y() {
+  idx_y_ = 0;
+}
+inline ::google::protobuf::int32 UpdateGameObjectsEvent::idx_y() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
+  return idx_y_;
+}
+inline void UpdateGameObjectsEvent::set_idx_y(::google::protobuf::int32 value) {
+  
+  idx_y_ = value;
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
+}
+
+// repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
 inline int UpdateGameObjectsEvent::clone_size() const {
   return clone_.size();
 }
@@ -1002,6 +1144,66 @@ inline void VoidReply::set_err(::google::protobuf::int32 value) {
   
   err_ = value;
   // @@protoc_insertion_point(field_set:acoross.snakebite.messages.VoidReply.err)
+}
+
+// -------------------------------------------------------------------
+
+// ZoneInfoReply
+
+// optional int32 height = 1;
+inline void ZoneInfoReply::clear_height() {
+  height_ = 0;
+}
+inline ::google::protobuf::int32 ZoneInfoReply::height() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.height)
+  return height_;
+}
+inline void ZoneInfoReply::set_height(::google::protobuf::int32 value) {
+  
+  height_ = value;
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.height)
+}
+
+// optional int32 width = 2;
+inline void ZoneInfoReply::clear_width() {
+  width_ = 0;
+}
+inline ::google::protobuf::int32 ZoneInfoReply::width() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.width)
+  return width_;
+}
+inline void ZoneInfoReply::set_width(::google::protobuf::int32 value) {
+  
+  width_ = value;
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.width)
+}
+
+// optional int32 limit_idx_x = 3;
+inline void ZoneInfoReply::clear_limit_idx_x() {
+  limit_idx_x_ = 0;
+}
+inline ::google::protobuf::int32 ZoneInfoReply::limit_idx_x() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
+  return limit_idx_x_;
+}
+inline void ZoneInfoReply::set_limit_idx_x(::google::protobuf::int32 value) {
+  
+  limit_idx_x_ = value;
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
+}
+
+// optional int32 limit_idx_y = 4;
+inline void ZoneInfoReply::clear_limit_idx_y() {
+  limit_idx_y_ = 0;
+}
+inline ::google::protobuf::int32 ZoneInfoReply::limit_idx_y() const {
+  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
+  return limit_idx_y_;
+}
+inline void ZoneInfoReply::set_limit_idx_y(::google::protobuf::int32 value) {
+  
+  limit_idx_y_ = value;
+  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
 }
 
 // -------------------------------------------------------------------
@@ -1106,6 +1308,8 @@ inline void TurnKeyUpRequest::set_key(::google::protobuf::int32 value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

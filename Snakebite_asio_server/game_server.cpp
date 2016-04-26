@@ -44,24 +44,16 @@ void GameServer::on_accept(boost::asio::io_service & io_service, tcp::socket && 
 				}
 			});
 	
-	{
-		std::lock_guard<std::recursive_mutex> lock(user_session_mutex_);
-		user_session_map_[addr] = us;
-	}
+	this->RegisterUserSession(addr, us);
 	us->start();
 }
 
 void GameServer::on_accept_push_socket(boost::asio::io_service & io_service, tcp::socket && push_socket)
 {
 	auto addr = push_socket.remote_endpoint().address().to_string();
-	std::lock_guard<std::recursive_mutex> lock(user_session_mutex_);
-	auto it = user_session_map_.find(addr);
-	if (it != user_session_map_.end())
+	if (auto us = this->FindUserSession(addr))
 	{
-		if (auto us = it->second.lock())
-		{
-			us->init_push_stub_socket(io_service, std::move(push_socket));
-		}
+		us->init_push_stub_socket(io_service, std::move(push_socket));
 	}
 }
 

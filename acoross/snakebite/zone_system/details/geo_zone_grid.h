@@ -87,16 +87,40 @@ public:
 	// idx_x, idx_y: grid ¿Œµ¶Ω∫
 	std::shared_ptr<ZoneT> get_zone_by_idx(int idx_x, int idx_y)
 	{
-		bool is_x_valid = (idx_x >= 0) && (idx_x < N_X);
-		bool is_y_valid = (idx_y >= 0) && (idx_y < N_Y);
-
-		//_ASSERT(is_x_valid && is_y_valid);
-		if (!is_x_valid || !is_y_valid)
+		if (IsValidIdx(idx_x, idx_y) == false)
 		{
 			return std::shared_ptr<ZoneT>();
 		}
 
 		return zone_grid_[idx_x][idx_y];
+	}
+	bool IsValidIdx(int idx_x, int idx_y) const
+	{
+		bool is_x_valid = (idx_x >= 0) && (idx_x < N_X);
+		bool is_y_valid = (idx_y >= 0) && (idx_y < N_Y);
+
+		if (!is_x_valid || !is_y_valid)
+			return false;
+
+		return true;
+	}
+	bool IsNeighborZone(int src_idx_x, int src_idx_y, int tar_idx_x, int tar_idx_y) const
+	{
+		if (IsValidIdx(src_idx_x, src_idx_y) == false)
+			return false;
+
+		if (IsValidIdx(tar_idx_x, tar_idx_y) == false)
+			return false;
+
+		auto diff_x = src_idx_x - tar_idx_x;
+		auto diff_y = src_idx_y - tar_idx_y;
+		if (diff_x >= -1 && diff_x <= 1
+			&& diff_y >= -1 && diff_y <= 1)
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	MovingObjectContainer& GetBoundaryContainer()

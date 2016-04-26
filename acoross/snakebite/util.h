@@ -2,7 +2,7 @@
 #define SNAKEBITE_UTIL_H_
 
 #include <atomic>
-#include <Windows.h>
+#include <acoross/snakebite/win/WinWrapper.h>
 
 namespace acoross {
 namespace snakebite {

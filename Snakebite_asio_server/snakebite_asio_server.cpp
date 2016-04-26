@@ -8,7 +8,6 @@
 #include <thread>
 #include <string>
 #include <sstream>
-#include <strsafe.h>
 #include <atomic>
 
 #define ACOROSS_USE_TBB
@@ -207,6 +206,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					L"mean total draw time: %.4f(ms)\n"
 					L"mean real draw time: %.4f(ms)\n"
 					L"mean frame tick: %.4f(ms)\n"
+					L"rpc socket pending write %u\n"
 					,
 					g_game_client->snake_count_.load(), g_game_client->apple_count_.load(),
 					game_server->mean_move_time_ms_.load(),
@@ -215,7 +215,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					game_server->mean_tick_time_ms_.load(),
 					mean_draw_time_ms.load(),
 					g_game_client->mean_draw_time_ms_.load(),
-					game_server->mean_frame_tick_.load()
+					game_server->mean_frame_tick_.load(),
+					acoross::rpc::RpcSocket::pending_write().load()
 				);
 
 				size_t str_len = 0;
@@ -264,7 +265,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		client->SetObjectList(idx_x, idx_y, std::move(snake_list), std::move(apple_list));
 	});
 
-	std::thread game_threads[3];
+	std::thread game_threads[2];
 	
 	for (auto& game_thread : game_threads)
 	{

@@ -11,10 +11,20 @@ acoross::rpc::ErrCode SC_PushServiceImpl::UpdateGameObjects(
 	return acoross::rpc::ErrCode::NoError;
 }
 
+acoross::rpc::ErrCode SC_PushServiceImpl::ResetPlayer(const acoross::snakebite::messages::VoidReply &rq, acoross::snakebite::messages::VoidReply *rp)
+{
+	owner_->SetPlayerHandleZero();
+
+	return acoross::rpc::ErrCode();
+}
+
 bool GameClient::UpdateGameObjectPositions(const messages::UpdateGameObjectsEvent& got_msg)
 {
 	std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>> snake_clone_list;
-	std::list<ZoneObjectClone> apple_clone_list;
+	std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>> apple_clone_list;
+
+	int idx_x = got_msg.idx_x();
+	int idx_y = got_msg.idx_y();
 
 	auto clone_count = got_msg.clone_size();
 	for (int i = 0; i < clone_count; ++i)
@@ -31,7 +41,7 @@ bool GameClient::UpdateGameObjectPositions(const messages::UpdateGameObjectsEven
 			client_body_list.emplace_back(Position2D(pac_body.x(), pac_body.y()), pac_body.radius());
 		}
 
-		auto client_clone = ZoneObjectClone(client_head, client_body_list, clone.obj_name());
+		auto client_clone = ZoneObjectClone(client_head, client_body_list, clone.obj_name(), idx_x, idx_y);
 
 		if (clone.clone_type() == 0) //snake
 		{
@@ -39,11 +49,11 @@ bool GameClient::UpdateGameObjectPositions(const messages::UpdateGameObjectsEven
 		}
 		else
 		{
-			apple_clone_list.emplace_back(client_clone);
+			apple_clone_list.emplace_back(std::make_pair(clone.handle(), client_clone));
 		}
 	}
 
-	this->SetObjectList(std::move(snake_clone_list), std::move(apple_clone_list));
+	this->SetObjectList(idx_x, idx_y, std::move(snake_clone_list), std::move(apple_clone_list));
 
 	return true;
 }

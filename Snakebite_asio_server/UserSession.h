@@ -31,7 +31,7 @@ public:
 		, on_destroy_(on_destroy)
 	{}
 
-	~UserSession()
+	virtual ~UserSession()
 	{
 		on_destroy_();
 		end();
@@ -43,15 +43,22 @@ public:
 	void init_push_stub_socket(::boost::asio::io_service& io_service,
 		::boost::asio::ip::tcp::socket&& socket)
 	{
-		push_stub_.reset(new messages::SC_PushService::Stub(io_service, std::move(socket)));
+		auto push_stub = std::make_shared<messages::SC_PushService::Stub>(io_service, std::move(socket));
+		push_stub->start();
+
+		std::atomic_store(&push_stub_, std::move(push_stub));
 	}
 
 private:
 	void send_update_game_object(
+		int idx_x, int idx_y,
 		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
-		const std::list<ZoneObjectClone>& apple_clone_list);
+		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& apple_clone_list);
 	
 	Handle<Snake>::Type user_snake_handle_;
+	std::atomic<int> player_idx_x_{ 0 };
+	std::atomic<int> player_idx_y_{ 0 };
+
 	std::shared_ptr<GameSession> game_session_;
 	
 	std::function<void(void)> on_destroy_;
@@ -59,6 +66,7 @@ private:
 	std::shared_ptr<messages::SC_PushService::Stub> push_stub_;
 
 	// Service을(를) 통해 상속됨
+	virtual acoross::rpc::ErrCode RequestZoneInfo(const acoross::snakebite::messages::VoidReply &rq, acoross::snakebite::messages::ZoneInfoReply *rp) override;
 	virtual acoross::rpc::ErrCode InitPlayer(const acoross::snakebite::messages::InitPlayerSnakeRequest &rq, acoross::snakebite::messages::InitPlayerSnakeReply *rp) override;
 	virtual acoross::rpc::ErrCode SetKeyDown(const acoross::snakebite::messages::TurnKeyDownRequest &rq, acoross::snakebite::messages::VoidReply *rp) override;
 	virtual acoross::rpc::ErrCode SetKeyUp(const acoross::snakebite::messages::TurnKeyUpRequest &rq, acoross::snakebite::messages::VoidReply *rp) override;

@@ -10,6 +10,11 @@
 #include <acoross/rpc/rpc_server.h>
 #include "game_client.h"
 
+#define ACOROSS_USE_TBB
+#ifdef ACOROSS_USE_TBB
+#include "tbb/tbbmalloc_proxy.h"
+#endif
+
 using boost::asio::ip::tcp;
 using namespace acoross::snakebite;
 
@@ -63,6 +68,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			if (auto game_client = g_game_client.lock())
 			{
 				game_client->InitPlayer();
+			}
+		}
+	}
+	break;
+	case WM_MOUSEWHEEL:
+	{
+		if (auto game_client = g_game_client.lock())
+		{
+			short hword = HIWORD(wParam);
+			short lword = LOWORD(wParam);
+			if (lword == 0)
+			{
+				game_client->FetchAddScalePcnt(hword > 0 ? 2 : -2);
+				::InvalidateRect(hWnd, nullptr, true);
 			}
 		}
 	}
@@ -127,29 +146,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		using namespace ::boost::asio;
 		io_service io_service;
 		ip::tcp::socket socket(io_service);
-		ip::tcp::socket push_service_socket(io_service);
 		{
 			tcp::resolver resolver(io_service);
 			boost::asio::connect(socket, resolver.resolve({ "127.0.0.1", "22000" }));
-			boost::asio::connect(push_service_socket, resolver.resolve({ "127.0.0.1", "22001" }));
 		}
 		
 		auto game_client = std::make_shared<GameClient>(io_service, std::move(socket));
 		g_game_client = game_client;
-		game_client->start();
 
-		auto push_service = std::make_shared<SC_PushServiceImpl>(
-			io_service, 
-			std::move(push_service_socket), 
-			game_client);
-		push_service->start();
+		game_client->start();
 
 		std::thread game_thread(
 			[&io_service]()
 		{
 			io_service.run();
-		}
-		);
+		});
 
 		// 응용 프로그램 초기화를 수행합니다.
 		acoross::Win::Window window(hInstance);

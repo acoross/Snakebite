@@ -60,12 +60,15 @@ message GameObjectClone {
 }
 
 message UpdateGameObjectsEvent {
-	repeated GameObjectClone clone = 1;
+	int32 idx_x = 1;
+	int32 idx_y = 2;
+	repeated GameObjectClone clone = 3;
 }
 
 //------------------------------
 //------------------------------
 service SnakebiteService {
+	rpc RequestZoneInfo(VoidReply) returns (ZoneInfoReply);
 	rpc InitPlayer(InitPlayerSnakeRequest) returns (InitPlayerSnakeReply);
 	rpc SetKeyDown(TurnKeyDownRequest) returns (VoidReply);
 	rpc SetKeyUp(TurnKeyUpRequest) returns (VoidReply);
@@ -74,6 +77,14 @@ service SnakebiteService {
 //------------------------------
 message VoidReply{
 	int32 err = 1;
+}
+
+//------------------------------
+message ZoneInfoReply{
+	int32 height = 1;
+	int32 width = 2;
+	int32 limit_idx_x = 3;
+	int32 limit_idx_y = 4;
 }
 
 //------------------------------
