@@ -32,7 +32,7 @@ public:
 	~SnakeNpcControlManager() {}
 
 	void Start(int frametick);
-	
+
 	void AsyncAddSnakeNpc();
 	void AsyncRemoveSnakeNpc(Handle<Snake>::Type handle);
 	void AsyncRemoveFirstSnakeNpc();

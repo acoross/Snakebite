@@ -20,8 +20,8 @@ public:
 	{
 		RequestZoneInfo();
 	}
-	virtual ~LocalGameClient(){}
-	
+	virtual ~LocalGameClient() {}
+
 	virtual void RequestZoneInfo() override
 	{
 		zone_info_.limit_idx_x = game_server_.COUNT_ZONE_X;
@@ -60,7 +60,7 @@ public:
 		game_server_.RequestToSession(
 			[player_key, handle = player_handle_](GameSession& session)
 		{
-			session.RequestToSnake(handle, 
+			session.RequestToSnake(handle,
 				[player_key](Snake& snake)
 			{
 				snake.SetKeyDown(player_key);

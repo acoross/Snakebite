@@ -28,7 +28,7 @@ class WDC
 {
 public:
 	WDC(HDC hdc) : hdc_(hdc) {}
-	WDC(){}
+	WDC() {}
 	virtual ~WDC() {}
 
 	HDC Get() const { return hdc_; };

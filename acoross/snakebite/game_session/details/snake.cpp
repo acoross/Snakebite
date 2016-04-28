@@ -5,16 +5,15 @@
 namespace acoross {
 namespace snakebite {
 
-SnakeNode::SnakeNode(GameSession& game_session, 
+SnakeNode::SnakeNode(GameSession& game_session,
 	HandleT owner,
 	SbColliderBase* collider, const Position2D & pos, double radius, std::string name)
 	: SbZoneObject(collider, pos, radius, name)
 	, game_session_(game_session)
 	, owner_handle_(owner)
-{
-}
+{}
 
-SnakeNode::~SnakeNode() 
+SnakeNode::~SnakeNode()
 {
 	if (auto next = std::atomic_load(&next_))
 	{
@@ -79,7 +78,7 @@ void SnakeNode::AddBody()
 			auto new_next = std::make_shared<SnakeTail>(game_session_,
 				owner_handle_,	// 자기자신이 owner 인 경우도 있음.
 				head_.GetPosition(), head_.GetRadius());
-		
+
 			std::shared_ptr<SnakeNode> exp(nullptr);
 			std::atomic_compare_exchange_strong(
 				&next_,
@@ -94,15 +93,13 @@ void SnakeNode::AddBody()
 //////////////////////////////////////////////////////////////////////////////////
 // SnakeTail
 SnakeTail::SnakeTail(GameSession& game_session, HandleT owner, const Position2D & pos, double radius)
-	: SnakeNode(game_session, 
+	: SnakeNode(game_session,
 		owner,
 		new SnakeTailCollider(this), pos, radius, "t")
-{
-}
+{}
 
 SnakeTail::~SnakeTail()
-{
-}
+{}
 
 // snake 가 알아서 움직인다.
 void SnakeTail::UpdateMove(int64_t diff_in_ms, MovingObjectContainer & container)
@@ -135,10 +132,10 @@ void SnakeTail::UpdateMove(int64_t diff_in_ms, MovingObjectContainer & container
 //////////////////////////////////////////////////////////////////////////////////
 // Snake
 
-Snake::Snake(GameSession& game_session, const Position2D & pos, double radius, 
-	const Degree & angle, double velocity, double ang_vel, int len, 
+Snake::Snake(GameSession& game_session, const Position2D & pos, double radius,
+	const Degree & angle, double velocity, double ang_vel, int len,
 	EventHandler onDie, std::string name)
-	: SnakeNode(game_session, 
+	: SnakeNode(game_session,
 		Handle<Snake>(this).handle,
 		new SnakeCollider(this), pos, radius, name)
 	, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)

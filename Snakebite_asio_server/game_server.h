@@ -23,38 +23,37 @@ using boost::asio::ip::tcp;
 
 namespace acoross {
 namespace snakebite {
-
 //----------------------------------------------------------------------
 
 class GameServer final
 	: public std::enable_shared_from_this<GameServer>
 {
 public:
-	using LocalUpdateListner = 
+	using LocalUpdateListner =
 		std::function<void(
-			int idx_x, int idx_y, 
+			int idx_x, int idx_y,
 			SbGeoZone::CloneZoneObjListT&,
 			SbGeoZone::CloneZoneObjListT&
-		)>;
-	
+			)>;
+
 public:
-	GameServer(boost::asio::io_service& io_service
-		, short port
-		, short push_port
-	);
+	GameServer(boost::asio::io_service& io_service,
+		short port,
+		short push_port);
 	~GameServer() {}
 
 	void SetLocalUpdateListner(LocalUpdateListner local_listner)
 	{
-		game_session_->AddUpdateEventListner("local listner",
-			[local_listner]	(
-				int idx_x, int idx_y, 
-				SbGeoZone::CloneZoneObjListT& snake_clone_list, 
-				SbGeoZone::CloneZoneObjListT& apple_clone_list)
-			{
-				local_listner(idx_x, idx_y, 
-					snake_clone_list, apple_clone_list);
-			});
+		auto update_event_connection =
+			game_session_->ConnectToUpdateEvent("local listner",
+				[local_listner](
+					int idx_x, int idx_y,
+					SbGeoZone::CloneZoneObjListT& snake_clone_list,
+					SbGeoZone::CloneZoneObjListT& apple_clone_list)
+		{
+			local_listner(idx_x, idx_y,
+				snake_clone_list, apple_clone_list);
+		});
 	}
 
 	void RequestToSession(std::function<void(GameSession&)> request)
@@ -62,7 +61,8 @@ public:
 		request(*game_session_);
 	}
 
-	void RequestToSessionNpcController(std::function<void(SnakeNpcControlManager&)> request)
+	void RequestToSessionNpcController(std::function<void(SnakeNpcControlManager&)>
+		request)
 	{
 		request(*npc_controll_manager_);
 	}
@@ -106,7 +106,7 @@ public:
 #endif
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };
 	const int ZoneGridHeight{ ZoneHeight * COUNT_ZONE_X };
-	
+
 	std::atomic<double> mean_move_time_ms_{ 0 };
 	std::atomic<double> mean_collision_time_ms_{ 0 };
 	std::atomic<double> mean_clone_object_time_ms_{ 0 };
@@ -115,11 +115,11 @@ public:
 
 private:
 	void on_accept(
-		boost::asio::io_service& io_service, 
+		boost::asio::io_service& io_service,
 		tcp::socket&& socket);
 
 	void on_accept_push_socket(
-		boost::asio::io_service& io_service, 
+		boost::asio::io_service& io_service,
 		tcp::socket&& push_socket);
 
 private:
@@ -133,7 +133,6 @@ private:
 	std::shared_ptr<GameSession> game_session_;
 	std::shared_ptr<SnakeNpcControlManager> npc_controll_manager_;
 };
-
 }
 }
 #endif //SNAKEBITE_GAME_SERVER_H_

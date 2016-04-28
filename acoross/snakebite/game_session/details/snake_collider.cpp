@@ -30,7 +30,7 @@ void SnakeCollider::Collide(SnakeTailCollider& other, int cnt)
 	{
 		owner_->Die();
 	}
-	
+
 	return;
 }
 void SnakeCollider::Collide(AppleCollider& other, int cnt)

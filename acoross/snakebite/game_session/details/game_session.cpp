@@ -14,7 +14,6 @@
 
 namespace acoross {
 namespace snakebite {
-
 /////////////////////////////////////////////////
 // GameSession
 GameSession::GameSession(
@@ -22,15 +21,14 @@ GameSession::GameSession(
 	int zone_width, int zone_height, int n_x, int n_y)
 	: strand_(io_service)
 	, zone_grid_(io_service, zone_width, zone_height, n_x, n_y)
-{	
+{
 	auto clock = std::chrono::high_resolution_clock();
 	auto t = clock.now();
 	random_engine_.seed((unsigned int)t.time_since_epoch().count());
 }
 
 GameSession::~GameSession()
-{
-}
+{}
 
 void GameSession::StartZone(int frame_tick)
 {
@@ -40,7 +38,7 @@ void GameSession::StartZone(int frame_tick)
 		zone.AsyncAddObserver(
 			"GameSession",
 			[&](int idx_zone_x, int idx_zone_y,
-				SbGeoZone::SharedCloneZoneObjlistT snakes, 
+				SbGeoZone::SharedCloneZoneObjlistT snakes,
 				SbGeoZone::SharedCloneZoneObjlistT apples)
 		{
 			InvokeEventListners(idx_zone_x, idx_zone_y, snakes, apples);
@@ -108,7 +106,6 @@ void GameSession::RequestToSnake(Handle<Snake>::Type handle, std::function<void(
 	});
 }
 
-
 void GameSession::AsyncAddSnakeTail(std::shared_ptr<SnakeNode> snake)
 {
 	auto zone = zone_grid_.get_zone(snake->GetPosition().x, snake->GetPosition().x);
@@ -140,11 +137,11 @@ Handle<Snake>::Type GameSession::AsyncMakeNewSnake(std::string name, Snake::Even
 	const int body_len{ 1 };
 
 	auto snake = std::make_shared<Snake>(
-			*this
-			, init_pos, radius
-			, unin_degree(random_engine_), velocity, ang_vel, body_len
-			, onDieHandler, name
-			);
+		*this
+		, init_pos, radius
+		, unin_degree(random_engine_), velocity, ang_vel, body_len
+		, onDieHandler, name
+		);
 
 	auto zone = zone_grid_.get_zone(snake->GetPosition().x, snake->GetPosition().x);
 	if (!zone)
@@ -161,7 +158,7 @@ Handle<Snake>::Type GameSession::AsyncMakeNewSnake(std::string name, Snake::Even
 			zone->AsyncAddMovObj(snake);
 		}
 	});
-	
+
 	return Handle<Snake>(snake.get()).handle;
 }
 
@@ -197,6 +194,5 @@ void GameSession::RequestMakeNewApple()
 		zone->AsyncAddStaticObj(apple);
 	}
 }
-
 }
 }

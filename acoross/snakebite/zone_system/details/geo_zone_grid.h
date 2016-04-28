@@ -11,7 +11,6 @@
 
 namespace acoross {
 namespace snakebite {
-
 ///////////////////////////////////////////////////////////////////
 
 // GeoZone ø° ¥Î«— const container
@@ -127,7 +126,7 @@ public:
 	{
 		return game_boundary_;
 	}
-	
+
 	const int N_X;
 	const int N_Y;
 
@@ -138,7 +137,6 @@ private:
 	std::vector<std::vector<std::shared_ptr<ZoneT>>> zone_grid_;
 	MovingObjectContainer game_boundary_;
 };
-
 }
 }
 

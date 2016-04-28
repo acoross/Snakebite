@@ -20,18 +20,18 @@ public:
 	MovingObject(const Position2D& pos, double radius)
 		: pos_(pos), radius_(radius)
 	{}
-	virtual ~MovingObject()	{}
+	virtual ~MovingObject() {}
 
 	virtual void MoveTo(const Position2D& newpos)
 	{
 		pos_ = newpos;
 	}
-	
+
 	void Move(const DirVector2D& diff, MyContainer& container);
 
 	Position2D GetPosition() const { return pos_; }
 	double GetRadius() const { return radius_; }
-	
+
 private:
 	Position2D pos_;	// relational positino to field, as UNIT
 	double radius_;
@@ -55,7 +55,7 @@ inline void MovingObject::Move(const DirVector2D & diff, MovingObjectContainer& 
 	auto pos_new = pos_;
 	pos_new.x += diff.x;
 	pos_new.y += diff.y;
-	
+
 	pos_new.x = Trim<double>(pos_new.x, container.Left, container.Right - 1);
 	pos_new.y = Trim<double>(pos_new.y, container.Top, container.Bottom - 1);
 

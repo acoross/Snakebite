@@ -18,7 +18,7 @@ public:
 	Apple(Apple& lhs) = default;
 	Apple(Apple&& lhs) = default;
 
-	virtual ~Apple(){}
+	virtual ~Apple() {}
 
 private:
 };

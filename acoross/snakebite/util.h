@@ -23,7 +23,7 @@ public:
 	~MeanProcessTimeCheckerBase()
 	{
 		double diff_time_ms = (double)::GetTickCount64() - start_tick_;
-		double new_mean_time = mean_process_time_ms_.load() * (double)Pcnt/100.0 + diff_time_ms * (100.0 - Pcnt)/100.0;
+		double new_mean_time = mean_process_time_ms_.load() * (double)Pcnt / 100.0 + diff_time_ms * (100.0 - Pcnt) / 100.0;
 		mean_process_time_ms_.store(new_mean_time);
 	}
 

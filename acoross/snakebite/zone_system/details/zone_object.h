@@ -9,10 +9,11 @@
 
 namespace acoross {
 namespace snakebite {
-
 template <typename ColliderT>
 class ZoneObjectCloneEx;
 
+template <typename ColliderT>
+class GeoZone;
 
 // ColliderT should implement bool Collide(ColliderT& other, int cnt);
 template <typename ColliderT>
@@ -27,8 +28,11 @@ public:
 	{}
 	virtual ~ZoneObjectEx()
 	{}
-	
+
 	MyCloneT Clone();
+
+	virtual void OnEnterZoneCallback(GeoZone<ColliderT>& zone) {}
+	virtual void OnLeaveZoneCallback(GeoZone<ColliderT>& zone) {}
 
 	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container)
 	{}
@@ -97,6 +101,9 @@ public:
 
 	Position2D GetPosition() const { return head_.GetPosition(); }
 
+	virtual void Inform()
+	{}
+
 public:
 	std::atomic<int> zone_idx_x_;
 	std::atomic<int> zone_idx_y_;
@@ -145,7 +152,6 @@ inline ZoneObjectCloneEx<ColliderT> ZoneObjectEx<ColliderT>::Clone()
 {
 	return ZoneObjectCloneEx<ColliderT>(*this);
 }
-
 }
 }
 

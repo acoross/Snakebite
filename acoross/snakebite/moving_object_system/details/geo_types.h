@@ -31,7 +31,7 @@ public:
 
 		return ret;
 	}
-	
+
 	static double Distance(const Position2D& p1, const Position2D& p2)
 	{
 		double xdist = (p1.x - p2.x);
@@ -49,7 +49,8 @@ class Degree
 {
 public:
 	Degree(double angle)
-		: angle_(angle) {}
+		: angle_(angle)
+	{}
 
 	const Degree& operator+=(const Degree& rhs)
 	{

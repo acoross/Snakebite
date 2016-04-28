@@ -18,7 +18,6 @@
 
 namespace acoross {
 namespace snakebite {
-
 //@need to be serialized
 // 벽에 충돌했는지 체크.
 // 벽에 충돌하면 튕겨나옴.
@@ -92,8 +91,8 @@ public:
 	explicit GeoZone(
 		::boost::asio::io_service& io_service,
 		GameGeoZoneGrid& owner_zone_grid,
-		int idx_zone_x, int idx_zone_y, 
-		MovingObjectContainer& game_boundary, 
+		int idx_zone_x, int idx_zone_y,
+		MovingObjectContainer& game_boundary,
 		int left, int top, int width, int height)
 		: strand_(io_service)
 		, owner_zone_grid_(owner_zone_grid)
@@ -102,11 +101,9 @@ public:
 		, IDX_ZONE_Y(idx_zone_y)
 		, game_boundary_(game_boundary)
 		, zone_boundary_(left, width + left, top, top + height)
-	{
-	}
+	{}
 	~GeoZone()
-	{
-	}
+	{}
 
 	// timer 를 이용하는 update loop 를 시작한다.
 	// loop 는 strand 를 통해 serialize 된다.
@@ -127,6 +124,15 @@ public:
 			[this, name, func]()
 		{
 			observer_map_[name] = func;
+		});
+	}
+	// update 된 object들의 위치 정보를 구독 종료
+	void AsyncRemoveObserver(std::string name)
+	{
+		strand_.post(
+			[this, name]()
+		{
+			observer_map_.erase(name);
 		});
 	}
 	// 움직이지 않는 object 추가
@@ -176,6 +182,7 @@ public:
 			if (it.second)
 			{
 				it.first->second->AtomicZoneIdx(IDX_ZONE_X, IDX_ZONE_Y);
+				it.first->second->OnEnterZoneCallback(*this);
 				cached_mov_object_cnt_.fetch_add(1);
 			}
 		});
@@ -189,7 +196,21 @@ public:
 	{
 		return cached_mov_object_cnt_.load();
 	}
-	
+
+	// 다른 zone 의 정보를 내 zone 의 observer 에게 보내는 method
+	void AsyncInvokeUpdateEventsToObservers(
+		int idx_x, int idx_y,
+		SharedCloneZoneObjlistT snakes,
+		SharedCloneZoneObjlistT apples)
+	{
+		strand_.post(
+			[this,
+			idx_x, idx_y, snakes, apples]()
+		{
+			invoke_update_event_to_observers(idx_x, idx_y, snakes, apples);
+		});
+	}
+
 public:
 	const int IDX_ZONE_X;
 	const int IDX_ZONE_Y;
@@ -207,6 +228,7 @@ private:
 
 			update_movobj_position(zone_timer_tick_);
 			process_collision(owner_zone_grid_);
+
 			invoke_update_event_to_observers();
 
 			zone_timer_.async_wait(
@@ -239,7 +261,7 @@ private:
 				static_objects_);
 		});
 	}
-	
+
 	// @use in serializer
 	// update every snake position
 	void update_movobj_position(int64_t diff_in_ms)
@@ -253,6 +275,7 @@ private:
 			if (mov_obj->remove_this_from_zone_.load())
 			{
 				mov_obj->AtomicZoneIdx(0, 0);
+				mov_obj->OnLeaveZoneCallback(*this);
 				cached_mov_object_cnt_.fetch_sub(1);
 				del_list.push_back(pair.first);
 			}
@@ -268,7 +291,7 @@ private:
 			mov_objects_.erase(handle);
 		}
 	}
-	
+
 	// @use in serializer
 	// process collision with neighbor zones
 	void process_collision(GameGeoZoneGrid& neighbors_)
@@ -297,6 +320,7 @@ private:
 					if (it != mov_objects_.end())
 					{
 						it->second->AtomicZoneIdx(0, 0);
+						it->second->OnLeaveZoneCallback(*this);
 						mov_objects_.erase(it);
 						//del_list.push_back(pair.first);
 						cached_mov_object_cnt_.fetch_sub(1);
@@ -320,9 +344,8 @@ private:
 		}
 		}*/
 	}
-	
+
 	// @use in serializer
-	// zone 내부의 objects 위치를 broadcast
 	// zone 내부의 objects 위치를 broadcast
 	void invoke_update_event_to_observers()
 	{
@@ -341,6 +364,13 @@ private:
 			apples->push_back(std::make_pair(apple.first, apple.second->Clone()));
 		}
 
+		invoke_update_event_to_observers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
+	}
+
+	// @use in serializer
+	void invoke_update_event_to_observers(int idx_x, int idx_y,
+		SharedCloneZoneObjlistT snakes, SharedCloneZoneObjlistT apples)
+	{
 		for (auto& pair : observer_map_)
 		{
 			pair.second(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
@@ -368,7 +398,7 @@ private:
 	::boost::asio::deadline_timer zone_timer_;
 	int zone_timer_tick_{ 10 };
 	std::atomic<bool> is_running_{ false };
-	
+
 	GameGeoZoneGrid& owner_zone_grid_;
 	MovingObjectContainer zone_boundary_;
 	MovingObjectContainer& game_boundary_;
@@ -378,7 +408,7 @@ private:
 	//std::unordered_map<uintptr_t, std::shared_ptr<ZoneObjectBase>> mov_objects_;
 	//std::unordered_map<uintptr_t, std::shared_ptr<ZoneObjectBase>> static_objects_;
 	std::unordered_map<std::string, ObserverFuncT> observer_map_;
-	
+
 	MapMyObj mov_objects_;
 	MapMyObj static_objects_;
 	std::atomic<int> cached_mov_object_cnt_{ 0 };
@@ -387,7 +417,6 @@ private:
 	//
 };
 //
-
 }
 }
 

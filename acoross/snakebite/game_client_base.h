@@ -35,7 +35,7 @@ public:
 	}
 
 	void SetObjectList(
-		int idx_x, int idx_y, 
+		int idx_x, int idx_y,
 		SbGeoZone::CloneZoneObjListT&& snake_clone_list,
 		SbGeoZone::CloneZoneObjListT&& apple_clone_list)
 	{
@@ -46,12 +46,12 @@ public:
 	}
 
 	void RetrieveObjectList(
-		int idx_x, int idx_y, 
+		int idx_x, int idx_y,
 		SbGeoZone::CloneZoneObjListT& snake_clone_list,
 		SbGeoZone::CloneZoneObjListT& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
-		
+
 		auto it_zone_snakes = zone_snake_clone_list_.find(std::make_pair(idx_x, idx_y));
 		if (it_zone_snakes != zone_snake_clone_list_.end())
 		{

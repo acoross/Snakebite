@@ -16,14 +16,13 @@
 
 namespace acoross {
 namespace snakebite {
-
 class GameServer;
 
 class UserSession
 	: public messages::SnakebiteService::Service
 {
 public:
-	UserSession(boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket, 
+	UserSession(boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket,
 		std::shared_ptr<GameSession> game_session, std::shared_ptr<GameServer> server,
 		std::function<void(void)> on_destroy)
 		: game_session_(game_session)
@@ -52,15 +51,15 @@ public:
 private:
 	void send_update_game_object(
 		int idx_x, int idx_y,
-		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
+		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list,
 		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& apple_clone_list);
-	
+
 	Handle<Snake>::Type user_snake_handle_;
 	std::atomic<int> player_idx_x_{ 0 };
 	std::atomic<int> player_idx_y_{ 0 };
 
 	std::shared_ptr<GameSession> game_session_;
-	
+
 	std::function<void(void)> on_destroy_;
 
 	std::shared_ptr<messages::SC_PushService::Stub> push_stub_;
@@ -71,7 +70,6 @@ private:
 	virtual acoross::rpc::ErrCode SetKeyDown(const acoross::snakebite::messages::TurnKeyDownRequest &rq, acoross::snakebite::messages::VoidReply *rp) override;
 	virtual acoross::rpc::ErrCode SetKeyUp(const acoross::snakebite::messages::TurnKeyUpRequest &rq, acoross::snakebite::messages::VoidReply *rp) override;
 };
-
 }
 }
 #endif //SNAKEBITE_USER_SESSION_H_

@@ -171,7 +171,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 			PAINTSTRUCT ps;
 			acoross::Win::WDC wdc(::BeginPaint(hWnd, &ps));
-			
+
 			// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
 			{
 				MeanProcessTimeChecker mean_draw(mean_draw_time_ms);
@@ -258,7 +258,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	server->SetLocalUpdateListner(
 		[client = g_game_client.get()]
 	(
-		int idx_x, int idx_y, 
+		int idx_x, int idx_y,
 		SbGeoZone::CloneZoneObjListT snake_list,
 		SbGeoZone::CloneZoneObjListT apple_list)
 	{
@@ -266,7 +266,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	});
 
 	std::thread game_threads[2];
-	
+
 	for (auto& game_thread : game_threads)
 	{
 		game_thread = std::thread(
@@ -290,7 +290,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	{
 		return FALSE;
 	}
-	
+
 	auto loop = [](MSG& msg)
 	{
 		static DWORD lasttick2draw = ::GetTickCount();

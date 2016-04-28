@@ -52,7 +52,7 @@ static void changeDirection(std::default_random_engine& re, std::shared_ptr<Game
 }
 
 SnakeNpcControlManager::SnakeNpcControlManager(
-	::boost::asio::io_service& io_service, 
+	::boost::asio::io_service& io_service,
 	std::weak_ptr<GameSession> game_session_wp)
 	: strand_(io_service)
 	, npc_change_dir_timer_(io_service)
@@ -149,7 +149,7 @@ void SnakeNpcControlManager::async_unregister_snake_npc(Handle<Snake>::Type hand
 	{
 		snake_npc_handles_.erase(handle);
 	});
-	
+
 }
 
 void SnakeNpcControlManager::AsyncRemoveFirstSnakeNpc()
