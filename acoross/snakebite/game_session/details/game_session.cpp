@@ -35,14 +35,15 @@ void GameSession::StartZone(int frame_tick)
 	zone_grid_.ProcessAllZone(
 		[this](auto& zone)->bool
 	{
-		zone.AsyncAddObserver(
-			"GameSession",
+		auto conn = zone.ConnectToUpdateEvent(
 			[&](int idx_zone_x, int idx_zone_y,
 				SbGeoZone::SharedCloneZoneObjlistT snakes,
 				SbGeoZone::SharedCloneZoneObjlistT apples)
 		{
-			InvokeEventListners(idx_zone_x, idx_zone_y, snakes, apples);
+			InvokeUpdateEvent(idx_zone_x, idx_zone_y, snakes, apples);
 		});
+
+		list_conn_to_zone_event_.emplace_back(acoross::make_auto_con(std::move(conn)));
 
 		return true;
 	});
@@ -90,20 +91,6 @@ size_t GameSession::CalculateAppleCount()
 	}
 	);
 	return count;
-}
-
-void GameSession::RequestToSnake(Handle<Snake>::Type handle, std::function<void(Snake&)> request)
-{
-	//std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
-	strand_.post(
-		[this, handle, request]()
-	{
-		auto it = snakes_.find(handle);
-		if (it != snakes_.end())
-		{
-			request(*it->second.get());
-		}
-	});
 }
 
 void GameSession::AsyncAddSnakeTail(std::shared_ptr<SnakeNode> snake)

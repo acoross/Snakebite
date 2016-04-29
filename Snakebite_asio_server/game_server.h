@@ -42,18 +42,9 @@ public:
 		short push_port);
 	~GameServer() {}
 
-	void SetLocalUpdateListner(LocalUpdateListner local_listner)
+	auto MakeConnectionToGlobalUpdateEvent(LocalUpdateListner local_listner)
 	{
-		auto update_event_connection =
-			game_session_->ConnectToUpdateEvent("local listner",
-				[local_listner](
-					int idx_x, int idx_y,
-					SbGeoZone::CloneZoneObjListT& snake_clone_list,
-					SbGeoZone::CloneZoneObjListT& apple_clone_list)
-		{
-			local_listner(idx_x, idx_y,
-				snake_clone_list, apple_clone_list);
-		});
+		return game_session_->MakeConnectionToUpdateEvent(local_listner);
 	}
 
 	void RequestToSession(std::function<void(GameSession&)> request)

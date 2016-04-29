@@ -25,335 +25,346 @@ namespace {
 
 const ::google::protobuf::Descriptor* MovingObject_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  MovingObject_reflection_ = NULL;
+MovingObject_reflection_ = NULL;
 const ::google::protobuf::Descriptor* GameObjectClone_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  GameObjectClone_reflection_ = NULL;
+GameObjectClone_reflection_ = NULL;
 const ::google::protobuf::Descriptor* UpdateGameObjectsEvent_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  UpdateGameObjectsEvent_reflection_ = NULL;
+UpdateGameObjectsEvent_reflection_ = NULL;
 const ::google::protobuf::Descriptor* VoidReply_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  VoidReply_reflection_ = NULL;
+VoidReply_reflection_ = NULL;
 const ::google::protobuf::Descriptor* ZoneInfoReply_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  ZoneInfoReply_reflection_ = NULL;
+ZoneInfoReply_reflection_ = NULL;
 const ::google::protobuf::Descriptor* InitPlayerSnakeRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  InitPlayerSnakeRequest_reflection_ = NULL;
+InitPlayerSnakeRequest_reflection_ = NULL;
 const ::google::protobuf::Descriptor* InitPlayerSnakeReply_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  InitPlayerSnakeReply_reflection_ = NULL;
+InitPlayerSnakeReply_reflection_ = NULL;
 const ::google::protobuf::Descriptor* TurnKeyDownRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  TurnKeyDownRequest_reflection_ = NULL;
+TurnKeyDownRequest_reflection_ = NULL;
 const ::google::protobuf::Descriptor* TurnKeyUpRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  TurnKeyUpRequest_reflection_ = NULL;
+TurnKeyUpRequest_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* ObjType_descriptor_ = NULL;
 
 }  // namespace
 
 
-void protobuf_AssignDesc_snakebite_5fmessage_2eproto() {
-  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "snakebite_message.proto");
-  GOOGLE_CHECK(file != NULL);
-  MovingObject_descriptor_ = file->message_type(0);
-  static const int MovingObject_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, y_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, radius_),
-  };
-  MovingObject_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      MovingObject_descriptor_,
-      MovingObject::default_instance_,
-      MovingObject_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(MovingObject),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, _is_default_instance_));
-  GameObjectClone_descriptor_ = file->message_type(1);
-  static const int GameObjectClone_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, clone_type_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, obj_name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, handle_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, head_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, body_),
-  };
-  GameObjectClone_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      GameObjectClone_descriptor_,
-      GameObjectClone::default_instance_,
-      GameObjectClone_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(GameObjectClone),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, _is_default_instance_));
-  UpdateGameObjectsEvent_descriptor_ = file->message_type(2);
-  static const int UpdateGameObjectsEvent_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, idx_x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, idx_y_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, clone_),
-  };
-  UpdateGameObjectsEvent_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      UpdateGameObjectsEvent_descriptor_,
-      UpdateGameObjectsEvent::default_instance_,
-      UpdateGameObjectsEvent_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(UpdateGameObjectsEvent),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, _is_default_instance_));
-  VoidReply_descriptor_ = file->message_type(3);
-  static const int VoidReply_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(VoidReply, err_),
-  };
-  VoidReply_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      VoidReply_descriptor_,
-      VoidReply::default_instance_,
-      VoidReply_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(VoidReply),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(VoidReply, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(VoidReply, _is_default_instance_));
-  ZoneInfoReply_descriptor_ = file->message_type(4);
-  static const int ZoneInfoReply_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, height_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, width_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, limit_idx_x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, limit_idx_y_),
-  };
-  ZoneInfoReply_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      ZoneInfoReply_descriptor_,
-      ZoneInfoReply::default_instance_,
-      ZoneInfoReply_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(ZoneInfoReply),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, _is_default_instance_));
-  InitPlayerSnakeRequest_descriptor_ = file->message_type(5);
-  static const int InitPlayerSnakeRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeRequest, name_),
-  };
-  InitPlayerSnakeRequest_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      InitPlayerSnakeRequest_descriptor_,
-      InitPlayerSnakeRequest::default_instance_,
-      InitPlayerSnakeRequest_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(InitPlayerSnakeRequest),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeRequest, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeRequest, _is_default_instance_));
-  InitPlayerSnakeReply_descriptor_ = file->message_type(6);
-  static const int InitPlayerSnakeReply_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeReply, handle_),
-  };
-  InitPlayerSnakeReply_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      InitPlayerSnakeReply_descriptor_,
-      InitPlayerSnakeReply::default_instance_,
-      InitPlayerSnakeReply_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(InitPlayerSnakeReply),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeReply, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeReply, _is_default_instance_));
-  TurnKeyDownRequest_descriptor_ = file->message_type(7);
-  static const int TurnKeyDownRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyDownRequest, key_),
-  };
-  TurnKeyDownRequest_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      TurnKeyDownRequest_descriptor_,
-      TurnKeyDownRequest::default_instance_,
-      TurnKeyDownRequest_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(TurnKeyDownRequest),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyDownRequest, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyDownRequest, _is_default_instance_));
-  TurnKeyUpRequest_descriptor_ = file->message_type(8);
-  static const int TurnKeyUpRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyUpRequest, key_),
-  };
-  TurnKeyUpRequest_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      TurnKeyUpRequest_descriptor_,
-      TurnKeyUpRequest::default_instance_,
-      TurnKeyUpRequest_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(TurnKeyUpRequest),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyUpRequest, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyUpRequest, _is_default_instance_));
-  ObjType_descriptor_ = file->enum_type(0);
+void protobuf_AssignDesc_snakebite_5fmessage_2eproto()
+{
+	protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	const ::google::protobuf::FileDescriptor* file =
+		::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
+			"snakebite_message.proto");
+	GOOGLE_CHECK(file != NULL);
+	MovingObject_descriptor_ = file->message_type(0);
+	static const int MovingObject_offsets_[3] = {
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, x_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, y_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, radius_),
+	};
+	MovingObject_reflection_ =
+		::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+			MovingObject_descriptor_,
+			MovingObject::default_instance_,
+			MovingObject_offsets_,
+			-1,
+			-1,
+			-1,
+			sizeof(MovingObject),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, _internal_metadata_),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MovingObject, _is_default_instance_));
+	GameObjectClone_descriptor_ = file->message_type(1);
+	static const int GameObjectClone_offsets_[5] = {
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, clone_type_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, obj_name_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, handle_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, head_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, body_),
+	};
+	GameObjectClone_reflection_ =
+		::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+			GameObjectClone_descriptor_,
+			GameObjectClone::default_instance_,
+			GameObjectClone_offsets_,
+			-1,
+			-1,
+			-1,
+			sizeof(GameObjectClone),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, _internal_metadata_),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObjectClone, _is_default_instance_));
+	UpdateGameObjectsEvent_descriptor_ = file->message_type(2);
+	static const int UpdateGameObjectsEvent_offsets_[3] = {
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, idx_x_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, idx_y_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, clone_),
+	};
+	UpdateGameObjectsEvent_reflection_ =
+		::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+			UpdateGameObjectsEvent_descriptor_,
+			UpdateGameObjectsEvent::default_instance_,
+			UpdateGameObjectsEvent_offsets_,
+			-1,
+			-1,
+			-1,
+			sizeof(UpdateGameObjectsEvent),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, _internal_metadata_),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UpdateGameObjectsEvent, _is_default_instance_));
+	VoidReply_descriptor_ = file->message_type(3);
+	static const int VoidReply_offsets_[1] = {
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(VoidReply, err_),
+	};
+	VoidReply_reflection_ =
+		::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+			VoidReply_descriptor_,
+			VoidReply::default_instance_,
+			VoidReply_offsets_,
+			-1,
+			-1,
+			-1,
+			sizeof(VoidReply),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(VoidReply, _internal_metadata_),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(VoidReply, _is_default_instance_));
+	ZoneInfoReply_descriptor_ = file->message_type(4);
+	static const int ZoneInfoReply_offsets_[4] = {
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, height_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, width_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, limit_idx_x_),
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, limit_idx_y_),
+	};
+	ZoneInfoReply_reflection_ =
+		::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+			ZoneInfoReply_descriptor_,
+			ZoneInfoReply::default_instance_,
+			ZoneInfoReply_offsets_,
+			-1,
+			-1,
+			-1,
+			sizeof(ZoneInfoReply),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, _internal_metadata_),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ZoneInfoReply, _is_default_instance_));
+	InitPlayerSnakeRequest_descriptor_ = file->message_type(5);
+	static const int InitPlayerSnakeRequest_offsets_[1] = {
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeRequest, name_),
+	};
+	InitPlayerSnakeRequest_reflection_ =
+		::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+			InitPlayerSnakeRequest_descriptor_,
+			InitPlayerSnakeRequest::default_instance_,
+			InitPlayerSnakeRequest_offsets_,
+			-1,
+			-1,
+			-1,
+			sizeof(InitPlayerSnakeRequest),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeRequest, _internal_metadata_),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeRequest, _is_default_instance_));
+	InitPlayerSnakeReply_descriptor_ = file->message_type(6);
+	static const int InitPlayerSnakeReply_offsets_[1] = {
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeReply, handle_),
+	};
+	InitPlayerSnakeReply_reflection_ =
+		::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+			InitPlayerSnakeReply_descriptor_,
+			InitPlayerSnakeReply::default_instance_,
+			InitPlayerSnakeReply_offsets_,
+			-1,
+			-1,
+			-1,
+			sizeof(InitPlayerSnakeReply),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeReply, _internal_metadata_),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(InitPlayerSnakeReply, _is_default_instance_));
+	TurnKeyDownRequest_descriptor_ = file->message_type(7);
+	static const int TurnKeyDownRequest_offsets_[1] = {
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyDownRequest, key_),
+	};
+	TurnKeyDownRequest_reflection_ =
+		::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+			TurnKeyDownRequest_descriptor_,
+			TurnKeyDownRequest::default_instance_,
+			TurnKeyDownRequest_offsets_,
+			-1,
+			-1,
+			-1,
+			sizeof(TurnKeyDownRequest),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyDownRequest, _internal_metadata_),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyDownRequest, _is_default_instance_));
+	TurnKeyUpRequest_descriptor_ = file->message_type(8);
+	static const int TurnKeyUpRequest_offsets_[1] = {
+	  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyUpRequest, key_),
+	};
+	TurnKeyUpRequest_reflection_ =
+		::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+			TurnKeyUpRequest_descriptor_,
+			TurnKeyUpRequest::default_instance_,
+			TurnKeyUpRequest_offsets_,
+			-1,
+			-1,
+			-1,
+			sizeof(TurnKeyUpRequest),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyUpRequest, _internal_metadata_),
+			GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnKeyUpRequest, _is_default_instance_));
+	ObjType_descriptor_ = file->enum_type(0);
 }
 
 namespace {
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_snakebite_5fmessage_2eproto);
+inline void protobuf_AssignDescriptorsOnce()
+{
+	::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
+		&protobuf_AssignDesc_snakebite_5fmessage_2eproto);
 }
 
-void protobuf_RegisterTypes(const ::std::string&) {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      MovingObject_descriptor_, &MovingObject::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      GameObjectClone_descriptor_, &GameObjectClone::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      UpdateGameObjectsEvent_descriptor_, &UpdateGameObjectsEvent::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      VoidReply_descriptor_, &VoidReply::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      ZoneInfoReply_descriptor_, &ZoneInfoReply::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      InitPlayerSnakeRequest_descriptor_, &InitPlayerSnakeRequest::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      InitPlayerSnakeReply_descriptor_, &InitPlayerSnakeReply::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      TurnKeyDownRequest_descriptor_, &TurnKeyDownRequest::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      TurnKeyUpRequest_descriptor_, &TurnKeyUpRequest::default_instance());
+void protobuf_RegisterTypes(const ::std::string&)
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+		MovingObject_descriptor_, &MovingObject::default_instance());
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+		GameObjectClone_descriptor_, &GameObjectClone::default_instance());
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+		UpdateGameObjectsEvent_descriptor_, &UpdateGameObjectsEvent::default_instance());
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+		VoidReply_descriptor_, &VoidReply::default_instance());
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+		ZoneInfoReply_descriptor_, &ZoneInfoReply::default_instance());
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+		InitPlayerSnakeRequest_descriptor_, &InitPlayerSnakeRequest::default_instance());
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+		InitPlayerSnakeReply_descriptor_, &InitPlayerSnakeReply::default_instance());
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+		TurnKeyDownRequest_descriptor_, &TurnKeyDownRequest::default_instance());
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+		TurnKeyUpRequest_descriptor_, &TurnKeyUpRequest::default_instance());
 }
 
 }  // namespace
 
-void protobuf_ShutdownFile_snakebite_5fmessage_2eproto() {
-  delete MovingObject::default_instance_;
-  delete MovingObject_reflection_;
-  delete GameObjectClone::default_instance_;
-  delete GameObjectClone_reflection_;
-  delete UpdateGameObjectsEvent::default_instance_;
-  delete UpdateGameObjectsEvent_reflection_;
-  delete VoidReply::default_instance_;
-  delete VoidReply_reflection_;
-  delete ZoneInfoReply::default_instance_;
-  delete ZoneInfoReply_reflection_;
-  delete InitPlayerSnakeRequest::default_instance_;
-  delete InitPlayerSnakeRequest_reflection_;
-  delete InitPlayerSnakeReply::default_instance_;
-  delete InitPlayerSnakeReply_reflection_;
-  delete TurnKeyDownRequest::default_instance_;
-  delete TurnKeyDownRequest_reflection_;
-  delete TurnKeyUpRequest::default_instance_;
-  delete TurnKeyUpRequest_reflection_;
+void protobuf_ShutdownFile_snakebite_5fmessage_2eproto()
+{
+	delete MovingObject::default_instance_;
+	delete MovingObject_reflection_;
+	delete GameObjectClone::default_instance_;
+	delete GameObjectClone_reflection_;
+	delete UpdateGameObjectsEvent::default_instance_;
+	delete UpdateGameObjectsEvent_reflection_;
+	delete VoidReply::default_instance_;
+	delete VoidReply_reflection_;
+	delete ZoneInfoReply::default_instance_;
+	delete ZoneInfoReply_reflection_;
+	delete InitPlayerSnakeRequest::default_instance_;
+	delete InitPlayerSnakeRequest_reflection_;
+	delete InitPlayerSnakeReply::default_instance_;
+	delete InitPlayerSnakeReply_reflection_;
+	delete TurnKeyDownRequest::default_instance_;
+	delete TurnKeyDownRequest_reflection_;
+	delete TurnKeyUpRequest::default_instance_;
+	delete TurnKeyUpRequest_reflection_;
 }
 
-void protobuf_AddDesc_snakebite_5fmessage_2eproto() {
-  static bool already_here = false;
-  if (already_here) return;
-  already_here = true;
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
+void protobuf_AddDesc_snakebite_5fmessage_2eproto()
+{
+	static bool already_here = false;
+	if (already_here) return;
+	already_here = true;
+	GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\027snakebite_message.proto\022\032acoross.snake"
-    "bite.messages\"4\n\014MovingObject\022\t\n\001x\030\001 \001(\001"
-    "\022\t\n\001y\030\002 \001(\001\022\016\n\006radius\030\003 \001(\001\"\267\001\n\017GameObje"
-    "ctClone\022\022\n\nclone_type\030\001 \001(\005\022\020\n\010obj_name\030"
-    "\002 \001(\t\022\016\n\006handle\030\003 \001(\003\0226\n\004head\030\004 \001(\0132(.ac"
-    "oross.snakebite.messages.MovingObject\0226\n"
-    "\004body\030\005 \003(\0132(.acoross.snakebite.messages"
-    ".MovingObject\"r\n\026UpdateGameObjectsEvent\022"
-    "\r\n\005idx_x\030\001 \001(\005\022\r\n\005idx_y\030\002 \001(\005\022:\n\005clone\030\003"
-    " \003(\0132+.acoross.snakebite.messages.GameOb"
-    "jectClone\"\030\n\tVoidReply\022\013\n\003err\030\001 \001(\005\"X\n\rZ"
-    "oneInfoReply\022\016\n\006height\030\001 \001(\005\022\r\n\005width\030\002 "
-    "\001(\005\022\023\n\013limit_idx_x\030\003 \001(\005\022\023\n\013limit_idx_y\030"
-    "\004 \001(\005\"&\n\026InitPlayerSnakeRequest\022\014\n\004name\030"
-    "\001 \001(\t\"&\n\024InitPlayerSnakeReply\022\016\n\006handle\030"
-    "\001 \001(\003\"!\n\022TurnKeyDownRequest\022\013\n\003key\030\001 \001(\005"
-    "\"\037\n\020TurnKeyUpRequest\022\013\n\003key\030\001 \001(\005*\037\n\007Obj"
-    "Type\022\t\n\005Snake\020\000\022\t\n\005Apple\020\0012\335\001\n\016SC_PushSe"
-    "rvice\022n\n\021UpdateGameObjects\0222.acoross.sna"
-    "kebite.messages.UpdateGameObjectsEvent\032%"
-    ".acoross.snakebite.messages.VoidReply\022[\n"
-    "\013ResetPlayer\022%.acoross.snakebite.message"
-    "s.VoidReply\032%.acoross.snakebite.messages"
-    ".VoidReply2\261\003\n\020SnakebiteService\022c\n\017Reque"
-    "stZoneInfo\022%.acoross.snakebite.messages."
-    "VoidReply\032).acoross.snakebite.messages.Z"
-    "oneInfoReply\022r\n\nInitPlayer\0222.acoross.sna"
-    "kebite.messages.InitPlayerSnakeRequest\0320"
-    ".acoross.snakebite.messages.InitPlayerSn"
-    "akeReply\022c\n\nSetKeyDown\022..acoross.snakebi"
-    "te.messages.TurnKeyDownRequest\032%.acoross"
-    ".snakebite.messages.VoidReply\022_\n\010SetKeyU"
-    "p\022,.acoross.snakebite.messages.TurnKeyUp"
-    "Request\032%.acoross.snakebite.messages.Voi"
-    "dReplyb\006proto3", 1374);
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
-    "snakebite_message.proto", &protobuf_RegisterTypes);
-  MovingObject::default_instance_ = new MovingObject();
-  GameObjectClone::default_instance_ = new GameObjectClone();
-  UpdateGameObjectsEvent::default_instance_ = new UpdateGameObjectsEvent();
-  VoidReply::default_instance_ = new VoidReply();
-  ZoneInfoReply::default_instance_ = new ZoneInfoReply();
-  InitPlayerSnakeRequest::default_instance_ = new InitPlayerSnakeRequest();
-  InitPlayerSnakeReply::default_instance_ = new InitPlayerSnakeReply();
-  TurnKeyDownRequest::default_instance_ = new TurnKeyDownRequest();
-  TurnKeyUpRequest::default_instance_ = new TurnKeyUpRequest();
-  MovingObject::default_instance_->InitAsDefaultInstance();
-  GameObjectClone::default_instance_->InitAsDefaultInstance();
-  UpdateGameObjectsEvent::default_instance_->InitAsDefaultInstance();
-  VoidReply::default_instance_->InitAsDefaultInstance();
-  ZoneInfoReply::default_instance_->InitAsDefaultInstance();
-  InitPlayerSnakeRequest::default_instance_->InitAsDefaultInstance();
-  InitPlayerSnakeReply::default_instance_->InitAsDefaultInstance();
-  TurnKeyDownRequest::default_instance_->InitAsDefaultInstance();
-  TurnKeyUpRequest::default_instance_->InitAsDefaultInstance();
-  ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_snakebite_5fmessage_2eproto);
+	::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
+		"\n\027snakebite_message.proto\022\032acoross.snake"
+		"bite.messages\"4\n\014MovingObject\022\t\n\001x\030\001 \001(\001"
+		"\022\t\n\001y\030\002 \001(\001\022\016\n\006radius\030\003 \001(\001\"\267\001\n\017GameObje"
+		"ctClone\022\022\n\nclone_type\030\001 \001(\005\022\020\n\010obj_name\030"
+		"\002 \001(\t\022\016\n\006handle\030\003 \001(\003\0226\n\004head\030\004 \001(\0132(.ac"
+		"oross.snakebite.messages.MovingObject\0226\n"
+		"\004body\030\005 \003(\0132(.acoross.snakebite.messages"
+		".MovingObject\"r\n\026UpdateGameObjectsEvent\022"
+		"\r\n\005idx_x\030\001 \001(\005\022\r\n\005idx_y\030\002 \001(\005\022:\n\005clone\030\003"
+		" \003(\0132+.acoross.snakebite.messages.GameOb"
+		"jectClone\"\030\n\tVoidReply\022\013\n\003err\030\001 \001(\005\"X\n\rZ"
+		"oneInfoReply\022\016\n\006height\030\001 \001(\005\022\r\n\005width\030\002 "
+		"\001(\005\022\023\n\013limit_idx_x\030\003 \001(\005\022\023\n\013limit_idx_y\030"
+		"\004 \001(\005\"&\n\026InitPlayerSnakeRequest\022\014\n\004name\030"
+		"\001 \001(\t\"&\n\024InitPlayerSnakeReply\022\016\n\006handle\030"
+		"\001 \001(\003\"!\n\022TurnKeyDownRequest\022\013\n\003key\030\001 \001(\005"
+		"\"\037\n\020TurnKeyUpRequest\022\013\n\003key\030\001 \001(\005*\037\n\007Obj"
+		"Type\022\t\n\005Snake\020\000\022\t\n\005Apple\020\0012\335\001\n\016SC_PushSe"
+		"rvice\022n\n\021UpdateGameObjects\0222.acoross.sna"
+		"kebite.messages.UpdateGameObjectsEvent\032%"
+		".acoross.snakebite.messages.VoidReply\022[\n"
+		"\013ResetPlayer\022%.acoross.snakebite.message"
+		"s.VoidReply\032%.acoross.snakebite.messages"
+		".VoidReply2\261\003\n\020SnakebiteService\022c\n\017Reque"
+		"stZoneInfo\022%.acoross.snakebite.messages."
+		"VoidReply\032).acoross.snakebite.messages.Z"
+		"oneInfoReply\022r\n\nInitPlayer\0222.acoross.sna"
+		"kebite.messages.InitPlayerSnakeRequest\0320"
+		".acoross.snakebite.messages.InitPlayerSn"
+		"akeReply\022c\n\nSetKeyDown\022..acoross.snakebi"
+		"te.messages.TurnKeyDownRequest\032%.acoross"
+		".snakebite.messages.VoidReply\022_\n\010SetKeyU"
+		"p\022,.acoross.snakebite.messages.TurnKeyUp"
+		"Request\032%.acoross.snakebite.messages.Voi"
+		"dReplyb\006proto3", 1374);
+	::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
+		"snakebite_message.proto", &protobuf_RegisterTypes);
+	MovingObject::default_instance_ = new MovingObject();
+	GameObjectClone::default_instance_ = new GameObjectClone();
+	UpdateGameObjectsEvent::default_instance_ = new UpdateGameObjectsEvent();
+	VoidReply::default_instance_ = new VoidReply();
+	ZoneInfoReply::default_instance_ = new ZoneInfoReply();
+	InitPlayerSnakeRequest::default_instance_ = new InitPlayerSnakeRequest();
+	InitPlayerSnakeReply::default_instance_ = new InitPlayerSnakeReply();
+	TurnKeyDownRequest::default_instance_ = new TurnKeyDownRequest();
+	TurnKeyUpRequest::default_instance_ = new TurnKeyUpRequest();
+	MovingObject::default_instance_->InitAsDefaultInstance();
+	GameObjectClone::default_instance_->InitAsDefaultInstance();
+	UpdateGameObjectsEvent::default_instance_->InitAsDefaultInstance();
+	VoidReply::default_instance_->InitAsDefaultInstance();
+	ZoneInfoReply::default_instance_->InitAsDefaultInstance();
+	InitPlayerSnakeRequest::default_instance_->InitAsDefaultInstance();
+	InitPlayerSnakeReply::default_instance_->InitAsDefaultInstance();
+	TurnKeyDownRequest::default_instance_->InitAsDefaultInstance();
+	TurnKeyUpRequest::default_instance_->InitAsDefaultInstance();
+	::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_snakebite_5fmessage_2eproto);
 }
 
 // Force AddDescriptors() to be called at static initialization time.
-struct StaticDescriptorInitializer_snakebite_5fmessage_2eproto {
-  StaticDescriptorInitializer_snakebite_5fmessage_2eproto() {
-    protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  }
+struct StaticDescriptorInitializer_snakebite_5fmessage_2eproto
+{
+	StaticDescriptorInitializer_snakebite_5fmessage_2eproto()
+	{
+		protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	}
 } static_descriptor_initializer_snakebite_5fmessage_2eproto_;
-const ::google::protobuf::EnumDescriptor* ObjType_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ObjType_descriptor_;
+const ::google::protobuf::EnumDescriptor* ObjType_descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return ObjType_descriptor_;
 }
-bool ObjType_IsValid(int value) {
-  switch(value) {
-    case 0:
-    case 1:
-      return true;
-    default:
-      return false;
-  }
+bool ObjType_IsValid(int value)
+{
+	switch (value)
+	{
+	case 0:
+	case 1:
+		return true;
+	default:
+		return false;
+	}
 }
 
 
 namespace {
 
 static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
-static void MergeFromFail(int line) {
-  GOOGLE_CHECK(false) << __FILE__ << ":" << line;
+static void MergeFromFail(int line)
+{
+	GOOGLE_CHECK(false) << __FILE__ << ":" << line;
 }
 
 }  // namespace
@@ -368,67 +379,80 @@ const int MovingObject::kRadiusFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MovingObject::MovingObject()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.MovingObject)
+	: ::google::protobuf::Message(), _internal_metadata_(NULL)
+{
+	SharedCtor();
+	// @@protoc_insertion_point(constructor:acoross.snakebite.messages.MovingObject)
 }
 
-void MovingObject::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
+void MovingObject::InitAsDefaultInstance()
+{
+	_is_default_instance_ = true;
 }
 
 MovingObject::MovingObject(const MovingObject& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.MovingObject)
+	: ::google::protobuf::Message(),
+	_internal_metadata_(NULL)
+{
+	SharedCtor();
+	MergeFrom(from);
+	// @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.MovingObject)
 }
 
-void MovingObject::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  x_ = 0;
-  y_ = 0;
-  radius_ = 0;
+void MovingObject::SharedCtor()
+{
+	_is_default_instance_ = false;
+	_cached_size_ = 0;
+	x_ = 0;
+	y_ = 0;
+	radius_ = 0;
 }
 
-MovingObject::~MovingObject() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.MovingObject)
-  SharedDtor();
+MovingObject::~MovingObject()
+{
+	// @@protoc_insertion_point(destructor:acoross.snakebite.messages.MovingObject)
+	SharedDtor();
 }
 
-void MovingObject::SharedDtor() {
-  if (this != default_instance_) {
-  }
+void MovingObject::SharedDtor()
+{
+	if (this != default_instance_)
+	{
+	}
 }
 
-void MovingObject::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+void MovingObject::SetCachedSize(int size) const
+{
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* MovingObject::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MovingObject_descriptor_;
+const ::google::protobuf::Descriptor* MovingObject::descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return MovingObject_descriptor_;
 }
 
-const MovingObject& MovingObject::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  return *default_instance_;
+const MovingObject& MovingObject::default_instance()
+{
+	if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	return *default_instance_;
 }
 
 MovingObject* MovingObject::default_instance_ = NULL;
 
-MovingObject* MovingObject::New(::google::protobuf::Arena* arena) const {
-  MovingObject* n = new MovingObject;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+MovingObject* MovingObject::New(::google::protobuf::Arena* arena) const
+{
+	MovingObject* n = new MovingObject;
+	if (arena != NULL)
+	{
+		arena->Own(n);
+	}
+	return n;
 }
 
-void MovingObject::Clear() {
+void MovingObject::Clear()
+{
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
   &reinterpret_cast<MovingObject*>(16)->f)
 
@@ -437,7 +461,7 @@ void MovingObject::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(x_, radius_);
+	ZR_(x_, radius_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -445,252 +469,304 @@ void MovingObject::Clear() {
 }
 
 bool MovingObject::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
+	::google::protobuf::io::CodedInputStream* input)
+{
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.MovingObject)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional double x = 1;
-      case 1: {
-        if (tag == 9) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &x_)));
+	::google::protobuf::uint32 tag;
+	// @@protoc_insertion_point(parse_start:acoross.snakebite.messages.MovingObject)
+	for (;;)
+	{
+		::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+		tag = p.first;
+		if (!p.second) goto handle_unusual;
+		switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag))
+		{
+			// optional double x = 1;
+		case 1:
+			{
+				if (tag == 9)
+				{
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+							input, &x_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(17)) goto parse_y;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(17)) goto parse_y;
+				break;
+			}
 
-      // optional double y = 2;
-      case 2: {
-        if (tag == 17) {
-         parse_y:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &y_)));
+			// optional double y = 2;
+		case 2:
+			{
+				if (tag == 17)
+				{
+				parse_y:
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+							input, &y_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(25)) goto parse_radius;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(25)) goto parse_radius;
+				break;
+			}
 
-      // optional double radius = 3;
-      case 3: {
-        if (tag == 25) {
-         parse_radius:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &radius_)));
+			// optional double radius = 3;
+		case 3:
+			{
+				if (tag == 25)
+				{
+				parse_radius:
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+							input, &radius_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectAtEnd()) goto success;
+				break;
+			}
 
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
+		default:
+			{
+			handle_unusual:
+				if (tag == 0 ||
+					::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+					::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP)
+				{
+					goto success;
+				}
+				DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+				break;
+			}
+		}
+	}
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.MovingObject)
-  return true;
+	// @@protoc_insertion_point(parse_success:acoross.snakebite.messages.MovingObject)
+	return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.MovingObject)
-  return false;
+	// @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.MovingObject)
+	return false;
 #undef DO_
 }
 
 void MovingObject::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.MovingObject)
-  // optional double x = 1;
-  if (this->x() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->x(), output);
-  }
+	::google::protobuf::io::CodedOutputStream* output) const
+{
+	// @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.MovingObject)
+	// optional double x = 1;
+	if (this->x() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->x(), output);
+	}
 
-  // optional double y = 2;
-  if (this->y() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(2, this->y(), output);
-  }
+	// optional double y = 2;
+	if (this->y() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteDouble(2, this->y(), output);
+	}
 
-  // optional double radius = 3;
-  if (this->radius() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(3, this->radius(), output);
-  }
+	// optional double radius = 3;
+	if (this->radius() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteDouble(3, this->radius(), output);
+	}
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.MovingObject)
+	// @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.MovingObject)
 }
 
 ::google::protobuf::uint8* MovingObject::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.MovingObject)
-  // optional double x = 1;
-  if (this->x() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->x(), target);
-  }
+	::google::protobuf::uint8* target) const
+{
+	// @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.MovingObject)
+	// optional double x = 1;
+	if (this->x() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->x(), target);
+	}
 
-  // optional double y = 2;
-  if (this->y() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(2, this->y(), target);
-  }
+	// optional double y = 2;
+	if (this->y() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(2, this->y(), target);
+	}
 
-  // optional double radius = 3;
-  if (this->radius() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(3, this->radius(), target);
-  }
+	// optional double radius = 3;
+	if (this->radius() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(3, this->radius(), target);
+	}
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.MovingObject)
-  return target;
+	// @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.MovingObject)
+	return target;
 }
 
-int MovingObject::ByteSize() const {
-  int total_size = 0;
+int MovingObject::ByteSize() const
+{
+	int total_size = 0;
 
-  // optional double x = 1;
-  if (this->x() != 0) {
-    total_size += 1 + 8;
-  }
+	// optional double x = 1;
+	if (this->x() != 0)
+	{
+		total_size += 1 + 8;
+	}
 
-  // optional double y = 2;
-  if (this->y() != 0) {
-    total_size += 1 + 8;
-  }
+	// optional double y = 2;
+	if (this->y() != 0)
+	{
+		total_size += 1 + 8;
+	}
 
-  // optional double radius = 3;
-  if (this->radius() != 0) {
-    total_size += 1 + 8;
-  }
+	// optional double radius = 3;
+	if (this->radius() != 0)
+	{
+		total_size += 1 + 8;
+	}
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
+	return total_size;
 }
 
-void MovingObject::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const MovingObject* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const MovingObject>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void MovingObject::MergeFrom(const ::google::protobuf::Message& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	const MovingObject* source =
+		::google::protobuf::internal::DynamicCastToGenerated<const MovingObject>(
+			&from);
+	if (source == NULL)
+	{
+		::google::protobuf::internal::ReflectionOps::Merge(from, this);
+	}
+	else
+	{
+		MergeFrom(*source);
+	}
 }
 
-void MovingObject::MergeFrom(const MovingObject& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.x() != 0) {
-    set_x(from.x());
-  }
-  if (from.y() != 0) {
-    set_y(from.y());
-  }
-  if (from.radius() != 0) {
-    set_radius(from.radius());
-  }
+void MovingObject::MergeFrom(const MovingObject& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	if (from.x() != 0)
+	{
+		set_x(from.x());
+	}
+	if (from.y() != 0)
+	{
+		set_y(from.y());
+	}
+	if (from.radius() != 0)
+	{
+		set_radius(from.radius());
+	}
 }
 
-void MovingObject::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void MovingObject::CopyFrom(const ::google::protobuf::Message& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-void MovingObject::CopyFrom(const MovingObject& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void MovingObject::CopyFrom(const MovingObject& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-bool MovingObject::IsInitialized() const {
+bool MovingObject::IsInitialized() const
+{
 
-  return true;
+	return true;
 }
 
-void MovingObject::Swap(MovingObject* other) {
-  if (other == this) return;
-  InternalSwap(other);
+void MovingObject::Swap(MovingObject* other)
+{
+	if (other == this) return;
+	InternalSwap(other);
 }
-void MovingObject::InternalSwap(MovingObject* other) {
-  std::swap(x_, other->x_);
-  std::swap(y_, other->y_);
-  std::swap(radius_, other->radius_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+void MovingObject::InternalSwap(MovingObject* other)
+{
+	std::swap(x_, other->x_);
+	std::swap(y_, other->y_);
+	std::swap(radius_, other->radius_);
+	_internal_metadata_.Swap(&other->_internal_metadata_);
+	std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata MovingObject::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MovingObject_descriptor_;
-  metadata.reflection = MovingObject_reflection_;
-  return metadata;
+::google::protobuf::Metadata MovingObject::GetMetadata() const
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::Metadata metadata;
+	metadata.descriptor = MovingObject_descriptor_;
+	metadata.reflection = MovingObject_reflection_;
+	return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MovingObject
 
 // optional double x = 1;
-void MovingObject::clear_x() {
-  x_ = 0;
+void MovingObject::clear_x()
+{
+	x_ = 0;
 }
- double MovingObject::x() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.x)
-  return x_;
+double MovingObject::x() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.x)
+	return x_;
 }
- void MovingObject::set_x(double value) {
-  
-  x_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.x)
+void MovingObject::set_x(double value)
+{
+
+	x_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.x)
 }
 
 // optional double y = 2;
-void MovingObject::clear_y() {
-  y_ = 0;
+void MovingObject::clear_y()
+{
+	y_ = 0;
 }
- double MovingObject::y() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.y)
-  return y_;
+double MovingObject::y() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.y)
+	return y_;
 }
- void MovingObject::set_y(double value) {
-  
-  y_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.y)
+void MovingObject::set_y(double value)
+{
+
+	y_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.y)
 }
 
 // optional double radius = 3;
-void MovingObject::clear_radius() {
-  radius_ = 0;
+void MovingObject::clear_radius()
+{
+	radius_ = 0;
 }
- double MovingObject::radius() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.radius)
-  return radius_;
+double MovingObject::radius() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.radius)
+	return radius_;
 }
- void MovingObject::set_radius(double value) {
-  
-  radius_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.radius)
+void MovingObject::set_radius(double value)
+{
+
+	radius_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.radius)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -706,520 +782,625 @@ const int GameObjectClone::kBodyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 GameObjectClone::GameObjectClone()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.GameObjectClone)
+	: ::google::protobuf::Message(), _internal_metadata_(NULL)
+{
+	SharedCtor();
+	// @@protoc_insertion_point(constructor:acoross.snakebite.messages.GameObjectClone)
 }
 
-void GameObjectClone::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
-  head_ = const_cast< ::acoross::snakebite::messages::MovingObject*>(&::acoross::snakebite::messages::MovingObject::default_instance());
+void GameObjectClone::InitAsDefaultInstance()
+{
+	_is_default_instance_ = true;
+	head_ = const_cast<::acoross::snakebite::messages::MovingObject*>(&::acoross::snakebite::messages::MovingObject::default_instance());
 }
 
 GameObjectClone::GameObjectClone(const GameObjectClone& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.GameObjectClone)
+	: ::google::protobuf::Message(),
+	_internal_metadata_(NULL)
+{
+	SharedCtor();
+	MergeFrom(from);
+	// @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.GameObjectClone)
 }
 
-void GameObjectClone::SharedCtor() {
-    _is_default_instance_ = false;
-  ::google::protobuf::internal::GetEmptyString();
-  _cached_size_ = 0;
-  clone_type_ = 0;
-  obj_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  handle_ = GOOGLE_LONGLONG(0);
-  head_ = NULL;
+void GameObjectClone::SharedCtor()
+{
+	_is_default_instance_ = false;
+	::google::protobuf::internal::GetEmptyString();
+	_cached_size_ = 0;
+	clone_type_ = 0;
+	obj_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	handle_ = GOOGLE_LONGLONG(0);
+	head_ = NULL;
 }
 
-GameObjectClone::~GameObjectClone() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.GameObjectClone)
-  SharedDtor();
+GameObjectClone::~GameObjectClone()
+{
+	// @@protoc_insertion_point(destructor:acoross.snakebite.messages.GameObjectClone)
+	SharedDtor();
 }
 
-void GameObjectClone::SharedDtor() {
-  obj_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (this != default_instance_) {
-    delete head_;
-  }
+void GameObjectClone::SharedDtor()
+{
+	obj_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	if (this != default_instance_)
+	{
+		delete head_;
+	}
 }
 
-void GameObjectClone::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+void GameObjectClone::SetCachedSize(int size) const
+{
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* GameObjectClone::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return GameObjectClone_descriptor_;
+const ::google::protobuf::Descriptor* GameObjectClone::descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return GameObjectClone_descriptor_;
 }
 
-const GameObjectClone& GameObjectClone::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  return *default_instance_;
+const GameObjectClone& GameObjectClone::default_instance()
+{
+	if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	return *default_instance_;
 }
 
 GameObjectClone* GameObjectClone::default_instance_ = NULL;
 
-GameObjectClone* GameObjectClone::New(::google::protobuf::Arena* arena) const {
-  GameObjectClone* n = new GameObjectClone;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+GameObjectClone* GameObjectClone::New(::google::protobuf::Arena* arena) const
+{
+	GameObjectClone* n = new GameObjectClone;
+	if (arena != NULL)
+	{
+		arena->Own(n);
+	}
+	return n;
 }
 
-void GameObjectClone::Clear() {
-  clone_type_ = 0;
-  obj_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  handle_ = GOOGLE_LONGLONG(0);
-  if (GetArenaNoVirtual() == NULL && head_ != NULL) delete head_;
-  head_ = NULL;
-  body_.Clear();
+void GameObjectClone::Clear()
+{
+	clone_type_ = 0;
+	obj_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	handle_ = GOOGLE_LONGLONG(0);
+	if (GetArenaNoVirtual() == NULL && head_ != NULL) delete head_;
+	head_ = NULL;
+	body_.Clear();
 }
 
 bool GameObjectClone::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
+	::google::protobuf::io::CodedInputStream* input)
+{
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.GameObjectClone)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 clone_type = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &clone_type_)));
+	::google::protobuf::uint32 tag;
+	// @@protoc_insertion_point(parse_start:acoross.snakebite.messages.GameObjectClone)
+	for (;;)
+	{
+		::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+		tag = p.first;
+		if (!p.second) goto handle_unusual;
+		switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag))
+		{
+			// optional int32 clone_type = 1;
+		case 1:
+			{
+				if (tag == 8)
+				{
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &clone_type_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(18)) goto parse_obj_name;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(18)) goto parse_obj_name;
+				break;
+			}
 
-      // optional string obj_name = 2;
-      case 2: {
-        if (tag == 18) {
-         parse_obj_name:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_obj_name()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->obj_name().data(), this->obj_name().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "acoross.snakebite.messages.GameObjectClone.obj_name"));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(24)) goto parse_handle;
-        break;
-      }
+			// optional string obj_name = 2;
+		case 2:
+			{
+				if (tag == 18)
+				{
+				parse_obj_name:
+					DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+						input, this->mutable_obj_name()));
+					DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+						this->obj_name().data(), this->obj_name().length(),
+						::google::protobuf::internal::WireFormatLite::PARSE,
+						"acoross.snakebite.messages.GameObjectClone.obj_name"));
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(24)) goto parse_handle;
+				break;
+			}
 
-      // optional int64 handle = 3;
-      case 3: {
-        if (tag == 24) {
-         parse_handle:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &handle_)));
+			// optional int64 handle = 3;
+		case 3:
+			{
+				if (tag == 24)
+				{
+				parse_handle:
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+							input, &handle_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(34)) goto parse_head;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(34)) goto parse_head;
+				break;
+			}
 
-      // optional .acoross.snakebite.messages.MovingObject head = 4;
-      case 4: {
-        if (tag == 34) {
-         parse_head:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_head()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(42)) goto parse_body;
-        break;
-      }
+			// optional .acoross.snakebite.messages.MovingObject head = 4;
+		case 4:
+			{
+				if (tag == 34)
+				{
+				parse_head:
+					DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+						input, mutable_head()));
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(42)) goto parse_body;
+				break;
+			}
 
-      // repeated .acoross.snakebite.messages.MovingObject body = 5;
-      case 5: {
-        if (tag == 42) {
-         parse_body:
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_body:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_body()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(42)) goto parse_loop_body;
-        input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
+			// repeated .acoross.snakebite.messages.MovingObject body = 5;
+		case 5:
+			{
+				if (tag == 42)
+				{
+				parse_body:
+					DO_(input->IncrementRecursionDepth());
+				parse_loop_body:
+					DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+						input, add_body()));
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(42)) goto parse_loop_body;
+				input->UnsafeDecrementRecursionDepth();
+				if (input->ExpectAtEnd()) goto success;
+				break;
+			}
 
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
+		default:
+			{
+			handle_unusual:
+				if (tag == 0 ||
+					::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+					::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP)
+				{
+					goto success;
+				}
+				DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+				break;
+			}
+		}
+	}
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.GameObjectClone)
-  return true;
+	// @@protoc_insertion_point(parse_success:acoross.snakebite.messages.GameObjectClone)
+	return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.GameObjectClone)
-  return false;
+	// @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.GameObjectClone)
+	return false;
 #undef DO_
 }
 
 void GameObjectClone::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.GameObjectClone)
-  // optional int32 clone_type = 1;
-  if (this->clone_type() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->clone_type(), output);
-  }
+	::google::protobuf::io::CodedOutputStream* output) const
+{
+	// @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.GameObjectClone)
+	// optional int32 clone_type = 1;
+	if (this->clone_type() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->clone_type(), output);
+	}
 
-  // optional string obj_name = 2;
-  if (this->obj_name().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->obj_name().data(), this->obj_name().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.messages.GameObjectClone.obj_name");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->obj_name(), output);
-  }
+	// optional string obj_name = 2;
+	if (this->obj_name().size() > 0)
+	{
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+			this->obj_name().data(), this->obj_name().length(),
+			::google::protobuf::internal::WireFormatLite::SERIALIZE,
+			"acoross.snakebite.messages.GameObjectClone.obj_name");
+		::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+			2, this->obj_name(), output);
+	}
 
-  // optional int64 handle = 3;
-  if (this->handle() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->handle(), output);
-  }
+	// optional int64 handle = 3;
+	if (this->handle() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->handle(), output);
+	}
 
-  // optional .acoross.snakebite.messages.MovingObject head = 4;
-  if (this->has_head()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, *this->head_, output);
-  }
+	// optional .acoross.snakebite.messages.MovingObject head = 4;
+	if (this->has_head())
+	{
+		::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+			4, *this->head_, output);
+	}
 
-  // repeated .acoross.snakebite.messages.MovingObject body = 5;
-  for (unsigned int i = 0, n = this->body_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->body(i), output);
-  }
+	// repeated .acoross.snakebite.messages.MovingObject body = 5;
+	for (unsigned int i = 0, n = this->body_size(); i < n; i++)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+			5, this->body(i), output);
+	}
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.GameObjectClone)
+	// @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.GameObjectClone)
 }
 
 ::google::protobuf::uint8* GameObjectClone::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.GameObjectClone)
-  // optional int32 clone_type = 1;
-  if (this->clone_type() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->clone_type(), target);
-  }
+	::google::protobuf::uint8* target) const
+{
+	// @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.GameObjectClone)
+	// optional int32 clone_type = 1;
+	if (this->clone_type() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->clone_type(), target);
+	}
 
-  // optional string obj_name = 2;
-  if (this->obj_name().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->obj_name().data(), this->obj_name().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.messages.GameObjectClone.obj_name");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->obj_name(), target);
-  }
+	// optional string obj_name = 2;
+	if (this->obj_name().size() > 0)
+	{
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+			this->obj_name().data(), this->obj_name().length(),
+			::google::protobuf::internal::WireFormatLite::SERIALIZE,
+			"acoross.snakebite.messages.GameObjectClone.obj_name");
+		target =
+			::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+				2, this->obj_name(), target);
+	}
 
-  // optional int64 handle = 3;
-  if (this->handle() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(3, this->handle(), target);
-  }
+	// optional int64 handle = 3;
+	if (this->handle() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(3, this->handle(), target);
+	}
 
-  // optional .acoross.snakebite.messages.MovingObject head = 4;
-  if (this->has_head()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, *this->head_, target);
-  }
+	// optional .acoross.snakebite.messages.MovingObject head = 4;
+	if (this->has_head())
+	{
+		target = ::google::protobuf::internal::WireFormatLite::
+			WriteMessageNoVirtualToArray(
+				4, *this->head_, target);
+	}
 
-  // repeated .acoross.snakebite.messages.MovingObject body = 5;
-  for (unsigned int i = 0, n = this->body_size(); i < n; i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        5, this->body(i), target);
-  }
+	// repeated .acoross.snakebite.messages.MovingObject body = 5;
+	for (unsigned int i = 0, n = this->body_size(); i < n; i++)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::
+			WriteMessageNoVirtualToArray(
+				5, this->body(i), target);
+	}
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.GameObjectClone)
-  return target;
+	// @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.GameObjectClone)
+	return target;
 }
 
-int GameObjectClone::ByteSize() const {
-  int total_size = 0;
+int GameObjectClone::ByteSize() const
+{
+	int total_size = 0;
 
-  // optional int32 clone_type = 1;
-  if (this->clone_type() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->clone_type());
-  }
+	// optional int32 clone_type = 1;
+	if (this->clone_type() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->clone_type());
+	}
 
-  // optional string obj_name = 2;
-  if (this->obj_name().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->obj_name());
-  }
+	// optional string obj_name = 2;
+	if (this->obj_name().size() > 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::StringSize(
+				this->obj_name());
+	}
 
-  // optional int64 handle = 3;
-  if (this->handle() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int64Size(
-        this->handle());
-  }
+	// optional int64 handle = 3;
+	if (this->handle() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int64Size(
+				this->handle());
+	}
 
-  // optional .acoross.snakebite.messages.MovingObject head = 4;
-  if (this->has_head()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->head_);
-  }
+	// optional .acoross.snakebite.messages.MovingObject head = 4;
+	if (this->has_head())
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+				*this->head_);
+	}
 
-  // repeated .acoross.snakebite.messages.MovingObject body = 5;
-  total_size += 1 * this->body_size();
-  for (int i = 0; i < this->body_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->body(i));
-  }
+	// repeated .acoross.snakebite.messages.MovingObject body = 5;
+	total_size += 1 * this->body_size();
+	for (int i = 0; i < this->body_size(); i++)
+	{
+		total_size +=
+			::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+				this->body(i));
+	}
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
+	return total_size;
 }
 
-void GameObjectClone::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const GameObjectClone* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const GameObjectClone>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void GameObjectClone::MergeFrom(const ::google::protobuf::Message& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	const GameObjectClone* source =
+		::google::protobuf::internal::DynamicCastToGenerated<const GameObjectClone>(
+			&from);
+	if (source == NULL)
+	{
+		::google::protobuf::internal::ReflectionOps::Merge(from, this);
+	}
+	else
+	{
+		MergeFrom(*source);
+	}
 }
 
-void GameObjectClone::MergeFrom(const GameObjectClone& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  body_.MergeFrom(from.body_);
-  if (from.clone_type() != 0) {
-    set_clone_type(from.clone_type());
-  }
-  if (from.obj_name().size() > 0) {
+void GameObjectClone::MergeFrom(const GameObjectClone& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	body_.MergeFrom(from.body_);
+	if (from.clone_type() != 0)
+	{
+		set_clone_type(from.clone_type());
+	}
+	if (from.obj_name().size() > 0)
+	{
 
-    obj_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.obj_name_);
-  }
-  if (from.handle() != 0) {
-    set_handle(from.handle());
-  }
-  if (from.has_head()) {
-    mutable_head()->::acoross::snakebite::messages::MovingObject::MergeFrom(from.head());
-  }
+		obj_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.obj_name_);
+	}
+	if (from.handle() != 0)
+	{
+		set_handle(from.handle());
+	}
+	if (from.has_head())
+	{
+		mutable_head()->::acoross::snakebite::messages::MovingObject::MergeFrom(from.head());
+	}
 }
 
-void GameObjectClone::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void GameObjectClone::CopyFrom(const ::google::protobuf::Message& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-void GameObjectClone::CopyFrom(const GameObjectClone& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void GameObjectClone::CopyFrom(const GameObjectClone& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-bool GameObjectClone::IsInitialized() const {
+bool GameObjectClone::IsInitialized() const
+{
 
-  return true;
+	return true;
 }
 
-void GameObjectClone::Swap(GameObjectClone* other) {
-  if (other == this) return;
-  InternalSwap(other);
+void GameObjectClone::Swap(GameObjectClone* other)
+{
+	if (other == this) return;
+	InternalSwap(other);
 }
-void GameObjectClone::InternalSwap(GameObjectClone* other) {
-  std::swap(clone_type_, other->clone_type_);
-  obj_name_.Swap(&other->obj_name_);
-  std::swap(handle_, other->handle_);
-  std::swap(head_, other->head_);
-  body_.UnsafeArenaSwap(&other->body_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+void GameObjectClone::InternalSwap(GameObjectClone* other)
+{
+	std::swap(clone_type_, other->clone_type_);
+	obj_name_.Swap(&other->obj_name_);
+	std::swap(handle_, other->handle_);
+	std::swap(head_, other->head_);
+	body_.UnsafeArenaSwap(&other->body_);
+	_internal_metadata_.Swap(&other->_internal_metadata_);
+	std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata GameObjectClone::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = GameObjectClone_descriptor_;
-  metadata.reflection = GameObjectClone_reflection_;
-  return metadata;
+::google::protobuf::Metadata GameObjectClone::GetMetadata() const
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::Metadata metadata;
+	metadata.descriptor = GameObjectClone_descriptor_;
+	metadata.reflection = GameObjectClone_reflection_;
+	return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // GameObjectClone
 
 // optional int32 clone_type = 1;
-void GameObjectClone::clear_clone_type() {
-  clone_type_ = 0;
+void GameObjectClone::clear_clone_type()
+{
+	clone_type_ = 0;
 }
- ::google::protobuf::int32 GameObjectClone::clone_type() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.clone_type)
-  return clone_type_;
+::google::protobuf::int32 GameObjectClone::clone_type() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.clone_type)
+	return clone_type_;
 }
- void GameObjectClone::set_clone_type(::google::protobuf::int32 value) {
-  
-  clone_type_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.clone_type)
+void GameObjectClone::set_clone_type(::google::protobuf::int32 value)
+{
+
+	clone_type_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.clone_type)
 }
 
 // optional string obj_name = 2;
-void GameObjectClone::clear_obj_name() {
-  obj_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+void GameObjectClone::clear_obj_name()
+{
+	obj_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- const ::std::string& GameObjectClone::obj_name() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.obj_name)
-  return obj_name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+const ::std::string& GameObjectClone::obj_name() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.obj_name)
+	return obj_name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- void GameObjectClone::set_obj_name(const ::std::string& value) {
-  
-  obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.obj_name)
+void GameObjectClone::set_obj_name(const ::std::string& value)
+{
+
+	obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.obj_name)
 }
- void GameObjectClone::set_obj_name(const char* value) {
-  
-  obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.GameObjectClone.obj_name)
+void GameObjectClone::set_obj_name(const char* value)
+{
+
+	obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+	// @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.GameObjectClone.obj_name)
 }
- void GameObjectClone::set_obj_name(const char* value, size_t size) {
-  
-  obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.GameObjectClone.obj_name)
+void GameObjectClone::set_obj_name(const char* value, size_t size)
+{
+
+	obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+		::std::string(reinterpret_cast<const char*>(value), size));
+	// @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.GameObjectClone.obj_name)
 }
- ::std::string* GameObjectClone::mutable_obj_name() {
-  
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.obj_name)
-  return obj_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+::std::string* GameObjectClone::mutable_obj_name()
+{
+
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.obj_name)
+	return obj_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- ::std::string* GameObjectClone::release_obj_name() {
-  
-  return obj_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+::std::string* GameObjectClone::release_obj_name()
+{
+
+	return obj_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- void GameObjectClone::set_allocated_obj_name(::std::string* obj_name) {
-  if (obj_name != NULL) {
-    
-  } else {
-    
-  }
-  obj_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), obj_name);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.GameObjectClone.obj_name)
+void GameObjectClone::set_allocated_obj_name(::std::string* obj_name)
+{
+	if (obj_name != NULL)
+	{
+
+	}
+	else
+	{
+
+	}
+	obj_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), obj_name);
+	// @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.GameObjectClone.obj_name)
 }
 
 // optional int64 handle = 3;
-void GameObjectClone::clear_handle() {
-  handle_ = GOOGLE_LONGLONG(0);
+void GameObjectClone::clear_handle()
+{
+	handle_ = GOOGLE_LONGLONG(0);
 }
- ::google::protobuf::int64 GameObjectClone::handle() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.handle)
-  return handle_;
+::google::protobuf::int64 GameObjectClone::handle() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.handle)
+	return handle_;
 }
- void GameObjectClone::set_handle(::google::protobuf::int64 value) {
-  
-  handle_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.handle)
+void GameObjectClone::set_handle(::google::protobuf::int64 value)
+{
+
+	handle_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.handle)
 }
 
 // optional .acoross.snakebite.messages.MovingObject head = 4;
-bool GameObjectClone::has_head() const {
-  return !_is_default_instance_ && head_ != NULL;
+bool GameObjectClone::has_head() const
+{
+	return !_is_default_instance_ && head_ != NULL;
 }
-void GameObjectClone::clear_head() {
-  if (GetArenaNoVirtual() == NULL && head_ != NULL) delete head_;
-  head_ = NULL;
+void GameObjectClone::clear_head()
+{
+	if (GetArenaNoVirtual() == NULL && head_ != NULL) delete head_;
+	head_ = NULL;
 }
-const ::acoross::snakebite::messages::MovingObject& GameObjectClone::head() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.head)
-  return head_ != NULL ? *head_ : *default_instance_->head_;
+const ::acoross::snakebite::messages::MovingObject& GameObjectClone::head() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.head)
+	return head_ != NULL ? *head_ : *default_instance_->head_;
 }
-::acoross::snakebite::messages::MovingObject* GameObjectClone::mutable_head() {
-  
-  if (head_ == NULL) {
-    head_ = new ::acoross::snakebite::messages::MovingObject;
-  }
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.head)
-  return head_;
+::acoross::snakebite::messages::MovingObject* GameObjectClone::mutable_head()
+{
+
+	if (head_ == NULL)
+	{
+		head_ = new ::acoross::snakebite::messages::MovingObject;
+	}
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.head)
+	return head_;
 }
-::acoross::snakebite::messages::MovingObject* GameObjectClone::release_head() {
-  
-  ::acoross::snakebite::messages::MovingObject* temp = head_;
-  head_ = NULL;
-  return temp;
+::acoross::snakebite::messages::MovingObject* GameObjectClone::release_head()
+{
+
+	::acoross::snakebite::messages::MovingObject* temp = head_;
+	head_ = NULL;
+	return temp;
 }
-void GameObjectClone::set_allocated_head(::acoross::snakebite::messages::MovingObject* head) {
-  delete head_;
-  head_ = head;
-  if (head) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.GameObjectClone.head)
+void GameObjectClone::set_allocated_head(::acoross::snakebite::messages::MovingObject* head)
+{
+	delete head_;
+	head_ = head;
+	if (head)
+	{
+
+	}
+	else
+	{
+
+	}
+	// @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.GameObjectClone.head)
 }
 
 // repeated .acoross.snakebite.messages.MovingObject body = 5;
-int GameObjectClone::body_size() const {
-  return body_.size();
+int GameObjectClone::body_size() const
+{
+	return body_.size();
 }
-void GameObjectClone::clear_body() {
-  body_.Clear();
+void GameObjectClone::clear_body()
+{
+	body_.Clear();
 }
-const ::acoross::snakebite::messages::MovingObject& GameObjectClone::body(int index) const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.body)
-  return body_.Get(index);
+const ::acoross::snakebite::messages::MovingObject& GameObjectClone::body(int index) const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.body)
+	return body_.Get(index);
 }
-::acoross::snakebite::messages::MovingObject* GameObjectClone::mutable_body(int index) {
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.body)
-  return body_.Mutable(index);
+::acoross::snakebite::messages::MovingObject* GameObjectClone::mutable_body(int index)
+{
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.body)
+	return body_.Mutable(index);
 }
-::acoross::snakebite::messages::MovingObject* GameObjectClone::add_body() {
-  // @@protoc_insertion_point(field_add:acoross.snakebite.messages.GameObjectClone.body)
-  return body_.Add();
+::acoross::snakebite::messages::MovingObject* GameObjectClone::add_body()
+{
+	// @@protoc_insertion_point(field_add:acoross.snakebite.messages.GameObjectClone.body)
+	return body_.Add();
 }
 ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject >*
-GameObjectClone::mutable_body() {
-  // @@protoc_insertion_point(field_mutable_list:acoross.snakebite.messages.GameObjectClone.body)
-  return &body_;
+GameObjectClone::mutable_body()
+{
+	// @@protoc_insertion_point(field_mutable_list:acoross.snakebite.messages.GameObjectClone.body)
+	return &body_;
 }
 const ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject >&
-GameObjectClone::body() const {
-  // @@protoc_insertion_point(field_list:acoross.snakebite.messages.GameObjectClone.body)
-  return body_;
+GameObjectClone::body() const
+{
+	// @@protoc_insertion_point(field_list:acoross.snakebite.messages.GameObjectClone.body)
+	return body_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1233,66 +1414,79 @@ const int UpdateGameObjectsEvent::kCloneFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 UpdateGameObjectsEvent::UpdateGameObjectsEvent()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	: ::google::protobuf::Message(), _internal_metadata_(NULL)
+{
+	SharedCtor();
+	// @@protoc_insertion_point(constructor:acoross.snakebite.messages.UpdateGameObjectsEvent)
 }
 
-void UpdateGameObjectsEvent::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
+void UpdateGameObjectsEvent::InitAsDefaultInstance()
+{
+	_is_default_instance_ = true;
 }
 
 UpdateGameObjectsEvent::UpdateGameObjectsEvent(const UpdateGameObjectsEvent& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	: ::google::protobuf::Message(),
+	_internal_metadata_(NULL)
+{
+	SharedCtor();
+	MergeFrom(from);
+	// @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.UpdateGameObjectsEvent)
 }
 
-void UpdateGameObjectsEvent::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  idx_x_ = 0;
-  idx_y_ = 0;
+void UpdateGameObjectsEvent::SharedCtor()
+{
+	_is_default_instance_ = false;
+	_cached_size_ = 0;
+	idx_x_ = 0;
+	idx_y_ = 0;
 }
 
-UpdateGameObjectsEvent::~UpdateGameObjectsEvent() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.UpdateGameObjectsEvent)
-  SharedDtor();
+UpdateGameObjectsEvent::~UpdateGameObjectsEvent()
+{
+	// @@protoc_insertion_point(destructor:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	SharedDtor();
 }
 
-void UpdateGameObjectsEvent::SharedDtor() {
-  if (this != default_instance_) {
-  }
+void UpdateGameObjectsEvent::SharedDtor()
+{
+	if (this != default_instance_)
+	{
+	}
 }
 
-void UpdateGameObjectsEvent::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+void UpdateGameObjectsEvent::SetCachedSize(int size) const
+{
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* UpdateGameObjectsEvent::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return UpdateGameObjectsEvent_descriptor_;
+const ::google::protobuf::Descriptor* UpdateGameObjectsEvent::descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return UpdateGameObjectsEvent_descriptor_;
 }
 
-const UpdateGameObjectsEvent& UpdateGameObjectsEvent::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  return *default_instance_;
+const UpdateGameObjectsEvent& UpdateGameObjectsEvent::default_instance()
+{
+	if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	return *default_instance_;
 }
 
 UpdateGameObjectsEvent* UpdateGameObjectsEvent::default_instance_ = NULL;
 
-UpdateGameObjectsEvent* UpdateGameObjectsEvent::New(::google::protobuf::Arena* arena) const {
-  UpdateGameObjectsEvent* n = new UpdateGameObjectsEvent;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+UpdateGameObjectsEvent* UpdateGameObjectsEvent::New(::google::protobuf::Arena* arena) const
+{
+	UpdateGameObjectsEvent* n = new UpdateGameObjectsEvent;
+	if (arena != NULL)
+	{
+		arena->Own(n);
+	}
+	return n;
 }
 
-void UpdateGameObjectsEvent::Clear() {
+void UpdateGameObjectsEvent::Clear()
+{
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
   &reinterpret_cast<UpdateGameObjectsEvent*>(16)->f)
 
@@ -1301,287 +1495,342 @@ void UpdateGameObjectsEvent::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(idx_x_, idx_y_);
+	ZR_(idx_x_, idx_y_);
 
 #undef ZR_HELPER_
 #undef ZR_
 
-  clone_.Clear();
+	clone_.Clear();
 }
 
 bool UpdateGameObjectsEvent::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
+	::google::protobuf::io::CodedInputStream* input)
+{
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.UpdateGameObjectsEvent)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 idx_x = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &idx_x_)));
+	::google::protobuf::uint32 tag;
+	// @@protoc_insertion_point(parse_start:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	for (;;)
+	{
+		::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+		tag = p.first;
+		if (!p.second) goto handle_unusual;
+		switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag))
+		{
+			// optional int32 idx_x = 1;
+		case 1:
+			{
+				if (tag == 8)
+				{
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &idx_x_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_idx_y;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(16)) goto parse_idx_y;
+				break;
+			}
 
-      // optional int32 idx_y = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_idx_y:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &idx_y_)));
+			// optional int32 idx_y = 2;
+		case 2:
+			{
+				if (tag == 16)
+				{
+				parse_idx_y:
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &idx_y_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(26)) goto parse_clone;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(26)) goto parse_clone;
+				break;
+			}
 
-      // repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
-      case 3: {
-        if (tag == 26) {
-         parse_clone:
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_clone:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_clone()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(26)) goto parse_loop_clone;
-        input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
+			// repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
+		case 3:
+			{
+				if (tag == 26)
+				{
+				parse_clone:
+					DO_(input->IncrementRecursionDepth());
+				parse_loop_clone:
+					DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+						input, add_clone()));
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(26)) goto parse_loop_clone;
+				input->UnsafeDecrementRecursionDepth();
+				if (input->ExpectAtEnd()) goto success;
+				break;
+			}
 
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
+		default:
+			{
+			handle_unusual:
+				if (tag == 0 ||
+					::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+					::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP)
+				{
+					goto success;
+				}
+				DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+				break;
+			}
+		}
+	}
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.UpdateGameObjectsEvent)
-  return true;
+	// @@protoc_insertion_point(parse_success:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.UpdateGameObjectsEvent)
-  return false;
+	// @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	return false;
 #undef DO_
 }
 
 void UpdateGameObjectsEvent::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.UpdateGameObjectsEvent)
-  // optional int32 idx_x = 1;
-  if (this->idx_x() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->idx_x(), output);
-  }
+	::google::protobuf::io::CodedOutputStream* output) const
+{
+	// @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	// optional int32 idx_x = 1;
+	if (this->idx_x() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->idx_x(), output);
+	}
 
-  // optional int32 idx_y = 2;
-  if (this->idx_y() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->idx_y(), output);
-  }
+	// optional int32 idx_y = 2;
+	if (this->idx_y() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->idx_y(), output);
+	}
 
-  // repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
-  for (unsigned int i = 0, n = this->clone_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->clone(i), output);
-  }
+	// repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
+	for (unsigned int i = 0, n = this->clone_size(); i < n; i++)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+			3, this->clone(i), output);
+	}
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	// @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.UpdateGameObjectsEvent)
 }
 
 ::google::protobuf::uint8* UpdateGameObjectsEvent::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.UpdateGameObjectsEvent)
-  // optional int32 idx_x = 1;
-  if (this->idx_x() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->idx_x(), target);
-  }
+	::google::protobuf::uint8* target) const
+{
+	// @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	// optional int32 idx_x = 1;
+	if (this->idx_x() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->idx_x(), target);
+	}
 
-  // optional int32 idx_y = 2;
-  if (this->idx_y() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->idx_y(), target);
-  }
+	// optional int32 idx_y = 2;
+	if (this->idx_y() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->idx_y(), target);
+	}
 
-  // repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
-  for (unsigned int i = 0, n = this->clone_size(); i < n; i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        3, this->clone(i), target);
-  }
+	// repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
+	for (unsigned int i = 0, n = this->clone_size(); i < n; i++)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::
+			WriteMessageNoVirtualToArray(
+				3, this->clone(i), target);
+	}
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.UpdateGameObjectsEvent)
-  return target;
+	// @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.UpdateGameObjectsEvent)
+	return target;
 }
 
-int UpdateGameObjectsEvent::ByteSize() const {
-  int total_size = 0;
+int UpdateGameObjectsEvent::ByteSize() const
+{
+	int total_size = 0;
 
-  // optional int32 idx_x = 1;
-  if (this->idx_x() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->idx_x());
-  }
+	// optional int32 idx_x = 1;
+	if (this->idx_x() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->idx_x());
+	}
 
-  // optional int32 idx_y = 2;
-  if (this->idx_y() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->idx_y());
-  }
+	// optional int32 idx_y = 2;
+	if (this->idx_y() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->idx_y());
+	}
 
-  // repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
-  total_size += 1 * this->clone_size();
-  for (int i = 0; i < this->clone_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->clone(i));
-  }
+	// repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
+	total_size += 1 * this->clone_size();
+	for (int i = 0; i < this->clone_size(); i++)
+	{
+		total_size +=
+			::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+				this->clone(i));
+	}
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
+	return total_size;
 }
 
-void UpdateGameObjectsEvent::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const UpdateGameObjectsEvent* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const UpdateGameObjectsEvent>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void UpdateGameObjectsEvent::MergeFrom(const ::google::protobuf::Message& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	const UpdateGameObjectsEvent* source =
+		::google::protobuf::internal::DynamicCastToGenerated<const UpdateGameObjectsEvent>(
+			&from);
+	if (source == NULL)
+	{
+		::google::protobuf::internal::ReflectionOps::Merge(from, this);
+	}
+	else
+	{
+		MergeFrom(*source);
+	}
 }
 
-void UpdateGameObjectsEvent::MergeFrom(const UpdateGameObjectsEvent& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  clone_.MergeFrom(from.clone_);
-  if (from.idx_x() != 0) {
-    set_idx_x(from.idx_x());
-  }
-  if (from.idx_y() != 0) {
-    set_idx_y(from.idx_y());
-  }
+void UpdateGameObjectsEvent::MergeFrom(const UpdateGameObjectsEvent& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	clone_.MergeFrom(from.clone_);
+	if (from.idx_x() != 0)
+	{
+		set_idx_x(from.idx_x());
+	}
+	if (from.idx_y() != 0)
+	{
+		set_idx_y(from.idx_y());
+	}
 }
 
-void UpdateGameObjectsEvent::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void UpdateGameObjectsEvent::CopyFrom(const ::google::protobuf::Message& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-void UpdateGameObjectsEvent::CopyFrom(const UpdateGameObjectsEvent& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void UpdateGameObjectsEvent::CopyFrom(const UpdateGameObjectsEvent& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-bool UpdateGameObjectsEvent::IsInitialized() const {
+bool UpdateGameObjectsEvent::IsInitialized() const
+{
 
-  return true;
+	return true;
 }
 
-void UpdateGameObjectsEvent::Swap(UpdateGameObjectsEvent* other) {
-  if (other == this) return;
-  InternalSwap(other);
+void UpdateGameObjectsEvent::Swap(UpdateGameObjectsEvent* other)
+{
+	if (other == this) return;
+	InternalSwap(other);
 }
-void UpdateGameObjectsEvent::InternalSwap(UpdateGameObjectsEvent* other) {
-  std::swap(idx_x_, other->idx_x_);
-  std::swap(idx_y_, other->idx_y_);
-  clone_.UnsafeArenaSwap(&other->clone_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+void UpdateGameObjectsEvent::InternalSwap(UpdateGameObjectsEvent* other)
+{
+	std::swap(idx_x_, other->idx_x_);
+	std::swap(idx_y_, other->idx_y_);
+	clone_.UnsafeArenaSwap(&other->clone_);
+	_internal_metadata_.Swap(&other->_internal_metadata_);
+	std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata UpdateGameObjectsEvent::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = UpdateGameObjectsEvent_descriptor_;
-  metadata.reflection = UpdateGameObjectsEvent_reflection_;
-  return metadata;
+::google::protobuf::Metadata UpdateGameObjectsEvent::GetMetadata() const
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::Metadata metadata;
+	metadata.descriptor = UpdateGameObjectsEvent_descriptor_;
+	metadata.reflection = UpdateGameObjectsEvent_reflection_;
+	return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // UpdateGameObjectsEvent
 
 // optional int32 idx_x = 1;
-void UpdateGameObjectsEvent::clear_idx_x() {
-  idx_x_ = 0;
+void UpdateGameObjectsEvent::clear_idx_x()
+{
+	idx_x_ = 0;
 }
- ::google::protobuf::int32 UpdateGameObjectsEvent::idx_x() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
-  return idx_x_;
+::google::protobuf::int32 UpdateGameObjectsEvent::idx_x() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
+	return idx_x_;
 }
- void UpdateGameObjectsEvent::set_idx_x(::google::protobuf::int32 value) {
-  
-  idx_x_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
+void UpdateGameObjectsEvent::set_idx_x(::google::protobuf::int32 value)
+{
+
+	idx_x_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
 }
 
 // optional int32 idx_y = 2;
-void UpdateGameObjectsEvent::clear_idx_y() {
-  idx_y_ = 0;
+void UpdateGameObjectsEvent::clear_idx_y()
+{
+	idx_y_ = 0;
 }
- ::google::protobuf::int32 UpdateGameObjectsEvent::idx_y() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
-  return idx_y_;
+::google::protobuf::int32 UpdateGameObjectsEvent::idx_y() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
+	return idx_y_;
 }
- void UpdateGameObjectsEvent::set_idx_y(::google::protobuf::int32 value) {
-  
-  idx_y_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
+void UpdateGameObjectsEvent::set_idx_y(::google::protobuf::int32 value)
+{
+
+	idx_y_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
 }
 
 // repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
-int UpdateGameObjectsEvent::clone_size() const {
-  return clone_.size();
+int UpdateGameObjectsEvent::clone_size() const
+{
+	return clone_.size();
 }
-void UpdateGameObjectsEvent::clear_clone() {
-  clone_.Clear();
+void UpdateGameObjectsEvent::clear_clone()
+{
+	clone_.Clear();
 }
-const ::acoross::snakebite::messages::GameObjectClone& UpdateGameObjectsEvent::clone(int index) const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return clone_.Get(index);
+const ::acoross::snakebite::messages::GameObjectClone& UpdateGameObjectsEvent::clone(int index) const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return clone_.Get(index);
 }
-::acoross::snakebite::messages::GameObjectClone* UpdateGameObjectsEvent::mutable_clone(int index) {
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return clone_.Mutable(index);
+::acoross::snakebite::messages::GameObjectClone* UpdateGameObjectsEvent::mutable_clone(int index)
+{
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return clone_.Mutable(index);
 }
-::acoross::snakebite::messages::GameObjectClone* UpdateGameObjectsEvent::add_clone() {
-  // @@protoc_insertion_point(field_add:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return clone_.Add();
+::acoross::snakebite::messages::GameObjectClone* UpdateGameObjectsEvent::add_clone()
+{
+	// @@protoc_insertion_point(field_add:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return clone_.Add();
 }
 ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone >*
-UpdateGameObjectsEvent::mutable_clone() {
-  // @@protoc_insertion_point(field_mutable_list:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return &clone_;
+UpdateGameObjectsEvent::mutable_clone()
+{
+	// @@protoc_insertion_point(field_mutable_list:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return &clone_;
 }
 const ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone >&
-UpdateGameObjectsEvent::clone() const {
-  // @@protoc_insertion_point(field_list:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return clone_;
+UpdateGameObjectsEvent::clone() const
+{
+	// @@protoc_insertion_point(field_list:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return clone_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1593,221 +1842,264 @@ const int VoidReply::kErrFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 VoidReply::VoidReply()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.VoidReply)
+	: ::google::protobuf::Message(), _internal_metadata_(NULL)
+{
+	SharedCtor();
+	// @@protoc_insertion_point(constructor:acoross.snakebite.messages.VoidReply)
 }
 
-void VoidReply::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
+void VoidReply::InitAsDefaultInstance()
+{
+	_is_default_instance_ = true;
 }
 
 VoidReply::VoidReply(const VoidReply& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.VoidReply)
+	: ::google::protobuf::Message(),
+	_internal_metadata_(NULL)
+{
+	SharedCtor();
+	MergeFrom(from);
+	// @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.VoidReply)
 }
 
-void VoidReply::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  err_ = 0;
+void VoidReply::SharedCtor()
+{
+	_is_default_instance_ = false;
+	_cached_size_ = 0;
+	err_ = 0;
 }
 
-VoidReply::~VoidReply() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.VoidReply)
-  SharedDtor();
+VoidReply::~VoidReply()
+{
+	// @@protoc_insertion_point(destructor:acoross.snakebite.messages.VoidReply)
+	SharedDtor();
 }
 
-void VoidReply::SharedDtor() {
-  if (this != default_instance_) {
-  }
+void VoidReply::SharedDtor()
+{
+	if (this != default_instance_)
+	{
+	}
 }
 
-void VoidReply::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+void VoidReply::SetCachedSize(int size) const
+{
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* VoidReply::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return VoidReply_descriptor_;
+const ::google::protobuf::Descriptor* VoidReply::descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return VoidReply_descriptor_;
 }
 
-const VoidReply& VoidReply::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  return *default_instance_;
+const VoidReply& VoidReply::default_instance()
+{
+	if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	return *default_instance_;
 }
 
 VoidReply* VoidReply::default_instance_ = NULL;
 
-VoidReply* VoidReply::New(::google::protobuf::Arena* arena) const {
-  VoidReply* n = new VoidReply;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+VoidReply* VoidReply::New(::google::protobuf::Arena* arena) const
+{
+	VoidReply* n = new VoidReply;
+	if (arena != NULL)
+	{
+		arena->Own(n);
+	}
+	return n;
 }
 
-void VoidReply::Clear() {
-  err_ = 0;
+void VoidReply::Clear()
+{
+	err_ = 0;
 }
 
 bool VoidReply::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
+	::google::protobuf::io::CodedInputStream* input)
+{
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.VoidReply)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 err = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &err_)));
+	::google::protobuf::uint32 tag;
+	// @@protoc_insertion_point(parse_start:acoross.snakebite.messages.VoidReply)
+	for (;;)
+	{
+		::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+		tag = p.first;
+		if (!p.second) goto handle_unusual;
+		switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag))
+		{
+			// optional int32 err = 1;
+		case 1:
+			{
+				if (tag == 8)
+				{
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &err_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectAtEnd()) goto success;
+				break;
+			}
 
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
+		default:
+			{
+			handle_unusual:
+				if (tag == 0 ||
+					::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+					::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP)
+				{
+					goto success;
+				}
+				DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+				break;
+			}
+		}
+	}
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.VoidReply)
-  return true;
+	// @@protoc_insertion_point(parse_success:acoross.snakebite.messages.VoidReply)
+	return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.VoidReply)
-  return false;
+	// @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.VoidReply)
+	return false;
 #undef DO_
 }
 
 void VoidReply::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.VoidReply)
-  // optional int32 err = 1;
-  if (this->err() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->err(), output);
-  }
+	::google::protobuf::io::CodedOutputStream* output) const
+{
+	// @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.VoidReply)
+	// optional int32 err = 1;
+	if (this->err() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->err(), output);
+	}
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.VoidReply)
+	// @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.VoidReply)
 }
 
 ::google::protobuf::uint8* VoidReply::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.VoidReply)
-  // optional int32 err = 1;
-  if (this->err() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->err(), target);
-  }
+	::google::protobuf::uint8* target) const
+{
+	// @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.VoidReply)
+	// optional int32 err = 1;
+	if (this->err() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->err(), target);
+	}
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.VoidReply)
-  return target;
+	// @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.VoidReply)
+	return target;
 }
 
-int VoidReply::ByteSize() const {
-  int total_size = 0;
+int VoidReply::ByteSize() const
+{
+	int total_size = 0;
 
-  // optional int32 err = 1;
-  if (this->err() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->err());
-  }
+	// optional int32 err = 1;
+	if (this->err() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->err());
+	}
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
+	return total_size;
 }
 
-void VoidReply::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const VoidReply* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const VoidReply>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void VoidReply::MergeFrom(const ::google::protobuf::Message& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	const VoidReply* source =
+		::google::protobuf::internal::DynamicCastToGenerated<const VoidReply>(
+			&from);
+	if (source == NULL)
+	{
+		::google::protobuf::internal::ReflectionOps::Merge(from, this);
+	}
+	else
+	{
+		MergeFrom(*source);
+	}
 }
 
-void VoidReply::MergeFrom(const VoidReply& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.err() != 0) {
-    set_err(from.err());
-  }
+void VoidReply::MergeFrom(const VoidReply& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	if (from.err() != 0)
+	{
+		set_err(from.err());
+	}
 }
 
-void VoidReply::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void VoidReply::CopyFrom(const ::google::protobuf::Message& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-void VoidReply::CopyFrom(const VoidReply& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void VoidReply::CopyFrom(const VoidReply& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-bool VoidReply::IsInitialized() const {
+bool VoidReply::IsInitialized() const
+{
 
-  return true;
+	return true;
 }
 
-void VoidReply::Swap(VoidReply* other) {
-  if (other == this) return;
-  InternalSwap(other);
+void VoidReply::Swap(VoidReply* other)
+{
+	if (other == this) return;
+	InternalSwap(other);
 }
-void VoidReply::InternalSwap(VoidReply* other) {
-  std::swap(err_, other->err_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+void VoidReply::InternalSwap(VoidReply* other)
+{
+	std::swap(err_, other->err_);
+	_internal_metadata_.Swap(&other->_internal_metadata_);
+	std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata VoidReply::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = VoidReply_descriptor_;
-  metadata.reflection = VoidReply_reflection_;
-  return metadata;
+::google::protobuf::Metadata VoidReply::GetMetadata() const
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::Metadata metadata;
+	metadata.descriptor = VoidReply_descriptor_;
+	metadata.reflection = VoidReply_reflection_;
+	return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // VoidReply
 
 // optional int32 err = 1;
-void VoidReply::clear_err() {
-  err_ = 0;
+void VoidReply::clear_err()
+{
+	err_ = 0;
 }
- ::google::protobuf::int32 VoidReply::err() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.VoidReply.err)
-  return err_;
+::google::protobuf::int32 VoidReply::err() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.VoidReply.err)
+	return err_;
 }
- void VoidReply::set_err(::google::protobuf::int32 value) {
-  
-  err_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.VoidReply.err)
+void VoidReply::set_err(::google::protobuf::int32 value)
+{
+
+	err_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.VoidReply.err)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1822,68 +2114,81 @@ const int ZoneInfoReply::kLimitIdxYFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ZoneInfoReply::ZoneInfoReply()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.ZoneInfoReply)
+	: ::google::protobuf::Message(), _internal_metadata_(NULL)
+{
+	SharedCtor();
+	// @@protoc_insertion_point(constructor:acoross.snakebite.messages.ZoneInfoReply)
 }
 
-void ZoneInfoReply::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
+void ZoneInfoReply::InitAsDefaultInstance()
+{
+	_is_default_instance_ = true;
 }
 
 ZoneInfoReply::ZoneInfoReply(const ZoneInfoReply& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.ZoneInfoReply)
+	: ::google::protobuf::Message(),
+	_internal_metadata_(NULL)
+{
+	SharedCtor();
+	MergeFrom(from);
+	// @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.ZoneInfoReply)
 }
 
-void ZoneInfoReply::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  height_ = 0;
-  width_ = 0;
-  limit_idx_x_ = 0;
-  limit_idx_y_ = 0;
+void ZoneInfoReply::SharedCtor()
+{
+	_is_default_instance_ = false;
+	_cached_size_ = 0;
+	height_ = 0;
+	width_ = 0;
+	limit_idx_x_ = 0;
+	limit_idx_y_ = 0;
 }
 
-ZoneInfoReply::~ZoneInfoReply() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.ZoneInfoReply)
-  SharedDtor();
+ZoneInfoReply::~ZoneInfoReply()
+{
+	// @@protoc_insertion_point(destructor:acoross.snakebite.messages.ZoneInfoReply)
+	SharedDtor();
 }
 
-void ZoneInfoReply::SharedDtor() {
-  if (this != default_instance_) {
-  }
+void ZoneInfoReply::SharedDtor()
+{
+	if (this != default_instance_)
+	{
+	}
 }
 
-void ZoneInfoReply::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+void ZoneInfoReply::SetCachedSize(int size) const
+{
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* ZoneInfoReply::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ZoneInfoReply_descriptor_;
+const ::google::protobuf::Descriptor* ZoneInfoReply::descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return ZoneInfoReply_descriptor_;
 }
 
-const ZoneInfoReply& ZoneInfoReply::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  return *default_instance_;
+const ZoneInfoReply& ZoneInfoReply::default_instance()
+{
+	if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	return *default_instance_;
 }
 
 ZoneInfoReply* ZoneInfoReply::default_instance_ = NULL;
 
-ZoneInfoReply* ZoneInfoReply::New(::google::protobuf::Arena* arena) const {
-  ZoneInfoReply* n = new ZoneInfoReply;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+ZoneInfoReply* ZoneInfoReply::New(::google::protobuf::Arena* arena) const
+{
+	ZoneInfoReply* n = new ZoneInfoReply;
+	if (arena != NULL)
+	{
+		arena->Own(n);
+	}
+	return n;
 }
 
-void ZoneInfoReply::Clear() {
+void ZoneInfoReply::Clear()
+{
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
   &reinterpret_cast<ZoneInfoReply*>(16)->f)
 
@@ -1892,7 +2197,7 @@ void ZoneInfoReply::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(height_, limit_idx_y_);
+	ZR_(height_, limit_idx_y_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -1900,308 +2205,371 @@ void ZoneInfoReply::Clear() {
 }
 
 bool ZoneInfoReply::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
+	::google::protobuf::io::CodedInputStream* input)
+{
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.ZoneInfoReply)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 height = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &height_)));
+	::google::protobuf::uint32 tag;
+	// @@protoc_insertion_point(parse_start:acoross.snakebite.messages.ZoneInfoReply)
+	for (;;)
+	{
+		::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+		tag = p.first;
+		if (!p.second) goto handle_unusual;
+		switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag))
+		{
+			// optional int32 height = 1;
+		case 1:
+			{
+				if (tag == 8)
+				{
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &height_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_width;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(16)) goto parse_width;
+				break;
+			}
 
-      // optional int32 width = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_width:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &width_)));
+			// optional int32 width = 2;
+		case 2:
+			{
+				if (tag == 16)
+				{
+				parse_width:
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &width_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(24)) goto parse_limit_idx_x;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(24)) goto parse_limit_idx_x;
+				break;
+			}
 
-      // optional int32 limit_idx_x = 3;
-      case 3: {
-        if (tag == 24) {
-         parse_limit_idx_x:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &limit_idx_x_)));
+			// optional int32 limit_idx_x = 3;
+		case 3:
+			{
+				if (tag == 24)
+				{
+				parse_limit_idx_x:
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &limit_idx_x_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(32)) goto parse_limit_idx_y;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectTag(32)) goto parse_limit_idx_y;
+				break;
+			}
 
-      // optional int32 limit_idx_y = 4;
-      case 4: {
-        if (tag == 32) {
-         parse_limit_idx_y:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &limit_idx_y_)));
+			// optional int32 limit_idx_y = 4;
+		case 4:
+			{
+				if (tag == 32)
+				{
+				parse_limit_idx_y:
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &limit_idx_y_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectAtEnd()) goto success;
+				break;
+			}
 
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
+		default:
+			{
+			handle_unusual:
+				if (tag == 0 ||
+					::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+					::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP)
+				{
+					goto success;
+				}
+				DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+				break;
+			}
+		}
+	}
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.ZoneInfoReply)
-  return true;
+	// @@protoc_insertion_point(parse_success:acoross.snakebite.messages.ZoneInfoReply)
+	return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.ZoneInfoReply)
-  return false;
+	// @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.ZoneInfoReply)
+	return false;
 #undef DO_
 }
 
 void ZoneInfoReply::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.ZoneInfoReply)
-  // optional int32 height = 1;
-  if (this->height() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->height(), output);
-  }
+	::google::protobuf::io::CodedOutputStream* output) const
+{
+	// @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.ZoneInfoReply)
+	// optional int32 height = 1;
+	if (this->height() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->height(), output);
+	}
 
-  // optional int32 width = 2;
-  if (this->width() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->width(), output);
-  }
+	// optional int32 width = 2;
+	if (this->width() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->width(), output);
+	}
 
-  // optional int32 limit_idx_x = 3;
-  if (this->limit_idx_x() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->limit_idx_x(), output);
-  }
+	// optional int32 limit_idx_x = 3;
+	if (this->limit_idx_x() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->limit_idx_x(), output);
+	}
 
-  // optional int32 limit_idx_y = 4;
-  if (this->limit_idx_y() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->limit_idx_y(), output);
-  }
+	// optional int32 limit_idx_y = 4;
+	if (this->limit_idx_y() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->limit_idx_y(), output);
+	}
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.ZoneInfoReply)
+	// @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.ZoneInfoReply)
 }
 
 ::google::protobuf::uint8* ZoneInfoReply::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.ZoneInfoReply)
-  // optional int32 height = 1;
-  if (this->height() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->height(), target);
-  }
+	::google::protobuf::uint8* target) const
+{
+	// @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.ZoneInfoReply)
+	// optional int32 height = 1;
+	if (this->height() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->height(), target);
+	}
 
-  // optional int32 width = 2;
-  if (this->width() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->width(), target);
-  }
+	// optional int32 width = 2;
+	if (this->width() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->width(), target);
+	}
 
-  // optional int32 limit_idx_x = 3;
-  if (this->limit_idx_x() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->limit_idx_x(), target);
-  }
+	// optional int32 limit_idx_x = 3;
+	if (this->limit_idx_x() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->limit_idx_x(), target);
+	}
 
-  // optional int32 limit_idx_y = 4;
-  if (this->limit_idx_y() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->limit_idx_y(), target);
-  }
+	// optional int32 limit_idx_y = 4;
+	if (this->limit_idx_y() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->limit_idx_y(), target);
+	}
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.ZoneInfoReply)
-  return target;
+	// @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.ZoneInfoReply)
+	return target;
 }
 
-int ZoneInfoReply::ByteSize() const {
-  int total_size = 0;
+int ZoneInfoReply::ByteSize() const
+{
+	int total_size = 0;
 
-  // optional int32 height = 1;
-  if (this->height() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->height());
-  }
+	// optional int32 height = 1;
+	if (this->height() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->height());
+	}
 
-  // optional int32 width = 2;
-  if (this->width() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->width());
-  }
+	// optional int32 width = 2;
+	if (this->width() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->width());
+	}
 
-  // optional int32 limit_idx_x = 3;
-  if (this->limit_idx_x() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->limit_idx_x());
-  }
+	// optional int32 limit_idx_x = 3;
+	if (this->limit_idx_x() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->limit_idx_x());
+	}
 
-  // optional int32 limit_idx_y = 4;
-  if (this->limit_idx_y() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->limit_idx_y());
-  }
+	// optional int32 limit_idx_y = 4;
+	if (this->limit_idx_y() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->limit_idx_y());
+	}
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
+	return total_size;
 }
 
-void ZoneInfoReply::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const ZoneInfoReply* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const ZoneInfoReply>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void ZoneInfoReply::MergeFrom(const ::google::protobuf::Message& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	const ZoneInfoReply* source =
+		::google::protobuf::internal::DynamicCastToGenerated<const ZoneInfoReply>(
+			&from);
+	if (source == NULL)
+	{
+		::google::protobuf::internal::ReflectionOps::Merge(from, this);
+	}
+	else
+	{
+		MergeFrom(*source);
+	}
 }
 
-void ZoneInfoReply::MergeFrom(const ZoneInfoReply& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.height() != 0) {
-    set_height(from.height());
-  }
-  if (from.width() != 0) {
-    set_width(from.width());
-  }
-  if (from.limit_idx_x() != 0) {
-    set_limit_idx_x(from.limit_idx_x());
-  }
-  if (from.limit_idx_y() != 0) {
-    set_limit_idx_y(from.limit_idx_y());
-  }
+void ZoneInfoReply::MergeFrom(const ZoneInfoReply& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	if (from.height() != 0)
+	{
+		set_height(from.height());
+	}
+	if (from.width() != 0)
+	{
+		set_width(from.width());
+	}
+	if (from.limit_idx_x() != 0)
+	{
+		set_limit_idx_x(from.limit_idx_x());
+	}
+	if (from.limit_idx_y() != 0)
+	{
+		set_limit_idx_y(from.limit_idx_y());
+	}
 }
 
-void ZoneInfoReply::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void ZoneInfoReply::CopyFrom(const ::google::protobuf::Message& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-void ZoneInfoReply::CopyFrom(const ZoneInfoReply& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void ZoneInfoReply::CopyFrom(const ZoneInfoReply& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-bool ZoneInfoReply::IsInitialized() const {
+bool ZoneInfoReply::IsInitialized() const
+{
 
-  return true;
+	return true;
 }
 
-void ZoneInfoReply::Swap(ZoneInfoReply* other) {
-  if (other == this) return;
-  InternalSwap(other);
+void ZoneInfoReply::Swap(ZoneInfoReply* other)
+{
+	if (other == this) return;
+	InternalSwap(other);
 }
-void ZoneInfoReply::InternalSwap(ZoneInfoReply* other) {
-  std::swap(height_, other->height_);
-  std::swap(width_, other->width_);
-  std::swap(limit_idx_x_, other->limit_idx_x_);
-  std::swap(limit_idx_y_, other->limit_idx_y_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+void ZoneInfoReply::InternalSwap(ZoneInfoReply* other)
+{
+	std::swap(height_, other->height_);
+	std::swap(width_, other->width_);
+	std::swap(limit_idx_x_, other->limit_idx_x_);
+	std::swap(limit_idx_y_, other->limit_idx_y_);
+	_internal_metadata_.Swap(&other->_internal_metadata_);
+	std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata ZoneInfoReply::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = ZoneInfoReply_descriptor_;
-  metadata.reflection = ZoneInfoReply_reflection_;
-  return metadata;
+::google::protobuf::Metadata ZoneInfoReply::GetMetadata() const
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::Metadata metadata;
+	metadata.descriptor = ZoneInfoReply_descriptor_;
+	metadata.reflection = ZoneInfoReply_reflection_;
+	return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // ZoneInfoReply
 
 // optional int32 height = 1;
-void ZoneInfoReply::clear_height() {
-  height_ = 0;
+void ZoneInfoReply::clear_height()
+{
+	height_ = 0;
 }
- ::google::protobuf::int32 ZoneInfoReply::height() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.height)
-  return height_;
+::google::protobuf::int32 ZoneInfoReply::height() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.height)
+	return height_;
 }
- void ZoneInfoReply::set_height(::google::protobuf::int32 value) {
-  
-  height_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.height)
+void ZoneInfoReply::set_height(::google::protobuf::int32 value)
+{
+
+	height_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.height)
 }
 
 // optional int32 width = 2;
-void ZoneInfoReply::clear_width() {
-  width_ = 0;
+void ZoneInfoReply::clear_width()
+{
+	width_ = 0;
 }
- ::google::protobuf::int32 ZoneInfoReply::width() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.width)
-  return width_;
+::google::protobuf::int32 ZoneInfoReply::width() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.width)
+	return width_;
 }
- void ZoneInfoReply::set_width(::google::protobuf::int32 value) {
-  
-  width_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.width)
+void ZoneInfoReply::set_width(::google::protobuf::int32 value)
+{
+
+	width_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.width)
 }
 
 // optional int32 limit_idx_x = 3;
-void ZoneInfoReply::clear_limit_idx_x() {
-  limit_idx_x_ = 0;
+void ZoneInfoReply::clear_limit_idx_x()
+{
+	limit_idx_x_ = 0;
 }
- ::google::protobuf::int32 ZoneInfoReply::limit_idx_x() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
-  return limit_idx_x_;
+::google::protobuf::int32 ZoneInfoReply::limit_idx_x() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
+	return limit_idx_x_;
 }
- void ZoneInfoReply::set_limit_idx_x(::google::protobuf::int32 value) {
-  
-  limit_idx_x_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
+void ZoneInfoReply::set_limit_idx_x(::google::protobuf::int32 value)
+{
+
+	limit_idx_x_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
 }
 
 // optional int32 limit_idx_y = 4;
-void ZoneInfoReply::clear_limit_idx_y() {
-  limit_idx_y_ = 0;
+void ZoneInfoReply::clear_limit_idx_y()
+{
+	limit_idx_y_ = 0;
 }
- ::google::protobuf::int32 ZoneInfoReply::limit_idx_y() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
-  return limit_idx_y_;
+::google::protobuf::int32 ZoneInfoReply::limit_idx_y() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
+	return limit_idx_y_;
 }
- void ZoneInfoReply::set_limit_idx_y(::google::protobuf::int32 value) {
-  
-  limit_idx_y_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
+void ZoneInfoReply::set_limit_idx_y(::google::protobuf::int32 value)
+{
+
+	limit_idx_y_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2213,266 +2581,317 @@ const int InitPlayerSnakeRequest::kNameFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 InitPlayerSnakeRequest::InitPlayerSnakeRequest()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	: ::google::protobuf::Message(), _internal_metadata_(NULL)
+{
+	SharedCtor();
+	// @@protoc_insertion_point(constructor:acoross.snakebite.messages.InitPlayerSnakeRequest)
 }
 
-void InitPlayerSnakeRequest::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
+void InitPlayerSnakeRequest::InitAsDefaultInstance()
+{
+	_is_default_instance_ = true;
 }
 
 InitPlayerSnakeRequest::InitPlayerSnakeRequest(const InitPlayerSnakeRequest& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	: ::google::protobuf::Message(),
+	_internal_metadata_(NULL)
+{
+	SharedCtor();
+	MergeFrom(from);
+	// @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.InitPlayerSnakeRequest)
 }
 
-void InitPlayerSnakeRequest::SharedCtor() {
-    _is_default_instance_ = false;
-  ::google::protobuf::internal::GetEmptyString();
-  _cached_size_ = 0;
-  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+void InitPlayerSnakeRequest::SharedCtor()
+{
+	_is_default_instance_ = false;
+	::google::protobuf::internal::GetEmptyString();
+	_cached_size_ = 0;
+	name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-InitPlayerSnakeRequest::~InitPlayerSnakeRequest() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.InitPlayerSnakeRequest)
-  SharedDtor();
+InitPlayerSnakeRequest::~InitPlayerSnakeRequest()
+{
+	// @@protoc_insertion_point(destructor:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	SharedDtor();
 }
 
-void InitPlayerSnakeRequest::SharedDtor() {
-  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (this != default_instance_) {
-  }
+void InitPlayerSnakeRequest::SharedDtor()
+{
+	name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	if (this != default_instance_)
+	{
+	}
 }
 
-void InitPlayerSnakeRequest::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+void InitPlayerSnakeRequest::SetCachedSize(int size) const
+{
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* InitPlayerSnakeRequest::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return InitPlayerSnakeRequest_descriptor_;
+const ::google::protobuf::Descriptor* InitPlayerSnakeRequest::descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return InitPlayerSnakeRequest_descriptor_;
 }
 
-const InitPlayerSnakeRequest& InitPlayerSnakeRequest::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  return *default_instance_;
+const InitPlayerSnakeRequest& InitPlayerSnakeRequest::default_instance()
+{
+	if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	return *default_instance_;
 }
 
 InitPlayerSnakeRequest* InitPlayerSnakeRequest::default_instance_ = NULL;
 
-InitPlayerSnakeRequest* InitPlayerSnakeRequest::New(::google::protobuf::Arena* arena) const {
-  InitPlayerSnakeRequest* n = new InitPlayerSnakeRequest;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+InitPlayerSnakeRequest* InitPlayerSnakeRequest::New(::google::protobuf::Arena* arena) const
+{
+	InitPlayerSnakeRequest* n = new InitPlayerSnakeRequest;
+	if (arena != NULL)
+	{
+		arena->Own(n);
+	}
+	return n;
 }
 
-void InitPlayerSnakeRequest::Clear() {
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+void InitPlayerSnakeRequest::Clear()
+{
+	name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool InitPlayerSnakeRequest::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
+	::google::protobuf::io::CodedInputStream* input)
+{
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.InitPlayerSnakeRequest)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string name = 1;
-      case 1: {
-        if (tag == 10) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_name()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "acoross.snakebite.messages.InitPlayerSnakeRequest.name"));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
+	::google::protobuf::uint32 tag;
+	// @@protoc_insertion_point(parse_start:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	for (;;)
+	{
+		::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+		tag = p.first;
+		if (!p.second) goto handle_unusual;
+		switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag))
+		{
+			// optional string name = 1;
+		case 1:
+			{
+				if (tag == 10)
+				{
+					DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+						input, this->mutable_name()));
+					DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+						this->name().data(), this->name().length(),
+						::google::protobuf::internal::WireFormatLite::PARSE,
+						"acoross.snakebite.messages.InitPlayerSnakeRequest.name"));
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectAtEnd()) goto success;
+				break;
+			}
 
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
+		default:
+			{
+			handle_unusual:
+				if (tag == 0 ||
+					::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+					::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP)
+				{
+					goto success;
+				}
+				DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+				break;
+			}
+		}
+	}
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.InitPlayerSnakeRequest)
-  return true;
+	// @@protoc_insertion_point(parse_success:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.InitPlayerSnakeRequest)
-  return false;
+	// @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	return false;
 #undef DO_
 }
 
 void InitPlayerSnakeRequest::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.InitPlayerSnakeRequest)
-  // optional string name = 1;
-  if (this->name().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.messages.InitPlayerSnakeRequest.name");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      1, this->name(), output);
-  }
+	::google::protobuf::io::CodedOutputStream* output) const
+{
+	// @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	// optional string name = 1;
+	if (this->name().size() > 0)
+	{
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+			this->name().data(), this->name().length(),
+			::google::protobuf::internal::WireFormatLite::SERIALIZE,
+			"acoross.snakebite.messages.InitPlayerSnakeRequest.name");
+		::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+			1, this->name(), output);
+	}
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	// @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.InitPlayerSnakeRequest)
 }
 
 ::google::protobuf::uint8* InitPlayerSnakeRequest::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.InitPlayerSnakeRequest)
-  // optional string name = 1;
-  if (this->name().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "acoross.snakebite.messages.InitPlayerSnakeRequest.name");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
+	::google::protobuf::uint8* target) const
+{
+	// @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	// optional string name = 1;
+	if (this->name().size() > 0)
+	{
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+			this->name().data(), this->name().length(),
+			::google::protobuf::internal::WireFormatLite::SERIALIZE,
+			"acoross.snakebite.messages.InitPlayerSnakeRequest.name");
+		target =
+			::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+				1, this->name(), target);
+	}
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.InitPlayerSnakeRequest)
-  return target;
+	// @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.InitPlayerSnakeRequest)
+	return target;
 }
 
-int InitPlayerSnakeRequest::ByteSize() const {
-  int total_size = 0;
+int InitPlayerSnakeRequest::ByteSize() const
+{
+	int total_size = 0;
 
-  // optional string name = 1;
-  if (this->name().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->name());
-  }
+	// optional string name = 1;
+	if (this->name().size() > 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::StringSize(
+				this->name());
+	}
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
+	return total_size;
 }
 
-void InitPlayerSnakeRequest::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const InitPlayerSnakeRequest* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const InitPlayerSnakeRequest>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void InitPlayerSnakeRequest::MergeFrom(const ::google::protobuf::Message& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	const InitPlayerSnakeRequest* source =
+		::google::protobuf::internal::DynamicCastToGenerated<const InitPlayerSnakeRequest>(
+			&from);
+	if (source == NULL)
+	{
+		::google::protobuf::internal::ReflectionOps::Merge(from, this);
+	}
+	else
+	{
+		MergeFrom(*source);
+	}
 }
 
-void InitPlayerSnakeRequest::MergeFrom(const InitPlayerSnakeRequest& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.name().size() > 0) {
+void InitPlayerSnakeRequest::MergeFrom(const InitPlayerSnakeRequest& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	if (from.name().size() > 0)
+	{
 
-    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
-  }
+		name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+	}
 }
 
-void InitPlayerSnakeRequest::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void InitPlayerSnakeRequest::CopyFrom(const ::google::protobuf::Message& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-void InitPlayerSnakeRequest::CopyFrom(const InitPlayerSnakeRequest& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void InitPlayerSnakeRequest::CopyFrom(const InitPlayerSnakeRequest& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-bool InitPlayerSnakeRequest::IsInitialized() const {
+bool InitPlayerSnakeRequest::IsInitialized() const
+{
 
-  return true;
+	return true;
 }
 
-void InitPlayerSnakeRequest::Swap(InitPlayerSnakeRequest* other) {
-  if (other == this) return;
-  InternalSwap(other);
+void InitPlayerSnakeRequest::Swap(InitPlayerSnakeRequest* other)
+{
+	if (other == this) return;
+	InternalSwap(other);
 }
-void InitPlayerSnakeRequest::InternalSwap(InitPlayerSnakeRequest* other) {
-  name_.Swap(&other->name_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+void InitPlayerSnakeRequest::InternalSwap(InitPlayerSnakeRequest* other)
+{
+	name_.Swap(&other->name_);
+	_internal_metadata_.Swap(&other->_internal_metadata_);
+	std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata InitPlayerSnakeRequest::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = InitPlayerSnakeRequest_descriptor_;
-  metadata.reflection = InitPlayerSnakeRequest_reflection_;
-  return metadata;
+::google::protobuf::Metadata InitPlayerSnakeRequest::GetMetadata() const
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::Metadata metadata;
+	metadata.descriptor = InitPlayerSnakeRequest_descriptor_;
+	metadata.reflection = InitPlayerSnakeRequest_reflection_;
+	return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // InitPlayerSnakeRequest
 
 // optional string name = 1;
-void InitPlayerSnakeRequest::clear_name() {
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+void InitPlayerSnakeRequest::clear_name()
+{
+	name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- const ::std::string& InitPlayerSnakeRequest::name() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
-  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+const ::std::string& InitPlayerSnakeRequest::name() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+	return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- void InitPlayerSnakeRequest::set_name(const ::std::string& value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+void InitPlayerSnakeRequest::set_name(const ::std::string& value)
+{
+
+	name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
- void InitPlayerSnakeRequest::set_name(const char* value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+void InitPlayerSnakeRequest::set_name(const char* value)
+{
+
+	name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+	// @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
- void InitPlayerSnakeRequest::set_name(const char* value, size_t size) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+void InitPlayerSnakeRequest::set_name(const char* value, size_t size)
+{
+
+	name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+		::std::string(reinterpret_cast<const char*>(value), size));
+	// @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
- ::std::string* InitPlayerSnakeRequest::mutable_name() {
-  
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
-  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+::std::string* InitPlayerSnakeRequest::mutable_name()
+{
+
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+	return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- ::std::string* InitPlayerSnakeRequest::release_name() {
-  
-  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+::std::string* InitPlayerSnakeRequest::release_name()
+{
+
+	return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- void InitPlayerSnakeRequest::set_allocated_name(::std::string* name) {
-  if (name != NULL) {
-    
-  } else {
-    
-  }
-  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+void InitPlayerSnakeRequest::set_allocated_name(::std::string* name)
+{
+	if (name != NULL)
+	{
+
+	}
+	else
+	{
+
+	}
+	name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+	// @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2484,221 +2903,264 @@ const int InitPlayerSnakeReply::kHandleFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 InitPlayerSnakeReply::InitPlayerSnakeReply()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.InitPlayerSnakeReply)
+	: ::google::protobuf::Message(), _internal_metadata_(NULL)
+{
+	SharedCtor();
+	// @@protoc_insertion_point(constructor:acoross.snakebite.messages.InitPlayerSnakeReply)
 }
 
-void InitPlayerSnakeReply::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
+void InitPlayerSnakeReply::InitAsDefaultInstance()
+{
+	_is_default_instance_ = true;
 }
 
 InitPlayerSnakeReply::InitPlayerSnakeReply(const InitPlayerSnakeReply& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.InitPlayerSnakeReply)
+	: ::google::protobuf::Message(),
+	_internal_metadata_(NULL)
+{
+	SharedCtor();
+	MergeFrom(from);
+	// @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.InitPlayerSnakeReply)
 }
 
-void InitPlayerSnakeReply::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  handle_ = GOOGLE_LONGLONG(0);
+void InitPlayerSnakeReply::SharedCtor()
+{
+	_is_default_instance_ = false;
+	_cached_size_ = 0;
+	handle_ = GOOGLE_LONGLONG(0);
 }
 
-InitPlayerSnakeReply::~InitPlayerSnakeReply() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.InitPlayerSnakeReply)
-  SharedDtor();
+InitPlayerSnakeReply::~InitPlayerSnakeReply()
+{
+	// @@protoc_insertion_point(destructor:acoross.snakebite.messages.InitPlayerSnakeReply)
+	SharedDtor();
 }
 
-void InitPlayerSnakeReply::SharedDtor() {
-  if (this != default_instance_) {
-  }
+void InitPlayerSnakeReply::SharedDtor()
+{
+	if (this != default_instance_)
+	{
+	}
 }
 
-void InitPlayerSnakeReply::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+void InitPlayerSnakeReply::SetCachedSize(int size) const
+{
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* InitPlayerSnakeReply::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return InitPlayerSnakeReply_descriptor_;
+const ::google::protobuf::Descriptor* InitPlayerSnakeReply::descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return InitPlayerSnakeReply_descriptor_;
 }
 
-const InitPlayerSnakeReply& InitPlayerSnakeReply::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  return *default_instance_;
+const InitPlayerSnakeReply& InitPlayerSnakeReply::default_instance()
+{
+	if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	return *default_instance_;
 }
 
 InitPlayerSnakeReply* InitPlayerSnakeReply::default_instance_ = NULL;
 
-InitPlayerSnakeReply* InitPlayerSnakeReply::New(::google::protobuf::Arena* arena) const {
-  InitPlayerSnakeReply* n = new InitPlayerSnakeReply;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+InitPlayerSnakeReply* InitPlayerSnakeReply::New(::google::protobuf::Arena* arena) const
+{
+	InitPlayerSnakeReply* n = new InitPlayerSnakeReply;
+	if (arena != NULL)
+	{
+		arena->Own(n);
+	}
+	return n;
 }
 
-void InitPlayerSnakeReply::Clear() {
-  handle_ = GOOGLE_LONGLONG(0);
+void InitPlayerSnakeReply::Clear()
+{
+	handle_ = GOOGLE_LONGLONG(0);
 }
 
 bool InitPlayerSnakeReply::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
+	::google::protobuf::io::CodedInputStream* input)
+{
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.InitPlayerSnakeReply)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int64 handle = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &handle_)));
+	::google::protobuf::uint32 tag;
+	// @@protoc_insertion_point(parse_start:acoross.snakebite.messages.InitPlayerSnakeReply)
+	for (;;)
+	{
+		::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+		tag = p.first;
+		if (!p.second) goto handle_unusual;
+		switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag))
+		{
+			// optional int64 handle = 1;
+		case 1:
+			{
+				if (tag == 8)
+				{
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+							input, &handle_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectAtEnd()) goto success;
+				break;
+			}
 
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
+		default:
+			{
+			handle_unusual:
+				if (tag == 0 ||
+					::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+					::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP)
+				{
+					goto success;
+				}
+				DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+				break;
+			}
+		}
+	}
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.InitPlayerSnakeReply)
-  return true;
+	// @@protoc_insertion_point(parse_success:acoross.snakebite.messages.InitPlayerSnakeReply)
+	return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.InitPlayerSnakeReply)
-  return false;
+	// @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.InitPlayerSnakeReply)
+	return false;
 #undef DO_
 }
 
 void InitPlayerSnakeReply::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.InitPlayerSnakeReply)
-  // optional int64 handle = 1;
-  if (this->handle() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->handle(), output);
-  }
+	::google::protobuf::io::CodedOutputStream* output) const
+{
+	// @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.InitPlayerSnakeReply)
+	// optional int64 handle = 1;
+	if (this->handle() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->handle(), output);
+	}
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.InitPlayerSnakeReply)
+	// @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.InitPlayerSnakeReply)
 }
 
 ::google::protobuf::uint8* InitPlayerSnakeReply::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.InitPlayerSnakeReply)
-  // optional int64 handle = 1;
-  if (this->handle() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->handle(), target);
-  }
+	::google::protobuf::uint8* target) const
+{
+	// @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.InitPlayerSnakeReply)
+	// optional int64 handle = 1;
+	if (this->handle() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->handle(), target);
+	}
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.InitPlayerSnakeReply)
-  return target;
+	// @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.InitPlayerSnakeReply)
+	return target;
 }
 
-int InitPlayerSnakeReply::ByteSize() const {
-  int total_size = 0;
+int InitPlayerSnakeReply::ByteSize() const
+{
+	int total_size = 0;
 
-  // optional int64 handle = 1;
-  if (this->handle() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int64Size(
-        this->handle());
-  }
+	// optional int64 handle = 1;
+	if (this->handle() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int64Size(
+				this->handle());
+	}
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
+	return total_size;
 }
 
-void InitPlayerSnakeReply::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const InitPlayerSnakeReply* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const InitPlayerSnakeReply>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void InitPlayerSnakeReply::MergeFrom(const ::google::protobuf::Message& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	const InitPlayerSnakeReply* source =
+		::google::protobuf::internal::DynamicCastToGenerated<const InitPlayerSnakeReply>(
+			&from);
+	if (source == NULL)
+	{
+		::google::protobuf::internal::ReflectionOps::Merge(from, this);
+	}
+	else
+	{
+		MergeFrom(*source);
+	}
 }
 
-void InitPlayerSnakeReply::MergeFrom(const InitPlayerSnakeReply& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.handle() != 0) {
-    set_handle(from.handle());
-  }
+void InitPlayerSnakeReply::MergeFrom(const InitPlayerSnakeReply& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	if (from.handle() != 0)
+	{
+		set_handle(from.handle());
+	}
 }
 
-void InitPlayerSnakeReply::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void InitPlayerSnakeReply::CopyFrom(const ::google::protobuf::Message& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-void InitPlayerSnakeReply::CopyFrom(const InitPlayerSnakeReply& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void InitPlayerSnakeReply::CopyFrom(const InitPlayerSnakeReply& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-bool InitPlayerSnakeReply::IsInitialized() const {
+bool InitPlayerSnakeReply::IsInitialized() const
+{
 
-  return true;
+	return true;
 }
 
-void InitPlayerSnakeReply::Swap(InitPlayerSnakeReply* other) {
-  if (other == this) return;
-  InternalSwap(other);
+void InitPlayerSnakeReply::Swap(InitPlayerSnakeReply* other)
+{
+	if (other == this) return;
+	InternalSwap(other);
 }
-void InitPlayerSnakeReply::InternalSwap(InitPlayerSnakeReply* other) {
-  std::swap(handle_, other->handle_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+void InitPlayerSnakeReply::InternalSwap(InitPlayerSnakeReply* other)
+{
+	std::swap(handle_, other->handle_);
+	_internal_metadata_.Swap(&other->_internal_metadata_);
+	std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata InitPlayerSnakeReply::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = InitPlayerSnakeReply_descriptor_;
-  metadata.reflection = InitPlayerSnakeReply_reflection_;
-  return metadata;
+::google::protobuf::Metadata InitPlayerSnakeReply::GetMetadata() const
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::Metadata metadata;
+	metadata.descriptor = InitPlayerSnakeReply_descriptor_;
+	metadata.reflection = InitPlayerSnakeReply_reflection_;
+	return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // InitPlayerSnakeReply
 
 // optional int64 handle = 1;
-void InitPlayerSnakeReply::clear_handle() {
-  handle_ = GOOGLE_LONGLONG(0);
+void InitPlayerSnakeReply::clear_handle()
+{
+	handle_ = GOOGLE_LONGLONG(0);
 }
- ::google::protobuf::int64 InitPlayerSnakeReply::handle() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeReply.handle)
-  return handle_;
+::google::protobuf::int64 InitPlayerSnakeReply::handle() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeReply.handle)
+	return handle_;
 }
- void InitPlayerSnakeReply::set_handle(::google::protobuf::int64 value) {
-  
-  handle_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeReply.handle)
+void InitPlayerSnakeReply::set_handle(::google::protobuf::int64 value)
+{
+
+	handle_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeReply.handle)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2710,221 +3172,264 @@ const int TurnKeyDownRequest::kKeyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 TurnKeyDownRequest::TurnKeyDownRequest()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.TurnKeyDownRequest)
+	: ::google::protobuf::Message(), _internal_metadata_(NULL)
+{
+	SharedCtor();
+	// @@protoc_insertion_point(constructor:acoross.snakebite.messages.TurnKeyDownRequest)
 }
 
-void TurnKeyDownRequest::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
+void TurnKeyDownRequest::InitAsDefaultInstance()
+{
+	_is_default_instance_ = true;
 }
 
 TurnKeyDownRequest::TurnKeyDownRequest(const TurnKeyDownRequest& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.TurnKeyDownRequest)
+	: ::google::protobuf::Message(),
+	_internal_metadata_(NULL)
+{
+	SharedCtor();
+	MergeFrom(from);
+	// @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.TurnKeyDownRequest)
 }
 
-void TurnKeyDownRequest::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  key_ = 0;
+void TurnKeyDownRequest::SharedCtor()
+{
+	_is_default_instance_ = false;
+	_cached_size_ = 0;
+	key_ = 0;
 }
 
-TurnKeyDownRequest::~TurnKeyDownRequest() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.TurnKeyDownRequest)
-  SharedDtor();
+TurnKeyDownRequest::~TurnKeyDownRequest()
+{
+	// @@protoc_insertion_point(destructor:acoross.snakebite.messages.TurnKeyDownRequest)
+	SharedDtor();
 }
 
-void TurnKeyDownRequest::SharedDtor() {
-  if (this != default_instance_) {
-  }
+void TurnKeyDownRequest::SharedDtor()
+{
+	if (this != default_instance_)
+	{
+	}
 }
 
-void TurnKeyDownRequest::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+void TurnKeyDownRequest::SetCachedSize(int size) const
+{
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TurnKeyDownRequest::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TurnKeyDownRequest_descriptor_;
+const ::google::protobuf::Descriptor* TurnKeyDownRequest::descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return TurnKeyDownRequest_descriptor_;
 }
 
-const TurnKeyDownRequest& TurnKeyDownRequest::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  return *default_instance_;
+const TurnKeyDownRequest& TurnKeyDownRequest::default_instance()
+{
+	if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	return *default_instance_;
 }
 
 TurnKeyDownRequest* TurnKeyDownRequest::default_instance_ = NULL;
 
-TurnKeyDownRequest* TurnKeyDownRequest::New(::google::protobuf::Arena* arena) const {
-  TurnKeyDownRequest* n = new TurnKeyDownRequest;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+TurnKeyDownRequest* TurnKeyDownRequest::New(::google::protobuf::Arena* arena) const
+{
+	TurnKeyDownRequest* n = new TurnKeyDownRequest;
+	if (arena != NULL)
+	{
+		arena->Own(n);
+	}
+	return n;
 }
 
-void TurnKeyDownRequest::Clear() {
-  key_ = 0;
+void TurnKeyDownRequest::Clear()
+{
+	key_ = 0;
 }
 
 bool TurnKeyDownRequest::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
+	::google::protobuf::io::CodedInputStream* input)
+{
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.TurnKeyDownRequest)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 key = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &key_)));
+	::google::protobuf::uint32 tag;
+	// @@protoc_insertion_point(parse_start:acoross.snakebite.messages.TurnKeyDownRequest)
+	for (;;)
+	{
+		::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+		tag = p.first;
+		if (!p.second) goto handle_unusual;
+		switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag))
+		{
+			// optional int32 key = 1;
+		case 1:
+			{
+				if (tag == 8)
+				{
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &key_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectAtEnd()) goto success;
+				break;
+			}
 
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
+		default:
+			{
+			handle_unusual:
+				if (tag == 0 ||
+					::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+					::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP)
+				{
+					goto success;
+				}
+				DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+				break;
+			}
+		}
+	}
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.TurnKeyDownRequest)
-  return true;
+	// @@protoc_insertion_point(parse_success:acoross.snakebite.messages.TurnKeyDownRequest)
+	return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.TurnKeyDownRequest)
-  return false;
+	// @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.TurnKeyDownRequest)
+	return false;
 #undef DO_
 }
 
 void TurnKeyDownRequest::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.TurnKeyDownRequest)
-  // optional int32 key = 1;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->key(), output);
-  }
+	::google::protobuf::io::CodedOutputStream* output) const
+{
+	// @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.TurnKeyDownRequest)
+	// optional int32 key = 1;
+	if (this->key() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->key(), output);
+	}
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.TurnKeyDownRequest)
+	// @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.TurnKeyDownRequest)
 }
 
 ::google::protobuf::uint8* TurnKeyDownRequest::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.TurnKeyDownRequest)
-  // optional int32 key = 1;
-  if (this->key() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->key(), target);
-  }
+	::google::protobuf::uint8* target) const
+{
+	// @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.TurnKeyDownRequest)
+	// optional int32 key = 1;
+	if (this->key() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->key(), target);
+	}
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.TurnKeyDownRequest)
-  return target;
+	// @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.TurnKeyDownRequest)
+	return target;
 }
 
-int TurnKeyDownRequest::ByteSize() const {
-  int total_size = 0;
+int TurnKeyDownRequest::ByteSize() const
+{
+	int total_size = 0;
 
-  // optional int32 key = 1;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->key());
-  }
+	// optional int32 key = 1;
+	if (this->key() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->key());
+	}
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
+	return total_size;
 }
 
-void TurnKeyDownRequest::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const TurnKeyDownRequest* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const TurnKeyDownRequest>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TurnKeyDownRequest::MergeFrom(const ::google::protobuf::Message& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	const TurnKeyDownRequest* source =
+		::google::protobuf::internal::DynamicCastToGenerated<const TurnKeyDownRequest>(
+			&from);
+	if (source == NULL)
+	{
+		::google::protobuf::internal::ReflectionOps::Merge(from, this);
+	}
+	else
+	{
+		MergeFrom(*source);
+	}
 }
 
-void TurnKeyDownRequest::MergeFrom(const TurnKeyDownRequest& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.key() != 0) {
-    set_key(from.key());
-  }
+void TurnKeyDownRequest::MergeFrom(const TurnKeyDownRequest& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	if (from.key() != 0)
+	{
+		set_key(from.key());
+	}
 }
 
-void TurnKeyDownRequest::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void TurnKeyDownRequest::CopyFrom(const ::google::protobuf::Message& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-void TurnKeyDownRequest::CopyFrom(const TurnKeyDownRequest& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void TurnKeyDownRequest::CopyFrom(const TurnKeyDownRequest& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-bool TurnKeyDownRequest::IsInitialized() const {
+bool TurnKeyDownRequest::IsInitialized() const
+{
 
-  return true;
+	return true;
 }
 
-void TurnKeyDownRequest::Swap(TurnKeyDownRequest* other) {
-  if (other == this) return;
-  InternalSwap(other);
+void TurnKeyDownRequest::Swap(TurnKeyDownRequest* other)
+{
+	if (other == this) return;
+	InternalSwap(other);
 }
-void TurnKeyDownRequest::InternalSwap(TurnKeyDownRequest* other) {
-  std::swap(key_, other->key_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+void TurnKeyDownRequest::InternalSwap(TurnKeyDownRequest* other)
+{
+	std::swap(key_, other->key_);
+	_internal_metadata_.Swap(&other->_internal_metadata_);
+	std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata TurnKeyDownRequest::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TurnKeyDownRequest_descriptor_;
-  metadata.reflection = TurnKeyDownRequest_reflection_;
-  return metadata;
+::google::protobuf::Metadata TurnKeyDownRequest::GetMetadata() const
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::Metadata metadata;
+	metadata.descriptor = TurnKeyDownRequest_descriptor_;
+	metadata.reflection = TurnKeyDownRequest_reflection_;
+	return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // TurnKeyDownRequest
 
 // optional int32 key = 1;
-void TurnKeyDownRequest::clear_key() {
-  key_ = 0;
+void TurnKeyDownRequest::clear_key()
+{
+	key_ = 0;
 }
- ::google::protobuf::int32 TurnKeyDownRequest::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyDownRequest.key)
-  return key_;
+::google::protobuf::int32 TurnKeyDownRequest::key() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyDownRequest.key)
+	return key_;
 }
- void TurnKeyDownRequest::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyDownRequest.key)
+void TurnKeyDownRequest::set_key(::google::protobuf::int32 value)
+{
+
+	key_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyDownRequest.key)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2936,221 +3441,264 @@ const int TurnKeyUpRequest::kKeyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 TurnKeyUpRequest::TurnKeyUpRequest()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:acoross.snakebite.messages.TurnKeyUpRequest)
+	: ::google::protobuf::Message(), _internal_metadata_(NULL)
+{
+	SharedCtor();
+	// @@protoc_insertion_point(constructor:acoross.snakebite.messages.TurnKeyUpRequest)
 }
 
-void TurnKeyUpRequest::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
+void TurnKeyUpRequest::InitAsDefaultInstance()
+{
+	_is_default_instance_ = true;
 }
 
 TurnKeyUpRequest::TurnKeyUpRequest(const TurnKeyUpRequest& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.TurnKeyUpRequest)
+	: ::google::protobuf::Message(),
+	_internal_metadata_(NULL)
+{
+	SharedCtor();
+	MergeFrom(from);
+	// @@protoc_insertion_point(copy_constructor:acoross.snakebite.messages.TurnKeyUpRequest)
 }
 
-void TurnKeyUpRequest::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  key_ = 0;
+void TurnKeyUpRequest::SharedCtor()
+{
+	_is_default_instance_ = false;
+	_cached_size_ = 0;
+	key_ = 0;
 }
 
-TurnKeyUpRequest::~TurnKeyUpRequest() {
-  // @@protoc_insertion_point(destructor:acoross.snakebite.messages.TurnKeyUpRequest)
-  SharedDtor();
+TurnKeyUpRequest::~TurnKeyUpRequest()
+{
+	// @@protoc_insertion_point(destructor:acoross.snakebite.messages.TurnKeyUpRequest)
+	SharedDtor();
 }
 
-void TurnKeyUpRequest::SharedDtor() {
-  if (this != default_instance_) {
-  }
+void TurnKeyUpRequest::SharedDtor()
+{
+	if (this != default_instance_)
+	{
+	}
 }
 
-void TurnKeyUpRequest::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+void TurnKeyUpRequest::SetCachedSize(int size) const
+{
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TurnKeyUpRequest::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TurnKeyUpRequest_descriptor_;
+const ::google::protobuf::Descriptor* TurnKeyUpRequest::descriptor()
+{
+	protobuf_AssignDescriptorsOnce();
+	return TurnKeyUpRequest_descriptor_;
 }
 
-const TurnKeyUpRequest& TurnKeyUpRequest::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  return *default_instance_;
+const TurnKeyUpRequest& TurnKeyUpRequest::default_instance()
+{
+	if (default_instance_ == NULL) protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	return *default_instance_;
 }
 
 TurnKeyUpRequest* TurnKeyUpRequest::default_instance_ = NULL;
 
-TurnKeyUpRequest* TurnKeyUpRequest::New(::google::protobuf::Arena* arena) const {
-  TurnKeyUpRequest* n = new TurnKeyUpRequest;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
+TurnKeyUpRequest* TurnKeyUpRequest::New(::google::protobuf::Arena* arena) const
+{
+	TurnKeyUpRequest* n = new TurnKeyUpRequest;
+	if (arena != NULL)
+	{
+		arena->Own(n);
+	}
+	return n;
 }
 
-void TurnKeyUpRequest::Clear() {
-  key_ = 0;
+void TurnKeyUpRequest::Clear()
+{
+	key_ = 0;
 }
 
 bool TurnKeyUpRequest::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
+	::google::protobuf::io::CodedInputStream* input)
+{
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:acoross.snakebite.messages.TurnKeyUpRequest)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 key = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &key_)));
+	::google::protobuf::uint32 tag;
+	// @@protoc_insertion_point(parse_start:acoross.snakebite.messages.TurnKeyUpRequest)
+	for (;;)
+	{
+		::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+		tag = p.first;
+		if (!p.second) goto handle_unusual;
+		switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag))
+		{
+			// optional int32 key = 1;
+		case 1:
+			{
+				if (tag == 8)
+				{
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+						::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+							input, &key_)));
 
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
+				}
+				else
+				{
+					goto handle_unusual;
+				}
+				if (input->ExpectAtEnd()) goto success;
+				break;
+			}
 
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
+		default:
+			{
+			handle_unusual:
+				if (tag == 0 ||
+					::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+					::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP)
+				{
+					goto success;
+				}
+				DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+				break;
+			}
+		}
+	}
 success:
-  // @@protoc_insertion_point(parse_success:acoross.snakebite.messages.TurnKeyUpRequest)
-  return true;
+	// @@protoc_insertion_point(parse_success:acoross.snakebite.messages.TurnKeyUpRequest)
+	return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.TurnKeyUpRequest)
-  return false;
+	// @@protoc_insertion_point(parse_failure:acoross.snakebite.messages.TurnKeyUpRequest)
+	return false;
 #undef DO_
 }
 
 void TurnKeyUpRequest::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.TurnKeyUpRequest)
-  // optional int32 key = 1;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->key(), output);
-  }
+	::google::protobuf::io::CodedOutputStream* output) const
+{
+	// @@protoc_insertion_point(serialize_start:acoross.snakebite.messages.TurnKeyUpRequest)
+	// optional int32 key = 1;
+	if (this->key() != 0)
+	{
+		::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->key(), output);
+	}
 
-  // @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.TurnKeyUpRequest)
+	// @@protoc_insertion_point(serialize_end:acoross.snakebite.messages.TurnKeyUpRequest)
 }
 
 ::google::protobuf::uint8* TurnKeyUpRequest::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.TurnKeyUpRequest)
-  // optional int32 key = 1;
-  if (this->key() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->key(), target);
-  }
+	::google::protobuf::uint8* target) const
+{
+	// @@protoc_insertion_point(serialize_to_array_start:acoross.snakebite.messages.TurnKeyUpRequest)
+	// optional int32 key = 1;
+	if (this->key() != 0)
+	{
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->key(), target);
+	}
 
-  // @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.TurnKeyUpRequest)
-  return target;
+	// @@protoc_insertion_point(serialize_to_array_end:acoross.snakebite.messages.TurnKeyUpRequest)
+	return target;
 }
 
-int TurnKeyUpRequest::ByteSize() const {
-  int total_size = 0;
+int TurnKeyUpRequest::ByteSize() const
+{
+	int total_size = 0;
 
-  // optional int32 key = 1;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->key());
-  }
+	// optional int32 key = 1;
+	if (this->key() != 0)
+	{
+		total_size += 1 +
+			::google::protobuf::internal::WireFormatLite::Int32Size(
+				this->key());
+	}
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+	_cached_size_ = total_size;
+	GOOGLE_SAFE_CONCURRENT_WRITES_END();
+	return total_size;
 }
 
-void TurnKeyUpRequest::MergeFrom(const ::google::protobuf::Message& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const TurnKeyUpRequest* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const TurnKeyUpRequest>(
-          &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TurnKeyUpRequest::MergeFrom(const ::google::protobuf::Message& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	const TurnKeyUpRequest* source =
+		::google::protobuf::internal::DynamicCastToGenerated<const TurnKeyUpRequest>(
+			&from);
+	if (source == NULL)
+	{
+		::google::protobuf::internal::ReflectionOps::Merge(from, this);
+	}
+	else
+	{
+		MergeFrom(*source);
+	}
 }
 
-void TurnKeyUpRequest::MergeFrom(const TurnKeyUpRequest& from) {
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.key() != 0) {
-    set_key(from.key());
-  }
+void TurnKeyUpRequest::MergeFrom(const TurnKeyUpRequest& from)
+{
+	if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+	if (from.key() != 0)
+	{
+		set_key(from.key());
+	}
 }
 
-void TurnKeyUpRequest::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void TurnKeyUpRequest::CopyFrom(const ::google::protobuf::Message& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-void TurnKeyUpRequest::CopyFrom(const TurnKeyUpRequest& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+void TurnKeyUpRequest::CopyFrom(const TurnKeyUpRequest& from)
+{
+	if (&from == this) return;
+	Clear();
+	MergeFrom(from);
 }
 
-bool TurnKeyUpRequest::IsInitialized() const {
+bool TurnKeyUpRequest::IsInitialized() const
+{
 
-  return true;
+	return true;
 }
 
-void TurnKeyUpRequest::Swap(TurnKeyUpRequest* other) {
-  if (other == this) return;
-  InternalSwap(other);
+void TurnKeyUpRequest::Swap(TurnKeyUpRequest* other)
+{
+	if (other == this) return;
+	InternalSwap(other);
 }
-void TurnKeyUpRequest::InternalSwap(TurnKeyUpRequest* other) {
-  std::swap(key_, other->key_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+void TurnKeyUpRequest::InternalSwap(TurnKeyUpRequest* other)
+{
+	std::swap(key_, other->key_);
+	_internal_metadata_.Swap(&other->_internal_metadata_);
+	std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata TurnKeyUpRequest::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TurnKeyUpRequest_descriptor_;
-  metadata.reflection = TurnKeyUpRequest_reflection_;
-  return metadata;
+::google::protobuf::Metadata TurnKeyUpRequest::GetMetadata() const
+{
+	protobuf_AssignDescriptorsOnce();
+	::google::protobuf::Metadata metadata;
+	metadata.descriptor = TurnKeyUpRequest_descriptor_;
+	metadata.reflection = TurnKeyUpRequest_reflection_;
+	return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // TurnKeyUpRequest
 
 // optional int32 key = 1;
-void TurnKeyUpRequest::clear_key() {
-  key_ = 0;
+void TurnKeyUpRequest::clear_key()
+{
+	key_ = 0;
 }
- ::google::protobuf::int32 TurnKeyUpRequest::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyUpRequest.key)
-  return key_;
+::google::protobuf::int32 TurnKeyUpRequest::key() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyUpRequest.key)
+	return key_;
 }
- void TurnKeyUpRequest::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyUpRequest.key)
+void TurnKeyUpRequest::set_key(::google::protobuf::int32 value)
+{
+
+	key_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyUpRequest.key)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

@@ -11,7 +11,7 @@ namespace rpc_test {
 TestRpc::Service::Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
 	: ::acoross::rpc::RpcService(io_service, std::move(socket))
 {
-  REGISTER_SERVICE(Hello, ::acoross::rpc_test::HelloRequest, ::acoross::rpc_test::HelloReply)
+	REGISTER_SERVICE(Hello, ::acoross::rpc_test::HelloRequest, ::acoross::rpc_test::HelloReply)
 }
 
 TestRpc::Stub::Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)

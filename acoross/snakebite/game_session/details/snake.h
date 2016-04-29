@@ -5,6 +5,7 @@
 #include <functional>
 #include <string>
 
+#include <acoross/snakebite/zone_system/details/signal.h>
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "sb_zone_object.h"
 
@@ -25,12 +26,17 @@ class SnakeNode
 	: public SbZoneObject
 {
 public:
+	template <typename T>
+	using signal = boost::signals2::signal<T>;
+
+	using UpdateEventListner = SbGeoZone::ObserverT;
+
 	SnakeNode(GameSession& game_session, HandleT owner, SbColliderBase* collider, const Position2D& pos, double radius, std::string name);
 	virtual ~SnakeNode();
 
 	// snake 가 알아서 움직인다.
 	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override = 0;
-	
+
 	// snake 를 지정한 diff_vec 만큼 이동시킨다.
 	Position2D Move(const DirVector2D& diff_vec, MovingObjectContainer& container);
 
@@ -79,7 +85,7 @@ public:
 	virtual ~Snake();
 
 	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override;
-	
+
 	//@thread-safe: atomic once
 	void Die();
 
@@ -97,8 +103,8 @@ public:
 
 #pragma region key_input
 	//@atomic
-	void SetKeyDown(PlayerKey player_key) 
-	{ 
+	void SetKeyDown(PlayerKey player_key)
+	{
 		last_pk_.store(player_key);
 	}
 	void SetKeyUp(PlayerKey player_key)
@@ -109,6 +115,24 @@ public:
 	//
 #pragma endregion key_input
 
+	// reset_connection 내부의 connection.swap 이 thread-safe 하지 않을걸?
+	// 그러므로, Enter 와 Leave 는 동시에 되지 않게 주의할 것.
+	virtual void OnEnterZoneCallback(SbGeoZone& zone) override
+	{
+		zone.GetUpdateEvent().connect(update_event_relayer_);
+	}
+	virtual void OnLeaveZoneCallback(SbGeoZone& zone) override
+	{
+		if (update_event_relayer_)
+		{
+			update_event_relayer_->disconnect();
+		}
+	}
+	auto ConnectToUpdateEventRelayer(SbGeoZone::ObserverT on_update)
+	{
+		return update_event_relayer_->connect(on_update);
+	}
+
 private:
 	Degree angle_; // degree
 	double velocity_; // UNIT/ms
@@ -118,6 +142,8 @@ private:
 
 	std::atomic<bool> isAlive_{ true };
 	EventHandler onDie_;
+
+	std::shared_ptr<SbGeoZone::UpdateEventRelayer> update_event_relayer_;
 };
 using SnakeSP = std::shared_ptr<Snake>;
 using SnakeWP = std::weak_ptr<Snake>;

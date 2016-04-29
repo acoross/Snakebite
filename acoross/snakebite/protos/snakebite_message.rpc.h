@@ -15,72 +15,74 @@ namespace acoross {
 namespace snakebite {
 namespace messages {
 
-class SC_PushService final {
- public:
-  enum Protocol
-  {
-    UpdateGameObjects,
-    ResetPlayer,
-  };
+class SC_PushService final
+{
+public:
+	enum Protocol
+	{
+		UpdateGameObjects,
+		ResetPlayer,
+	};
 
-  class Service : public ::acoross::rpc::RpcService 
-  {
-  public:
-    Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
-    virtual ~Service() {}
+	class Service : public ::acoross::rpc::RpcService
+	{
+	public:
+		Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
+		virtual ~Service() {}
 
-  private:
-    DEF_SERVICE(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
-    DEF_SERVICE(ResetPlayer, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::VoidReply)
+	private:
+		DEF_SERVICE(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
+			DEF_SERVICE(ResetPlayer, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::VoidReply)
 
-  };
+	};
 
-  class Stub : public ::acoross::rpc::RpcStub
-  {
-  public:
-    Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
-    virtual ~Stub() {}
-    DEF_STUB(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
-    DEF_STUB(ResetPlayer, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::VoidReply)
-  };
+	class Stub : public ::acoross::rpc::RpcStub
+	{
+	public:
+		Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
+		virtual ~Stub() {}
+		DEF_STUB(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
+			DEF_STUB(ResetPlayer, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::VoidReply)
+	};
 
 };
 
 
-class SnakebiteService final {
- public:
-  enum Protocol
-  {
-    RequestZoneInfo,
-    InitPlayer,
-    SetKeyDown,
-    SetKeyUp,
-  };
+class SnakebiteService final
+{
+public:
+	enum Protocol
+	{
+		RequestZoneInfo,
+		InitPlayer,
+		SetKeyDown,
+		SetKeyUp,
+	};
 
-  class Service : public ::acoross::rpc::RpcService 
-  {
-  public:
-    Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
-    virtual ~Service() {}
+	class Service : public ::acoross::rpc::RpcService
+	{
+	public:
+		Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
+		virtual ~Service() {}
 
-  private:
-    DEF_SERVICE(RequestZoneInfo, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::ZoneInfoReply)
-    DEF_SERVICE(InitPlayer, ::acoross::snakebite::messages::InitPlayerSnakeRequest, ::acoross::snakebite::messages::InitPlayerSnakeReply)
-    DEF_SERVICE(SetKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
-    DEF_SERVICE(SetKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)
+	private:
+		DEF_SERVICE(RequestZoneInfo, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::ZoneInfoReply)
+			DEF_SERVICE(InitPlayer, ::acoross::snakebite::messages::InitPlayerSnakeRequest, ::acoross::snakebite::messages::InitPlayerSnakeReply)
+			DEF_SERVICE(SetKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
+			DEF_SERVICE(SetKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)
 
-  };
+	};
 
-  class Stub : public ::acoross::rpc::RpcStub
-  {
-  public:
-    Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
-    virtual ~Stub() {}
-    DEF_STUB(RequestZoneInfo, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::ZoneInfoReply)
-    DEF_STUB(InitPlayer, ::acoross::snakebite::messages::InitPlayerSnakeRequest, ::acoross::snakebite::messages::InitPlayerSnakeReply)
-    DEF_STUB(SetKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
-    DEF_STUB(SetKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)
-  };
+	class Stub : public ::acoross::rpc::RpcStub
+	{
+	public:
+		Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
+		virtual ~Stub() {}
+		DEF_STUB(RequestZoneInfo, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::ZoneInfoReply)
+			DEF_STUB(InitPlayer, ::acoross::snakebite::messages::InitPlayerSnakeRequest, ::acoross::snakebite::messages::InitPlayerSnakeReply)
+			DEF_STUB(SetKeyDown, ::acoross::snakebite::messages::TurnKeyDownRequest, ::acoross::snakebite::messages::VoidReply)
+			DEF_STUB(SetKeyUp, ::acoross::snakebite::messages::TurnKeyUpRequest, ::acoross::snakebite::messages::VoidReply)
+	};
 
 };
 

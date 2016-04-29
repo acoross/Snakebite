@@ -49,11 +49,12 @@ class UpdateGameObjectsEvent;
 class VoidReply;
 class ZoneInfoReply;
 
-enum ObjType {
-  Snake = 0,
-  Apple = 1,
-  ObjType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  ObjType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+enum ObjType
+{
+	Snake = 0,
+	Apple = 1,
+	ObjType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+	ObjType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ObjType_IsValid(int value);
 const ObjType ObjType_MIN = Snake;
@@ -61,818 +62,856 @@ const ObjType ObjType_MAX = Apple;
 const int ObjType_ARRAYSIZE = ObjType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ObjType_descriptor();
-inline const ::std::string& ObjType_Name(ObjType value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    ObjType_descriptor(), value);
+inline const ::std::string& ObjType_Name(ObjType value)
+{
+	return ::google::protobuf::internal::NameOfEnum(
+		ObjType_descriptor(), value);
 }
 inline bool ObjType_Parse(
-    const ::std::string& name, ObjType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<ObjType>(
-    ObjType_descriptor(), name, value);
+	const ::std::string& name, ObjType* value)
+{
+	return ::google::protobuf::internal::ParseNamedEnum<ObjType>(
+		ObjType_descriptor(), name, value);
 }
 // ===================================================================
 
-class MovingObject : public ::google::protobuf::Message {
- public:
-  MovingObject();
-  virtual ~MovingObject();
+class MovingObject : public ::google::protobuf::Message
+{
+public:
+	MovingObject();
+	virtual ~MovingObject();
 
-  MovingObject(const MovingObject& from);
+	MovingObject(const MovingObject& from);
 
-  inline MovingObject& operator=(const MovingObject& from) {
-    CopyFrom(from);
-    return *this;
-  }
+	inline MovingObject& operator=(const MovingObject& from)
+	{
+		CopyFrom(from);
+		return *this;
+	}
 
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MovingObject& default_instance();
+	static const ::google::protobuf::Descriptor* descriptor();
+	static const MovingObject& default_instance();
 
-  void Swap(MovingObject* other);
+	void Swap(MovingObject* other);
 
-  // implements Message ----------------------------------------------
+	// implements Message ----------------------------------------------
 
-  inline MovingObject* New() const { return New(NULL); }
+	inline MovingObject* New() const { return New(NULL); }
 
-  MovingObject* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MovingObject& from);
-  void MergeFrom(const MovingObject& from);
-  void Clear();
-  bool IsInitialized() const;
+	MovingObject* New(::google::protobuf::Arena* arena) const;
+	void CopyFrom(const ::google::protobuf::Message& from);
+	void MergeFrom(const ::google::protobuf::Message& from);
+	void CopyFrom(const MovingObject& from);
+	void MergeFrom(const MovingObject& from);
+	void Clear();
+	bool IsInitialized() const;
 
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(MovingObject* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
+	int ByteSize() const;
+	bool MergePartialFromCodedStream(
+		::google::protobuf::io::CodedInputStream* input);
+	void SerializeWithCachedSizes(
+		::google::protobuf::io::CodedOutputStream* output) const;
+	::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+	int GetCachedSize() const { return _cached_size_; }
+private:
+	void SharedCtor();
+	void SharedDtor();
+	void SetCachedSize(int size) const;
+	void InternalSwap(MovingObject* other);
+private:
+	inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+	{
+		return _internal_metadata_.arena();
+	}
+	inline void* MaybeArenaPtr() const
+	{
+		return _internal_metadata_.raw_arena_ptr();
+	}
+public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+	::google::protobuf::Metadata GetMetadata() const;
 
-  // nested types ----------------------------------------------------
+	// nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
+	// accessors -------------------------------------------------------
 
-  // optional double x = 1;
-  void clear_x();
-  static const int kXFieldNumber = 1;
-  double x() const;
-  void set_x(double value);
+	// optional double x = 1;
+	void clear_x();
+	static const int kXFieldNumber = 1;
+	double x() const;
+	void set_x(double value);
 
-  // optional double y = 2;
-  void clear_y();
-  static const int kYFieldNumber = 2;
-  double y() const;
-  void set_y(double value);
+	// optional double y = 2;
+	void clear_y();
+	static const int kYFieldNumber = 2;
+	double y() const;
+	void set_y(double value);
 
-  // optional double radius = 3;
-  void clear_radius();
-  static const int kRadiusFieldNumber = 3;
-  double radius() const;
-  void set_radius(double value);
+	// optional double radius = 3;
+	void clear_radius();
+	static const int kRadiusFieldNumber = 3;
+	double radius() const;
+	void set_radius(double value);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.MovingObject)
- private:
+	// @@protoc_insertion_point(class_scope:acoross.snakebite.messages.MovingObject)
+private:
 
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  double x_;
-  double y_;
-  double radius_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	bool _is_default_instance_;
+	double x_;
+	double y_;
+	double radius_;
+	mutable int _cached_size_;
+	friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
-  void InitAsDefaultInstance();
-  static MovingObject* default_instance_;
+	void InitAsDefaultInstance();
+	static MovingObject* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class GameObjectClone : public ::google::protobuf::Message {
- public:
-  GameObjectClone();
-  virtual ~GameObjectClone();
+class GameObjectClone : public ::google::protobuf::Message
+{
+public:
+	GameObjectClone();
+	virtual ~GameObjectClone();
 
-  GameObjectClone(const GameObjectClone& from);
+	GameObjectClone(const GameObjectClone& from);
 
-  inline GameObjectClone& operator=(const GameObjectClone& from) {
-    CopyFrom(from);
-    return *this;
-  }
+	inline GameObjectClone& operator=(const GameObjectClone& from)
+	{
+		CopyFrom(from);
+		return *this;
+	}
 
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const GameObjectClone& default_instance();
+	static const ::google::protobuf::Descriptor* descriptor();
+	static const GameObjectClone& default_instance();
 
-  void Swap(GameObjectClone* other);
+	void Swap(GameObjectClone* other);
 
-  // implements Message ----------------------------------------------
+	// implements Message ----------------------------------------------
 
-  inline GameObjectClone* New() const { return New(NULL); }
+	inline GameObjectClone* New() const { return New(NULL); }
 
-  GameObjectClone* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const GameObjectClone& from);
-  void MergeFrom(const GameObjectClone& from);
-  void Clear();
-  bool IsInitialized() const;
+	GameObjectClone* New(::google::protobuf::Arena* arena) const;
+	void CopyFrom(const ::google::protobuf::Message& from);
+	void MergeFrom(const ::google::protobuf::Message& from);
+	void CopyFrom(const GameObjectClone& from);
+	void MergeFrom(const GameObjectClone& from);
+	void Clear();
+	bool IsInitialized() const;
 
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(GameObjectClone* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
+	int ByteSize() const;
+	bool MergePartialFromCodedStream(
+		::google::protobuf::io::CodedInputStream* input);
+	void SerializeWithCachedSizes(
+		::google::protobuf::io::CodedOutputStream* output) const;
+	::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+	int GetCachedSize() const { return _cached_size_; }
+private:
+	void SharedCtor();
+	void SharedDtor();
+	void SetCachedSize(int size) const;
+	void InternalSwap(GameObjectClone* other);
+private:
+	inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+	{
+		return _internal_metadata_.arena();
+	}
+	inline void* MaybeArenaPtr() const
+	{
+		return _internal_metadata_.raw_arena_ptr();
+	}
+public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+	::google::protobuf::Metadata GetMetadata() const;
 
-  // nested types ----------------------------------------------------
+	// nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
+	// accessors -------------------------------------------------------
 
-  // optional int32 clone_type = 1;
-  void clear_clone_type();
-  static const int kCloneTypeFieldNumber = 1;
-  ::google::protobuf::int32 clone_type() const;
-  void set_clone_type(::google::protobuf::int32 value);
+	// optional int32 clone_type = 1;
+	void clear_clone_type();
+	static const int kCloneTypeFieldNumber = 1;
+	::google::protobuf::int32 clone_type() const;
+	void set_clone_type(::google::protobuf::int32 value);
 
-  // optional string obj_name = 2;
-  void clear_obj_name();
-  static const int kObjNameFieldNumber = 2;
-  const ::std::string& obj_name() const;
-  void set_obj_name(const ::std::string& value);
-  void set_obj_name(const char* value);
-  void set_obj_name(const char* value, size_t size);
-  ::std::string* mutable_obj_name();
-  ::std::string* release_obj_name();
-  void set_allocated_obj_name(::std::string* obj_name);
+	// optional string obj_name = 2;
+	void clear_obj_name();
+	static const int kObjNameFieldNumber = 2;
+	const ::std::string& obj_name() const;
+	void set_obj_name(const ::std::string& value);
+	void set_obj_name(const char* value);
+	void set_obj_name(const char* value, size_t size);
+	::std::string* mutable_obj_name();
+	::std::string* release_obj_name();
+	void set_allocated_obj_name(::std::string* obj_name);
 
-  // optional int64 handle = 3;
-  void clear_handle();
-  static const int kHandleFieldNumber = 3;
-  ::google::protobuf::int64 handle() const;
-  void set_handle(::google::protobuf::int64 value);
+	// optional int64 handle = 3;
+	void clear_handle();
+	static const int kHandleFieldNumber = 3;
+	::google::protobuf::int64 handle() const;
+	void set_handle(::google::protobuf::int64 value);
 
-  // optional .acoross.snakebite.messages.MovingObject head = 4;
-  bool has_head() const;
-  void clear_head();
-  static const int kHeadFieldNumber = 4;
-  const ::acoross::snakebite::messages::MovingObject& head() const;
-  ::acoross::snakebite::messages::MovingObject* mutable_head();
-  ::acoross::snakebite::messages::MovingObject* release_head();
-  void set_allocated_head(::acoross::snakebite::messages::MovingObject* head);
+	// optional .acoross.snakebite.messages.MovingObject head = 4;
+	bool has_head() const;
+	void clear_head();
+	static const int kHeadFieldNumber = 4;
+	const ::acoross::snakebite::messages::MovingObject& head() const;
+	::acoross::snakebite::messages::MovingObject* mutable_head();
+	::acoross::snakebite::messages::MovingObject* release_head();
+	void set_allocated_head(::acoross::snakebite::messages::MovingObject* head);
 
-  // repeated .acoross.snakebite.messages.MovingObject body = 5;
-  int body_size() const;
-  void clear_body();
-  static const int kBodyFieldNumber = 5;
-  const ::acoross::snakebite::messages::MovingObject& body(int index) const;
-  ::acoross::snakebite::messages::MovingObject* mutable_body(int index);
-  ::acoross::snakebite::messages::MovingObject* add_body();
-  ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject >*
-      mutable_body();
-  const ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject >&
-      body() const;
+	// repeated .acoross.snakebite.messages.MovingObject body = 5;
+	int body_size() const;
+	void clear_body();
+	static const int kBodyFieldNumber = 5;
+	const ::acoross::snakebite::messages::MovingObject& body(int index) const;
+	::acoross::snakebite::messages::MovingObject* mutable_body(int index);
+	::acoross::snakebite::messages::MovingObject* add_body();
+	::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject >*
+		mutable_body();
+	const ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject >&
+		body() const;
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.GameObjectClone)
- private:
+	// @@protoc_insertion_point(class_scope:acoross.snakebite.messages.GameObjectClone)
+private:
 
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::internal::ArenaStringPtr obj_name_;
-  ::google::protobuf::int64 handle_;
-  ::acoross::snakebite::messages::MovingObject* head_;
-  ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject > body_;
-  ::google::protobuf::int32 clone_type_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	bool _is_default_instance_;
+	::google::protobuf::internal::ArenaStringPtr obj_name_;
+	::google::protobuf::int64 handle_;
+	::acoross::snakebite::messages::MovingObject* head_;
+	::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject > body_;
+	::google::protobuf::int32 clone_type_;
+	mutable int _cached_size_;
+	friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
-  void InitAsDefaultInstance();
-  static GameObjectClone* default_instance_;
+	void InitAsDefaultInstance();
+	static GameObjectClone* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class UpdateGameObjectsEvent : public ::google::protobuf::Message {
- public:
-  UpdateGameObjectsEvent();
-  virtual ~UpdateGameObjectsEvent();
+class UpdateGameObjectsEvent : public ::google::protobuf::Message
+{
+public:
+	UpdateGameObjectsEvent();
+	virtual ~UpdateGameObjectsEvent();
 
-  UpdateGameObjectsEvent(const UpdateGameObjectsEvent& from);
+	UpdateGameObjectsEvent(const UpdateGameObjectsEvent& from);
 
-  inline UpdateGameObjectsEvent& operator=(const UpdateGameObjectsEvent& from) {
-    CopyFrom(from);
-    return *this;
-  }
+	inline UpdateGameObjectsEvent& operator=(const UpdateGameObjectsEvent& from)
+	{
+		CopyFrom(from);
+		return *this;
+	}
 
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const UpdateGameObjectsEvent& default_instance();
+	static const ::google::protobuf::Descriptor* descriptor();
+	static const UpdateGameObjectsEvent& default_instance();
 
-  void Swap(UpdateGameObjectsEvent* other);
+	void Swap(UpdateGameObjectsEvent* other);
 
-  // implements Message ----------------------------------------------
+	// implements Message ----------------------------------------------
 
-  inline UpdateGameObjectsEvent* New() const { return New(NULL); }
+	inline UpdateGameObjectsEvent* New() const { return New(NULL); }
 
-  UpdateGameObjectsEvent* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const UpdateGameObjectsEvent& from);
-  void MergeFrom(const UpdateGameObjectsEvent& from);
-  void Clear();
-  bool IsInitialized() const;
+	UpdateGameObjectsEvent* New(::google::protobuf::Arena* arena) const;
+	void CopyFrom(const ::google::protobuf::Message& from);
+	void MergeFrom(const ::google::protobuf::Message& from);
+	void CopyFrom(const UpdateGameObjectsEvent& from);
+	void MergeFrom(const UpdateGameObjectsEvent& from);
+	void Clear();
+	bool IsInitialized() const;
 
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(UpdateGameObjectsEvent* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
+	int ByteSize() const;
+	bool MergePartialFromCodedStream(
+		::google::protobuf::io::CodedInputStream* input);
+	void SerializeWithCachedSizes(
+		::google::protobuf::io::CodedOutputStream* output) const;
+	::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+	int GetCachedSize() const { return _cached_size_; }
+private:
+	void SharedCtor();
+	void SharedDtor();
+	void SetCachedSize(int size) const;
+	void InternalSwap(UpdateGameObjectsEvent* other);
+private:
+	inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+	{
+		return _internal_metadata_.arena();
+	}
+	inline void* MaybeArenaPtr() const
+	{
+		return _internal_metadata_.raw_arena_ptr();
+	}
+public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+	::google::protobuf::Metadata GetMetadata() const;
 
-  // nested types ----------------------------------------------------
+	// nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
+	// accessors -------------------------------------------------------
 
-  // optional int32 idx_x = 1;
-  void clear_idx_x();
-  static const int kIdxXFieldNumber = 1;
-  ::google::protobuf::int32 idx_x() const;
-  void set_idx_x(::google::protobuf::int32 value);
+	// optional int32 idx_x = 1;
+	void clear_idx_x();
+	static const int kIdxXFieldNumber = 1;
+	::google::protobuf::int32 idx_x() const;
+	void set_idx_x(::google::protobuf::int32 value);
 
-  // optional int32 idx_y = 2;
-  void clear_idx_y();
-  static const int kIdxYFieldNumber = 2;
-  ::google::protobuf::int32 idx_y() const;
-  void set_idx_y(::google::protobuf::int32 value);
+	// optional int32 idx_y = 2;
+	void clear_idx_y();
+	static const int kIdxYFieldNumber = 2;
+	::google::protobuf::int32 idx_y() const;
+	void set_idx_y(::google::protobuf::int32 value);
 
-  // repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
-  int clone_size() const;
-  void clear_clone();
-  static const int kCloneFieldNumber = 3;
-  const ::acoross::snakebite::messages::GameObjectClone& clone(int index) const;
-  ::acoross::snakebite::messages::GameObjectClone* mutable_clone(int index);
-  ::acoross::snakebite::messages::GameObjectClone* add_clone();
-  ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone >*
-      mutable_clone();
-  const ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone >&
-      clone() const;
+	// repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
+	int clone_size() const;
+	void clear_clone();
+	static const int kCloneFieldNumber = 3;
+	const ::acoross::snakebite::messages::GameObjectClone& clone(int index) const;
+	::acoross::snakebite::messages::GameObjectClone* mutable_clone(int index);
+	::acoross::snakebite::messages::GameObjectClone* add_clone();
+	::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone >*
+		mutable_clone();
+	const ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone >&
+		clone() const;
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.UpdateGameObjectsEvent)
- private:
+	// @@protoc_insertion_point(class_scope:acoross.snakebite.messages.UpdateGameObjectsEvent)
+private:
 
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::int32 idx_x_;
-  ::google::protobuf::int32 idx_y_;
-  ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone > clone_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	bool _is_default_instance_;
+	::google::protobuf::int32 idx_x_;
+	::google::protobuf::int32 idx_y_;
+	::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone > clone_;
+	mutable int _cached_size_;
+	friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
-  void InitAsDefaultInstance();
-  static UpdateGameObjectsEvent* default_instance_;
+	void InitAsDefaultInstance();
+	static UpdateGameObjectsEvent* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class VoidReply : public ::google::protobuf::Message {
- public:
-  VoidReply();
-  virtual ~VoidReply();
+class VoidReply : public ::google::protobuf::Message
+{
+public:
+	VoidReply();
+	virtual ~VoidReply();
 
-  VoidReply(const VoidReply& from);
+	VoidReply(const VoidReply& from);
 
-  inline VoidReply& operator=(const VoidReply& from) {
-    CopyFrom(from);
-    return *this;
-  }
+	inline VoidReply& operator=(const VoidReply& from)
+	{
+		CopyFrom(from);
+		return *this;
+	}
 
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const VoidReply& default_instance();
+	static const ::google::protobuf::Descriptor* descriptor();
+	static const VoidReply& default_instance();
 
-  void Swap(VoidReply* other);
+	void Swap(VoidReply* other);
 
-  // implements Message ----------------------------------------------
+	// implements Message ----------------------------------------------
 
-  inline VoidReply* New() const { return New(NULL); }
+	inline VoidReply* New() const { return New(NULL); }
 
-  VoidReply* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const VoidReply& from);
-  void MergeFrom(const VoidReply& from);
-  void Clear();
-  bool IsInitialized() const;
+	VoidReply* New(::google::protobuf::Arena* arena) const;
+	void CopyFrom(const ::google::protobuf::Message& from);
+	void MergeFrom(const ::google::protobuf::Message& from);
+	void CopyFrom(const VoidReply& from);
+	void MergeFrom(const VoidReply& from);
+	void Clear();
+	bool IsInitialized() const;
 
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(VoidReply* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
+	int ByteSize() const;
+	bool MergePartialFromCodedStream(
+		::google::protobuf::io::CodedInputStream* input);
+	void SerializeWithCachedSizes(
+		::google::protobuf::io::CodedOutputStream* output) const;
+	::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+	int GetCachedSize() const { return _cached_size_; }
+private:
+	void SharedCtor();
+	void SharedDtor();
+	void SetCachedSize(int size) const;
+	void InternalSwap(VoidReply* other);
+private:
+	inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+	{
+		return _internal_metadata_.arena();
+	}
+	inline void* MaybeArenaPtr() const
+	{
+		return _internal_metadata_.raw_arena_ptr();
+	}
+public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+	::google::protobuf::Metadata GetMetadata() const;
 
-  // nested types ----------------------------------------------------
+	// nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
+	// accessors -------------------------------------------------------
 
-  // optional int32 err = 1;
-  void clear_err();
-  static const int kErrFieldNumber = 1;
-  ::google::protobuf::int32 err() const;
-  void set_err(::google::protobuf::int32 value);
+	// optional int32 err = 1;
+	void clear_err();
+	static const int kErrFieldNumber = 1;
+	::google::protobuf::int32 err() const;
+	void set_err(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.VoidReply)
- private:
+	// @@protoc_insertion_point(class_scope:acoross.snakebite.messages.VoidReply)
+private:
 
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::int32 err_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	bool _is_default_instance_;
+	::google::protobuf::int32 err_;
+	mutable int _cached_size_;
+	friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
-  void InitAsDefaultInstance();
-  static VoidReply* default_instance_;
+	void InitAsDefaultInstance();
+	static VoidReply* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class ZoneInfoReply : public ::google::protobuf::Message {
- public:
-  ZoneInfoReply();
-  virtual ~ZoneInfoReply();
+class ZoneInfoReply : public ::google::protobuf::Message
+{
+public:
+	ZoneInfoReply();
+	virtual ~ZoneInfoReply();
 
-  ZoneInfoReply(const ZoneInfoReply& from);
+	ZoneInfoReply(const ZoneInfoReply& from);
 
-  inline ZoneInfoReply& operator=(const ZoneInfoReply& from) {
-    CopyFrom(from);
-    return *this;
-  }
+	inline ZoneInfoReply& operator=(const ZoneInfoReply& from)
+	{
+		CopyFrom(from);
+		return *this;
+	}
 
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const ZoneInfoReply& default_instance();
+	static const ::google::protobuf::Descriptor* descriptor();
+	static const ZoneInfoReply& default_instance();
 
-  void Swap(ZoneInfoReply* other);
+	void Swap(ZoneInfoReply* other);
 
-  // implements Message ----------------------------------------------
+	// implements Message ----------------------------------------------
 
-  inline ZoneInfoReply* New() const { return New(NULL); }
+	inline ZoneInfoReply* New() const { return New(NULL); }
 
-  ZoneInfoReply* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const ZoneInfoReply& from);
-  void MergeFrom(const ZoneInfoReply& from);
-  void Clear();
-  bool IsInitialized() const;
+	ZoneInfoReply* New(::google::protobuf::Arena* arena) const;
+	void CopyFrom(const ::google::protobuf::Message& from);
+	void MergeFrom(const ::google::protobuf::Message& from);
+	void CopyFrom(const ZoneInfoReply& from);
+	void MergeFrom(const ZoneInfoReply& from);
+	void Clear();
+	bool IsInitialized() const;
 
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(ZoneInfoReply* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
+	int ByteSize() const;
+	bool MergePartialFromCodedStream(
+		::google::protobuf::io::CodedInputStream* input);
+	void SerializeWithCachedSizes(
+		::google::protobuf::io::CodedOutputStream* output) const;
+	::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+	int GetCachedSize() const { return _cached_size_; }
+private:
+	void SharedCtor();
+	void SharedDtor();
+	void SetCachedSize(int size) const;
+	void InternalSwap(ZoneInfoReply* other);
+private:
+	inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+	{
+		return _internal_metadata_.arena();
+	}
+	inline void* MaybeArenaPtr() const
+	{
+		return _internal_metadata_.raw_arena_ptr();
+	}
+public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+	::google::protobuf::Metadata GetMetadata() const;
 
-  // nested types ----------------------------------------------------
+	// nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
+	// accessors -------------------------------------------------------
 
-  // optional int32 height = 1;
-  void clear_height();
-  static const int kHeightFieldNumber = 1;
-  ::google::protobuf::int32 height() const;
-  void set_height(::google::protobuf::int32 value);
+	// optional int32 height = 1;
+	void clear_height();
+	static const int kHeightFieldNumber = 1;
+	::google::protobuf::int32 height() const;
+	void set_height(::google::protobuf::int32 value);
 
-  // optional int32 width = 2;
-  void clear_width();
-  static const int kWidthFieldNumber = 2;
-  ::google::protobuf::int32 width() const;
-  void set_width(::google::protobuf::int32 value);
+	// optional int32 width = 2;
+	void clear_width();
+	static const int kWidthFieldNumber = 2;
+	::google::protobuf::int32 width() const;
+	void set_width(::google::protobuf::int32 value);
 
-  // optional int32 limit_idx_x = 3;
-  void clear_limit_idx_x();
-  static const int kLimitIdxXFieldNumber = 3;
-  ::google::protobuf::int32 limit_idx_x() const;
-  void set_limit_idx_x(::google::protobuf::int32 value);
+	// optional int32 limit_idx_x = 3;
+	void clear_limit_idx_x();
+	static const int kLimitIdxXFieldNumber = 3;
+	::google::protobuf::int32 limit_idx_x() const;
+	void set_limit_idx_x(::google::protobuf::int32 value);
 
-  // optional int32 limit_idx_y = 4;
-  void clear_limit_idx_y();
-  static const int kLimitIdxYFieldNumber = 4;
-  ::google::protobuf::int32 limit_idx_y() const;
-  void set_limit_idx_y(::google::protobuf::int32 value);
+	// optional int32 limit_idx_y = 4;
+	void clear_limit_idx_y();
+	static const int kLimitIdxYFieldNumber = 4;
+	::google::protobuf::int32 limit_idx_y() const;
+	void set_limit_idx_y(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.ZoneInfoReply)
- private:
+	// @@protoc_insertion_point(class_scope:acoross.snakebite.messages.ZoneInfoReply)
+private:
 
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::int32 height_;
-  ::google::protobuf::int32 width_;
-  ::google::protobuf::int32 limit_idx_x_;
-  ::google::protobuf::int32 limit_idx_y_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	bool _is_default_instance_;
+	::google::protobuf::int32 height_;
+	::google::protobuf::int32 width_;
+	::google::protobuf::int32 limit_idx_x_;
+	::google::protobuf::int32 limit_idx_y_;
+	mutable int _cached_size_;
+	friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
-  void InitAsDefaultInstance();
-  static ZoneInfoReply* default_instance_;
+	void InitAsDefaultInstance();
+	static ZoneInfoReply* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class InitPlayerSnakeRequest : public ::google::protobuf::Message {
- public:
-  InitPlayerSnakeRequest();
-  virtual ~InitPlayerSnakeRequest();
+class InitPlayerSnakeRequest : public ::google::protobuf::Message
+{
+public:
+	InitPlayerSnakeRequest();
+	virtual ~InitPlayerSnakeRequest();
 
-  InitPlayerSnakeRequest(const InitPlayerSnakeRequest& from);
+	InitPlayerSnakeRequest(const InitPlayerSnakeRequest& from);
 
-  inline InitPlayerSnakeRequest& operator=(const InitPlayerSnakeRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
+	inline InitPlayerSnakeRequest& operator=(const InitPlayerSnakeRequest& from)
+	{
+		CopyFrom(from);
+		return *this;
+	}
 
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const InitPlayerSnakeRequest& default_instance();
+	static const ::google::protobuf::Descriptor* descriptor();
+	static const InitPlayerSnakeRequest& default_instance();
 
-  void Swap(InitPlayerSnakeRequest* other);
+	void Swap(InitPlayerSnakeRequest* other);
 
-  // implements Message ----------------------------------------------
+	// implements Message ----------------------------------------------
 
-  inline InitPlayerSnakeRequest* New() const { return New(NULL); }
+	inline InitPlayerSnakeRequest* New() const { return New(NULL); }
 
-  InitPlayerSnakeRequest* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const InitPlayerSnakeRequest& from);
-  void MergeFrom(const InitPlayerSnakeRequest& from);
-  void Clear();
-  bool IsInitialized() const;
+	InitPlayerSnakeRequest* New(::google::protobuf::Arena* arena) const;
+	void CopyFrom(const ::google::protobuf::Message& from);
+	void MergeFrom(const ::google::protobuf::Message& from);
+	void CopyFrom(const InitPlayerSnakeRequest& from);
+	void MergeFrom(const InitPlayerSnakeRequest& from);
+	void Clear();
+	bool IsInitialized() const;
 
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(InitPlayerSnakeRequest* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
+	int ByteSize() const;
+	bool MergePartialFromCodedStream(
+		::google::protobuf::io::CodedInputStream* input);
+	void SerializeWithCachedSizes(
+		::google::protobuf::io::CodedOutputStream* output) const;
+	::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+	int GetCachedSize() const { return _cached_size_; }
+private:
+	void SharedCtor();
+	void SharedDtor();
+	void SetCachedSize(int size) const;
+	void InternalSwap(InitPlayerSnakeRequest* other);
+private:
+	inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+	{
+		return _internal_metadata_.arena();
+	}
+	inline void* MaybeArenaPtr() const
+	{
+		return _internal_metadata_.raw_arena_ptr();
+	}
+public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+	::google::protobuf::Metadata GetMetadata() const;
 
-  // nested types ----------------------------------------------------
+	// nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
+	// accessors -------------------------------------------------------
 
-  // optional string name = 1;
-  void clear_name();
-  static const int kNameFieldNumber = 1;
-  const ::std::string& name() const;
-  void set_name(const ::std::string& value);
-  void set_name(const char* value);
-  void set_name(const char* value, size_t size);
-  ::std::string* mutable_name();
-  ::std::string* release_name();
-  void set_allocated_name(::std::string* name);
+	// optional string name = 1;
+	void clear_name();
+	static const int kNameFieldNumber = 1;
+	const ::std::string& name() const;
+	void set_name(const ::std::string& value);
+	void set_name(const char* value);
+	void set_name(const char* value, size_t size);
+	::std::string* mutable_name();
+	::std::string* release_name();
+	void set_allocated_name(::std::string* name);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.InitPlayerSnakeRequest)
- private:
+	// @@protoc_insertion_point(class_scope:acoross.snakebite.messages.InitPlayerSnakeRequest)
+private:
 
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::internal::ArenaStringPtr name_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	bool _is_default_instance_;
+	::google::protobuf::internal::ArenaStringPtr name_;
+	mutable int _cached_size_;
+	friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
-  void InitAsDefaultInstance();
-  static InitPlayerSnakeRequest* default_instance_;
+	void InitAsDefaultInstance();
+	static InitPlayerSnakeRequest* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class InitPlayerSnakeReply : public ::google::protobuf::Message {
- public:
-  InitPlayerSnakeReply();
-  virtual ~InitPlayerSnakeReply();
+class InitPlayerSnakeReply : public ::google::protobuf::Message
+{
+public:
+	InitPlayerSnakeReply();
+	virtual ~InitPlayerSnakeReply();
 
-  InitPlayerSnakeReply(const InitPlayerSnakeReply& from);
+	InitPlayerSnakeReply(const InitPlayerSnakeReply& from);
 
-  inline InitPlayerSnakeReply& operator=(const InitPlayerSnakeReply& from) {
-    CopyFrom(from);
-    return *this;
-  }
+	inline InitPlayerSnakeReply& operator=(const InitPlayerSnakeReply& from)
+	{
+		CopyFrom(from);
+		return *this;
+	}
 
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const InitPlayerSnakeReply& default_instance();
+	static const ::google::protobuf::Descriptor* descriptor();
+	static const InitPlayerSnakeReply& default_instance();
 
-  void Swap(InitPlayerSnakeReply* other);
+	void Swap(InitPlayerSnakeReply* other);
 
-  // implements Message ----------------------------------------------
+	// implements Message ----------------------------------------------
 
-  inline InitPlayerSnakeReply* New() const { return New(NULL); }
+	inline InitPlayerSnakeReply* New() const { return New(NULL); }
 
-  InitPlayerSnakeReply* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const InitPlayerSnakeReply& from);
-  void MergeFrom(const InitPlayerSnakeReply& from);
-  void Clear();
-  bool IsInitialized() const;
+	InitPlayerSnakeReply* New(::google::protobuf::Arena* arena) const;
+	void CopyFrom(const ::google::protobuf::Message& from);
+	void MergeFrom(const ::google::protobuf::Message& from);
+	void CopyFrom(const InitPlayerSnakeReply& from);
+	void MergeFrom(const InitPlayerSnakeReply& from);
+	void Clear();
+	bool IsInitialized() const;
 
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(InitPlayerSnakeReply* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
+	int ByteSize() const;
+	bool MergePartialFromCodedStream(
+		::google::protobuf::io::CodedInputStream* input);
+	void SerializeWithCachedSizes(
+		::google::protobuf::io::CodedOutputStream* output) const;
+	::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+	int GetCachedSize() const { return _cached_size_; }
+private:
+	void SharedCtor();
+	void SharedDtor();
+	void SetCachedSize(int size) const;
+	void InternalSwap(InitPlayerSnakeReply* other);
+private:
+	inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+	{
+		return _internal_metadata_.arena();
+	}
+	inline void* MaybeArenaPtr() const
+	{
+		return _internal_metadata_.raw_arena_ptr();
+	}
+public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+	::google::protobuf::Metadata GetMetadata() const;
 
-  // nested types ----------------------------------------------------
+	// nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
+	// accessors -------------------------------------------------------
 
-  // optional int64 handle = 1;
-  void clear_handle();
-  static const int kHandleFieldNumber = 1;
-  ::google::protobuf::int64 handle() const;
-  void set_handle(::google::protobuf::int64 value);
+	// optional int64 handle = 1;
+	void clear_handle();
+	static const int kHandleFieldNumber = 1;
+	::google::protobuf::int64 handle() const;
+	void set_handle(::google::protobuf::int64 value);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.InitPlayerSnakeReply)
- private:
+	// @@protoc_insertion_point(class_scope:acoross.snakebite.messages.InitPlayerSnakeReply)
+private:
 
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::int64 handle_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	bool _is_default_instance_;
+	::google::protobuf::int64 handle_;
+	mutable int _cached_size_;
+	friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
-  void InitAsDefaultInstance();
-  static InitPlayerSnakeReply* default_instance_;
+	void InitAsDefaultInstance();
+	static InitPlayerSnakeReply* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class TurnKeyDownRequest : public ::google::protobuf::Message {
- public:
-  TurnKeyDownRequest();
-  virtual ~TurnKeyDownRequest();
+class TurnKeyDownRequest : public ::google::protobuf::Message
+{
+public:
+	TurnKeyDownRequest();
+	virtual ~TurnKeyDownRequest();
 
-  TurnKeyDownRequest(const TurnKeyDownRequest& from);
+	TurnKeyDownRequest(const TurnKeyDownRequest& from);
 
-  inline TurnKeyDownRequest& operator=(const TurnKeyDownRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
+	inline TurnKeyDownRequest& operator=(const TurnKeyDownRequest& from)
+	{
+		CopyFrom(from);
+		return *this;
+	}
 
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const TurnKeyDownRequest& default_instance();
+	static const ::google::protobuf::Descriptor* descriptor();
+	static const TurnKeyDownRequest& default_instance();
 
-  void Swap(TurnKeyDownRequest* other);
+	void Swap(TurnKeyDownRequest* other);
 
-  // implements Message ----------------------------------------------
+	// implements Message ----------------------------------------------
 
-  inline TurnKeyDownRequest* New() const { return New(NULL); }
+	inline TurnKeyDownRequest* New() const { return New(NULL); }
 
-  TurnKeyDownRequest* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const TurnKeyDownRequest& from);
-  void MergeFrom(const TurnKeyDownRequest& from);
-  void Clear();
-  bool IsInitialized() const;
+	TurnKeyDownRequest* New(::google::protobuf::Arena* arena) const;
+	void CopyFrom(const ::google::protobuf::Message& from);
+	void MergeFrom(const ::google::protobuf::Message& from);
+	void CopyFrom(const TurnKeyDownRequest& from);
+	void MergeFrom(const TurnKeyDownRequest& from);
+	void Clear();
+	bool IsInitialized() const;
 
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(TurnKeyDownRequest* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
+	int ByteSize() const;
+	bool MergePartialFromCodedStream(
+		::google::protobuf::io::CodedInputStream* input);
+	void SerializeWithCachedSizes(
+		::google::protobuf::io::CodedOutputStream* output) const;
+	::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+	int GetCachedSize() const { return _cached_size_; }
+private:
+	void SharedCtor();
+	void SharedDtor();
+	void SetCachedSize(int size) const;
+	void InternalSwap(TurnKeyDownRequest* other);
+private:
+	inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+	{
+		return _internal_metadata_.arena();
+	}
+	inline void* MaybeArenaPtr() const
+	{
+		return _internal_metadata_.raw_arena_ptr();
+	}
+public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+	::google::protobuf::Metadata GetMetadata() const;
 
-  // nested types ----------------------------------------------------
+	// nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
+	// accessors -------------------------------------------------------
 
-  // optional int32 key = 1;
-  void clear_key();
-  static const int kKeyFieldNumber = 1;
-  ::google::protobuf::int32 key() const;
-  void set_key(::google::protobuf::int32 value);
+	// optional int32 key = 1;
+	void clear_key();
+	static const int kKeyFieldNumber = 1;
+	::google::protobuf::int32 key() const;
+	void set_key(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.TurnKeyDownRequest)
- private:
+	// @@protoc_insertion_point(class_scope:acoross.snakebite.messages.TurnKeyDownRequest)
+private:
 
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::int32 key_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	bool _is_default_instance_;
+	::google::protobuf::int32 key_;
+	mutable int _cached_size_;
+	friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
-  void InitAsDefaultInstance();
-  static TurnKeyDownRequest* default_instance_;
+	void InitAsDefaultInstance();
+	static TurnKeyDownRequest* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class TurnKeyUpRequest : public ::google::protobuf::Message {
- public:
-  TurnKeyUpRequest();
-  virtual ~TurnKeyUpRequest();
+class TurnKeyUpRequest : public ::google::protobuf::Message
+{
+public:
+	TurnKeyUpRequest();
+	virtual ~TurnKeyUpRequest();
 
-  TurnKeyUpRequest(const TurnKeyUpRequest& from);
+	TurnKeyUpRequest(const TurnKeyUpRequest& from);
 
-  inline TurnKeyUpRequest& operator=(const TurnKeyUpRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
+	inline TurnKeyUpRequest& operator=(const TurnKeyUpRequest& from)
+	{
+		CopyFrom(from);
+		return *this;
+	}
 
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const TurnKeyUpRequest& default_instance();
+	static const ::google::protobuf::Descriptor* descriptor();
+	static const TurnKeyUpRequest& default_instance();
 
-  void Swap(TurnKeyUpRequest* other);
+	void Swap(TurnKeyUpRequest* other);
 
-  // implements Message ----------------------------------------------
+	// implements Message ----------------------------------------------
 
-  inline TurnKeyUpRequest* New() const { return New(NULL); }
+	inline TurnKeyUpRequest* New() const { return New(NULL); }
 
-  TurnKeyUpRequest* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const TurnKeyUpRequest& from);
-  void MergeFrom(const TurnKeyUpRequest& from);
-  void Clear();
-  bool IsInitialized() const;
+	TurnKeyUpRequest* New(::google::protobuf::Arena* arena) const;
+	void CopyFrom(const ::google::protobuf::Message& from);
+	void MergeFrom(const ::google::protobuf::Message& from);
+	void CopyFrom(const TurnKeyUpRequest& from);
+	void MergeFrom(const TurnKeyUpRequest& from);
+	void Clear();
+	bool IsInitialized() const;
 
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(TurnKeyUpRequest* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
+	int ByteSize() const;
+	bool MergePartialFromCodedStream(
+		::google::protobuf::io::CodedInputStream* input);
+	void SerializeWithCachedSizes(
+		::google::protobuf::io::CodedOutputStream* output) const;
+	::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+	int GetCachedSize() const { return _cached_size_; }
+private:
+	void SharedCtor();
+	void SharedDtor();
+	void SetCachedSize(int size) const;
+	void InternalSwap(TurnKeyUpRequest* other);
+private:
+	inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+	{
+		return _internal_metadata_.arena();
+	}
+	inline void* MaybeArenaPtr() const
+	{
+		return _internal_metadata_.raw_arena_ptr();
+	}
+public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+	::google::protobuf::Metadata GetMetadata() const;
 
-  // nested types ----------------------------------------------------
+	// nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
+	// accessors -------------------------------------------------------
 
-  // optional int32 key = 1;
-  void clear_key();
-  static const int kKeyFieldNumber = 1;
-  ::google::protobuf::int32 key() const;
-  void set_key(::google::protobuf::int32 value);
+	// optional int32 key = 1;
+	void clear_key();
+	static const int kKeyFieldNumber = 1;
+	::google::protobuf::int32 key() const;
+	void set_key(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:acoross.snakebite.messages.TurnKeyUpRequest)
- private:
+	// @@protoc_insertion_point(class_scope:acoross.snakebite.messages.TurnKeyUpRequest)
+private:
 
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::int32 key_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
-  friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
+	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	bool _is_default_instance_;
+	::google::protobuf::int32 key_;
+	mutable int _cached_size_;
+	friend void  protobuf_AddDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_AssignDesc_snakebite_5fmessage_2eproto();
+	friend void protobuf_ShutdownFile_snakebite_5fmessage_2eproto();
 
-  void InitAsDefaultInstance();
-  static TurnKeyUpRequest* default_instance_;
+	void InitAsDefaultInstance();
+	static TurnKeyUpRequest* default_instance_;
 };
 // ===================================================================
 
@@ -883,45 +922,54 @@ class TurnKeyUpRequest : public ::google::protobuf::Message {
 // MovingObject
 
 // optional double x = 1;
-inline void MovingObject::clear_x() {
-  x_ = 0;
+inline void MovingObject::clear_x()
+{
+	x_ = 0;
 }
-inline double MovingObject::x() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.x)
-  return x_;
+inline double MovingObject::x() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.x)
+	return x_;
 }
-inline void MovingObject::set_x(double value) {
-  
-  x_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.x)
+inline void MovingObject::set_x(double value)
+{
+
+	x_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.x)
 }
 
 // optional double y = 2;
-inline void MovingObject::clear_y() {
-  y_ = 0;
+inline void MovingObject::clear_y()
+{
+	y_ = 0;
 }
-inline double MovingObject::y() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.y)
-  return y_;
+inline double MovingObject::y() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.y)
+	return y_;
 }
-inline void MovingObject::set_y(double value) {
-  
-  y_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.y)
+inline void MovingObject::set_y(double value)
+{
+
+	y_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.y)
 }
 
 // optional double radius = 3;
-inline void MovingObject::clear_radius() {
-  radius_ = 0;
+inline void MovingObject::clear_radius()
+{
+	radius_ = 0;
 }
-inline double MovingObject::radius() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.radius)
-  return radius_;
+inline double MovingObject::radius() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.MovingObject.radius)
+	return radius_;
 }
-inline void MovingObject::set_radius(double value) {
-  
-  radius_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.radius)
+inline void MovingObject::set_radius(double value)
+{
+
+	radius_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.MovingObject.radius)
 }
 
 // -------------------------------------------------------------------
@@ -929,141 +977,175 @@ inline void MovingObject::set_radius(double value) {
 // GameObjectClone
 
 // optional int32 clone_type = 1;
-inline void GameObjectClone::clear_clone_type() {
-  clone_type_ = 0;
+inline void GameObjectClone::clear_clone_type()
+{
+	clone_type_ = 0;
 }
-inline ::google::protobuf::int32 GameObjectClone::clone_type() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.clone_type)
-  return clone_type_;
+inline ::google::protobuf::int32 GameObjectClone::clone_type() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.clone_type)
+	return clone_type_;
 }
-inline void GameObjectClone::set_clone_type(::google::protobuf::int32 value) {
-  
-  clone_type_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.clone_type)
+inline void GameObjectClone::set_clone_type(::google::protobuf::int32 value)
+{
+
+	clone_type_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.clone_type)
 }
 
 // optional string obj_name = 2;
-inline void GameObjectClone::clear_obj_name() {
-  obj_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline void GameObjectClone::clear_obj_name()
+{
+	obj_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& GameObjectClone::obj_name() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.obj_name)
-  return obj_name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline const ::std::string& GameObjectClone::obj_name() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.obj_name)
+	return obj_name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void GameObjectClone::set_obj_name(const ::std::string& value) {
-  
-  obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.obj_name)
+inline void GameObjectClone::set_obj_name(const ::std::string& value)
+{
+
+	obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.obj_name)
 }
-inline void GameObjectClone::set_obj_name(const char* value) {
-  
-  obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.GameObjectClone.obj_name)
+inline void GameObjectClone::set_obj_name(const char* value)
+{
+
+	obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+	// @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.GameObjectClone.obj_name)
 }
-inline void GameObjectClone::set_obj_name(const char* value, size_t size) {
-  
-  obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.GameObjectClone.obj_name)
+inline void GameObjectClone::set_obj_name(const char* value, size_t size)
+{
+
+	obj_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+		::std::string(reinterpret_cast<const char*>(value), size));
+	// @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.GameObjectClone.obj_name)
 }
-inline ::std::string* GameObjectClone::mutable_obj_name() {
-  
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.obj_name)
-  return obj_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline ::std::string* GameObjectClone::mutable_obj_name()
+{
+
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.obj_name)
+	return obj_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* GameObjectClone::release_obj_name() {
-  
-  return obj_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline ::std::string* GameObjectClone::release_obj_name()
+{
+
+	return obj_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void GameObjectClone::set_allocated_obj_name(::std::string* obj_name) {
-  if (obj_name != NULL) {
-    
-  } else {
-    
-  }
-  obj_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), obj_name);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.GameObjectClone.obj_name)
+inline void GameObjectClone::set_allocated_obj_name(::std::string* obj_name)
+{
+	if (obj_name != NULL)
+	{
+
+	}
+	else
+	{
+
+	}
+	obj_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), obj_name);
+	// @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.GameObjectClone.obj_name)
 }
 
 // optional int64 handle = 3;
-inline void GameObjectClone::clear_handle() {
-  handle_ = GOOGLE_LONGLONG(0);
+inline void GameObjectClone::clear_handle()
+{
+	handle_ = GOOGLE_LONGLONG(0);
 }
-inline ::google::protobuf::int64 GameObjectClone::handle() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.handle)
-  return handle_;
+inline ::google::protobuf::int64 GameObjectClone::handle() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.handle)
+	return handle_;
 }
-inline void GameObjectClone::set_handle(::google::protobuf::int64 value) {
-  
-  handle_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.handle)
+inline void GameObjectClone::set_handle(::google::protobuf::int64 value)
+{
+
+	handle_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.GameObjectClone.handle)
 }
 
 // optional .acoross.snakebite.messages.MovingObject head = 4;
-inline bool GameObjectClone::has_head() const {
-  return !_is_default_instance_ && head_ != NULL;
+inline bool GameObjectClone::has_head() const
+{
+	return !_is_default_instance_ && head_ != NULL;
 }
-inline void GameObjectClone::clear_head() {
-  if (GetArenaNoVirtual() == NULL && head_ != NULL) delete head_;
-  head_ = NULL;
+inline void GameObjectClone::clear_head()
+{
+	if (GetArenaNoVirtual() == NULL && head_ != NULL) delete head_;
+	head_ = NULL;
 }
-inline const ::acoross::snakebite::messages::MovingObject& GameObjectClone::head() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.head)
-  return head_ != NULL ? *head_ : *default_instance_->head_;
+inline const ::acoross::snakebite::messages::MovingObject& GameObjectClone::head() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.head)
+	return head_ != NULL ? *head_ : *default_instance_->head_;
 }
-inline ::acoross::snakebite::messages::MovingObject* GameObjectClone::mutable_head() {
-  
-  if (head_ == NULL) {
-    head_ = new ::acoross::snakebite::messages::MovingObject;
-  }
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.head)
-  return head_;
+inline ::acoross::snakebite::messages::MovingObject* GameObjectClone::mutable_head()
+{
+
+	if (head_ == NULL)
+	{
+		head_ = new ::acoross::snakebite::messages::MovingObject;
+	}
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.head)
+	return head_;
 }
-inline ::acoross::snakebite::messages::MovingObject* GameObjectClone::release_head() {
-  
-  ::acoross::snakebite::messages::MovingObject* temp = head_;
-  head_ = NULL;
-  return temp;
+inline ::acoross::snakebite::messages::MovingObject* GameObjectClone::release_head()
+{
+
+	::acoross::snakebite::messages::MovingObject* temp = head_;
+	head_ = NULL;
+	return temp;
 }
-inline void GameObjectClone::set_allocated_head(::acoross::snakebite::messages::MovingObject* head) {
-  delete head_;
-  head_ = head;
-  if (head) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.GameObjectClone.head)
+inline void GameObjectClone::set_allocated_head(::acoross::snakebite::messages::MovingObject* head)
+{
+	delete head_;
+	head_ = head;
+	if (head)
+	{
+
+	}
+	else
+	{
+
+	}
+	// @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.GameObjectClone.head)
 }
 
 // repeated .acoross.snakebite.messages.MovingObject body = 5;
-inline int GameObjectClone::body_size() const {
-  return body_.size();
+inline int GameObjectClone::body_size() const
+{
+	return body_.size();
 }
-inline void GameObjectClone::clear_body() {
-  body_.Clear();
+inline void GameObjectClone::clear_body()
+{
+	body_.Clear();
 }
-inline const ::acoross::snakebite::messages::MovingObject& GameObjectClone::body(int index) const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.body)
-  return body_.Get(index);
+inline const ::acoross::snakebite::messages::MovingObject& GameObjectClone::body(int index) const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.GameObjectClone.body)
+	return body_.Get(index);
 }
-inline ::acoross::snakebite::messages::MovingObject* GameObjectClone::mutable_body(int index) {
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.body)
-  return body_.Mutable(index);
+inline ::acoross::snakebite::messages::MovingObject* GameObjectClone::mutable_body(int index)
+{
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.GameObjectClone.body)
+	return body_.Mutable(index);
 }
-inline ::acoross::snakebite::messages::MovingObject* GameObjectClone::add_body() {
-  // @@protoc_insertion_point(field_add:acoross.snakebite.messages.GameObjectClone.body)
-  return body_.Add();
+inline ::acoross::snakebite::messages::MovingObject* GameObjectClone::add_body()
+{
+	// @@protoc_insertion_point(field_add:acoross.snakebite.messages.GameObjectClone.body)
+	return body_.Add();
 }
 inline ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject >*
-GameObjectClone::mutable_body() {
-  // @@protoc_insertion_point(field_mutable_list:acoross.snakebite.messages.GameObjectClone.body)
-  return &body_;
+GameObjectClone::mutable_body()
+{
+	// @@protoc_insertion_point(field_mutable_list:acoross.snakebite.messages.GameObjectClone.body)
+	return &body_;
 }
 inline const ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::MovingObject >&
-GameObjectClone::body() const {
-  // @@protoc_insertion_point(field_list:acoross.snakebite.messages.GameObjectClone.body)
-  return body_;
+GameObjectClone::body() const
+{
+	// @@protoc_insertion_point(field_list:acoross.snakebite.messages.GameObjectClone.body)
+	return body_;
 }
 
 // -------------------------------------------------------------------
@@ -1071,61 +1153,74 @@ GameObjectClone::body() const {
 // UpdateGameObjectsEvent
 
 // optional int32 idx_x = 1;
-inline void UpdateGameObjectsEvent::clear_idx_x() {
-  idx_x_ = 0;
+inline void UpdateGameObjectsEvent::clear_idx_x()
+{
+	idx_x_ = 0;
 }
-inline ::google::protobuf::int32 UpdateGameObjectsEvent::idx_x() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
-  return idx_x_;
+inline ::google::protobuf::int32 UpdateGameObjectsEvent::idx_x() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
+	return idx_x_;
 }
-inline void UpdateGameObjectsEvent::set_idx_x(::google::protobuf::int32 value) {
-  
-  idx_x_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
+inline void UpdateGameObjectsEvent::set_idx_x(::google::protobuf::int32 value)
+{
+
+	idx_x_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_x)
 }
 
 // optional int32 idx_y = 2;
-inline void UpdateGameObjectsEvent::clear_idx_y() {
-  idx_y_ = 0;
+inline void UpdateGameObjectsEvent::clear_idx_y()
+{
+	idx_y_ = 0;
 }
-inline ::google::protobuf::int32 UpdateGameObjectsEvent::idx_y() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
-  return idx_y_;
+inline ::google::protobuf::int32 UpdateGameObjectsEvent::idx_y() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
+	return idx_y_;
 }
-inline void UpdateGameObjectsEvent::set_idx_y(::google::protobuf::int32 value) {
-  
-  idx_y_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
+inline void UpdateGameObjectsEvent::set_idx_y(::google::protobuf::int32 value)
+{
+
+	idx_y_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.UpdateGameObjectsEvent.idx_y)
 }
 
 // repeated .acoross.snakebite.messages.GameObjectClone clone = 3;
-inline int UpdateGameObjectsEvent::clone_size() const {
-  return clone_.size();
+inline int UpdateGameObjectsEvent::clone_size() const
+{
+	return clone_.size();
 }
-inline void UpdateGameObjectsEvent::clear_clone() {
-  clone_.Clear();
+inline void UpdateGameObjectsEvent::clear_clone()
+{
+	clone_.Clear();
 }
-inline const ::acoross::snakebite::messages::GameObjectClone& UpdateGameObjectsEvent::clone(int index) const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return clone_.Get(index);
+inline const ::acoross::snakebite::messages::GameObjectClone& UpdateGameObjectsEvent::clone(int index) const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return clone_.Get(index);
 }
-inline ::acoross::snakebite::messages::GameObjectClone* UpdateGameObjectsEvent::mutable_clone(int index) {
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return clone_.Mutable(index);
+inline ::acoross::snakebite::messages::GameObjectClone* UpdateGameObjectsEvent::mutable_clone(int index)
+{
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return clone_.Mutable(index);
 }
-inline ::acoross::snakebite::messages::GameObjectClone* UpdateGameObjectsEvent::add_clone() {
-  // @@protoc_insertion_point(field_add:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return clone_.Add();
+inline ::acoross::snakebite::messages::GameObjectClone* UpdateGameObjectsEvent::add_clone()
+{
+	// @@protoc_insertion_point(field_add:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return clone_.Add();
 }
 inline ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone >*
-UpdateGameObjectsEvent::mutable_clone() {
-  // @@protoc_insertion_point(field_mutable_list:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return &clone_;
+UpdateGameObjectsEvent::mutable_clone()
+{
+	// @@protoc_insertion_point(field_mutable_list:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return &clone_;
 }
 inline const ::google::protobuf::RepeatedPtrField< ::acoross::snakebite::messages::GameObjectClone >&
-UpdateGameObjectsEvent::clone() const {
-  // @@protoc_insertion_point(field_list:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
-  return clone_;
+UpdateGameObjectsEvent::clone() const
+{
+	// @@protoc_insertion_point(field_list:acoross.snakebite.messages.UpdateGameObjectsEvent.clone)
+	return clone_;
 }
 
 // -------------------------------------------------------------------
@@ -1133,17 +1228,20 @@ UpdateGameObjectsEvent::clone() const {
 // VoidReply
 
 // optional int32 err = 1;
-inline void VoidReply::clear_err() {
-  err_ = 0;
+inline void VoidReply::clear_err()
+{
+	err_ = 0;
 }
-inline ::google::protobuf::int32 VoidReply::err() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.VoidReply.err)
-  return err_;
+inline ::google::protobuf::int32 VoidReply::err() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.VoidReply.err)
+	return err_;
 }
-inline void VoidReply::set_err(::google::protobuf::int32 value) {
-  
-  err_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.VoidReply.err)
+inline void VoidReply::set_err(::google::protobuf::int32 value)
+{
+
+	err_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.VoidReply.err)
 }
 
 // -------------------------------------------------------------------
@@ -1151,59 +1249,71 @@ inline void VoidReply::set_err(::google::protobuf::int32 value) {
 // ZoneInfoReply
 
 // optional int32 height = 1;
-inline void ZoneInfoReply::clear_height() {
-  height_ = 0;
+inline void ZoneInfoReply::clear_height()
+{
+	height_ = 0;
 }
-inline ::google::protobuf::int32 ZoneInfoReply::height() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.height)
-  return height_;
+inline ::google::protobuf::int32 ZoneInfoReply::height() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.height)
+	return height_;
 }
-inline void ZoneInfoReply::set_height(::google::protobuf::int32 value) {
-  
-  height_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.height)
+inline void ZoneInfoReply::set_height(::google::protobuf::int32 value)
+{
+
+	height_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.height)
 }
 
 // optional int32 width = 2;
-inline void ZoneInfoReply::clear_width() {
-  width_ = 0;
+inline void ZoneInfoReply::clear_width()
+{
+	width_ = 0;
 }
-inline ::google::protobuf::int32 ZoneInfoReply::width() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.width)
-  return width_;
+inline ::google::protobuf::int32 ZoneInfoReply::width() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.width)
+	return width_;
 }
-inline void ZoneInfoReply::set_width(::google::protobuf::int32 value) {
-  
-  width_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.width)
+inline void ZoneInfoReply::set_width(::google::protobuf::int32 value)
+{
+
+	width_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.width)
 }
 
 // optional int32 limit_idx_x = 3;
-inline void ZoneInfoReply::clear_limit_idx_x() {
-  limit_idx_x_ = 0;
+inline void ZoneInfoReply::clear_limit_idx_x()
+{
+	limit_idx_x_ = 0;
 }
-inline ::google::protobuf::int32 ZoneInfoReply::limit_idx_x() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
-  return limit_idx_x_;
+inline ::google::protobuf::int32 ZoneInfoReply::limit_idx_x() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
+	return limit_idx_x_;
 }
-inline void ZoneInfoReply::set_limit_idx_x(::google::protobuf::int32 value) {
-  
-  limit_idx_x_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
+inline void ZoneInfoReply::set_limit_idx_x(::google::protobuf::int32 value)
+{
+
+	limit_idx_x_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_x)
 }
 
 // optional int32 limit_idx_y = 4;
-inline void ZoneInfoReply::clear_limit_idx_y() {
-  limit_idx_y_ = 0;
+inline void ZoneInfoReply::clear_limit_idx_y()
+{
+	limit_idx_y_ = 0;
 }
-inline ::google::protobuf::int32 ZoneInfoReply::limit_idx_y() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
-  return limit_idx_y_;
+inline ::google::protobuf::int32 ZoneInfoReply::limit_idx_y() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
+	return limit_idx_y_;
 }
-inline void ZoneInfoReply::set_limit_idx_y(::google::protobuf::int32 value) {
-  
-  limit_idx_y_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
+inline void ZoneInfoReply::set_limit_idx_y(::google::protobuf::int32 value)
+{
+
+	limit_idx_y_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.ZoneInfoReply.limit_idx_y)
 }
 
 // -------------------------------------------------------------------
@@ -1211,46 +1321,57 @@ inline void ZoneInfoReply::set_limit_idx_y(::google::protobuf::int32 value) {
 // InitPlayerSnakeRequest
 
 // optional string name = 1;
-inline void InitPlayerSnakeRequest::clear_name() {
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline void InitPlayerSnakeRequest::clear_name()
+{
+	name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& InitPlayerSnakeRequest::name() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
-  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline const ::std::string& InitPlayerSnakeRequest::name() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+	return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void InitPlayerSnakeRequest::set_name(const ::std::string& value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+inline void InitPlayerSnakeRequest::set_name(const ::std::string& value)
+{
+
+	name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
-inline void InitPlayerSnakeRequest::set_name(const char* value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+inline void InitPlayerSnakeRequest::set_name(const char* value)
+{
+
+	name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+	// @@protoc_insertion_point(field_set_char:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
-inline void InitPlayerSnakeRequest::set_name(const char* value, size_t size) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+inline void InitPlayerSnakeRequest::set_name(const char* value, size_t size)
+{
+
+	name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+		::std::string(reinterpret_cast<const char*>(value), size));
+	// @@protoc_insertion_point(field_set_pointer:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
-inline ::std::string* InitPlayerSnakeRequest::mutable_name() {
-  
-  // @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
-  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline ::std::string* InitPlayerSnakeRequest::mutable_name()
+{
+
+	// @@protoc_insertion_point(field_mutable:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+	return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* InitPlayerSnakeRequest::release_name() {
-  
-  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline ::std::string* InitPlayerSnakeRequest::release_name()
+{
+
+	return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void InitPlayerSnakeRequest::set_allocated_name(::std::string* name) {
-  if (name != NULL) {
-    
-  } else {
-    
-  }
-  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
+inline void InitPlayerSnakeRequest::set_allocated_name(::std::string* name)
+{
+	if (name != NULL)
+	{
+
+	}
+	else
+	{
+
+	}
+	name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+	// @@protoc_insertion_point(field_set_allocated:acoross.snakebite.messages.InitPlayerSnakeRequest.name)
 }
 
 // -------------------------------------------------------------------
@@ -1258,17 +1379,20 @@ inline void InitPlayerSnakeRequest::set_allocated_name(::std::string* name) {
 // InitPlayerSnakeReply
 
 // optional int64 handle = 1;
-inline void InitPlayerSnakeReply::clear_handle() {
-  handle_ = GOOGLE_LONGLONG(0);
+inline void InitPlayerSnakeReply::clear_handle()
+{
+	handle_ = GOOGLE_LONGLONG(0);
 }
-inline ::google::protobuf::int64 InitPlayerSnakeReply::handle() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeReply.handle)
-  return handle_;
+inline ::google::protobuf::int64 InitPlayerSnakeReply::handle() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.InitPlayerSnakeReply.handle)
+	return handle_;
 }
-inline void InitPlayerSnakeReply::set_handle(::google::protobuf::int64 value) {
-  
-  handle_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeReply.handle)
+inline void InitPlayerSnakeReply::set_handle(::google::protobuf::int64 value)
+{
+
+	handle_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.InitPlayerSnakeReply.handle)
 }
 
 // -------------------------------------------------------------------
@@ -1276,17 +1400,20 @@ inline void InitPlayerSnakeReply::set_handle(::google::protobuf::int64 value) {
 // TurnKeyDownRequest
 
 // optional int32 key = 1;
-inline void TurnKeyDownRequest::clear_key() {
-  key_ = 0;
+inline void TurnKeyDownRequest::clear_key()
+{
+	key_ = 0;
 }
-inline ::google::protobuf::int32 TurnKeyDownRequest::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyDownRequest.key)
-  return key_;
+inline ::google::protobuf::int32 TurnKeyDownRequest::key() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyDownRequest.key)
+	return key_;
 }
-inline void TurnKeyDownRequest::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyDownRequest.key)
+inline void TurnKeyDownRequest::set_key(::google::protobuf::int32 value)
+{
+
+	key_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyDownRequest.key)
 }
 
 // -------------------------------------------------------------------
@@ -1294,17 +1421,20 @@ inline void TurnKeyDownRequest::set_key(::google::protobuf::int32 value) {
 // TurnKeyUpRequest
 
 // optional int32 key = 1;
-inline void TurnKeyUpRequest::clear_key() {
-  key_ = 0;
+inline void TurnKeyUpRequest::clear_key()
+{
+	key_ = 0;
 }
-inline ::google::protobuf::int32 TurnKeyUpRequest::key() const {
-  // @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyUpRequest.key)
-  return key_;
+inline ::google::protobuf::int32 TurnKeyUpRequest::key() const
+{
+	// @@protoc_insertion_point(field_get:acoross.snakebite.messages.TurnKeyUpRequest.key)
+	return key_;
 }
-inline void TurnKeyUpRequest::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyUpRequest.key)
+inline void TurnKeyUpRequest::set_key(::google::protobuf::int32 value)
+{
+
+	key_ = value;
+	// @@protoc_insertion_point(field_set:acoross.snakebite.messages.TurnKeyUpRequest.key)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1337,8 +1467,9 @@ namespace protobuf {
 
 template <> struct is_proto_enum< ::acoross::snakebite::messages::ObjType> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::acoross::snakebite::messages::ObjType>() {
-  return ::acoross::snakebite::messages::ObjType_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::acoross::snakebite::messages::ObjType>()
+{
+	return ::acoross::snakebite::messages::ObjType_descriptor();
 }
 
 }  // namespace protobuf

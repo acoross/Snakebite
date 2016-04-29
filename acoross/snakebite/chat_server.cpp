@@ -78,8 +78,7 @@ public:
 	chat_session(tcp::socket socket, chat_room& room)
 		: socket_(std::move(socket)),
 		room_(room)
-	{
-	}
+	{}
 
 	void start()
 	{
@@ -140,7 +139,7 @@ private:
 		auto self(shared_from_this());
 		boost::asio::async_write(socket_,
 			boost::asio::buffer(write_msgs_.front().data(),
-				write_msgs_.front().length()),
+								write_msgs_.front().length()),
 			[this, self](boost::system::error_code ec, std::size_t /*length*/)
 		{
 			if (!ec)

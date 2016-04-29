@@ -255,7 +255,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	g_game_client = std::make_unique<LocalGameClient>(*server);
 	g_game_server_wp = server;
 
-	server->SetLocalUpdateListner(
+
+	auto auto_con = server->MakeConnectionToGlobalUpdateEvent(
 		[client = g_game_client.get()]
 	(
 		int idx_x, int idx_y,

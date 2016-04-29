@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <string>
 
+#include "signal.h"
 #include "handle.h"
 #include "geo_zone_grid.h"
 #include "zone_object.h"
@@ -18,6 +19,7 @@
 
 namespace acoross {
 namespace snakebite {
+
 //@need to be serialized
 // 벽에 충돌했는지 체크.
 // 벽에 충돌하면 튕겨나옴.
@@ -34,7 +36,6 @@ static void process_collision_to_wall(std::shared_ptr<ZoneObjectEx<ColliderT>> a
 	//	|| pos.y <= game_boundary_.Top + 1 || pos.y >= game_boundary_.Bottom - 1)
 	//{
 	//	pos.x = Trim((int)pos.x, game_boundary_.Left + 1, game_boundary_.Right - 1);
-
 	//	auto ret = wall_collision_set_.insert(Handle<Snake>(actor.get()).handle);
 	//	if (ret.second == true)
 	//	{
@@ -83,8 +84,71 @@ public:
 	using MyCloneObjT = ZoneObjectCloneEx<ColliderT>;
 	using CloneZoneObjListT = std::list<std::pair<HandleT, MyCloneObjT>>;
 	using SharedCloneZoneObjlistT = std::shared_ptr<CloneZoneObjListT>;
-	using ObserverFuncT = std::function<void(int idx_zone_x, int idx_zone_y,
-		SharedCloneZoneObjlistT snakes, SharedCloneZoneObjlistT apples)>;
+	using ObserverT = std::function<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
+
+	class UpdateEventRelayer;
+	class UpdateEvent
+	{
+	public:
+		using MySigT = boost::signals2::signal<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
+		virtual ~UpdateEvent()
+		{}
+
+		boost::signals2::connection connect(const ObserverT& observer)
+		{
+			return sig_.connect(observer);
+		}
+		acoross::auto_connection auto_connect(const ObserverT& observer)
+		{
+			return acoross::make_auto_con(sig_.connect(observer));
+		}
+
+		void connect(std::shared_ptr<UpdateEventRelayer> observer);
+
+		void invoke(int idx_x, int idx_y, SharedCloneZoneObjlistT mov_objs, SharedCloneZoneObjlistT static_objs)
+		{
+			sig_(idx_x, idx_y, mov_objs, static_objs);
+		}
+
+	protected:
+		MySigT sig_;
+	};
+
+	class UpdateEventRelayer final
+		: public UpdateEvent
+		, public std::enable_shared_from_this<UpdateEventRelayer>
+	{
+	public:
+		UpdateEventRelayer(UpdateEventRelayer&) = delete;
+		UpdateEventRelayer& operator=(UpdateEventRelayer&) = delete;
+
+		UpdateEventRelayer()
+		{}
+		UpdateEventRelayer(auto_connection&& conn_to_event)
+			: conn_to_event_(conn_to_event)
+		{}
+		virtual ~UpdateEventRelayer()
+		{}
+
+		UpdateEventRelayer& operator=(UpdateEventRelayer&& other)
+		{
+			conn_to_event_.swap(other.conn_to_event_);
+			return *this;
+		}
+		void disconnect()
+		{
+			if (auto conn = std::atomic_load(&conn_to_event_))
+			{
+				conn->disconnect();
+			}
+		}
+		void reset_connection(acoross::auto_connection&& conn_to_event)
+		{
+			std::atomic_exchange(&conn_to_event_, conn_to_event);
+		}
+	private:
+		acoross::auto_connection conn_to_event_;
+	};
 
 	/////////////////////////////////////////////////
 	// GeoZone
@@ -117,24 +181,12 @@ public:
 			AsyncDoUpdate();
 		}
 	}
-	// update 된 object들의 위치 정보를 구독하는 observer 추가
-	void AsyncAddObserver(std::string name, ObserverFuncT func)
+
+	auto& GetUpdateEvent()
 	{
-		strand_.post(
-			[this, name, func]()
-		{
-			observer_map_[name] = func;
-		});
+		return update_event_;
 	}
-	// update 된 object들의 위치 정보를 구독 종료
-	void AsyncRemoveObserver(std::string name)
-	{
-		strand_.post(
-			[this, name]()
-		{
-			observer_map_.erase(name);
-		});
-	}
+
 	// 움직이지 않는 object 추가
 	void AsyncAddStaticObj(std::shared_ptr<MyObjT> apple)
 	{
@@ -371,10 +423,7 @@ private:
 	void invoke_update_event_to_observers(int idx_x, int idx_y,
 		SharedCloneZoneObjlistT snakes, SharedCloneZoneObjlistT apples)
 	{
-		for (auto& pair : observer_map_)
-		{
-			pair.second(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
-		}
+		update_event_.invoke(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
 	}
 
 	static void process_collision_2mapsnake(MapMyObj& src_mov_objs, MapMyObj& target_mov_objs, MapMyObj& static_objs)
@@ -404,10 +453,7 @@ private:
 	MovingObjectContainer& game_boundary_;
 
 	//@use in serializer
-	// container 멤버들이다. 아래 멤버들에 대한 접근은 strand 안에서만 이루어져야 한다.
-	//std::unordered_map<uintptr_t, std::shared_ptr<ZoneObjectBase>> mov_objects_;
-	//std::unordered_map<uintptr_t, std::shared_ptr<ZoneObjectBase>> static_objects_;
-	std::unordered_map<std::string, ObserverFuncT> observer_map_;
+	UpdateEvent update_event_;
 
 	MapMyObj mov_objects_;
 	MapMyObj static_objects_;
@@ -417,6 +463,24 @@ private:
 	//
 };
 //
+
+template <typename ColliderT>
+inline void GeoZone<ColliderT>::UpdateEvent::connect(
+	std::shared_ptr<typename GeoZone<ColliderT>::UpdateEventRelayer> observer)
+{
+	if (!observer)
+		return;
+
+	auto auto_con = sig_.auto_connect(
+		[obs = observer](int idx_zone_x, int idx_zone_y,
+			SbGeoZone::SharedCloneZoneObjlistT snakes,
+			SbGeoZone::SharedCloneZoneObjlistT apples)
+	{
+		obs->invoke(idx_zone_x, idx_zone_y, snakes, apples);
+	});
+	observer->reset_connection(std::move(auto_con));
+}
+
 }
 }
 

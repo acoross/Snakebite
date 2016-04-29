@@ -3,17 +3,21 @@
 #include "UserSession.h"
 #include "game_server.h"
 
+#define BOOST_THREAD_PROVIDES_FUTURE
+#define BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION
+#include <boost/thread/future.hpp>
+
 namespace acoross {
 namespace snakebite {
-
 void UserSession::start()
 {
 	std::string myid = std::to_string((uintptr_t)this);
-	game_session_->AddUpdateEventListner(
+
+	/*game_session_->ConnectToUpdateEvent(
 		myid,
 		[this, rpcsocket_wp = std::weak_ptr<rpc::RpcSocket>(shared_from_this())]
 	(
-		int idx_x, int idx_y, 
+		int idx_x, int idx_y,
 		SbGeoZone::CloneZoneObjListT& snake_clone_list,
 		SbGeoZone::CloneZoneObjListT& apple_clone_list)
 	{
@@ -24,7 +28,7 @@ void UserSession::start()
 				send_update_game_object(idx_x, idx_y, snake_clone_list, apple_clone_list);
 			}
 		}
-	});
+	});*/
 
 	messages::SnakebiteService::Service::start();
 }
@@ -33,13 +37,15 @@ void UserSession::end()
 {
 	game_session_->AsyncRemoveSnake(user_snake_handle_);
 
-	std::string myid = std::to_string((uintptr_t)this);
-	game_session_->UnregisterEventListner(myid);
+	if (auto_discon_observer_to_session_)
+	{
+		auto_discon_observer_to_session_->disconnect();
+	}
 }
 
 void UserSession::send_update_game_object(
 	int idx_x, int idx_y,
-	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list, 
+	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list,
 	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& apple_clone_list)
 {
 	if (!std::atomic_load(&push_stub_))
@@ -135,7 +141,7 @@ acoross::rpc::ErrCode UserSession::RequestZoneInfo(const acoross::snakebite::mes
 acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages::InitPlayerSnakeRequest &rq, acoross::snakebite::messages::InitPlayerSnakeReply *rp)
 {
 	game_session_->AsyncRemoveSnake(user_snake_handle_);
-	
+
 	auto self_wp = std::weak_ptr<RpcSocket>(shared_from_this());
 	user_snake_handle_ = game_session_->AsyncMakeNewSnake(rq.name(),
 		[self_wp, this](Snake& snake)	//die callback
@@ -154,6 +160,32 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 			}
 		}
 	});
+
+	boost::promise<acoross::ConT> prom;
+	auto fut = prom.get_future();
+
+	game_session_->RequestToSnake(
+		user_snake_handle_,
+		[this, self_wp, p = boost::move(prom)](Snake& snake) mutable
+	{
+		auto con = snake.ConnectToUpdateEventRelayer(
+			[this, self_wp](int idx_x, int idx_y,
+				SbGeoZone::SharedCloneZoneObjlistT snake_clone_list,
+				SbGeoZone::SharedCloneZoneObjlistT apple_clone_list)
+		{
+			if (auto rpcsocket = self_wp.lock())
+			{
+				//if (game_session_->GetZoneGrid().IsNeighborZone(player_idx_x_.load(), player_idx_y_.load(), idx_x, idx_y))
+				{
+					send_update_game_object(idx_x, idx_y, *snake_clone_list, *apple_clone_list);
+				}
+			}
+		});
+
+		p.set_value(con);
+	});
+
+	auto_discon_observer_to_session_ = acoross::make_auto_con(fut.get());
 
 	if (rp)
 	{
@@ -184,6 +216,5 @@ acoross::rpc::ErrCode UserSession::SetKeyUp(const acoross::snakebite::messages::
 
 	return acoross::rpc::ErrCode();
 }
-
 }
 }

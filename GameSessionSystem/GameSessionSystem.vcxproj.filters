@@ -64,6 +64,9 @@
     <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
       <Filter>moving_object_system\details</Filter>
     </ClInclude>
+    <ClInclude Include="..\acoross\snakebite\zone_system\details\signal.h">
+      <Filter>zone_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\acoross\snakebite\game_session\details\game_session.cpp">

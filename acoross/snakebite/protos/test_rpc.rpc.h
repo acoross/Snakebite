@@ -15,31 +15,32 @@
 namespace acoross {
 namespace rpc_test {
 
-class TestRpc final {
- public:
-  enum Protocol
-  {
-    Hello,
-  };
+class TestRpc final
+{
+public:
+	enum Protocol
+	{
+		Hello,
+	};
 
-  class Service : public ::acoross::rpc::RpcService 
-  {
-  public:
-    Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
-    virtual ~Service() {}
+	class Service : public ::acoross::rpc::RpcService
+	{
+	public:
+		Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
+		virtual ~Service() {}
 
-  private:
-    DEF_SERVICE(Hello, ::acoross::rpc_test::HelloRequest, ::acoross::rpc_test::HelloReply)
+	private:
+		DEF_SERVICE(Hello, ::acoross::rpc_test::HelloRequest, ::acoross::rpc_test::HelloReply)
 
-  };
+	};
 
-  class Stub : public ::acoross::rpc::RpcStub
-  {
-  public:
-    Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
-    virtual ~Stub() {}
-    DEF_STUB(Hello, ::acoross::rpc_test::HelloRequest, ::acoross::rpc_test::HelloReply)
-  };
+	class Stub : public ::acoross::rpc::RpcStub
+	{
+	public:
+		Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
+		virtual ~Stub() {}
+		DEF_STUB(Hello, ::acoross::rpc_test::HelloRequest, ::acoross::rpc_test::HelloReply)
+	};
 
 };
 

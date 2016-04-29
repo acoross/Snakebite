@@ -59,6 +59,7 @@ private:
 	std::atomic<int> player_idx_y_{ 0 };
 
 	std::shared_ptr<GameSession> game_session_;
+	acoross::auto_connection auto_discon_observer_to_session_;
 
 	std::function<void(void)> on_destroy_;
 

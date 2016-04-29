@@ -10,6 +10,8 @@
 #include <mutex>
 #include <string>
 
+#include <acoross/snakebite/zone_system/details/signal.h>
+
 #include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "sb_zone_object.h"
 #include "snake.h"
@@ -25,21 +27,20 @@ using ListApple = std::list<AppleSP>;
 class GameSession final
 {
 public:
-	using UpdateEventListner =
-		std::function<void(int idx_x, int idx_y, 
-			SbGeoZone::CloneZoneObjListT&,
-			SbGeoZone::CloneZoneObjListT&)>;
+	using UpdateEventHandler = void(int, int,
+		SbGeoZone::CloneZoneObjListT&, SbGeoZone::CloneZoneObjListT&);
+	using UpdateEventListner = std::function<UpdateEventHandler>;
 	using ListMovingObject = MovingObjectContainer::ListMovingObject;
-	
+
 	explicit GameSession(
 		::boost::asio::io_service& io_service,
 		int zone_width, int zone_height, int n_x, int n_y);
 	~GameSession();
-	
+
 	void StartZone(int frame_tick);
 
 	Handle<Snake>::Type AsyncMakeNewSnake(
-		std::string name = "noname", 
+		std::string name = "noname",
 		Snake::EventHandler onDieHandler = Snake::EventHandler());
 	void RequestMakeNewApple();
 	void AsyncRemoveSnake(Handle<Snake>::Type snake);
@@ -51,29 +52,30 @@ public:
 	size_t CalculateAppleCount();
 
 	// 이 함수는 refactoring 필요.
-	void RequestToSnake(Handle<Snake>::Type handle, std::function<void(Snake&)> request);
-
-	void AddUpdateEventListner(std::string name, UpdateEventListner on_update)
+	void RequestToSnake(Handle<Snake>::Type handle,
+		std::function<void(Snake&)> request)
 	{
-		std::lock_guard<std::mutex> lock(update_listner_mutex_);
-		on_update_event_listeners_[name] = on_update;
-	}
-	void UnregisterEventListner(std::string name)
-	{
-		std::lock_guard<std::mutex> lock(update_listner_mutex_);
-		on_update_event_listeners_.erase(name);
-	}
-	void InvokeEventListners(int idx_zone_x, int idx_zone_y, SbGeoZone::SharedCloneZoneObjlistT& snakes, SbGeoZone::SharedCloneZoneObjlistT& apples)
-	{
-		update_listner_mutex_.lock();
-		auto event_listeners = on_update_event_listeners_;
-		update_listner_mutex_.unlock();
-
-		for (auto& pair : event_listeners)
+		//std::lock_guard<std::recursive_mutex> lock(snakes_mutex_);
+		strand_.post(
+			[this, handle, request]()
 		{
-			auto& listner = pair.second;
-			listner(idx_zone_x, idx_zone_y, *snakes, *apples);
-		}
+			auto it = snakes_.find(handle);
+			if (it != snakes_.end())
+			{
+				return request(*it->second.get());
+			}
+		});
+	}
+
+	auto MakeConnectionToUpdateEvent(std::function<UpdateEventHandler> on_update)
+	{
+		return update_event_.connect(on_update);
+	}
+
+	void InvokeUpdateEvent(int idx_zone_x, int idx_zone_y,
+		SbGeoZone::SharedCloneZoneObjlistT snakes, SbGeoZone::SharedCloneZoneObjlistT apples)
+	{
+		update_event_(idx_zone_x, idx_zone_y, *snakes, *apples);
 	}
 
 	const SbGeoZoneGrid& GetZoneGrid() const
@@ -93,9 +95,13 @@ private:
 	const double velocity{ 0.06 };	// UNIT/ms
 	const Position2D player_pos{ 100, 100 };
 
-	std::mutex update_listner_mutex_;
-	std::unordered_map<std::string, UpdateEventListner> on_update_event_listeners_;
+	// my update event... pass zone event to listners
+	boost::signals2::signal<void(int, int,
+		SbGeoZone::CloneZoneObjListT&,
+		SbGeoZone::CloneZoneObjListT&)> update_event_;
 
+	// zone event connection
+	std::list<acoross::auto_connection> list_conn_to_zone_event_;
 	SbGeoZoneGrid zone_grid_;
 
 	//임시
