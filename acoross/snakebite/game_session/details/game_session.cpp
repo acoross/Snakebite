@@ -33,17 +33,19 @@ GameSession::~GameSession()
 void GameSession::StartZone(int frame_tick)
 {
 	zone_grid_.ProcessAllZone(
-		[this](auto& zone)->bool
+		[this](SbGeoZone& zone)->bool
 	{
-		auto conn = zone.ConnectToUpdateEvent(
-			[&](int idx_zone_x, int idx_zone_y,
+		SbGeoZone::UpdateEventRelayer relayer = zone.GetUpdateEvent().make_relayer();
+		//
+		/*relayer.connect(
+			[this](int idx_x, int idx_y,
 				SbGeoZone::SharedCloneZoneObjlistT snakes,
 				SbGeoZone::SharedCloneZoneObjlistT apples)
 		{
-			InvokeUpdateEvent(idx_zone_x, idx_zone_y, snakes, apples);
+			this->InvokeUpdateEvent(idx_x, idx_y, snakes, apples);
 		});
 
-		list_conn_to_zone_event_.emplace_back(acoross::make_auto_con(std::move(conn)));
+		list_zone_event_relayer_.emplace_back(std::move(relayer));*/
 
 		return true;
 	});

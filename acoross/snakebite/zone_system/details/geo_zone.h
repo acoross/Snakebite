@@ -91,63 +91,58 @@ public:
 	{
 	public:
 		using MySigT = boost::signals2::signal<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
+
+		explicit UpdateEvent()
+			: sig_(std::make_shared<MySigT>())
+		{}
+		explicit UpdateEvent(std::shared_ptr<MySigT> sig)
+			: sig_(sig){}
+		explicit UpdateEvent(UpdateEvent&& other)
+			: sig_(std::move(other.sig_))
+		{}
+
 		virtual ~UpdateEvent()
 		{}
 
 		boost::signals2::connection connect(const ObserverT& observer)
 		{
-			return sig_.connect(observer);
+			return sig_->connect(observer);
 		}
 		acoross::auto_connection auto_connect(const ObserverT& observer)
 		{
-			return acoross::make_auto_con(sig_.connect(observer));
+			return acoross::make_auto_con(sig_->connect(observer));
 		}
-
-		void connect(std::shared_ptr<UpdateEventRelayer> observer);
-
 		void invoke(int idx_x, int idx_y, SharedCloneZoneObjlistT mov_objs, SharedCloneZoneObjlistT static_objs)
 		{
-			sig_(idx_x, idx_y, mov_objs, static_objs);
+			(*sig_)(idx_x, idx_y, mov_objs, static_objs);
 		}
+		UpdateEventRelayer make_relayer();
+		std::unique_ptr<UpdateEventRelayer> make_relayer_up();
 
 	protected:
-		MySigT sig_;
+		std::shared_ptr<MySigT> sig_;	// 불변. 단, UpdateEventRelayer 의 경우 lifetime 이 owner 인 UpdateEventRelayer 보다 길 수 있음.
 	};
+
+	using life_share = std::shared_ptr<int>;
 
 	class UpdateEventRelayer final
 		: public UpdateEvent
 		, public std::enable_shared_from_this<UpdateEventRelayer>
 	{
 	public:
-		UpdateEventRelayer(UpdateEventRelayer&) = delete;
+		//UpdateEventRelayer(UpdateEventRelayer&) = delete;	-- this class is template... so it uses universal reference... you cannot block lvalue ref ctor only.
 		UpdateEventRelayer& operator=(UpdateEventRelayer&) = delete;
 
-		UpdateEventRelayer()
-		{}
-		UpdateEventRelayer(auto_connection&& conn_to_event)
-			: conn_to_event_(conn_to_event)
-		{}
+		explicit UpdateEventRelayer(std::shared_ptr<MySigT> sig, auto_connection&& conn_to_event)
+			: UpdateEvent(sig), conn_to_event_(std::move(conn_to_event)) {}
+		explicit UpdateEventRelayer(UpdateEventRelayer&& other)
+			: conn_to_event_(std::forward(other.conn_to_event_))
+			, UpdateEvent(std::forward(other)) {}
 		virtual ~UpdateEventRelayer()
 		{}
 
-		UpdateEventRelayer& operator=(UpdateEventRelayer&& other)
-		{
-			conn_to_event_.swap(other.conn_to_event_);
-			return *this;
-		}
-		void disconnect()
-		{
-			if (auto conn = std::atomic_load(&conn_to_event_))
-			{
-				conn->disconnect();
-			}
-		}
-		void reset_connection(acoross::auto_connection&& conn_to_event)
-		{
-			std::atomic_exchange(&conn_to_event_, conn_to_event);
-		}
 	private:
-		acoross::auto_connection conn_to_event_;
+		acoross::auto_connection conn_to_event_;	// 불변
 	};
 
 	/////////////////////////////////////////////////
@@ -182,7 +177,7 @@ public:
 		}
 	}
 
-	auto& GetUpdateEvent()
+	UpdateEvent& GetUpdateEvent()
 	{
 		return update_event_;
 	}
@@ -464,21 +459,31 @@ private:
 };
 //
 
-template <typename ColliderT>
-inline void GeoZone<ColliderT>::UpdateEvent::connect(
-	std::shared_ptr<typename GeoZone<ColliderT>::UpdateEventRelayer> observer)
+template<typename ColliderT>
+inline typename GeoZone<ColliderT>::UpdateEventRelayer GeoZone<ColliderT>::UpdateEvent::make_relayer()
 {
-	if (!observer)
-		return;
-
-	auto auto_con = sig_.auto_connect(
-		[obs = observer](int idx_zone_x, int idx_zone_y,
-			SbGeoZone::SharedCloneZoneObjlistT snakes,
-			SbGeoZone::SharedCloneZoneObjlistT apples)
+	auto relay_sig = std::make_shared<MySigT>();
+	auto new_conn = this->auto_connect([relay_sig](int idx_x, int idx_y, 
+		typename GeoZone<ColliderT>::SharedCloneZoneObjlistT mov_objs, 
+		typename GeoZone<ColliderT>::SharedCloneZoneObjlistT static_objs)
 	{
-		obs->invoke(idx_zone_x, idx_zone_y, snakes, apples);
+		(*relay_sig)(idx_x, idx_y, mov_objs, static_objs);
 	});
-	observer->reset_connection(std::move(auto_con));
+	return typename GeoZone<ColliderT>::UpdateEventRelayer(relay_sig, std::move(new_conn));
+}
+
+template<typename ColliderT>
+inline std::unique_ptr<typename GeoZone<ColliderT>::UpdateEventRelayer> GeoZone<ColliderT>::UpdateEvent::make_relayer_up()
+{
+	auto relay_sig = std::make_shared<MySigT>();
+	auto new_conn = this->auto_connect([relay_sig](int idx_x, int idx_y, 
+		typename GeoZone<ColliderT>::SharedCloneZoneObjlistT mov_objs, 
+		typename GeoZone<ColliderT>::SharedCloneZoneObjlistT static_objs)
+	{
+		(*relay_sig)(idx_x, idx_y, mov_objs, static_objs);
+	});
+
+	return std::make_unique<typename GeoZone<ColliderT>::UpdateEventRelayer>(relay_sig, std::move(new_conn));
 }
 
 }

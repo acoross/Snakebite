@@ -12,7 +12,7 @@
 
 #define ACOROSS_USE_TBB
 #ifdef ACOROSS_USE_TBB
-#include "tbb/tbbmalloc_proxy.h"
+//#include "tbb/tbbmalloc_proxy.h"
 #endif
 
 #include "local_game_client.h"

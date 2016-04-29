@@ -119,14 +119,12 @@ public:
 	// 그러므로, Enter 와 Leave 는 동시에 되지 않게 주의할 것.
 	virtual void OnEnterZoneCallback(SbGeoZone& zone) override
 	{
-		zone.GetUpdateEvent().connect(update_event_relayer_);
+		std::atomic_exchange(&update_event_relayer_, 
+			std::shared_ptr<SbGeoZone::UpdateEventRelayer>(zone.GetUpdateEvent().make_relayer_up()));
 	}
 	virtual void OnLeaveZoneCallback(SbGeoZone& zone) override
 	{
-		if (update_event_relayer_)
-		{
-			update_event_relayer_->disconnect();
-		}
+		std::atomic_exchange(&update_event_relayer_, decltype(update_event_relayer_)());
 	}
 	auto ConnectToUpdateEventRelayer(SbGeoZone::ObserverT on_update)
 	{

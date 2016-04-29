@@ -101,7 +101,7 @@ private:
 		SbGeoZone::CloneZoneObjListT&)> update_event_;
 
 	// zone event connection
-	std::list<acoross::auto_connection> list_conn_to_zone_event_;
+	std::list<SbGeoZone::UpdateEventRelayer> list_zone_event_relayer_;
 	SbGeoZoneGrid zone_grid_;
 
 	//юс╫ц
