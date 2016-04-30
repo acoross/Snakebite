@@ -249,8 +249,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// TODO: 여기에 코드를 입력합니다.
 	boost::asio::io_service io_service;
 	auto server = std::make_shared<GameServer>(
-		io_service, 22000, 22001
-		);
+		io_service, 22000, 22001);
 
 	g_game_client = std::make_unique<LocalGameClient>(*server);
 	g_game_server_wp = server;
@@ -267,7 +266,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	});
 
 	std::thread game_threads[3];
-
 	for (auto& game_thread : game_threads)
 	{
 		game_thread = std::thread(
