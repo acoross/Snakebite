@@ -41,7 +41,8 @@ public:
 
 	Handle<Snake>::Type AsyncMakeNewSnake(
 		std::string name = "noname",
-		Snake::EventHandler onDieHandler = Snake::EventHandler());
+		Snake::EventHandler onDieHandler = Snake::EventHandler(),
+		bool is_connect_zone = false);
 	void RequestMakeNewApple();
 	void AsyncRemoveSnake(Handle<Snake>::Type snake);
 	void RequestRemoveApple(HandleT apple_handle, std::function<void(bool result)> func);
@@ -101,7 +102,7 @@ private:
 		SbGeoZone::CloneZoneObjListT&)> update_event_;
 
 	// zone event connection
-	std::list<SbGeoZone::UpdateEventRelayer> list_zone_event_relayer_;
+	std::list<std::unique_ptr<typename SbGeoZone::UpdateEventRelayer>> list_zone_event_relayer_;
 	SbGeoZoneGrid zone_grid_;
 
 	//юс╫ц

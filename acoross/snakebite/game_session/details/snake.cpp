@@ -134,12 +134,14 @@ void SnakeTail::UpdateMove(int64_t diff_in_ms, MovingObjectContainer & container
 
 Snake::Snake(GameSession& game_session, const Position2D & pos, double radius,
 	const Degree & angle, double velocity, double ang_vel, int len,
-	EventHandler onDie, std::string name)
+	EventHandler onDie, std::string name,
+	bool is_connect_to_zone)
 	: SnakeNode(game_session,
 		Handle<Snake>(this).handle,
 		new SnakeCollider(this), pos, radius, name)
 	, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	, onDie_(onDie)
+	, is_connect_to_zone_(is_connect_to_zone)
 {
 	for (int i = 0; i < len; ++i)
 	{

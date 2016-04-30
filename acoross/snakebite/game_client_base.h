@@ -208,6 +208,8 @@ protected:
 			return;
 		}
 
+		it->second.store(false);
+
 		// snake 와 apple 의 복제본 리스트를 받아온 뒤 화면에 그린다.
 		// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
 		SbGeoZone::CloneZoneObjListT snake_pairs;

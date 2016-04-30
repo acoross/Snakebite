@@ -90,8 +90,8 @@ public:
 	const int ZoneWidth{ 500 };
 	const int ZoneHeight{ 500 };
 #else
-	const int COUNT_ZONE_X = 5;
-	const int COUNT_ZONE_Y = 5;
+	const int COUNT_ZONE_X = 15;
+	const int COUNT_ZONE_Y = 15;
 	const int ZoneWidth{ 500 };
 	const int ZoneHeight{ 500 };
 #endif

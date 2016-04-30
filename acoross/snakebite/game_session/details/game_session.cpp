@@ -35,20 +35,18 @@ void GameSession::StartZone(int frame_tick)
 	zone_grid_.ProcessAllZone(
 		[this](SbGeoZone& zone)->bool
 	{
-		SbGeoZone::UpdateEventRelayer relayer = zone.GetUpdateEvent().make_relayer();
-		//
-		/*relayer.connect(
-			[this](int idx_x, int idx_y,
-				SbGeoZone::SharedCloneZoneObjlistT snakes,
-				SbGeoZone::SharedCloneZoneObjlistT apples)
-		{
-			this->InvokeUpdateEvent(idx_x, idx_y, snakes, apples);
-		});
-
-		list_zone_event_relayer_.emplace_back(std::move(relayer));*/
-
+		list_zone_event_relayer_.emplace_back(zone.GetUpdateEvent().make_relayer_up());
 		return true;
 	});
+
+	for (auto& er : list_zone_event_relayer_)
+	{
+		er->connect([this](int idx_zone_x, int idx_zone_y,
+			SbGeoZone::SharedCloneZoneObjlistT snakes, SbGeoZone::SharedCloneZoneObjlistT apples)
+		{
+			this->InvokeUpdateEvent(idx_zone_x, idx_zone_y, snakes, apples);
+		});
+	}
 
 	zone_grid_.ProcessAllZone(
 		[frame_tick](auto& zone)->bool
@@ -113,7 +111,7 @@ void GameSession::AsyncAddSnakeTail(std::shared_ptr<SnakeNode> snake)
 	});
 }
 
-Handle<Snake>::Type GameSession::AsyncMakeNewSnake(std::string name, Snake::EventHandler onDieHandler)
+Handle<Snake>::Type GameSession::AsyncMakeNewSnake(std::string name, Snake::EventHandler onDieHandler, bool is_connect_zone)
 {
 	auto& game_boundary = zone_grid_.GetBoundaryContainer();
 	std::uniform_int_distribution<int> unin_x(game_boundary.Left, game_boundary.Right - 1);
@@ -129,7 +127,7 @@ Handle<Snake>::Type GameSession::AsyncMakeNewSnake(std::string name, Snake::Even
 		*this
 		, init_pos, radius
 		, unin_degree(random_engine_), velocity, ang_vel, body_len
-		, onDieHandler, name
+		, onDieHandler, name, is_connect_zone
 		);
 
 	auto zone = zone_grid_.get_zone(snake->GetPosition().x, snake->GetPosition().x);

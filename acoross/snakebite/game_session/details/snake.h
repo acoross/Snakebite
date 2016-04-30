@@ -81,7 +81,8 @@ public:
 
 	Snake(GameSession& game_session, const Position2D& pos, double radius
 		, const Degree& angle, double velocity, double ang_vel, int len
-		, EventHandler onDie = EventHandler(), std::string name = "noname");
+		, EventHandler onDie = EventHandler(), std::string name = "noname"
+		, bool is_connect_to_zone = false);
 	virtual ~Snake();
 
 	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override;
@@ -119,16 +120,27 @@ public:
 	// 그러므로, Enter 와 Leave 는 동시에 되지 않게 주의할 것.
 	virtual void OnEnterZoneCallback(SbGeoZone& zone) override
 	{
-		std::atomic_exchange(&update_event_relayer_, 
-			std::shared_ptr<SbGeoZone::UpdateEventRelayer>(zone.GetUpdateEvent().make_relayer_up()));
+		if (is_connect_to_zone_)
+		{
+			std::atomic_exchange(&update_event_relayer_,
+				std::shared_ptr<SbGeoZone::UpdateEventRelayer>(zone.GetUpdateEvent().make_relayer_up()));
+		}
 	}
 	virtual void OnLeaveZoneCallback(SbGeoZone& zone) override
 	{
-		std::atomic_exchange(&update_event_relayer_, decltype(update_event_relayer_)());
+		if (is_connect_to_zone_)
+		{
+			std::atomic_exchange(&update_event_relayer_, decltype(update_event_relayer_)());
+		}
 	}
 	auto ConnectToUpdateEventRelayer(SbGeoZone::ObserverT on_update)
 	{
-		return update_event_relayer_->connect(on_update);
+		if (auto er = std::atomic_load(&update_event_relayer_))
+		{
+			return er->auto_connect(on_update);
+		}
+
+		return acoross::auto_connection();
 	}
 
 private:
@@ -142,6 +154,7 @@ private:
 	EventHandler onDie_;
 
 	std::shared_ptr<SbGeoZone::UpdateEventRelayer> update_event_relayer_;
+	const bool is_connect_to_zone_{ false };
 };
 using SnakeSP = std::shared_ptr<Snake>;
 using SnakeWP = std::weak_ptr<Snake>;

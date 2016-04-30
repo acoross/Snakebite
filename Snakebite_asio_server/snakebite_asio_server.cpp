@@ -115,7 +115,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 #ifdef _DEBUG
 						for (int i = 0; i < 200; ++i)
 #else
-						for (int i = 0; i < 400; ++i)
+						for (int i = 0; i < 100; ++i)
 #endif
 						{
 							session.RequestMakeNewApple();
@@ -266,7 +266,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		client->SetObjectList(idx_x, idx_y, std::move(snake_list), std::move(apple_list));
 	});
 
-	std::thread game_threads[2];
+	std::thread game_threads[3];
 
 	for (auto& game_thread : game_threads)
 	{

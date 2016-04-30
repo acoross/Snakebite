@@ -189,14 +189,48 @@ void future_test()
 	//
 }
 
+void test_my_event()
+{
+	acoross::Event<void(int)> ev;
+	ev.connect([](int a)
+	{
+		std::cout << "con1 ";
+		std::cout << a << std::endl;
+	});
+	auto auto_conn = ev.auto_connect([](int b)
+	{
+		std::cout << "con2 ";
+		std::cout << b << std::endl;
+	});
+	ev.invoke(10);
+	auto_conn.reset(nullptr);
+
+	//
+	auto ev2(std::move(ev));
+	std::cout << "ev2" << std::endl;
+	ev2.invoke(2);
+
+	//
+	auto relayer = ev2.make_relayer_up();
+	auto auto_con3 = relayer->auto_connect([](int c)
+	{
+		std::cout << "con3 ";
+		std::cout << c << std::endl;
+	});
+	auto auto_con4 = relayer->auto_connect([](int c)
+	{
+		std::cout << "con4 ";
+		std::cout << c << std::endl;
+	});
+	ev2.invoke(3);
+}
+
 int main()
 {
-	if (true)
-	{
-	}
-	else
-	{
-	}
+	test_my_event();
+
+	system("pause");
+	return 0;
 
 	{
 		std::cout << "size: " << sizeof(acoross::auto_connection) << std::endl;

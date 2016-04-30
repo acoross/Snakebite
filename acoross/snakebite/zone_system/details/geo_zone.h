@@ -86,64 +86,8 @@ public:
 	using SharedCloneZoneObjlistT = std::shared_ptr<CloneZoneObjListT>;
 	using ObserverT = std::function<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
 
-	class UpdateEventRelayer;
-	class UpdateEvent
-	{
-	public:
-		using MySigT = boost::signals2::signal<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
-
-		explicit UpdateEvent()
-			: sig_(std::make_shared<MySigT>())
-		{}
-		explicit UpdateEvent(std::shared_ptr<MySigT> sig)
-			: sig_(sig){}
-		explicit UpdateEvent(UpdateEvent&& other)
-			: sig_(std::move(other.sig_))
-		{}
-
-		virtual ~UpdateEvent()
-		{}
-
-		boost::signals2::connection connect(const ObserverT& observer)
-		{
-			return sig_->connect(observer);
-		}
-		acoross::auto_connection auto_connect(const ObserverT& observer)
-		{
-			return acoross::make_auto_con(sig_->connect(observer));
-		}
-		void invoke(int idx_x, int idx_y, SharedCloneZoneObjlistT mov_objs, SharedCloneZoneObjlistT static_objs)
-		{
-			(*sig_)(idx_x, idx_y, mov_objs, static_objs);
-		}
-		UpdateEventRelayer make_relayer();
-		std::unique_ptr<UpdateEventRelayer> make_relayer_up();
-
-	protected:
-		std::shared_ptr<MySigT> sig_;	// 불변. 단, UpdateEventRelayer 의 경우 lifetime 이 owner 인 UpdateEventRelayer 보다 길 수 있음.
-	};
-
-	using life_share = std::shared_ptr<int>;
-
-	class UpdateEventRelayer final
-		: public UpdateEvent
-		, public std::enable_shared_from_this<UpdateEventRelayer>
-	{
-	public:
-		//UpdateEventRelayer(UpdateEventRelayer&) = delete;	-- this class is template... so it uses universal reference... you cannot block lvalue ref ctor only.
-		UpdateEventRelayer& operator=(UpdateEventRelayer&) = delete;
-
-		explicit UpdateEventRelayer(std::shared_ptr<MySigT> sig, auto_connection&& conn_to_event)
-			: UpdateEvent(sig), conn_to_event_(std::move(conn_to_event)) {}
-		explicit UpdateEventRelayer(UpdateEventRelayer&& other)
-			: conn_to_event_(std::forward(other.conn_to_event_))
-			, UpdateEvent(std::forward(other)) {}
-		virtual ~UpdateEventRelayer()
-		{}
-
-	private:
-		acoross::auto_connection conn_to_event_;	// 불변
-	};
+	using UpdateEvent = acoross::Event<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
+	using UpdateEventRelayer = acoross::Event<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
 
 	/////////////////////////////////////////////////
 	// GeoZone
@@ -162,6 +106,9 @@ public:
 		, zone_boundary_(left, width + left, top, top + height)
 	{}
 	~GeoZone()
+	{}
+
+	void Init()
 	{}
 
 	// timer 를 이용하는 update loop 를 시작한다.
@@ -276,7 +223,7 @@ private:
 			update_movobj_position(zone_timer_tick_);
 			process_collision(owner_zone_grid_);
 
-			invoke_update_event_to_observers();
+			invoke_my_update_event_to_observers();
 
 			zone_timer_.async_wait(
 				[this](boost::system::error_code ec)
@@ -341,7 +288,7 @@ private:
 
 	// @use in serializer
 	// process collision with neighbor zones
-	void process_collision(GameGeoZoneGrid& neighbors_)
+	void process_collision(GameGeoZoneGrid& neighbors)
 	{
 		auto shared_src_mov_objs = std::make_shared<MapMyObj>(mov_objects_);
 		for (auto& pair : *shared_src_mov_objs)
@@ -383,7 +330,7 @@ private:
 		{
 		for (int y = -1; y <= 1; ++y)
 		{
-		auto neighbor_zone = neighbors_.get_zone_by_idx(IDX_ZONE_X + x, IDX_ZONE_Y + y);
+		auto neighbor_zone = neighbors.get_zone_by_idx(IDX_ZONE_X + x, IDX_ZONE_Y + y);
 		if (neighbor_zone)
 		{
 		neighbor_zone->AsyncProcessCollisionTo(shared_src_mov_objs);
@@ -394,7 +341,7 @@ private:
 
 	// @use in serializer
 	// zone 내부의 objects 위치를 broadcast
-	void invoke_update_event_to_observers()
+	void invoke_my_update_event_to_observers()
 	{
 		auto snakes = std::make_shared<CloneZoneObjListT>();
 		for (auto pair : mov_objects_)
@@ -412,8 +359,21 @@ private:
 		}
 
 		invoke_update_event_to_observers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
+
+		for (int x = -1; x <= 1; ++x)
+		{
+			for (int y = -1; y <= 1; ++y)
+			{
+				auto neighbor_zone = owner_zone_grid_.get_zone_by_idx(IDX_ZONE_X + x, IDX_ZONE_Y + y);
+				if (neighbor_zone)
+				{
+					neighbor_zone->AsyncInvokeUpdateEventsToObservers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
+				}
+			}
+		}
 	}
 
+	// refactoring 필요
 	// @use in serializer
 	void invoke_update_event_to_observers(int idx_x, int idx_y,
 		SharedCloneZoneObjlistT snakes, SharedCloneZoneObjlistT apples)
@@ -458,33 +418,6 @@ private:
 	//
 };
 //
-
-template<typename ColliderT>
-inline typename GeoZone<ColliderT>::UpdateEventRelayer GeoZone<ColliderT>::UpdateEvent::make_relayer()
-{
-	auto relay_sig = std::make_shared<MySigT>();
-	auto new_conn = this->auto_connect([relay_sig](int idx_x, int idx_y, 
-		typename GeoZone<ColliderT>::SharedCloneZoneObjlistT mov_objs, 
-		typename GeoZone<ColliderT>::SharedCloneZoneObjlistT static_objs)
-	{
-		(*relay_sig)(idx_x, idx_y, mov_objs, static_objs);
-	});
-	return typename GeoZone<ColliderT>::UpdateEventRelayer(relay_sig, std::move(new_conn));
-}
-
-template<typename ColliderT>
-inline std::unique_ptr<typename GeoZone<ColliderT>::UpdateEventRelayer> GeoZone<ColliderT>::UpdateEvent::make_relayer_up()
-{
-	auto relay_sig = std::make_shared<MySigT>();
-	auto new_conn = this->auto_connect([relay_sig](int idx_x, int idx_y, 
-		typename GeoZone<ColliderT>::SharedCloneZoneObjlistT mov_objs, 
-		typename GeoZone<ColliderT>::SharedCloneZoneObjlistT static_objs)
-	{
-		(*relay_sig)(idx_x, idx_y, mov_objs, static_objs);
-	});
-
-	return std::make_unique<typename GeoZone<ColliderT>::UpdateEventRelayer>(relay_sig, std::move(new_conn));
-}
 
 }
 }

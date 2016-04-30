@@ -159,16 +159,16 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 				{});
 			}
 		}
-	});
+	}, /*is_connect_zone = */ true);
 
-	boost::promise<acoross::ConT> prom;
-	auto fut = prom.get_future();
+	std::shared_ptr<boost::promise<acoross::auto_connection>> prom_sp;
+	auto fut = prom_sp->get_future();
 
 	game_session_->RequestToSnake(
 		user_snake_handle_,
-		[this, self_wp, p = boost::move(prom)](Snake& snake) mutable
+		[this, self_wp, prom_sp](Snake& snake) mutable
 	{
-		auto con = snake.ConnectToUpdateEventRelayer(
+		auto auto_conn = snake.ConnectToUpdateEventRelayer(
 			[this, self_wp](int idx_x, int idx_y,
 				SbGeoZone::SharedCloneZoneObjlistT snake_clone_list,
 				SbGeoZone::SharedCloneZoneObjlistT apple_clone_list)
@@ -182,10 +182,10 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 			}
 		});
 
-		p.set_value(con);
+		prom_sp->set_value(std::move(auto_conn));
 	});
 
-	auto_discon_observer_to_session_ = acoross::make_auto_con(fut.get());
+	auto_discon_observer_to_session_ = std::move(fut.get());
 
 	if (rp)
 	{
