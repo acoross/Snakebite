@@ -352,7 +352,7 @@ private:
 			}
 		}
 
-		auto apples = std::make_shared<CloneZoneObjListT>();//std::make_shared<CloneApplelistT>();
+		auto apples = std::make_shared<CloneZoneObjListT>();
 		for (auto apple : static_objects_)
 		{
 			apples->push_back(std::make_pair(apple.first, apple.second->Clone()));
@@ -360,17 +360,20 @@ private:
 
 		invoke_update_event_to_observers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
 
-		for (int x = -1; x <= 1; ++x)
-		{
-			for (int y = -1; y <= 1; ++y)
-			{
-				auto neighbor_zone = owner_zone_grid_.get_zone_by_idx(IDX_ZONE_X + x, IDX_ZONE_Y + y);
-				if (neighbor_zone)
-				{
-					neighbor_zone->AsyncInvokeUpdateEventsToObservers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
-				}
-			}
-		}
+		//for (int x = -1; x <= 1; ++x)
+		//{
+		//	for (int y = -1; y <= 1; ++y)
+		//	{
+		//		if (x == 0 && y == 0)
+		//			continue;
+
+		//		auto neighbor_zone = owner_zone_grid_.get_zone_by_idx(IDX_ZONE_X + x, IDX_ZONE_Y + y);
+		//		if (neighbor_zone)
+		//		{
+		//			neighbor_zone->AsyncInvokeUpdateEventsToObservers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
+		//		}
+		//	}
+		//}
 	}
 
 	// refactoring ÇÊ¿ä

@@ -68,7 +68,7 @@ public:
 		});
 	}
 
-	auto MakeConnectionToUpdateEvent(std::function<UpdateEventHandler> on_update)
+	auto MakeConnectionToUpdateEvent(SbGeoZone::ObserverT on_update)
 	{
 		return update_event_.connect(on_update);
 	}
@@ -76,7 +76,7 @@ public:
 	void InvokeUpdateEvent(int idx_zone_x, int idx_zone_y,
 		SbGeoZone::SharedCloneZoneObjlistT snakes, SbGeoZone::SharedCloneZoneObjlistT apples)
 	{
-		update_event_(idx_zone_x, idx_zone_y, *snakes, *apples);
+		update_event_.invoke(idx_zone_x, idx_zone_y, snakes, apples);
 	}
 
 	const SbGeoZoneGrid& GetZoneGrid() const
@@ -97,9 +97,7 @@ private:
 	const Position2D player_pos{ 100, 100 };
 
 	// my update event... pass zone event to listners
-	boost::signals2::signal<void(int, int,
-		SbGeoZone::CloneZoneObjListT&,
-		SbGeoZone::CloneZoneObjListT&)> update_event_;
+	SbGeoZone::UpdateEvent update_event_;	
 
 	// zone event connection
 	std::list<std::unique_ptr<typename SbGeoZone::UpdateEventRelayer>> list_zone_event_relayer_;

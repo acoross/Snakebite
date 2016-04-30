@@ -29,20 +29,12 @@ class GameServer final
 	: public std::enable_shared_from_this<GameServer>
 {
 public:
-	using LocalUpdateListner =
-		std::function<void(
-			int idx_x, int idx_y,
-			SbGeoZone::CloneZoneObjListT&,
-			SbGeoZone::CloneZoneObjListT&
-			)>;
-
-public:
 	GameServer(boost::asio::io_service& io_service,
 		short port,
 		short push_port);
 	~GameServer() {}
 
-	auto MakeConnectionToGlobalUpdateEvent(LocalUpdateListner local_listner)
+	auto MakeConnectionToGlobalUpdateEvent(SbGeoZone::ObserverT local_listner)
 	{
 		return game_session_->MakeConnectionToUpdateEvent(local_listner);
 	}

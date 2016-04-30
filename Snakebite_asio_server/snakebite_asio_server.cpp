@@ -255,15 +255,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	g_game_client = std::make_unique<LocalGameClient>(*server);
 	g_game_server_wp = server;
 
-
 	auto auto_con = server->MakeConnectionToGlobalUpdateEvent(
-		[client = g_game_client.get()]
-	(
-		int idx_x, int idx_y,
-		SbGeoZone::CloneZoneObjListT snake_list,
-		SbGeoZone::CloneZoneObjListT apple_list)
+		[client = g_game_client.get()](
+			int idx_x, int idx_y,
+			SbGeoZone::SharedCloneZoneObjlistT snake_list,
+			SbGeoZone::SharedCloneZoneObjlistT apple_list)
 	{
-		client->SetObjectList(idx_x, idx_y, std::move(snake_list), std::move(apple_list));
+		auto snakes = *snake_list;
+		auto apples = *apple_list;
+		client->SetObjectList(idx_x, idx_y, std::move(snakes), std::move(apples));
 	});
 
 	std::thread game_threads[3];
