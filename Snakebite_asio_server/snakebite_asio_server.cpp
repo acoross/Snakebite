@@ -1,5 +1,6 @@
 #include <acoross/snakebite/win/Resource.h>
 #include <acoross/snakebite/win/WinWrapper.h>
+#include <Windowsx.h>
 
 #include <SDKDDKVer.h>
 #include <boost/asio.hpp>
@@ -26,6 +27,9 @@ std::weak_ptr<GameServer> g_game_server_wp;
 //<test>
 std::atomic<double> mean_draw_time_ms{ 0 };
 //</test>
+
+int last_mouse_pos_x = -1;
+int last_mouse_pos_y = -1;
 
 //
 //  ÇÔ¼ö: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -164,6 +168,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			}
 		}
 		break;
+	case WM_MOUSEMOVE:
+		{
+			if (last_mouse_pos_x == -1 || last_mouse_pos_y == -1)
+				break;
+
+			if (wParam & MK_LBUTTON)
+			{
+				int x = GET_X_LPARAM(lParam);
+				int y = GET_Y_LPARAM(lParam);
+				g_game_client->FetchMoveScreen(last_mouse_pos_x - x, last_mouse_pos_y - y);
+
+				last_mouse_pos_x = x;
+				last_mouse_pos_y = y;
+			}
+		}
+		break;
+	case WM_LBUTTONDOWN:
+		{
+			last_mouse_pos_x = GET_X_LPARAM(lParam);
+			last_mouse_pos_y = GET_Y_LPARAM(lParam);
+		}
+		break;
+	case WM_LBUTTONUP:
+		{
+			::InvalidateRect(hWnd, nullptr, true);
+		}
+		break;
 	case WM_PAINT:
 		{
 			RECT client_rect;
@@ -260,9 +291,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			SbGeoZone::SharedCloneZoneObjlistT snake_list,
 			SbGeoZone::SharedCloneZoneObjlistT apple_list)
 	{
-		auto snakes = *snake_list;
-		auto apples = *apple_list;
-		client->SetObjectList(idx_x, idx_y, std::move(snakes), std::move(apples));
+		client->SetObjectList_FilteredByCurrentObservingZoneOnly(idx_x, idx_y, snake_list, apple_list);
 	});
 
 	std::thread game_threads[3];

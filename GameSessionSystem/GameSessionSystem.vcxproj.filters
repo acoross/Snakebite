@@ -4,16 +4,19 @@
     <Filter Include="details">
       <UniqueIdentifier>{b8de2bb3-b341-4f9b-8048-f4133b5f83e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zone_system">
+    <Filter Include="lib">
+      <UniqueIdentifier>{f9a4826a-fc8a-43f0-8a38-e7590ee1fc60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\zone_system">
       <UniqueIdentifier>{b061af5f-c933-410f-9ecf-d84a972afb51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zone_system\details">
+    <Filter Include="lib\zone_system\details">
       <UniqueIdentifier>{4bc58143-2bc5-4806-9a3a-46a415ec8dfc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="moving_object_system">
+    <Filter Include="lib\moving_object_system">
       <UniqueIdentifier>{ff82ae5d-0ba7-465a-8f39-524845d8ac3b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="moving_object_system\details">
+    <Filter Include="lib\moving_object_system\details">
       <UniqueIdentifier>{1e5835ab-efd8-4067-94fc-f749fc4cf326}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -37,35 +40,35 @@
       <Filter>details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\zone_system\zone_system.h">
-      <Filter>zone_system</Filter>
+      <Filter>lib\zone_system</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\zone_system\details\geo_zone.h">
-      <Filter>zone_system\details</Filter>
+      <Filter>lib\zone_system\details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\zone_system\details\geo_zone_grid.h">
-      <Filter>zone_system\details</Filter>
+      <Filter>lib\zone_system\details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\zone_system\details\handle.h">
-      <Filter>zone_system\details</Filter>
+      <Filter>lib\zone_system\details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\zone_system\details\zone_object.h">
-      <Filter>zone_system\details</Filter>
+      <Filter>lib\zone_system\details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h" />
     <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h">
-      <Filter>moving_object_system</Filter>
+      <Filter>lib\moving_object_system</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h">
-      <Filter>moving_object_system\details</Filter>
+      <Filter>lib\moving_object_system\details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object.h">
-      <Filter>moving_object_system\details</Filter>
+      <Filter>lib\moving_object_system\details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
-      <Filter>moving_object_system\details</Filter>
+      <Filter>lib\moving_object_system\details</Filter>
     </ClInclude>
     <ClInclude Include="..\acoross\snakebite\zone_system\details\signal.h">
-      <Filter>zone_system</Filter>
+      <Filter>lib\zone_system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -81,11 +84,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="..\acoross\snakebite\zone_system\details\geo_zone.ipp">
-      <Filter>zone_system\details</Filter>
-    </None>
-    <None Include="..\acoross\snakebite\zone_system\details\geo_zone_grid.ipp">
-      <Filter>zone_system\details</Filter>
-    </None>
   </ItemGroup>
 </Project>

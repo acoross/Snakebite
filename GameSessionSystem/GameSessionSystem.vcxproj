@@ -92,8 +92,6 @@
     <ClCompile Include="..\acoross\snakebite\game_session\details\snake_collider.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\acoross\snakebite\zone_system\details\geo_zone.ipp" />
-    <None Include="..\acoross\snakebite\zone_system\details\geo_zone_grid.ipp" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,6 +2,7 @@
 #define ACOROSS_EVENT_H_
 
 #include <memory>
+#include <mutex>
 
 #include <boost/signals2.hpp>
 
@@ -70,6 +71,7 @@ public:
 	}
 
 	std::unique_ptr<EventRelayer<F>> make_relayer_up();
+	void reconnect_relayer(EventRelayer<F>& relayer);
 
 protected:
 	std::shared_ptr<MySigT> sig_;	// 불변. 단, EventRelayer 의 경우 lifetime 이 owner 인 EventRelayer 보다 길 수 있음.
@@ -82,8 +84,14 @@ class EventRelayer final
 {
 public:
 	//EventRelayer(EventRelayer&) = delete;	// this class is template... so it uses universal reference... you cannot block lvalue ref ctor only.
-	//EventRelayer& operator=(EventRelayer&) = delete;
+	//EventRelayer& operator=(const EventRelayer&) = delete;
 
+	EventRelayer()
+		: Event()
+		, conn_to_event_(nullptr)
+	{
+	}
+	
 	explicit EventRelayer(std::shared_ptr<MySigT> sig, auto_connection&& conn_to_event)
 		: Event(sig), conn_to_event_(std::move(conn_to_event))
 	{}
@@ -93,15 +101,18 @@ public:
 	{}
 	virtual ~EventRelayer()
 	{}
-
-	/*EventRelayer& operator=(EventRelayer&& other)
-	{
-		sig_ = std::forward(other.sig_);
-		conn_to_event_ = std::forward(other.conn_to_event_);
-	}*/
-
+	
 private:
-	acoross::auto_connection conn_to_event_;	// 불변
+	void change_connection(acoross::auto_connection&& new_conn)
+	{
+		std::lock_guard<std::mutex> lock(con_lock_);
+		conn_to_event_.swap(new_conn);
+	}
+
+	std::mutex con_lock_;
+	acoross::auto_connection conn_to_event_;
+
+	friend Event<F>;
 };
 
 template<typename F>
@@ -112,10 +123,21 @@ inline std::unique_ptr<EventRelayer<F>> Event<F>::make_relayer_up()
 		[relay_sig](auto... args)
 	{
 		(*relay_sig)(args...);
-	}
-	);
+	});
 
 	return std::make_unique<EventRelayer<F>>(relay_sig, std::move(new_conn));
+}
+
+template<typename F>
+inline void Event<F>::reconnect_relayer(EventRelayer<F>& relayer)
+{
+	auto new_conn = this->auto_connect(
+		[relay_sig = relayer.sig_](auto... args)
+	{
+		(*relay_sig)(args...);
+	});
+
+	relayer.change_connection(std::move(new_conn));
 }
 
 }

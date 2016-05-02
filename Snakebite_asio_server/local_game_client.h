@@ -31,6 +31,27 @@ public:
 		zone_info_.initialized.store(true);
 	}
 
+	void SetObjectList_FilteredByCurrentObservingZoneOnly(
+		int idx_x, int idx_y,
+		SbGeoZone::SharedCloneZoneObjlistT snake_list,
+		SbGeoZone::SharedCloneZoneObjlistT apple_list)
+	{
+		auto min_x = cached_draw_zone_min_x_.load();
+		auto max_x = cached_draw_zone_max_x_.load();
+		auto min_y = cached_draw_zone_min_y_.load();
+		auto max_y = cached_draw_zone_max_y_.load();
+
+		if (min_x > idx_x || max_x < idx_x
+			|| min_y > idx_y || max_y < idx_y)
+		{
+			return;
+		}
+		
+		auto snakes = *snake_list;
+		auto apples = *apple_list;
+		this->SetObjectList(idx_x, idx_y, std::move(snakes), std::move(apples));
+	}
+
 	//@lock
 	virtual void InitPlayer() override
 	{

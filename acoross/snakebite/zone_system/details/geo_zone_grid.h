@@ -140,6 +140,6 @@ private:
 }
 }
 
-#include "geo_zone_grid.ipp"
+//#include "geo_zone_grid.ipp"
 
 #endif //ACOROSS_GAME_GEO_ZONE_GRID_H_

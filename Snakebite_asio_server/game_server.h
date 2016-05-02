@@ -44,8 +44,8 @@ public:
 		request(*game_session_);
 	}
 
-	void RequestToSessionNpcController(std::function<void(SnakeNpcControlManager&)>
-		request)
+	void RequestToSessionNpcController(
+		std::function<void(SnakeNpcControlManager&)> request)
 	{
 		request(*npc_controll_manager_);
 	}

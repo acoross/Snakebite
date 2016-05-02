@@ -87,7 +87,7 @@ public:
 	using ObserverT = std::function<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
 
 	using UpdateEvent = acoross::Event<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
-	using UpdateEventRelayer = acoross::Event<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
+	using UpdateEventRelayer = acoross::EventRelayer<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
 
 	/////////////////////////////////////////////////
 	// GeoZone
@@ -360,20 +360,20 @@ private:
 
 		invoke_update_event_to_observers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
 
-		//for (int x = -1; x <= 1; ++x)
-		//{
-		//	for (int y = -1; y <= 1; ++y)
-		//	{
-		//		if (x == 0 && y == 0)
-		//			continue;
+		for (int x = -1; x <= 1; ++x)
+		{
+			for (int y = -1; y <= 1; ++y)
+			{
+				if (x == 0 && y == 0)
+					continue;
 
-		//		auto neighbor_zone = owner_zone_grid_.get_zone_by_idx(IDX_ZONE_X + x, IDX_ZONE_Y + y);
-		//		if (neighbor_zone)
-		//		{
-		//			neighbor_zone->AsyncInvokeUpdateEventsToObservers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
-		//		}
-		//	}
-		//}
+				auto neighbor_zone = owner_zone_grid_.get_zone_by_idx(IDX_ZONE_X + x, IDX_ZONE_Y + y);
+				if (neighbor_zone)
+				{
+					neighbor_zone->AsyncInvokeUpdateEventsToObservers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
+				}
+			}
+		}
 	}
 
 	// refactoring ÇÊ¿ä
@@ -381,7 +381,7 @@ private:
 	void invoke_update_event_to_observers(int idx_x, int idx_y,
 		SharedCloneZoneObjlistT snakes, SharedCloneZoneObjlistT apples)
 	{
-		update_event_.invoke(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
+		update_event_.invoke(idx_x, idx_y, snakes, apples);
 	}
 
 	static void process_collision_2mapsnake(MapMyObj& src_mov_objs, MapMyObj& target_mov_objs, MapMyObj& static_objs)
@@ -425,6 +425,6 @@ private:
 }
 }
 
-#include "geo_zone.ipp"
+//#include "geo_zone.ipp"
 
 #endif //SNAKEBITE_GAME_GEO_ZONE_H_

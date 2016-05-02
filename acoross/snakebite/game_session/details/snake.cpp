@@ -142,6 +142,7 @@ Snake::Snake(GameSession& game_session, const Position2D & pos, double radius,
 	, angle_(angle), velocity_(velocity), ang_vel_(ang_vel)
 	, onDie_(onDie)
 	, is_connect_to_zone_(is_connect_to_zone)
+	, update_event_relayer_(std::make_shared<SbGeoZone::UpdateEventRelayer>())
 {
 	for (int i = 0; i < len; ++i)
 	{

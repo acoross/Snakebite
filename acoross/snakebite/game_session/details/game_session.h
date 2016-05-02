@@ -21,17 +21,11 @@ namespace acoross {
 namespace snakebite {
 
 using MapSnake = std::unordered_map<Handle<Snake>::Type, std::shared_ptr<Snake>>;
-using ListApple = std::list<AppleSP>;
 
 // 맵, GameObject 로 구성되는 하나의 게임 단위.
 class GameSession final
 {
 public:
-	using UpdateEventHandler = void(int, int,
-		SbGeoZone::CloneZoneObjListT&, SbGeoZone::CloneZoneObjListT&);
-	using UpdateEventListner = std::function<UpdateEventHandler>;
-	using ListMovingObject = MovingObjectContainer::ListMovingObject;
-
 	explicit GameSession(
 		::boost::asio::io_service& io_service,
 		int zone_width, int zone_height, int n_x, int n_y);
@@ -100,7 +94,7 @@ private:
 	SbGeoZone::UpdateEvent update_event_;	
 
 	// zone event connection
-	std::list<std::unique_ptr<typename SbGeoZone::UpdateEventRelayer>> list_zone_event_relayer_;
+	std::list<std::pair<std::pair<int, int>, std::unique_ptr<typename SbGeoZone::UpdateEventRelayer>>> list_zone_event_relayer_;
 	SbGeoZoneGrid zone_grid_;
 
 	//임시

@@ -122,15 +122,17 @@ public:
 	{
 		if (is_connect_to_zone_)
 		{
-			std::atomic_exchange(&update_event_relayer_,
-				std::shared_ptr<SbGeoZone::UpdateEventRelayer>(zone.GetUpdateEvent().make_relayer_up()));
+			if (auto er = std::atomic_load(&update_event_relayer_))
+			{
+				zone.GetUpdateEvent().reconnect_relayer(*er);
+			}
 		}
 	}
 	virtual void OnLeaveZoneCallback(SbGeoZone& zone) override
 	{
 		if (is_connect_to_zone_)
 		{
-			std::atomic_exchange(&update_event_relayer_, decltype(update_event_relayer_)());
+			//std::atomic_exchange(&update_event_relayer_, decltype(update_event_relayer_)());
 		}
 	}
 	auto ConnectToUpdateEventRelayer(SbGeoZone::ObserverT on_update)

@@ -161,7 +161,7 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 		}
 	}, /*is_connect_zone = */ true);
 
-	std::shared_ptr<boost::promise<acoross::auto_connection>> prom_sp;
+	auto prom_sp = std::make_shared<boost::promise<acoross::auto_connection>>();
 	auto fut = prom_sp->get_future();
 
 	game_session_->RequestToSnake(

@@ -35,15 +35,22 @@ void GameSession::StartZone(int frame_tick)
 	zone_grid_.ProcessAllZone(
 		[this](SbGeoZone& zone)->bool
 	{
-		list_zone_event_relayer_.emplace_back(zone.GetUpdateEvent().make_relayer_up());
+		list_zone_event_relayer_.emplace_back(
+			std::make_pair(
+				std::make_pair(zone.IDX_ZONE_X, zone.IDX_ZONE_Y), zone.GetUpdateEvent().make_relayer_up()));
 		return true;
 	});
 
-	for (auto& er : list_zone_event_relayer_)
+	for (auto& zone_er : list_zone_event_relayer_)
 	{
-		er->connect([this](int idx_zone_x, int idx_zone_y,
+		zone_er.second->connect(
+			[ix = zone_er.first.first, iy = zone_er.first.second, this]
+		(int idx_zone_x, int idx_zone_y,
 			SbGeoZone::SharedCloneZoneObjlistT snakes, SbGeoZone::SharedCloneZoneObjlistT apples)
 		{
+			if (ix == idx_zone_x && iy == idx_zone_y)	// 각 zone 은 옆 zone 정보까지 broadcast 하기 때문에, 전체 zone 정보를 수신하는 경우 filter 필요.
+				return;
+
 			this->InvokeUpdateEvent(idx_zone_x, idx_zone_y, snakes, apples);
 		});
 	}

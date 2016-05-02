@@ -45,7 +45,7 @@ public:
 			return false;
 		}
 
-		if (IsCollidingTo(target))
+		if (IsCollidingTo(target.get()))
 		{
 			if (this->collider_)
 			{
@@ -60,9 +60,9 @@ public:
 		return false;
 	}
 
-	bool IsCollidingTo(std::shared_ptr<MyT> other) const
+	bool IsCollidingTo(MyT* other) const
 	{
-		if (this == other.get())
+		if (this == other)
 		{
 			return false;
 		}
@@ -77,7 +77,7 @@ public:
 			return true;
 		}
 
-		std::lock_guard<std::recursive_mutex> lock(body_list_lock_);
+		std::lock_guard<std::recursive_mutex> lock(other->body_list_lock_);
 		for (auto mo : other->body_list_)
 		{
 			if (IsCrashed(head_, mo))
