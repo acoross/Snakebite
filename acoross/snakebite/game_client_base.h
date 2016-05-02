@@ -76,8 +76,8 @@ public:
 
 	void FetchMoveScreen(int x, int y)
 	{
-		center_screen_x_.fetch_add(x);
-		center_screen_y_.fetch_add(y);
+		center_screen_x_.fetch_add(x * 100 / scale_pcnt_);
+		center_screen_y_.fetch_add(y * 100 / scale_pcnt_);
 	}
 
 	int FetchAddScalePcnt(int val)
@@ -97,6 +97,12 @@ public:
 	void SetGridOn(bool on)
 	{
 		bGridOn_ = on;
+	}
+
+	void SetScreenCenterToPlayerPos(RECT& client_rect)
+	{
+		center_screen_x_.store(player_x_.load() - (int)(client_rect.right / 2));
+		center_screen_y_.store(player_y_.load() - (int)(client_rect.bottom / 2));
 	}
 
 	virtual void Draw(Win::WDC& wdc, RECT& client_rect)
@@ -272,6 +278,10 @@ protected:
 					idx_zone_player_x = snake_pair.second.zone_idx_x_;
 					idx_zone_player_y = snake_pair.second.zone_idx_y_;
 
+					auto& player_pos = snake_pair.second.head_.GetPosition();
+					player_x_.store(player_pos.x);
+					player_y_.store(player_pos.y);
+
 					HBRUSH oldbrush = (HBRUSH)::SelectObject(memdc.Get(), ::GetStockObject(BLACK_BRUSH));
 					DrawSnake(memdc, snake_pair.second);
 					(HBRUSH)::SelectObject(memdc.Get(), oldbrush);
@@ -367,6 +377,9 @@ protected:
 	// lock 을 추가하던지 뭔가 코드 수정 필요.
 	Handle<Snake>::Type player_handle_{ 0 };
 	PlayerKey player_key_{ PlayerKey::PK_NONE };
+
+	std::atomic<int> player_x_{ 0 };
+	std::atomic<int> player_y_{ 0 };
 
 	//
 	bool bGridOn_{ true };

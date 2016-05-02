@@ -38,7 +38,7 @@ public:
 
 	void start();
 	void end();
-
+	
 	void init_push_stub_socket(::boost::asio::io_service& io_service,
 		::boost::asio::ip::tcp::socket&& socket)
 	{

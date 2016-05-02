@@ -1,5 +1,6 @@
 #include <acoross/snakebite/win/Resource.h>
 #include <acoross/snakebite/win/WinWrapper.h>
+#include <Windowsx.h>
 
 #include <iostream>
 #include <thread>
@@ -19,6 +20,9 @@ using boost::asio::ip::tcp;
 using namespace acoross::snakebite;
 
 std::weak_ptr<GameClient> g_game_client;
+
+int last_mouse_pos_x = -1;
+int last_mouse_pos_y = -1;
 
 //
 //  ÇÔ¼ö: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -86,6 +90,37 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		}
 	}
 	break;
+	case WM_MOUSEMOVE:
+		{
+			if (last_mouse_pos_x == -1 || last_mouse_pos_y == -1)
+				break;
+
+			if (wParam & MK_LBUTTON)
+			{
+				int x = GET_X_LPARAM(lParam);
+				int y = GET_Y_LPARAM(lParam);
+				
+				if (auto game_client = g_game_client.lock())
+				{
+					game_client->FetchMoveScreen(last_mouse_pos_x - x, last_mouse_pos_y - y);
+
+					last_mouse_pos_x = x;
+					last_mouse_pos_y = y;
+				}
+			}
+		}
+		break;
+	case WM_LBUTTONDOWN:
+		{
+			last_mouse_pos_x = GET_X_LPARAM(lParam);
+			last_mouse_pos_y = GET_Y_LPARAM(lParam);
+		}
+		break;
+	case WM_LBUTTONUP:
+		{
+			::InvalidateRect(hWnd, nullptr, true);
+		}
+		break;
 	case WM_KEYUP:
 	{
 		if (wParam == VK_LEFT)
@@ -100,6 +135,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			if (auto game_client = g_game_client.lock())
 			{
 				game_client->SetKeyUp(PK_RIGHT);
+			}
+		}
+		else if (wParam == 'Q')
+		{
+			if (auto game_client = g_game_client.lock())
+			{
+				RECT client_rect;
+				::GetClientRect(hWnd, &client_rect);
+				game_client->SetScreenCenterToPlayerPos(client_rect);
 			}
 		}
 	}

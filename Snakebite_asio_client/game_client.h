@@ -58,6 +58,7 @@ public:
 		this->RequestZoneInfo();
 	}
 
+	/////////////////////////////////////////////
 	virtual void RequestZoneInfo() override
 	{
 		messages::VoidReply rq;
