@@ -51,6 +51,7 @@ public:
 
 	void RetrieveChangedList(std::map<std::pair<int, int>, std::atomic<bool>>& changed)
 	{
+		std::lock_guard<std::mutex> lock(clone_list_mutex_);
 		changed = std::move(zone_clone_list_changed_);
 	}
 
@@ -60,7 +61,7 @@ public:
 		SbGeoZone::CloneZoneObjListT& apple_clone_list)
 	{
 		std::lock_guard<std::mutex> lock(clone_list_mutex_);
-		
+
 		auto it_zone_snakes = zone_snake_clone_list_.find(std::make_pair(idx_x, idx_y));
 		if (it_zone_snakes != zone_snake_clone_list_.end())
 		{
@@ -112,67 +113,25 @@ public:
 			return;
 		}
 
-		double scale_ratio = scale_pcnt_ / 100.;
-
-		// client_rect 와 scale, zone grid size 를 비교하여 몇칸의 zone 을 그릴 지 결정한다.
-		auto cen_scr_x = center_screen_x_.load();
-		auto cen_scr_y = center_screen_y_.load();
-
-		auto draw_zone_min_x = int((cen_scr_x + client_rect.left) / ((double)zone_info_.w * scale_ratio)) -1;
-		auto draw_zone_max_x = int((cen_scr_x + client_rect.right) / ((double)zone_info_.w * scale_ratio)) + 1;
-		auto draw_zone_min_y = int((cen_scr_y + client_rect.top) / ((double)zone_info_.h * scale_ratio)) -1;
-		auto draw_zone_max_y = int((cen_scr_y + client_rect.bottom) / ((double)zone_info_.h * scale_ratio)) + 1;
-
-		auto it_draw_zone_min_x = std::max(draw_zone_min_x, 0);
-		auto it_draw_zone_min_y = std::max(draw_zone_min_y, 0);
-		auto it_draw_zone_max_x = std::min(draw_zone_max_x, zone_info_.limit_idx_x);
-		auto it_draw_zone_max_y = std::min(draw_zone_max_y, zone_info_.limit_idx_y);
-
-		//
-		cached_draw_zone_min_x_.store(draw_zone_min_x);
-		cached_draw_zone_max_x_.store(draw_zone_max_x);
-		cached_draw_zone_min_y_.store(draw_zone_min_y);
-		cached_draw_zone_max_y_.store(draw_zone_max_y);
-		//
-
 		acoross::Win::WDC memdc(::CreateCompatibleDC(wdc.Get()));
 		static HBITMAP hbitmap = ::CreateCompatibleBitmap(wdc.Get(),
 			zone_info_.w * zone_info_.limit_idx_x, zone_info_.h * zone_info_.limit_idx_y);
 		HBITMAP oldbit = (HBITMAP)::SelectObject(memdc.Get(), hbitmap);
 
 		/*memdc.Rectangle(0, 0,
-			zone_info_.w * draw_zone_cnt_x,
-			zone_info_.h * draw_zone_cnt_y);*/
+			zone_info_.w * zone_info_.limit_idx_x,
+			zone_info_.h * zone_info_.limit_idx_y);
+		*/
 
-		std::map<std::pair<int, int>, std::atomic<bool>> changed;
-		this->RetrieveChangedList(changed);
+		// client_rect 와 scale, zone grid size 를 비교하여 몇칸의 zone 을 그릴 지 결정한다.
+		double scale_ratio = scale_pcnt_ / 100.;
+		auto cen_scr_x = center_screen_x_.load();
+		auto cen_scr_y = center_screen_y_.load();
 
-		for (int idx_x = it_draw_zone_min_x; idx_x < it_draw_zone_max_x; ++idx_x)
-		{
-			for (int idx_y = it_draw_zone_min_y; idx_y < it_draw_zone_max_y; ++idx_y)
-			{
-				auto it = changed.find(std::make_pair(idx_x, idx_y));
-				if (it != changed.end() && it->second.load())
-				{
-					DrawGrid(memdc, idx_x, idx_y);
-				}
-			}
-		}
-
-		for (int idx_x = it_draw_zone_min_x; idx_x < it_draw_zone_max_x; ++idx_x)
-		{
-			for (int idx_y = it_draw_zone_min_y; idx_y < it_draw_zone_max_y; ++idx_y)
-			{
-				auto it = changed.find(std::make_pair(idx_x, idx_y));
-				if (it != changed.end() && it->second.load())
-				{
-					DrawZone(memdc, idx_x, idx_y);
-				}
-			}
-		}
-
-		auto src_len_x = zone_info_.w * draw_zone_max_x - cen_scr_x;
-		auto src_len_y = zone_info_.h * draw_zone_max_y - cen_scr_y;
+		// field 상에서의 screen size
+		int scr_width = int(client_rect.right / scale_ratio);
+		int scr_height = int(client_rect.bottom / scale_ratio);
+		draw_only_on_screen(memdc, cen_scr_x, cen_scr_y, scr_width, scr_height);
 
 		::StretchBlt(
 			wdc.Get(),
@@ -182,10 +141,9 @@ public:
 			memdc.Get(),
 			cen_scr_x,
 			cen_scr_y,
-			(int)(client_rect.right / scale_ratio),
-			(int)(client_rect.bottom / scale_ratio),
+			int(client_rect.right / scale_ratio),
+			int(client_rect.bottom / scale_ratio),
 			SRCCOPY);
-		//::BitBlt(wdc.Get(), 0, 0, client_rect.right, client_rect.bottom, memdc.Get(), 0, 0, SRCCOPY);
 
 		::SelectObject(memdc.Get(), oldbit);
 		::DeleteObject(memdc.Get());
@@ -200,8 +158,56 @@ public:
 	std::atomic<size_t> snake_count_{ 0 };
 	std::atomic<size_t> apple_count_{ 0 };
 	std::atomic<double> mean_draw_time_ms_{ 0 };
-	
+
 protected:
+	void draw_only_on_screen(Win::WDC& memdc, int cen_scr_x, int cen_scr_y, int scr_width, int scr_height)
+	{
+		auto draw_zone_min_x = int((cen_scr_x) / ((double)zone_info_.w));
+		auto draw_zone_max_x = int((cen_scr_x + scr_width) / ((double)zone_info_.w));
+		auto draw_zone_min_y = int((cen_scr_y) / ((double)zone_info_.h));
+		auto draw_zone_max_y = int((cen_scr_y + scr_height) / ((double)zone_info_.h));
+
+		//
+		cached_draw_zone_min_x_.store(draw_zone_min_x);
+		cached_draw_zone_max_x_.store(draw_zone_max_x);
+		cached_draw_zone_min_y_.store(draw_zone_min_y);
+		cached_draw_zone_max_y_.store(draw_zone_max_y);
+		//
+
+		// left, top, right, bottom
+		RECT draw_zone_idx{
+			std::max(draw_zone_min_x, 0),
+			std::max(draw_zone_min_y, 0),
+			std::min(draw_zone_max_x, zone_info_.limit_idx_x - 1),
+			std::min(draw_zone_max_y, zone_info_.limit_idx_y - 1) };
+
+		std::map<std::pair<int, int>, std::atomic<bool>> changed;
+		this->RetrieveChangedList(changed);
+
+		for (int idx_x = draw_zone_idx.left; idx_x <= draw_zone_idx.right; ++idx_x)
+		{
+			for (int idx_y = draw_zone_idx.top; idx_y <= draw_zone_idx.bottom; ++idx_y)
+			{
+				/*auto it = changed.find(std::make_pair(idx_x, idx_y));
+				if (it != changed.end() && it->second.load())*/
+				{
+					DrawGrid(memdc, idx_x, idx_y);
+				}
+			}
+		}
+
+		for (int idx_x = draw_zone_idx.left; idx_x <= draw_zone_idx.right; ++idx_x)
+		{
+			for (int idx_y = draw_zone_idx.top; idx_y <= draw_zone_idx.bottom; ++idx_y)
+			{
+				/*auto it = changed.find(std::make_pair(idx_x, idx_y));
+				if (it != changed.end() && it->second.load())*/
+				{
+					DrawZone(memdc, idx_x, idx_y);
+				}
+			}
+		}
+	}
 
 	void DrawGrid(Win::WDC& memdc, int idx_x, int idx_y)
 	{
@@ -209,7 +215,7 @@ protected:
 		{
 			return;
 		}
-		
+
 		RECT zone_rect = { zone_info_.w * idx_x, zone_info_.h * idx_y,
 			zone_info_.w * (idx_x + 1), zone_info_.h * (idx_y + 1) };
 
@@ -245,7 +251,7 @@ protected:
 		{
 			return;
 		}
-				
+
 		// snake 와 apple 의 복제본 리스트를 받아온 뒤 화면에 그린다.
 		// 락을 짧은 순간만 걸기 때문에 효과적이라고 생각한다.
 		SbGeoZone::CloneZoneObjListT snake_pairs;
@@ -361,18 +367,20 @@ protected:
 		int h{ 1 };
 	} zone_info_;
 
+	// game field 를 화면에 몇배로 확대해서 그릴 지. 단위=퍼센트
 	std::atomic<int> scale_pcnt_{ 100 };
+	// game field 상에 화면의 left, top 위치
 	std::atomic<int> center_screen_x_{ 0 };
 	std::atomic<int> center_screen_y_{ 0 };
 
 	int idx_zone_player_x{ -1 };
 	int idx_zone_player_y{ -1 };
-	
+
 	std::atomic<int> cached_draw_zone_min_x_{ 0 };
 	std::atomic<int> cached_draw_zone_max_x_{ 0 };
 	std::atomic<int> cached_draw_zone_min_y_{ 0 };
 	std::atomic<int> cached_draw_zone_max_y_{ 0 };
-	
+
 	//FIXME: !!! player_ 의 exchange 가 atomic 해야함
 	// lock 을 추가하던지 뭔가 코드 수정 필요.
 	Handle<Snake>::Type player_handle_{ 0 };

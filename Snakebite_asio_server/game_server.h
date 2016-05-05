@@ -77,8 +77,8 @@ public:
 public:
 	const int FRAME_TICK{ 100 };
 #ifdef _DEBUG
-	const int COUNT_ZONE_X = 5;
-	const int COUNT_ZONE_Y = 5;
+	const int COUNT_ZONE_X = 10;
+	const int COUNT_ZONE_Y = 10;
 	const int ZoneWidth{ 500 };
 	const int ZoneHeight{ 500 };
 #else
