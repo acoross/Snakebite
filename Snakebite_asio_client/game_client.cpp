@@ -2,9 +2,19 @@
 
 namespace acoross {
 namespace snakebite {
+acoross::rpc::ErrCode SC_PushServiceImpl::QueryClientPort(
+	const acoross::snakebite::messages::VoidReply & rq,
+	acoross::snakebite::messages::AddressReply * rp)
+{
+	if (rp)
+	{
+		rp->set_addr(owner_->GetSocketAddress());
+	}
+	return acoross::rpc::ErrCode();
+}
 
 acoross::rpc::ErrCode SC_PushServiceImpl::UpdateGameObjects(
-	const messages::UpdateGameObjectsEvent &rq, 
+	const messages::UpdateGameObjectsEvent &rq,
 	messages::VoidReply *rp)
 {
 	owner_->UpdateGameObjectPositions(rq);
@@ -13,8 +23,19 @@ acoross::rpc::ErrCode SC_PushServiceImpl::UpdateGameObjects(
 
 acoross::rpc::ErrCode SC_PushServiceImpl::ResetPlayer(const acoross::snakebite::messages::VoidReply &rq, acoross::snakebite::messages::VoidReply *rp)
 {
-	owner_->SetPlayerHandleZero();
+	std::atomic_exchange(&owner_->player_info_, std::shared_ptr<GameClient::ClientPlayerInfo>());
 
+	if (owner_->auto_player_mode_.load())
+	{
+		owner_->InitPlayer();
+	}
+
+	return acoross::rpc::ErrCode();
+}
+
+acoross::rpc::ErrCode SC_PushServiceImpl::NotifyPlayerPosition(const acoross::snakebite::messages::PlayerPosition &rq, acoross::snakebite::messages::VoidReply *rp)
+{
+	owner_->SetPlayerPosition(rq.idx_x(), rq.idx_y(), int(rq.x()), int(rq.y()));
 	return acoross::rpc::ErrCode();
 }
 
@@ -30,7 +51,7 @@ bool GameClient::UpdateGameObjectPositions(const messages::UpdateGameObjectsEven
 	for (int i = 0; i < clone_count; ++i)
 	{
 		auto& clone = got_msg.clone(i);
-		
+
 		auto& pac_head = clone.head();
 		MovingObject client_head(Position2D(pac_head.x(), pac_head.y()), pac_head.radius());
 

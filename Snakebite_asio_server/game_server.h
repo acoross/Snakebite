@@ -82,13 +82,18 @@ public:
 	const int ZoneWidth{ 500 };
 	const int ZoneHeight{ 500 };
 #else
-	const int COUNT_ZONE_X = 15;
-	const int COUNT_ZONE_Y = 15;
+	const int COUNT_ZONE_X = 2;
+	const int COUNT_ZONE_Y = 2;
 	const int ZoneWidth{ 500 };
 	const int ZoneHeight{ 500 };
 #endif
 	const int ZoneGridWidth{ ZoneWidth * COUNT_ZONE_X };
 	const int ZoneGridHeight{ ZoneHeight * COUNT_ZONE_X };
+
+	double GetUpdateTime()
+	{
+		return game_session_->CalculateTotalZoneUpdateTime();
+	}
 
 	std::atomic<double> mean_move_time_ms_{ 0 };
 	std::atomic<double> mean_collision_time_ms_{ 0 };

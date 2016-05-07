@@ -190,6 +190,9 @@ void Snake::UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container)
 	{
 		next->SetLastPrevPosition(std::make_shared<Position2D>(last_moved_pos));
 	}
+
+	auto& pos_after = GetPosition();
+	mov_event_.invoke(0, 0, pos_after.x, pos_after.y);
 }
 
 //@thread-safe: atomic once

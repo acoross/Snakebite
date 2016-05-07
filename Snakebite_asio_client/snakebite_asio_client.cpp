@@ -1,6 +1,7 @@
 #include <acoross/snakebite/win/Resource.h>
 #include <acoross/snakebite/win/WinWrapper.h>
 #include <Windowsx.h>
+#include <shellapi.h>
 
 #include <iostream>
 #include <thread>
@@ -38,58 +39,76 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	switch (message)
 	{
 	case WM_COMMAND:
-	{
-		int wmId = LOWORD(wParam);
-		// 메뉴 선택을 구문 분석합니다.
-		switch (wmId)
 		{
-		case IDM_EXIT:
-			DestroyWindow(hWnd);
-			break;
-		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
+			int wmId = LOWORD(wParam);
+			// 메뉴 선택을 구문 분석합니다.
+			switch (wmId)
+			{
+			case IDM_EXIT:
+				DestroyWindow(hWnd);
+				break;
+			default:
+				return DefWindowProc(hWnd, message, wParam, lParam);
+			}
 		}
-	}
-	break;
+		break;
 	case WM_KEYDOWN:
-	{
-		if (wParam == VK_LEFT)
 		{
-			if (auto game_client = g_game_client.lock())
+			auto game_client = g_game_client.lock();
+			if (!game_client)
+			{
+				break;
+			}
+
+			if (wParam == VK_LEFT)
 			{
 				game_client->SetKeyDown(PK_LEFT);
 			}
-		}
-		else if (wParam == VK_RIGHT)
-		{
-			if (auto game_client = g_game_client.lock())
+			else if (wParam == VK_RIGHT)
 			{
 				game_client->SetKeyDown(PK_RIGHT);
 			}
-		}
-		else if (wParam == VK_F5)
-		{
-			if (auto game_client = g_game_client.lock())
+			else if (wParam == VK_F5)
 			{
 				game_client->InitPlayer();
 			}
-		}
-	}
-	break;
-	case WM_MOUSEWHEEL:
-	{
-		if (auto game_client = g_game_client.lock())
-		{
-			short hword = HIWORD(wParam);
-			short lword = LOWORD(wParam);
-			if (lword == 0)
+			else if (wParam == 'Q')
 			{
-				game_client->FetchAddScalePcnt(hword > 0 ? 2 : -2);
+				game_client->SetScreenCenterToPlayerPos();
+			}
+			else if (wParam == 'F')
+			{
+				game_client->FollowPlayerOnOff();
+			}
+			else if (wParam == 'Q')
+			{
+				game_client->SetScreenCenterToPlayerPos();
+			}
+			else if (wParam == 'O')
+			{
 				::InvalidateRect(hWnd, nullptr, true);
+				game_client->SetScreenOnOff();
+			}
+			else if (wParam == 'A') // auto
+			{
+				game_client->SetAutoOnOff();
 			}
 		}
-	}
-	break;
+		break;
+	case WM_MOUSEWHEEL:
+		{
+			if (auto game_client = g_game_client.lock())
+			{
+				short hword = HIWORD(wParam);
+				short lword = LOWORD(wParam);
+				if (lword == 0)
+				{
+					game_client->FetchAddScalePcnt(hword > 0 ? 2 : -2);
+					::InvalidateRect(hWnd, nullptr, true);
+				}
+			}
+		}
+		break;
 	case WM_MOUSEMOVE:
 		{
 			if (last_mouse_pos_x == -1 || last_mouse_pos_y == -1)
@@ -99,7 +118,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			{
 				int x = GET_X_LPARAM(lParam);
 				int y = GET_Y_LPARAM(lParam);
-				
+
 				if (auto game_client = g_game_client.lock())
 				{
 					game_client->FetchMoveScreen(last_mouse_pos_x - x, last_mouse_pos_y - y);
@@ -122,51 +141,42 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		}
 		break;
 	case WM_KEYUP:
-	{
-		if (wParam == VK_LEFT)
 		{
-			if (auto game_client = g_game_client.lock())
+			if (wParam == VK_LEFT)
 			{
-				game_client->SetKeyUp(PK_LEFT);
+				if (auto game_client = g_game_client.lock())
+				{
+					game_client->SetKeyUp(PK_LEFT);
+				}
+			}
+			else if (wParam == VK_RIGHT)
+			{
+				if (auto game_client = g_game_client.lock())
+				{
+					game_client->SetKeyUp(PK_RIGHT);
+				}
 			}
 		}
-		else if (wParam == VK_RIGHT)
-		{
-			if (auto game_client = g_game_client.lock())
-			{
-				game_client->SetKeyUp(PK_RIGHT);
-			}
-		}
-		else if (wParam == 'Q')
-		{
-			if (auto game_client = g_game_client.lock())
-			{
-				RECT client_rect;
-				::GetClientRect(hWnd, &client_rect);
-				game_client->SetScreenCenterToPlayerPos(client_rect);
-			}
-		}
-	}
 	case WM_PAINT:
-	{
-		RECT client_rect;
-		::GetClientRect(hWnd, &client_rect);
-
-		PAINTSTRUCT ps;
-		acoross::Win::WDC wdc(::BeginPaint(hWnd, &ps));
-
-		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
 		{
-			//MeanProcessTimeChecker mean_draw(mean_draw_time_ms);
-			if (auto game_client = g_game_client.lock())
-			{
-				game_client->Draw(wdc, client_rect);
-			}
-		}
+			RECT client_rect;
+			::GetClientRect(hWnd, &client_rect);
 
-		::EndPaint(hWnd, &ps);
-	}
-	break;
+			PAINTSTRUCT ps;
+			acoross::Win::WDC wdc(::BeginPaint(hWnd, &ps));
+
+			// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
+			{
+				//MeanProcessTimeChecker mean_draw(mean_draw_time_ms);
+				if (auto game_client = g_game_client.lock())
+				{
+					game_client->Draw(wdc, client_rect);
+				}
+			}
+
+			::EndPaint(hWnd, &ps);
+		}
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -176,6 +186,70 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	return 0;
 }
 
+class ConsoleParser final
+{
+public:
+	// only true false
+	void RegisterToken(std::wstring token, bool default_value)
+	{
+		token_to_result_[token] = default_value;
+	}
+
+	void Run(LPWSTR* lpArgList, int args)
+	{
+		for (int i = 1; i + 1 < args; i += 2)
+		{
+			std::wstring arg_type(lpArgList[i]);
+			std::wstring arg_contents(lpArgList[i + 1]);
+
+			parse_cmdline(arg_type, arg_contents);
+		}
+	}
+
+	bool GetResult(std::wstring arg_type) const
+	{
+		auto ret = token_to_result_.find(arg_type);
+		if (ret == token_to_result_.end())
+		{
+			char buf[1000]{ 0, };
+			::StringCchPrintfA(buf, _countof(buf), "GetResult: invalid argument: %S", arg_type.c_str());
+			throw(std::exception(buf));
+			return false;
+		}
+
+		return ret->second;
+	}
+
+private:
+	void parse_cmdline(std::wstring& arg_type, std::wstring& arg_contents)
+	{
+		auto ret = token_to_result_.find(arg_type);
+		if (ret == token_to_result_.end())
+		{
+			char buf[1000]{ 0, };
+			::StringCchPrintfA(buf, _countof(buf), "invalid argument: %S %S", arg_type.c_str(), arg_contents.c_str());
+			throw(std::exception(buf));
+		}
+
+		if (arg_contents.compare(L"true") == 0)
+		{
+			ret->second = true;
+		}
+		else if (arg_contents.compare(L"false") == 0)
+		{
+			ret->second = false;
+		}
+		else
+		{
+			char buf[1000]{ 0, };
+			::StringCchPrintfA(buf, _countof(buf), "invalid argument: %S %S", arg_type.c_str(), arg_contents.c_str());
+			throw(std::exception(buf));
+		}
+	}
+
+	std::map<std::wstring, bool> token_to_result_;
+};
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,
@@ -183,6 +257,31 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
+
+	bool follow_player = false;
+	bool draw_screen = true;
+	bool auto_player = false;
+
+	ConsoleParser parser;
+	parser.RegisterToken(L"-f", false);
+	parser.RegisterToken(L"-d", true);
+	parser.RegisterToken(L"-a", false);
+
+	int args = 0;
+	auto lpArgList = ::CommandLineToArgvW(GetCommandLineW(), &args);
+
+	try
+	{
+		parser.Run(lpArgList, args);
+		follow_player = parser.GetResult(L"-f");
+		draw_screen = parser.GetResult(L"-d");
+		auto_player = parser.GetResult(L"-a");
+	}
+	catch (std::exception& ex)
+	{
+		::MessageBoxA(nullptr, ex.what(), "console parser error", MB_OK);
+		abort();
+	}
 
 	try
 	{
@@ -194,8 +293,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			tcp::resolver resolver(io_service);
 			boost::asio::connect(socket, resolver.resolve({ "127.0.0.1", "22000" }));
 		}
-		
-		auto game_client = std::make_shared<GameClient>(io_service, std::move(socket));
+
+		auto game_client = std::make_shared<GameClient>(
+			io_service, std::move(socket),
+			auto_player, draw_screen, follow_player);
 		g_game_client = game_client;
 
 		game_client->start();
@@ -209,6 +310,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// 응용 프로그램 초기화를 수행합니다.
 		acoross::Win::Window window(hInstance);
 		window.MyRegisterClass(WndProc);
+
+		if (draw_screen == false)
+		{
+			nCmdShow = SW_MINIMIZE;
+		}
+
 		if (!window.InitInstance(nCmdShow))
 		{
 			return FALSE;

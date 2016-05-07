@@ -8,12 +8,12 @@
 #include <functional>
 #include <thread>
 #include <string>
-#include <sstream>
+//#include <sstream>
 #include <atomic>
 
 #define ACOROSS_USE_TBB
 #ifdef ACOROSS_USE_TBB
-//#include "tbb/tbbmalloc_proxy.h"
+#include "tbb/tbbmalloc_proxy.h"
 #endif
 
 #include "local_game_client.h"
@@ -107,7 +107,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			}
 			else if (wParam == 'G')
 			{
-				g_game_client->SetGridOn(false);
+				g_game_client->SetGridOnOff();
+			}
+			else if (wParam == 'F')
+			{
+				g_game_client->FollowPlayerOnOff();
+			}
+			else if (wParam == 'Q')
+			{
+				g_game_client->SetScreenCenterToPlayerPos();
+			}
+			else if (wParam == 'O')
+			{
+				::InvalidateRect(hWnd, nullptr, true);
+				g_game_client->SetScreenOnOff();
 			}
 			else if (wParam == 'M')	// 'M' or 'm'
 			{
@@ -124,7 +137,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 						{
 							session.RequestMakeNewApple();
 						}
-					});
+				});
 
 					server->RequestToSessionNpcController(
 						[](SnakeNpcControlManager& npc_controller)
@@ -137,10 +150,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 						{
 							npc_controller.AsyncAddSnakeNpc();
 						}
-					});
-				}
-			}
+			});
 		}
+	}
+}
 		break;
 	case WM_KEYUP:
 		{
@@ -231,7 +244,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					outBuf, 1000,
 					L"snakes: %d, apples: %d, \n"
 					L"mean move time: %.4f(ms), \n"
-					L"mean collision time: %.4f(ms)\n"
+					//L"mean collision time: %.4f(ms)\n"
+					L"total zone update time: %.4f(ms)\n"
 					L"mean clone time: %.4f(ms)\n"
 					L"mean server tick time: %.4f(ms)\n"
 					L"mean total draw time: %.4f(ms)\n"
@@ -241,7 +255,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					,
 					g_game_client->snake_count_.load(), g_game_client->apple_count_.load(),
 					game_server->mean_move_time_ms_.load(),
-					game_server->mean_collision_time_ms_.load(),
+					//game_server->mean_collision_time_ms_.load(),
+					game_server->GetUpdateTime(),
 					game_server->mean_clone_object_time_ms_.load(),
 					game_server->mean_tick_time_ms_.load(),
 					mean_draw_time_ms.load(),
@@ -265,7 +280,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
+}
 	return 0;
 }
 

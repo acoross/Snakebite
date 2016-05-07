@@ -15,6 +15,7 @@
 #include "geo_zone_grid.h"
 #include "zone_object.h"
 
+#include <acoross/snakebite/util.h>
 //#include "../collider_base.h"
 
 namespace acoross {
@@ -209,6 +210,10 @@ public:
 	const int IDX_ZONE_X;
 	const int IDX_ZONE_Y;
 
+	//
+	std::atomic<double> mean_update_time_ms_{ 0 };
+	//
+
 private:
 	//using CollisionSet = std::set<HandleT>;
 
@@ -218,6 +223,8 @@ private:
 		strand_.post(
 			[this]()
 		{
+			MeanProcessTimeChecker mean_update(mean_update_time_ms_);
+
 			zone_timer_.expires_from_now(boost::posix_time::milliseconds(zone_timer_tick_));
 
 			update_movobj_position(zone_timer_tick_);
@@ -231,6 +238,10 @@ private:
 				if (!ec)
 				{
 					AsyncDoUpdate();
+				}
+				else
+				{
+					throw(std::exception("zone update error"));
 				}
 			});
 		});

@@ -78,6 +78,36 @@ public:
 		return zone_grid_;
 	}
 
+	double CalculateMeanZoneUpdateTime()
+	{
+		double update_time_sum = 0;
+		int zone_cnt = 0;
+		zone_grid_.ProcessAllZone(
+			[&update_time_sum, &zone_cnt](SbGeoZone& zone) mutable ->bool
+		{
+			update_time_sum += zone.mean_update_time_ms_.load();
+			++zone_cnt;
+			return true;
+		});
+
+		return update_time_sum / zone_cnt;
+	}
+
+	double CalculateTotalZoneUpdateTime()
+	{
+		double update_time_sum = 0;
+		int zone_cnt = 0;
+		zone_grid_.ProcessAllZone(
+			[&update_time_sum, &zone_cnt](SbGeoZone& zone) mutable ->bool
+		{
+			update_time_sum += zone.mean_update_time_ms_.load();
+			++zone_cnt;
+			return true;
+		});
+
+		return update_time_sum;
+	}
+
 private:
 	::boost::asio::strand strand_;
 	MapSnake snakes_;
@@ -91,7 +121,7 @@ private:
 	const Position2D player_pos{ 100, 100 };
 
 	// my update event... pass zone event to listners
-	SbGeoZone::UpdateEvent update_event_;	
+	SbGeoZone::UpdateEvent update_event_;
 
 	// zone event connection
 	std::list<std::pair<std::pair<int, int>, std::unique_ptr<typename SbGeoZone::UpdateEventRelayer>>> list_zone_event_relayer_;

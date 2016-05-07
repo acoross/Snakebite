@@ -33,12 +33,14 @@ void GameServer::on_accept(boost::asio::io_service & io_service,
 	tcp::socket && socket)
 {
 	auto addr = socket.remote_endpoint().address().to_string();
+	addr += ":" + std::to_string(socket.remote_endpoint().port());
 	auto us =
 		std::make_shared<UserSession>(
 			io_service,
 			std::move(socket),
 			game_session_,
 			shared_from_this(),
+			addr,
 			[gs_wp = std::weak_ptr<GameServer>(shared_from_this()), addr]
 	{
 		if (auto gs = gs_wp.lock())
@@ -55,10 +57,20 @@ void GameServer::on_accept_push_socket(boost::asio::io_service& io_service,
 	tcp::socket&& push_socket)
 {
 	auto addr = push_socket.remote_endpoint().address().to_string();
-	if (auto us = this->FindUserSession(addr))
+	addr += ":" + std::to_string(push_socket.remote_endpoint().port());
+
+	auto push_stub = std::make_shared<messages::SC_PushService::Stub>(io_service, std::move(push_socket));
+	push_stub->start();
+
+	messages::VoidReply rq;
+	push_stub->QueryClientPort(rq,
+		[&io_service, this, push_stub](rpc::ErrCode ec, messages::AddressReply& addr)
 	{
-		us->init_push_stub_socket(io_service, std::move(push_socket));
-	}
+		if (auto us = this->FindUserSession(addr.addr()))
+		{
+			us->init_push_stub(io_service, push_stub);
+		}
+	});
 }
 }
 }

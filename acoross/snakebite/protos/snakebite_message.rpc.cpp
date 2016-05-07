@@ -12,8 +12,10 @@ namespace messages {
 SC_PushService::Service::Service(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)
 	: ::acoross::rpc::RpcService(io_service, std::move(socket))
 {
+  REGISTER_SERVICE(QueryClientPort, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::AddressReply)
   REGISTER_SERVICE(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
   REGISTER_SERVICE(ResetPlayer, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::VoidReply)
+  REGISTER_SERVICE(NotifyPlayerPosition, ::acoross::snakebite::messages::PlayerPosition, ::acoross::snakebite::messages::VoidReply)
 }
 
 SC_PushService::Stub::Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket)

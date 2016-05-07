@@ -78,6 +78,8 @@ class Snake
 {
 public:
 	using EventHandler = std::function<void(Snake&)>;
+	using MovEvent = acoross::Event<void(int, int, double, double)>;
+	using MovObsF = MovEvent::MyObsF;
 
 	Snake(GameSession& game_session, const Position2D& pos, double radius
 		, const Degree& angle, double velocity, double ang_vel, int len
@@ -145,6 +147,11 @@ public:
 		return acoross::auto_connection();
 	}
 
+	auto ConnectToPositionUpdateEvent(MovObsF observer)
+	{
+		return mov_event_.auto_connect(observer);
+	}
+
 private:
 	Degree angle_; // degree
 	double velocity_; // UNIT/ms
@@ -156,6 +163,7 @@ private:
 	EventHandler onDie_;
 
 	std::shared_ptr<SbGeoZone::UpdateEventRelayer> update_event_relayer_;
+	MovEvent mov_event_;
 	const bool is_connect_to_zone_{ false };
 };
 using SnakeSP = std::shared_ptr<Snake>;

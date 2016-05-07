@@ -53,12 +53,12 @@ void UserSession::send_update_game_object(
 		return;
 	}
 
-	static std::atomic<int> cnt = 0;
+	/*static std::atomic<int> cnt = 0;
 	if (cnt.fetch_add(1) > 0)
 	{
 		cnt.fetch_sub(1);
 		return;
-	}
+	}*/
 
 	messages::UpdateGameObjectsEvent game_objects;
 	game_objects.set_idx_x(idx_x);
@@ -113,12 +113,12 @@ void UserSession::send_update_game_object(
 
 	if (bool is_initialized = game_objects.IsInitialized())
 	{
-		if (push_stub_)
+		if (auto push = std::atomic_load(&push_stub_))
 		{
-			push_stub_->UpdateGameObjects(game_objects,
+			push->UpdateGameObjects(game_objects,
 				[this](rpc::ErrCode ec, messages::VoidReply&)
 			{
-				cnt.fetch_sub(1);
+				//cnt.fetch_sub(1);
 			});
 		}
 	}
@@ -135,6 +135,8 @@ acoross::rpc::ErrCode UserSession::RequestZoneInfo(const acoross::snakebite::mes
 	rp->set_height(zone_grid.ZoneHeight);
 	rp->set_width(zone_grid.ZoneWidth);
 
+	rp->set_my_address(my_address_.c_str());
+
 	return acoross::rpc::ErrCode();
 }
 
@@ -149,12 +151,12 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 		if (auto self = self_wp.lock())
 		{
 			user_snake_handle_ = 0;
-			if (std::atomic_load(&push_stub_))
+			if (auto push = std::atomic_load(&push_stub_))
 			{
 				messages::VoidReply vr;
 				vr.set_err(0);
 
-				push_stub_->ResetPlayer(vr,
+				push->ResetPlayer(vr,
 					[](rpc::ErrCode ec, messages::VoidReply&)
 				{});
 			}
@@ -164,9 +166,12 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 	auto prom_sp = std::make_shared<boost::promise<acoross::auto_connection>>();
 	auto fut = prom_sp->get_future();
 
+	auto prom_set_mov_event_sp = std::make_shared<boost::promise<acoross::auto_connection>>();
+	auto fut_mov_event = prom_set_mov_event_sp->get_future();
+
 	game_session_->RequestToSnake(
 		user_snake_handle_,
-		[this, self_wp, prom_sp](Snake& snake) mutable
+		[this, self_wp, prom_sp, prom_set_mov_event_sp](Snake& snake) mutable
 	{
 		auto auto_conn = snake.ConnectToUpdateEventRelayer(
 			[this, self_wp](int idx_x, int idx_y,
@@ -183,9 +188,31 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 		});
 
 		prom_sp->set_value(std::move(auto_conn));
+
+		auto auto_conn_2_mov_event = snake.ConnectToPositionUpdateEvent(
+			[this, self_wp](int idx_x, int idx_y,
+				double pos_x, double pos_y)
+		{
+			if (auto rpcsocket = self_wp.lock())
+			{
+				if (auto push = std::atomic_load(&push_stub_))
+				{
+					messages::PlayerPosition rq;
+					rq.set_idx_x(idx_x);
+					rq.set_idx_y(idx_y);
+					rq.set_x(pos_x);
+					rq.set_y(pos_y);
+
+					push->NotifyPlayerPosition(rq, [](acoross::rpc::ErrCode, messages::VoidReply& rp) {});
+				}
+			}
+		});
+
+		prom_set_mov_event_sp->set_value(std::move(auto_conn_2_mov_event));
 	});
 
 	auto_discon_observer_to_session_ = std::move(fut.get());
+	auto_discon_observer_to_player_ = std::move(fut_mov_event.get());
 
 	if (rp)
 	{

@@ -34,11 +34,17 @@ package acoross.snakebite.messages;
 //------------------------------
 //------------------------------
 service SC_PushService {
+	rpc QueryClientPort(VoidReply) returns (AddressReply);
 	rpc UpdateGameObjects(UpdateGameObjectsEvent) returns (VoidReply);
 	rpc ResetPlayer(VoidReply) returns (VoidReply);
+	rpc NotifyPlayerPosition(PlayerPosition) returns (VoidReply);
 }
 
 //------------------------------
+message AddressReply{
+	string addr = 1;
+}
+
 enum ObjType
 {
 	Snake = 0;
@@ -65,6 +71,13 @@ message UpdateGameObjectsEvent {
 	repeated GameObjectClone clone = 3;
 }
 
+message PlayerPosition{
+	int32 idx_x = 1;
+	int32 idx_y = 2;
+	double x = 3;
+	double y = 4;
+}
+
 //------------------------------
 //------------------------------
 service SnakebiteService {
@@ -85,6 +98,7 @@ message ZoneInfoReply{
 	int32 width = 2;
 	int32 limit_idx_x = 3;
 	int32 limit_idx_y = 4;
+	string my_address = 5;
 }
 
 //------------------------------

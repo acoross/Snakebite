@@ -38,6 +38,7 @@ class Event
 {
 public:
 	using MySigT = boost::signals2::signal<F>;
+	using MyObsF = std::function<F>;
 
 	explicit Event()
 		: sig_(std::make_shared<MySigT>())
@@ -89,9 +90,8 @@ public:
 	EventRelayer()
 		: Event()
 		, conn_to_event_(nullptr)
-	{
-	}
-	
+	{}
+
 	explicit EventRelayer(std::shared_ptr<MySigT> sig, auto_connection&& conn_to_event)
 		: Event(sig), conn_to_event_(std::move(conn_to_event))
 	{}
@@ -101,7 +101,7 @@ public:
 	{}
 	virtual ~EventRelayer()
 	{}
-	
+
 private:
 	void change_connection(acoross::auto_connection&& new_conn)
 	{

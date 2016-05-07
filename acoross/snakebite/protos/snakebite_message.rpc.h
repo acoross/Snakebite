@@ -19,8 +19,10 @@ class SC_PushService final {
  public:
   enum Protocol
   {
+    QueryClientPort,
     UpdateGameObjects,
     ResetPlayer,
+    NotifyPlayerPosition,
   };
 
   class Service : public ::acoross::rpc::RpcService 
@@ -30,8 +32,10 @@ class SC_PushService final {
     virtual ~Service() {}
 
   private:
+    DEF_SERVICE(QueryClientPort, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::AddressReply)
     DEF_SERVICE(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
     DEF_SERVICE(ResetPlayer, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::VoidReply)
+    DEF_SERVICE(NotifyPlayerPosition, ::acoross::snakebite::messages::PlayerPosition, ::acoross::snakebite::messages::VoidReply)
 
   };
 
@@ -40,8 +44,10 @@ class SC_PushService final {
   public:
     Stub(::boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket);
     virtual ~Stub() {}
+    DEF_STUB(QueryClientPort, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::AddressReply)
     DEF_STUB(UpdateGameObjects, ::acoross::snakebite::messages::UpdateGameObjectsEvent, ::acoross::snakebite::messages::VoidReply)
     DEF_STUB(ResetPlayer, ::acoross::snakebite::messages::VoidReply, ::acoross::snakebite::messages::VoidReply)
+    DEF_STUB(NotifyPlayerPosition, ::acoross::snakebite::messages::PlayerPosition, ::acoross::snakebite::messages::VoidReply)
   };
 
 };

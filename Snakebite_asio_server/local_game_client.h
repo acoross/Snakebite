@@ -24,11 +24,11 @@ public:
 
 	virtual void RequestZoneInfo() override
 	{
-		zone_info_.limit_idx_x = game_server_.COUNT_ZONE_X;
-		zone_info_.limit_idx_y = game_server_.COUNT_ZONE_Y;
-		zone_info_.w = game_server_.ZoneWidth;
-		zone_info_.h = game_server_.ZoneHeight;
-		zone_info_.initialized.store(true);
+		initialize(
+			game_server_.ZoneWidth,
+			game_server_.ZoneHeight,
+			game_server_.COUNT_ZONE_X,
+			game_server_.COUNT_ZONE_Y);
 	}
 
 	void SetObjectList_FilteredByCurrentObservingZoneOnly(
@@ -46,7 +46,7 @@ public:
 		{
 			return;
 		}
-		
+
 		auto snakes = *snake_list;
 		auto apples = *apple_list;
 		this->SetObjectList(idx_x, idx_y, std::move(snakes), std::move(apples));
@@ -56,14 +56,34 @@ public:
 	virtual void InitPlayer() override
 	{
 		game_server_.RequestToSession(
-			[_this = this, handle = player_handle_](GameSession& session)
+			[this](GameSession& session)
 		{
-			session.AsyncRemoveSnake(_this->player_handle_);
-			_this->player_handle_ = session.AsyncMakeNewSnake("local player",
-				[_this](Snake& snake)
+			if (auto player_info = std::atomic_load(&player_info_))
 			{
-				_this->SetPlayerHandleZero();
+				uintptr_t handle = player_info->player_handle_;
+				session.AsyncRemoveSnake(handle);
+			}
+
+			auto new_player_info = std::make_shared<LocalClientPlayerInfo>();
+			new_player_info->player_handle_ = session.AsyncMakeNewSnake("local player",
+				[this, new_player_info](Snake& snake)
+			{
+				new_player_info->SetPlayerHandleZero();
 			});
+
+			session.RequestToSnake(
+				new_player_info->player_handle_,
+				[this, new_player_info](Snake& snake)
+			{
+				new_player_info->auto_conn_2_mov_event =
+					snake.ConnectToPositionUpdateEvent(
+						[this, new_player_info](int idx_x, int idx_y, double x, double y)
+				{
+					SetPlayerPosition(idx_x, idx_y, (int)x, (int)y);
+				});
+			});
+
+			std::atomic_exchange(&player_info_, std::shared_ptr<ClientPlayerInfo>(new_player_info));
 		});
 	}
 	//
@@ -71,46 +91,54 @@ public:
 	//@atomic for Snake
 	virtual void SetKeyDown(PlayerKey player_key) override
 	{
-		if (player_key == player_key_)
+		if (auto player_info = std::atomic_load(&player_info_))
 		{
-			return;
-		}
-
-		player_key_ = player_key;
-
-		game_server_.RequestToSession(
-			[player_key, handle = player_handle_](GameSession& session)
-		{
-			session.RequestToSnake(handle,
-				[player_key](Snake& snake)
+			if (!player_info->SetKeyDown(player_key))
 			{
-				snake.SetKeyDown(player_key);
+				return;
+			}
+
+			game_server_.RequestToSession(
+				[player_key, handle = player_info->player_handle_](GameSession& session)
+			{
+				session.RequestToSnake(handle,
+					[player_key](Snake& snake)
+				{
+					snake.SetKeyDown(player_key);
+				});
 			});
-		});
+		}
 	}
 
 	virtual void SetKeyUp(PlayerKey player_key) override
 	{
-		if (player_key != player_key_)
+		if (auto player_info = std::atomic_load(&player_info_))
 		{
-			return;
-		}
-
-		player_key_ = PlayerKey::PK_NONE;
-
-		game_server_.RequestToSession(
-			[player_key, handle = player_handle_](GameSession& session)
-		{
-			session.RequestToSnake(handle,
-				[player_key](Snake& snake)
+			if (!player_info->SetKeyUp(player_key))
 			{
-				snake.SetKeyUp(player_key);
+				return;
+			}
+
+			game_server_.RequestToSession(
+				[player_key, handle = player_info->player_handle_](GameSession& session)
+			{
+				session.RequestToSnake(handle,
+					[player_key](Snake& snake)
+				{
+					snake.SetKeyUp(player_key);
+				});
 			});
-		});
+		}
 	}
 	//
 private:
 	GameServer& game_server_;
+
+	class LocalClientPlayerInfo : public ClientPlayerInfo
+	{
+	public:
+		acoross::auto_connection auto_conn_2_mov_event;
+	};
 };
 
 }

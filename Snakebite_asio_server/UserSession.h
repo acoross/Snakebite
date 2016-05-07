@@ -24,11 +24,14 @@ class UserSession
 public:
 	UserSession(boost::asio::io_service& io_service, ::boost::asio::ip::tcp::socket&& socket,
 		std::shared_ptr<GameSession> game_session, std::shared_ptr<GameServer> server,
+		std::string& my_address,
 		std::function<void(void)> on_destroy)
 		: game_session_(game_session)
 		, Service(io_service, std::move(socket))
 		, on_destroy_(on_destroy)
-	{}
+	{
+		my_address_ = my_address;
+	}
 
 	virtual ~UserSession()
 	{
@@ -38,14 +41,11 @@ public:
 
 	void start();
 	void end();
-	
-	void init_push_stub_socket(::boost::asio::io_service& io_service,
-		::boost::asio::ip::tcp::socket&& socket)
-	{
-		auto push_stub = std::make_shared<messages::SC_PushService::Stub>(io_service, std::move(socket));
-		push_stub->start();
 
-		std::atomic_store(&push_stub_, std::move(push_stub));
+	void init_push_stub(::boost::asio::io_service& io_service,
+		std::shared_ptr<messages::SC_PushService::Stub> push_stub)
+	{
+		std::atomic_store(&push_stub_, push_stub);
 	}
 
 private:
@@ -60,10 +60,13 @@ private:
 
 	std::shared_ptr<GameSession> game_session_;
 	acoross::auto_connection auto_discon_observer_to_session_;
+	acoross::auto_connection auto_discon_observer_to_player_;
 
 	std::function<void(void)> on_destroy_;
 
 	std::shared_ptr<messages::SC_PushService::Stub> push_stub_;
+
+	std::string my_address_;
 
 	// Service을(를) 통해 상속됨
 	virtual acoross::rpc::ErrCode RequestZoneInfo(const acoross::snakebite::messages::VoidReply &rq, acoross::snakebite::messages::ZoneInfoReply *rp) override;
