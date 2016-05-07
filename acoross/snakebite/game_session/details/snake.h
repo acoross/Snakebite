@@ -35,10 +35,10 @@ public:
 	virtual ~SnakeNode();
 
 	// snake 가 알아서 움직인다.
-	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override = 0;
+	virtual void UpdateMove(int64_t diff_in_ms, Rect& boundary) override = 0;
 
 	// snake 를 지정한 diff_vec 만큼 이동시킨다.
-	Position2D Move(const DirVector2D& diff_vec, MovingObjectContainer& container);
+	Position2D Move(const DirVector2D& diff_vec, Rect& boundary);
 
 	//@lock
 	void AddBody();
@@ -69,7 +69,7 @@ public:
 	virtual ~SnakeTail();
 
 	// 앞 snake 를 따라서 이동한다.
-	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override;
+	virtual void UpdateMove(int64_t diff_in_ms, Rect& boundary) override;
 };
 
 ///////////////////////////////////////////////////
@@ -87,7 +87,7 @@ public:
 		, bool is_connect_to_zone = false);
 	virtual ~Snake();
 
-	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container) override;
+	virtual void UpdateMove(int64_t diff_in_ms, Rect& boundary) override;
 
 	//@thread-safe: atomic once
 	void Die();

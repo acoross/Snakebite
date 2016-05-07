@@ -106,6 +106,35 @@ private:
 	double angle_;
 };
 
+class Rect final
+{
+public:
+	Rect(int left, int right, int top, int bottom)
+		: Left(left), Right(right), Top(top), Bottom(bottom)
+	{}
+
+	// game field APIs
+	int Left{ 0 };
+	int Right{ 0 };
+	int Top{ 0 };
+	int Bottom{ 0 };
+
+	int Width() const { return Right - Left; }
+	int Height() const { return Bottom - Top; }
+};
+
+template <typename T>
+T Trim(T src, T minv, T maxv)
+{
+	_ASSERT(minv <= maxv);
+
+	if (src < minv)
+		return minv;
+	if (src > maxv)
+		return maxv;
+	return src;
+}
+
 }
 }
 #endif //SNAKEBITE_GEO_TYPES_H

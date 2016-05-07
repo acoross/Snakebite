@@ -122,7 +122,7 @@ public:
 		return false;
 	}
 
-	MovingObjectContainer& GetBoundaryContainer()
+	Rect& GetBoundaryContainer()
 	{
 		return game_boundary_;
 	}
@@ -135,7 +135,7 @@ public:
 
 private:
 	std::vector<std::vector<std::shared_ptr<ZoneT>>> zone_grid_;
-	MovingObjectContainer game_boundary_;
+	Rect game_boundary_;
 };
 }
 }

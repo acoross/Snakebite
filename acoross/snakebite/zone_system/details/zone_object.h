@@ -34,7 +34,7 @@ public:
 	virtual void OnEnterZoneCallback(GeoZone<ColliderT>& zone) {}
 	virtual void OnLeaveZoneCallback(GeoZone<ColliderT>& zone) {}
 
-	virtual void UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container)
+	virtual void UpdateMove(int64_t diff_in_ms, Rect& boundary)
 	{}
 
 	bool ProcessCollision(std::shared_ptr<MyT> target)

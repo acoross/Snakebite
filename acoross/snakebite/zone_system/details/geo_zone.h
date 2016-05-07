@@ -27,7 +27,7 @@ namespace snakebite {
 // BUG!!!
 // when move to neighbor zone, actor should be removed from wall_collision_set_, but now it doesn't
 template <typename ColliderT>
-static void process_collision_to_wall(std::shared_ptr<ZoneObjectEx<ColliderT>> actor, MovingObjectContainer& boundary)
+static void process_collision_to_wall(std::shared_ptr<ZoneObjectEx<ColliderT>> actor, Rect& boundary)
 {
 	auto& pos = actor->GetPosition();
 	pos.x = Trim((int)pos.x, boundary.Left + 1, boundary.Right - 1);
@@ -96,7 +96,7 @@ public:
 		::boost::asio::io_service& io_service,
 		GameGeoZoneGrid& owner_zone_grid,
 		int idx_zone_x, int idx_zone_y,
-		MovingObjectContainer& game_boundary,
+		Rect& game_boundary,
 		int left, int top, int width, int height)
 		: strand_(io_service)
 		, owner_zone_grid_(owner_zone_grid)
@@ -420,8 +420,8 @@ private:
 	std::atomic<bool> is_running_{ false };
 
 	GameGeoZoneGrid& owner_zone_grid_;
-	MovingObjectContainer zone_boundary_;
-	MovingObjectContainer& game_boundary_;
+	Rect zone_boundary_;
+	Rect& game_boundary_;
 
 	//@use in serializer
 	UpdateEvent update_event_;

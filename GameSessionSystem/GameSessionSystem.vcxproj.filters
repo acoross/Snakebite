@@ -64,9 +64,6 @@
     <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object.h">
       <Filter>lib\moving_object_system\details</Filter>
     </ClInclude>
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object_container.h">
-      <Filter>lib\moving_object_system\details</Filter>
-    </ClInclude>
     <ClInclude Include="..\acoross\snakebite\zone_system\details\signal.h">
       <Filter>lib\zone_system</Filter>
     </ClInclude>
