@@ -12,9 +12,7 @@ class Apple : public SbZoneObject
 public:
 	Apple(const Position2D& pos, double radius)
 		: SbZoneObject(new AppleCollider(this), pos, radius)
-	{
-		//container.RegisterMovingObject(mo);
-	}
+	{}
 	Apple(Apple& lhs) = default;
 	Apple(Apple&& lhs) = default;
 

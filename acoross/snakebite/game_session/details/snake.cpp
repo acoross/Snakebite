@@ -22,12 +22,12 @@ SnakeNode::~SnakeNode()
 }
 
 // snake 를 지정한 diff_vec 만큼 이동시킨다.
-Position2D SnakeNode::Move(const DirVector2D & diff_vec, MovingObjectContainer & container)
+Position2D SnakeNode::Move(const DirVector2D & diff_vec, Rect & boundary)
 {
 	const double dist_mov = diff_vec.Length();
 
 	Position2D pos_prev_node = head_.GetPosition();
-	head_.Move(diff_vec, container);
+	head_.Move(diff_vec, boundary);
 
 	//DirVector2D diff_prev = diff_vec;
 
@@ -51,7 +51,7 @@ Position2D SnakeNode::Move(const DirVector2D & diff_vec, MovingObjectContainer &
 		diff_move.y *= dist_mov;
 
 		pos_prev_node = mo.GetPosition();
-		mo.Move(diff_move, container);
+		mo.Move(diff_move, boundary);
 	}
 
 	return pos_prev_node;
@@ -102,7 +102,7 @@ SnakeTail::~SnakeTail()
 {}
 
 // snake 가 알아서 움직인다.
-void SnakeTail::UpdateMove(int64_t diff_in_ms, MovingObjectContainer & container)
+void SnakeTail::UpdateMove(int64_t diff_in_ms, Rect & boundary)
 {
 	if (auto prev_pos = std::atomic_load(&prev_last_pos_))
 	{
@@ -120,7 +120,7 @@ void SnakeTail::UpdateMove(int64_t diff_in_ms, MovingObjectContainer & container
 			diff_vec.y *= (len * 0.9);
 		}
 
-		auto last_moved_pos = Move(diff_vec, container);
+		auto last_moved_pos = Move(diff_vec, boundary);
 
 		if (auto next = std::atomic_load(&next_))
 		{
@@ -155,7 +155,7 @@ Snake::~Snake()
 
 }
 
-void Snake::UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container)
+void Snake::UpdateMove(int64_t diff_in_ms, Rect& boundary)
 {
 	// change direction
 	{
@@ -184,7 +184,7 @@ void Snake::UpdateMove(int64_t diff_in_ms, MovingObjectContainer& container)
 		diff_distance * std::sin(angle_now_rad)
 	};
 
-	auto last_moved_pos = Move(diff_vec, container);
+	auto last_moved_pos = Move(diff_vec, boundary);
 
 	if (auto next = std::atomic_load(&next_))
 	{
