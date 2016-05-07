@@ -212,6 +212,7 @@ public:
 
 	//
 	std::atomic<double> mean_update_time_ms_{ 0 };
+	std::atomic<double> mean_broadcast_time_ms_{ 0 };
 	//
 
 private:
@@ -392,6 +393,7 @@ private:
 	void invoke_update_event_to_observers(int idx_x, int idx_y,
 		SharedCloneZoneObjlistT snakes, SharedCloneZoneObjlistT apples)
 	{
+		MeanProcessTimeChecker time_checker(mean_broadcast_time_ms_);
 		update_event_.invoke(idx_x, idx_y, snakes, apples);
 	}
 

@@ -108,6 +108,20 @@ public:
 		return update_time_sum;
 	}
 
+	double CalculateTotalBroadcastTime()
+	{
+		double broadcast_time_sum = 0;
+		int zone_cnt = 0;
+		zone_grid_.ProcessAllZone(
+			[&broadcast_time_sum, &zone_cnt](SbGeoZone& zone) mutable ->bool
+		{
+			broadcast_time_sum += zone.mean_broadcast_time_ms_.load();
+			return true;
+		});
+
+		return broadcast_time_sum;
+	}
+
 private:
 	::boost::asio::strand strand_;
 	MapSnake snakes_;

@@ -3,6 +3,8 @@
 #include <Windowsx.h>
 #include <shellapi.h>
 
+#include <codecvt>
+#include <locale>
 #include <iostream>
 #include <thread>
 #include <memory>
@@ -195,6 +197,11 @@ public:
 		token_to_result_[token] = default_value;
 	}
 
+	void RegisterTokenString(std::wstring token, std::wstring default_value)
+	{
+		token_to_string_[token] = default_value;
+	}
+
 	void Run(LPWSTR* lpArgList, int args)
 	{
 		for (int i = 1; i + 1 < args; i += 2)
@@ -220,34 +227,58 @@ public:
 		return ret->second;
 	}
 
+	std::wstring GetStringResult(std::wstring arg_type) const
+	{
+		auto ret = token_to_string_.find(arg_type);
+		if (ret == token_to_string_.end())
+		{
+			char buf[1000]{ 0, };
+			::StringCchPrintfA(buf, _countof(buf), "GetResult: invalid argument: %S", arg_type.c_str());
+			throw(std::exception(buf));
+			return false;
+		}
+		return ret->second;
+	}
+
 private:
 	void parse_cmdline(std::wstring& arg_type, std::wstring& arg_contents)
 	{
 		auto ret = token_to_result_.find(arg_type);
-		if (ret == token_to_result_.end())
+		if (ret != token_to_result_.end())
 		{
-			char buf[1000]{ 0, };
-			::StringCchPrintfA(buf, _countof(buf), "invalid argument: %S %S", arg_type.c_str(), arg_contents.c_str());
-			throw(std::exception(buf));
+			if (arg_contents.compare(L"true") == 0)
+			{
+				ret->second = true;
+			}
+			else if (arg_contents.compare(L"false") == 0)
+			{
+				ret->second = false;
+			}
+			else
+			{
+				char buf[1000]{ 0, };
+				::StringCchPrintfA(buf, _countof(buf), "invalid argument: %S %S", arg_type.c_str(), arg_contents.c_str());
+				throw(std::exception(buf));
+			}
 		}
-
-		if (arg_contents.compare(L"true") == 0)
+		else 
 		{
-			ret->second = true;
-		}
-		else if (arg_contents.compare(L"false") == 0)
-		{
-			ret->second = false;
-		}
-		else
-		{
-			char buf[1000]{ 0, };
-			::StringCchPrintfA(buf, _countof(buf), "invalid argument: %S %S", arg_type.c_str(), arg_contents.c_str());
-			throw(std::exception(buf));
+			auto ret2 = token_to_string_.find(arg_type);
+			if (ret2 != token_to_string_.end())
+			{
+				ret2->second = arg_contents;
+			}
+			else
+			{
+				char buf[1000]{ 0, };
+				::StringCchPrintfA(buf, _countof(buf), "invalid argument: %S %S", arg_type.c_str(), arg_contents.c_str());
+				throw(std::exception(buf));
+			}
 		}
 	}
 
 	std::map<std::wstring, bool> token_to_result_;
+	std::map<std::wstring, std::wstring> token_to_string_;
 };
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -261,11 +292,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	bool follow_player = false;
 	bool draw_screen = true;
 	bool auto_player = false;
+	std::string ip;
+	std::string port;
 
 	ConsoleParser parser;
 	parser.RegisterToken(L"-f", false);
 	parser.RegisterToken(L"-d", true);
 	parser.RegisterToken(L"-a", false);
+	parser.RegisterTokenString(L"-o", L"localhost");
+	parser.RegisterTokenString(L"-p", L"22000");
 
 	int args = 0;
 	auto lpArgList = ::CommandLineToArgvW(GetCommandLineW(), &args);
@@ -276,6 +311,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		follow_player = parser.GetResult(L"-f");
 		draw_screen = parser.GetResult(L"-d");
 		auto_player = parser.GetResult(L"-a");
+		
+		using convert_type = std::codecvt_utf8<wchar_t>;
+		std::wstring_convert<convert_type, wchar_t> converter;		
+		ip = converter.to_bytes(parser.GetStringResult(L"-o"));
+		port = converter.to_bytes(parser.GetStringResult(L"-p"));
 	}
 	catch (std::exception& ex)
 	{
@@ -291,7 +331,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		ip::tcp::socket socket(io_service);
 		{
 			tcp::resolver resolver(io_service);
-			boost::asio::connect(socket, resolver.resolve({ "127.0.0.1", "22000" }));
+			//boost::asio::connect(socket, resolver.resolve({ "127.0.0.1", "22000" }));
+			boost::asio::connect(socket, resolver.resolve({ ip.c_str(), port.c_str() }));
 		}
 
 		auto game_client = std::make_shared<GameClient>(

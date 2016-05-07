@@ -277,15 +277,15 @@ protected:
 			std::min(draw_zone_max_x, zone_info_.limit_idx_x - 1),
 			std::min(draw_zone_max_y, zone_info_.limit_idx_y - 1) };
 
-		//std::map<std::pair<int, int>, std::atomic<bool>> changed;
-		//this->RetrieveChangedList(changed);
+		std::map<std::pair<int, int>, std::atomic<bool>> changed;
+		this->retrieve_changed_list(changed);
 
 		for (int idx_x = draw_zone_idx.left; idx_x <= draw_zone_idx.right; ++idx_x)
 		{
 			for (int idx_y = draw_zone_idx.top; idx_y <= draw_zone_idx.bottom; ++idx_y)
 			{
-				/*auto it = changed.find(std::make_pair(idx_x, idx_y));
-				if (it != changed.end() && it->second.load())*/
+				auto it = changed.find(std::make_pair(idx_x, idx_y));
+				if (it != changed.end() && it->second.load())
 				{
 					draw_grid(memdc, idx_x, idx_y);
 				}
@@ -296,8 +296,8 @@ protected:
 		{
 			for (int idx_y = draw_zone_idx.top; idx_y <= draw_zone_idx.bottom; ++idx_y)
 			{
-				/*auto it = changed.find(std::make_pair(idx_x, idx_y));
-				if (it != changed.end() && it->second.load())*/
+				auto it = changed.find(std::make_pair(idx_x, idx_y));
+				if (it != changed.end() && it->second.load())
 				{
 					draw_zone(memdc, idx_x, idx_y);
 				}

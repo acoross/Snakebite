@@ -229,7 +229,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					10,
 					10,
 					250,
-					150
+					180
 				};
 
 				game_server->RequestToSession(
@@ -246,8 +246,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					L"mean move time: %.4f(ms), \n"
 					//L"mean collision time: %.4f(ms)\n"
 					L"total zone update time: %.4f(ms)\n"
+					L"total zone broadcast time: %.4f(ms)\n"
 					L"mean clone time: %.4f(ms)\n"
-					L"mean server tick time: %.4f(ms)\n"
 					L"mean total draw time: %.4f(ms)\n"
 					L"mean real draw time: %.4f(ms)\n"
 					L"mean frame tick: %.4f(ms)\n"
@@ -257,8 +257,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					game_server->mean_move_time_ms_.load(),
 					//game_server->mean_collision_time_ms_.load(),
 					game_server->GetUpdateTime(),
+					game_server->GetBroadcastTime(),
 					game_server->mean_clone_object_time_ms_.load(),
-					game_server->mean_tick_time_ms_.load(),
 					mean_draw_time_ms.load(),
 					g_game_client->mean_draw_time_ms_.load(),
 					game_server->mean_frame_tick_.load(),

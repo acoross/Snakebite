@@ -92,8 +92,27 @@ public:
 
 	double GetUpdateTime()
 	{
-		return game_session_->CalculateTotalZoneUpdateTime();
+		static int64_t lasttick = ::GetTickCount();
+		if (::GetTickCount() > lasttick + 200)
+		{
+			total_zone_update_time_ms_.store(game_session_->CalculateTotalZoneUpdateTime());
+		}
+		return total_zone_update_time_ms_.load();
 	}
+
+	double GetBroadcastTime()
+	{
+		static int64_t lasttick = ::GetTickCount();
+		if (::GetTickCount() > lasttick + 200)
+		{
+			total_zone_broadcast_time_ms_.store(game_session_->CalculateTotalBroadcastTime());
+		}
+		return total_zone_broadcast_time_ms_.load();
+	}
+
+
+	std::atomic<double> total_zone_update_time_ms_{ 0 };
+	std::atomic<double> total_zone_broadcast_time_ms_{ 0 };
 
 	std::atomic<double> mean_move_time_ms_{ 0 };
 	std::atomic<double> mean_collision_time_ms_{ 0 };

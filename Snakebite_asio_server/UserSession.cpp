@@ -53,12 +53,12 @@ void UserSession::send_update_game_object(
 		return;
 	}
 
-	/*static std::atomic<int> cnt = 0;
+	static std::atomic<int> cnt = 0;
 	if (cnt.fetch_add(1) > 0)
 	{
 		cnt.fetch_sub(1);
 		return;
-	}*/
+	}
 
 	messages::UpdateGameObjectsEvent game_objects;
 	game_objects.set_idx_x(idx_x);
@@ -120,6 +120,7 @@ void UserSession::send_update_game_object(
 			{
 				//cnt.fetch_sub(1);
 			});
+			cnt.fetch_sub(1);
 		}
 	}
 }
