@@ -301,12 +301,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	g_game_server_wp = server;
 
 	auto auto_con = server->MakeConnectionToGlobalUpdateEvent(
-		[client = g_game_client.get()](
-			int idx_x, int idx_y,
-			SbGeoZone::SharedCloneZoneObjlistT snake_list,
-			SbGeoZone::SharedCloneZoneObjlistT apple_list)
+		[client = g_game_client.get()](SbGeoZone::UpdateEventData ed)
 	{
-		client->SetObjectList_FilteredByCurrentObservingZoneOnly(idx_x, idx_y, snake_list, apple_list);
+		client->SetObjectList_FilteredByCurrentObservingZoneOnly(ed);
 	});
 
 	std::thread game_threads[3];

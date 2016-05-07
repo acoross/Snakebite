@@ -72,7 +72,7 @@ public:
 			return false;
 		}
 
-		if (IsCrashed(head_, other->head_))
+		if (head_.IsCrashed(other->head_))
 		{
 			return true;
 		}
@@ -80,7 +80,7 @@ public:
 		std::lock_guard<std::recursive_mutex> lock(other->body_list_lock_);
 		for (auto mo : other->body_list_)
 		{
-			if (IsCrashed(head_, mo))
+			if (head_.IsCrashed(mo))
 			{
 				return true;
 			}
@@ -100,9 +100,6 @@ public:
 	}
 
 	Position2D GetPosition() const { return head_.GetPosition(); }
-
-	virtual void Inform()
-	{}
 
 public:
 	std::atomic<int> zone_idx_x_;

@@ -109,8 +109,8 @@ private:
 class Rect final
 {
 public:
-	Rect(int left, int right, int top, int bottom)
-		: Left(left), Right(right), Top(top), Bottom(bottom)
+	Rect(int left, int top, int right, int bottom)
+		: Left(left), Top(top), Right(right), Bottom(bottom)
 	{}
 
 	// game field APIs

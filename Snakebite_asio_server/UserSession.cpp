@@ -43,11 +43,15 @@ void UserSession::end()
 	}
 }
 
-void UserSession::send_update_game_object(
-	int idx_x, int idx_y,
-	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list,
-	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& apple_clone_list)
+void UserSession::send_update_game_object(SbGeoZone::UpdateEventData ed)
 {
+	//int idx_x, int idx_y,
+	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list = *ed.mov_obj_.get();
+	const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& apple_clone_list = *ed.static_obj_.get();
+	//int idx_x, int idx_y,
+	//SbGeoZone::SharedCloneZoneObjlistT snake_clone_list
+	//	SbGeoZone::SharedCloneZoneObjlistT apple_clone_list
+
 	if (!std::atomic_load(&push_stub_))
 	{
 		return;
@@ -61,8 +65,8 @@ void UserSession::send_update_game_object(
 	}
 
 	messages::UpdateGameObjectsEvent game_objects;
-	game_objects.set_idx_x(idx_x);
-	game_objects.set_idx_y(idx_y);
+	game_objects.set_idx_x(ed.idx_x_);
+	game_objects.set_idx_y(ed.idx_y_);
 	{
 		for (auto& pair : snake_clone_list)
 		{
@@ -175,15 +179,12 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 		[this, self_wp, prom_sp, prom_set_mov_event_sp](Snake& snake) mutable
 	{
 		auto auto_conn = snake.ConnectToUpdateEventRelayer(
-			[this, self_wp](int idx_x, int idx_y,
-				SbGeoZone::SharedCloneZoneObjlistT snake_clone_list,
-				SbGeoZone::SharedCloneZoneObjlistT apple_clone_list)
+			[this, self_wp](SbGeoZone::UpdateEventData ed)
 		{
 			if (auto rpcsocket = self_wp.lock())
 			{
 				//if (game_session_->GetZoneGrid().IsNeighborZone(player_idx_x_.load(), player_idx_y_.load(), idx_x, idx_y))
 				{
-					send_update_game_object(idx_x, idx_y, *snake_clone_list, *apple_clone_list);
 				}
 			}
 		});

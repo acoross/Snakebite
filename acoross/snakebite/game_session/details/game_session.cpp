@@ -45,13 +45,12 @@ void GameSession::StartZone(int frame_tick)
 	{
 		zone_er.second->connect(
 			[ix = zone_er.first.first, iy = zone_er.first.second, this]
-		(int idx_zone_x, int idx_zone_y,
-			SbGeoZone::SharedCloneZoneObjlistT snakes, SbGeoZone::SharedCloneZoneObjlistT apples)
+		(SbGeoZone::UpdateEventData ed)
 		{
-			if (ix == idx_zone_x && iy == idx_zone_y)	// 각 zone 은 옆 zone 정보까지 broadcast 하기 때문에, 전체 zone 정보를 수신하는 경우 filter 필요.
+			if (ix == ed.idx_x_ && iy == ed.idx_y_)	// 각 zone 은 옆 zone 정보까지 broadcast 하기 때문에, 전체 zone 정보를 수신하는 경우 filter 필요.
 				return;
 
-			this->InvokeUpdateEvent(idx_zone_x, idx_zone_y, snakes, apples);
+			this->InvokeUpdateEvent(ed);
 		});
 	}
 

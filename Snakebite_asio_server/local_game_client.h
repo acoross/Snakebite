@@ -32,10 +32,13 @@ public:
 	}
 
 	void SetObjectList_FilteredByCurrentObservingZoneOnly(
-		int idx_x, int idx_y,
-		SbGeoZone::SharedCloneZoneObjlistT snake_list,
-		SbGeoZone::SharedCloneZoneObjlistT apple_list)
+		SbGeoZone::UpdateEventData ed)
 	{
+		int idx_x = ed.idx_x_;
+		int idx_y = ed.idx_y_;
+		SbGeoZone::SharedCloneZoneObjlistT snake_list = ed.mov_obj_;
+		SbGeoZone::SharedCloneZoneObjlistT apple_list = ed.static_obj_;
+
 		auto min_x = cached_draw_zone_min_x_.load();
 		auto max_x = cached_draw_zone_max_x_.load();
 		auto min_y = cached_draw_zone_min_y_.load();

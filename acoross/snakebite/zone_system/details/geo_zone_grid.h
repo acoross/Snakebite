@@ -24,7 +24,7 @@ public:
 	// GameGeoZoneGrid
 	ZoneGrid(::boost::asio::io_service& io_service,
 		int zone_width, int zone_height, int n_x, int n_y)
-		: game_boundary_(0, n_x * zone_width, 0, n_y * zone_height)
+		: game_boundary_(0, 0, n_x * zone_width, n_y * zone_height)
 		, ZoneWidth(zone_width), ZoneHeight(zone_height)
 		, N_X(n_x), N_Y(n_y)
 	{
@@ -43,10 +43,10 @@ public:
 						*this,
 						i, j,
 						game_boundary_,
-						zone_left,
-						zone_top,
-						zone_width,
-						zone_height
+						Rect(zone_left,
+							zone_top,
+							zone_left + zone_width,
+							zone_top + zone_height)
 						)
 				);
 			}

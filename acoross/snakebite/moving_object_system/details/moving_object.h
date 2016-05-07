@@ -31,6 +31,8 @@ public:
 	Position2D GetPosition() const { return pos_; }
 	double GetRadius() const { return radius_; }
 
+	bool IsCrashed(const MovingObject& other) const;
+
 private:
 	Position2D pos_;
 	double radius_;
@@ -57,15 +59,25 @@ inline void MovingObject::Move(const DirVector2D & diff, Rect& boundary)
 	pos_ = pos_new;
 }
 
-inline bool IsCrashed(const MovingObject& mo1, const MovingObject& mo2)
+inline bool MovingObject::IsCrashed(const MovingObject& other) const
 {
-	double dist = Position2D::Distance(mo1.GetPosition(), mo2.GetPosition());
-	if (dist < mo1.GetRadius() + mo2.GetRadius())
+	double dist = Position2D::Distance(this->pos_, other.pos_);
+	if (dist < this->radius_ + other.radius_)
 	{
 		return true;
 	}
 	return false;
 }
+
+//inline bool IsCrashed(const MovingObject& mo1, const MovingObject& mo2)
+//{
+//	double dist = Position2D::Distance(mo1.GetPosition(), mo2.GetPosition());
+//	if (dist < mo1.GetRadius() + mo2.GetRadius())
+//	{
+//		return true;
+//	}
+//	return false;
+//}
 
 }
 }

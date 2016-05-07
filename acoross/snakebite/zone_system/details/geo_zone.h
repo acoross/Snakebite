@@ -16,7 +16,6 @@
 #include "zone_object.h"
 
 #include <acoross/snakebite/util.h>
-//#include "../collider_base.h"
 
 namespace acoross {
 namespace snakebite {
@@ -70,12 +69,9 @@ static void process_collision_to_wall(std::shared_ptr<ZoneObjectEx<ColliderT>> a
 // serialized by strand
 template <typename ColliderT>
 class GeoZone
-	//: std::enable_shared_from_this<GeoZone>
 	: std::enable_shared_from_this<GeoZone<ColliderT>>
 {
 public:
-	//using ColliderT = SbColliderBase;
-	//using MyT = GeoZone;
 	using MyT = GeoZone<ColliderT>;
 	using GameGeoZoneGrid = ZoneGrid<MyT>;
 
@@ -85,10 +81,31 @@ public:
 	using MyCloneObjT = ZoneObjectCloneEx<ColliderT>;
 	using CloneZoneObjListT = std::list<std::pair<HandleT, MyCloneObjT>>;
 	using SharedCloneZoneObjlistT = std::shared_ptr<CloneZoneObjListT>;
-	using ObserverT = std::function<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
+	
+	class UpdateEventData
+	{
+	public:
+		UpdateEventData(
+			int idx_x,
+			int idx_y,
+			SharedCloneZoneObjlistT mov_obj,
+			SharedCloneZoneObjlistT static_obj)
+			: idx_x_(idx_x), idx_y_(idx_y), mov_obj_(mov_obj), static_obj_(static_obj)
+		{}
+		UpdateEventData(const UpdateEventData& other)
+			: idx_x_(other.idx_x_), idx_y_(other.idx_y_), mov_obj_(other.mov_obj_), static_obj_(other.static_obj_)
+		{}
+		UpdateEventData& operator=(const UpdateEventData& other) = default;
 
-	using UpdateEvent = acoross::Event<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
-	using UpdateEventRelayer = acoross::EventRelayer<void(int, int, SharedCloneZoneObjlistT, SharedCloneZoneObjlistT)>;
+		int idx_x_;
+		int idx_y_;
+		SharedCloneZoneObjlistT mov_obj_;
+		SharedCloneZoneObjlistT static_obj_;
+	};
+
+	using ObserverT = std::function<void(UpdateEventData)>;
+	using UpdateEvent = acoross::Event<void(UpdateEventData)>;
+	using UpdateEventRelayer = acoross::EventRelayer<void(UpdateEventData)>;
 
 	/////////////////////////////////////////////////
 	// GeoZone
@@ -97,14 +114,14 @@ public:
 		GameGeoZoneGrid& owner_zone_grid,
 		int idx_zone_x, int idx_zone_y,
 		Rect& game_boundary,
-		int left, int top, int width, int height)
+		Rect zone_boundary)
 		: strand_(io_service)
-		, owner_zone_grid_(owner_zone_grid)
 		, zone_timer_(io_service)
+		, owner_zone_grid_(owner_zone_grid)
 		, IDX_ZONE_X(idx_zone_x)
 		, IDX_ZONE_Y(idx_zone_y)
 		, game_boundary_(game_boundary)
-		, zone_boundary_(left, width + left, top, top + height)
+		, zone_boundary_(zone_boundary)
 	{}
 	~GeoZone()
 	{}
@@ -116,11 +133,10 @@ public:
 	// loop 는 strand 를 통해 serialize 된다.
 	void Run(int frame_tick)
 	{
-		zone_timer_tick_ = frame_tick;
-
 		bool exp = false;
 		if (is_running_.compare_exchange_strong(exp, true))
 		{
+			zone_timer_tick_ = frame_tick;
 			AsyncDoUpdate();
 		}
 	}
@@ -131,23 +147,23 @@ public:
 	}
 
 	// 움직이지 않는 object 추가
-	void AsyncAddStaticObj(std::shared_ptr<MyObjT> apple)
+	void AsyncAddStaticObj(std::shared_ptr<MyObjT> static_obj)
 	{
 		strand_.post(
-			[this, apple]()
+			[this, static_obj]()
 		{
-			static_objects_.emplace(std::make_pair(Handle<MyObjT>(apple.get()).handle, apple));
+			static_objects_.emplace(std::make_pair(Handle<MyObjT>(static_obj.get()).handle, static_obj));
 			cached_static_object_cnt_.fetch_add(1);
-			apple->AtomicZoneIdx(IDX_ZONE_X, IDX_ZONE_Y);
+			static_obj->AtomicZoneIdx(IDX_ZONE_X, IDX_ZONE_Y);
 		});
 	}
 	// 움직이지 않는 object 제거
-	void AsyncRemoveStaticObj(HandleT apple_handle, std::function<void(bool result)> func)
+	void AsyncRemoveStaticObj(HandleT handle, std::function<void(bool result)> callback)
 	{
 		strand_.post(
-			[&, this, apple_handle, func]()
+			[&, this, handle, callback]()
 		{
-			auto it = static_objects_.find(apple_handle);
+			auto it = static_objects_.find(handle);
 			if (it != static_objects_.end())
 			{
 				it->second->AtomicZoneIdx(0, 0);
@@ -155,25 +171,25 @@ public:
 				static_objects_.erase(it);
 				cached_static_object_cnt_.fetch_sub(1);
 
-				return func(true);
+				return callback(true);
 			}
 
-			return func(false);
+			return callback(false);
 		});
 	}
 	// 움직이는 object 추가
-	void AsyncAddMovObj(std::shared_ptr<MyObjT> snake)
+	void AsyncAddMovObj(std::shared_ptr<MyObjT> mov_obj)
 	{
 		strand_.post(
-			[this, snake]()
+			[this, mov_obj]()
 		{
-			if (snake->remove_this_from_zone_.load())
+			if (mov_obj->remove_this_from_zone_.load())
 			{
-				snake->AtomicZoneIdx(0, 0);
+				mov_obj->AtomicZoneIdx(0, 0);
 				return;
 			}
 
-			auto it = mov_objects_.emplace(Handle<MyObjT>(snake.get()).handle, snake);
+			auto it = mov_objects_.emplace(Handle<MyObjT>(mov_obj.get()).handle, mov_obj);
 			if (it.second)
 			{
 				it.first->second->AtomicZoneIdx(IDX_ZONE_X, IDX_ZONE_Y);
@@ -193,16 +209,12 @@ public:
 	}
 
 	// 다른 zone 의 정보를 내 zone 의 observer 에게 보내는 method
-	void AsyncInvokeUpdateEventsToObservers(
-		int idx_x, int idx_y,
-		SharedCloneZoneObjlistT snakes,
-		SharedCloneZoneObjlistT apples)
+	void AsyncInvokeUpdateEventsToObservers(UpdateEventData ed)
 	{
 		strand_.post(
-			[this,
-			idx_x, idx_y, snakes, apples]()
+			[this, ed]()
 		{
-			invoke_update_event_to_observers(idx_x, idx_y, snakes, apples);
+			invoke_update_event_to_observers(ed);
 		});
 	}
 
@@ -216,8 +228,6 @@ public:
 	//
 
 private:
-	//using CollisionSet = std::set<HandleT>;
-
 	// update loop, using timer
 	void AsyncDoUpdate()
 	{
@@ -228,9 +238,13 @@ private:
 
 			zone_timer_.expires_from_now(boost::posix_time::milliseconds(zone_timer_tick_));
 
+			auto cnt = mov_objects_.size();
 			update_movobj_position(zone_timer_tick_);
+
+			cnt = mov_objects_.size();
 			process_collision(owner_zone_grid_);
 
+			cnt = mov_objects_.size();
 			invoke_my_update_event_to_observers();
 
 			zone_timer_.async_wait(
@@ -261,7 +275,7 @@ private:
 				return;
 			}
 
-			process_collision_2mapsnake(
+			process_collision_2_mapsnake(
 				*shared_other_snakes,
 				mov_objects_,
 				static_objects_);
@@ -288,7 +302,7 @@ private:
 			else
 			{
 				mov_obj->UpdateMove(diff_in_ms, game_boundary_);
-				process_collision_to_wall((std::shared_ptr<MyObjT>)mov_obj, game_boundary_);
+				//process_collision_to_wall((std::shared_ptr<MyObjT>)mov_obj, game_boundary_);
 			}
 		}
 
@@ -370,8 +384,12 @@ private:
 			apples->push_back(std::make_pair(apple.first, apple.second->Clone()));
 		}
 
-		invoke_update_event_to_observers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
+		UpdateEventData ed(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
 
+		// event to me
+		invoke_update_event_to_observers(ed);
+
+		// broadcast to neighbors
 		for (int x = -1; x <= 1; ++x)
 		{
 			for (int y = -1; y <= 1; ++y)
@@ -382,7 +400,7 @@ private:
 				auto neighbor_zone = owner_zone_grid_.get_zone_by_idx(IDX_ZONE_X + x, IDX_ZONE_Y + y);
 				if (neighbor_zone)
 				{
-					neighbor_zone->AsyncInvokeUpdateEventsToObservers(IDX_ZONE_X, IDX_ZONE_Y, snakes, apples);
+					neighbor_zone->AsyncInvokeUpdateEventsToObservers(ed);
 				}
 			}
 		}
@@ -390,14 +408,13 @@ private:
 
 	// refactoring 필요
 	// @use in serializer
-	void invoke_update_event_to_observers(int idx_x, int idx_y,
-		SharedCloneZoneObjlistT snakes, SharedCloneZoneObjlistT apples)
+	void invoke_update_event_to_observers(UpdateEventData ed)
 	{
 		MeanProcessTimeChecker time_checker(mean_broadcast_time_ms_);
-		update_event_.invoke(idx_x, idx_y, snakes, apples);
+		update_event_.invoke(ed);
 	}
 
-	static void process_collision_2mapsnake(MapMyObj& src_mov_objs, MapMyObj& target_mov_objs, MapMyObj& static_objs)
+	static void process_collision_2_mapsnake(MapMyObj& src_mov_objs, MapMyObj& target_mov_objs, MapMyObj& static_objs)
 	{
 		for (auto& mov_obj1 : src_mov_objs)
 		{
@@ -416,28 +433,26 @@ private:
 private:
 	::boost::asio::strand strand_;
 	::boost::asio::deadline_timer zone_timer_;
-	int zone_timer_tick_{ 10 };
+
+	int zone_timer_tick_{ 100 };
 	std::atomic<bool> is_running_{ false };
 
 	GameGeoZoneGrid& owner_zone_grid_;
 	Rect zone_boundary_;
 	Rect& game_boundary_;
 
-	//@use in serializer
+	//@use in strand_
 	UpdateEvent update_event_;
-
 	MapMyObj mov_objects_;
 	MapMyObj static_objects_;
+	//
+
+	// monitor
 	std::atomic<int> cached_mov_object_cnt_{ 0 };
 	std::atomic<int> cached_static_object_cnt_{ 0 };
-	//CollisionSet wall_collision_set_;
-	//
 };
 //
 
 }
 }
-
-//#include "geo_zone.ipp"
-
 #endif //SNAKEBITE_GAME_GEO_ZONE_H_

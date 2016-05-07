@@ -67,10 +67,9 @@ public:
 		return update_event_.connect(on_update);
 	}
 
-	void InvokeUpdateEvent(int idx_zone_x, int idx_zone_y,
-		SbGeoZone::SharedCloneZoneObjlistT snakes, SbGeoZone::SharedCloneZoneObjlistT apples)
+	void InvokeUpdateEvent(SbGeoZone::UpdateEventData ed)
 	{
-		update_event_.invoke(idx_zone_x, idx_zone_y, snakes, apples);
+		update_event_.invoke(ed);
 	}
 
 	const SbGeoZoneGrid& GetZoneGrid() const

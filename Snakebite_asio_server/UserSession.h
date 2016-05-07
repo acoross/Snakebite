@@ -49,10 +49,7 @@ public:
 	}
 
 private:
-	void send_update_game_object(
-		int idx_x, int idx_y,
-		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& snake_clone_list,
-		const std::list<std::pair<Handle<Snake>::Type, ZoneObjectClone>>& apple_clone_list);
+	void send_update_game_object(SbGeoZone::UpdateEventData ed);
 	
 	Handle<Snake>::Type user_snake_handle_;
 	std::atomic<int> player_idx_x_{ 0 };
