@@ -185,6 +185,7 @@ acoross::rpc::ErrCode UserSession::InitPlayer(const acoross::snakebite::messages
 			{
 				//if (game_session_->GetZoneGrid().IsNeighborZone(player_idx_x_.load(), player_idx_y_.load(), idx_x, idx_y))
 				{
+					send_update_game_object(ed);
 				}
 			}
 		});
