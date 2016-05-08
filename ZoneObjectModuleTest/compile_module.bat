@@ -1,0 +1,1 @@
+cl /c /experimental:module /module:name zone_obj_system /module:export zone_object_module.cpp /I"../packages/boost.1.60.0.0/lib/native/include" /I"../"
