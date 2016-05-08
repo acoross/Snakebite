@@ -13,10 +13,7 @@ public:
 	Position2D(double ax, double ay)
 		: x{ ax }, y{ ay }
 	{}
-
-	double x{ 0 };
-	double y{ 0 };
-
+	
 	double Length() const
 	{
 		return sqrt(x * x + y * y);
@@ -41,6 +38,11 @@ public:
 
 		return sqrt(sqdist);
 	}
+
+public:
+	double x{ 0 };
+	double y{ 0 };
+
 };
 
 typedef Position2D DirVector2D;

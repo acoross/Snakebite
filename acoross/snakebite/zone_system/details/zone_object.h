@@ -5,6 +5,8 @@
 #include <mutex>
 #include <atomic>
 
+#include "moving_object.h"
+
 namespace acoross {
 namespace snakebite {
 template <typename ColliderT>

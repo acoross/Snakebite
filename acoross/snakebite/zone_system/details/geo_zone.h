@@ -21,46 +21,59 @@ namespace acoross {
 namespace snakebite {
 
 //@need to be serialized
-// 벽에 충돌했는지 체크.
 // 벽에 충돌하면 튕겨나옴.
 // BUG!!!
 // when move to neighbor zone, actor should be removed from wall_collision_set_, but now it doesn't
 template <typename ColliderT>
-static void process_collision_to_wall(std::shared_ptr<ZoneObjectEx<ColliderT>> actor, Rect& boundary)
+static void reflect_object_at_boundary(std::shared_ptr<ZoneObjectEx<ColliderT>> actor, Rect& boundary)
+{
+	if (pos.x <= game_boundary_.Left + 1 || pos.x >= game_boundary_.Right - 1
+		|| pos.y <= game_boundary_.Top + 1 || pos.y >= game_boundary_.Bottom - 1)
+	{
+		pos.x = Trim((int)pos.x, game_boundary_.Left + 1, game_boundary_.Right - 1);
+		auto ret = wall_collision_set_.insert(Handle<Snake>(actor.get()).handle);
+		if (ret.second == true)
+		{
+			// onCollideBegin
+			if (pos.x <= game_boundary_.Left + 1 || pos.x >= game_boundary_.Right - 1)
+			{
+				actor->SetAngle(180. - actor->GetAngle().Get());
+			}
+			else if (pos.y <= game_boundary_.Top + 1 || pos.y >= game_boundary_.Bottom - 1)
+			{
+				actor->SetAngle(-1 * actor->GetAngle().Get());
+			}
+		}
+		else
+		{
+			// onColliding
+		}
+	}
+	else
+	{
+		if (wall_collision_set_.erase(Handle<Snake>(actor.get()).handle) > 0)
+		{
+			// onCollideEnd
+		}
+	}
+}
+
+//@need to be serialized
+// boundary 벗어나지 않게 조정
+template <typename ColliderT>
+static void trim_object_position(std::shared_ptr<ZoneObjectEx<ColliderT>> actor, Rect& boundary)
 {
 	auto& pos = actor->GetPosition();
 	pos.x = Trim((int)pos.x, boundary.Left + 1, boundary.Right - 1);
 	pos.y = Trim((int)pos.y, boundary.Top + 1, boundary.Bottom - 1);
+}
 
-	//if (pos.x <= game_boundary_.Left + 1 || pos.x >= game_boundary_.Right - 1
-	//	|| pos.y <= game_boundary_.Top + 1 || pos.y >= game_boundary_.Bottom - 1)
-	//{
-	//	pos.x = Trim((int)pos.x, game_boundary_.Left + 1, game_boundary_.Right - 1);
-	//	auto ret = wall_collision_set_.insert(Handle<Snake>(actor.get()).handle);
-	//	if (ret.second == true)
-	//	{
-	//		// onCollideBegin
-	//		if (pos.x <= game_boundary_.Left + 1 || pos.x >= game_boundary_.Right - 1)
-	//		{
-	//			actor->SetAngle(180. - actor->GetAngle().Get());
-	//		}
-	//		else if (pos.y <= game_boundary_.Top + 1 || pos.y >= game_boundary_.Bottom - 1)
-	//		{
-	//			actor->SetAngle(-1 * actor->GetAngle().Get());
-	//		}
-	//	}
-	//	else
-	//	{
-	//		// onColliding
-	//	}
-	//}
-	//else
-	//{
-	//	if (wall_collision_set_.erase(Handle<Snake>(actor.get()).handle) > 0)
-	//	{
-	//		// onCollideEnd
-	//	}
-	//}
+//@need to be serialized
+// boundary 벗어나지 않게 조정
+template <typename ColliderT>
+static void process_collision_to_wall(std::shared_ptr<ZoneObjectEx<ColliderT>> actor, Rect& boundary)
+{
+	trim_object_position(actor, boundary);
 }
 
 //////////////////////////////////////////////////
