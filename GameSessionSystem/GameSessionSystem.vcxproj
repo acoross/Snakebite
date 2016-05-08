@@ -75,14 +75,14 @@
     <ClInclude Include="..\acoross\snakebite\game_session\details\snake.h" />
     <ClInclude Include="..\acoross\snakebite\game_session\details\snake_collider.h" />
     <ClInclude Include="..\acoross\snakebite\game_session\game_session_system.h" />
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\geo_types.h" />
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\details\moving_object.h" />
-    <ClInclude Include="..\acoross\snakebite\moving_object_system\moving_object_system.h" />
+    <ClInclude Include="..\acoross\snakebite\zone_system\details\geo_types.h" />
+    <ClInclude Include="..\acoross\snakebite\zone_system\details\moving_object.h" />
     <ClInclude Include="..\acoross\snakebite\zone_system\details\signal.h" />
     <ClInclude Include="..\acoross\snakebite\zone_system\details\geo_zone.h" />
     <ClInclude Include="..\acoross\snakebite\zone_system\details\geo_zone_grid.h" />
     <ClInclude Include="..\acoross\snakebite\zone_system\details\handle.h" />
     <ClInclude Include="..\acoross\snakebite\zone_system\details\zone_object.h" />
+    <ClInclude Include="..\acoross\snakebite\zone_system\moving_object_system.h" />
     <ClInclude Include="..\acoross\snakebite\zone_system\zone_system.h" />
   </ItemGroup>
   <ItemGroup>

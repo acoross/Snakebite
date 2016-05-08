@@ -2,7 +2,6 @@
 #define SNAKEBITE_SNAKEBITE_COLLIDER_H_
 
 #include <set>
-#include <acoross/snakebite/moving_object_system/moving_object_system.h>
 
 #include "collider_base.h"
 

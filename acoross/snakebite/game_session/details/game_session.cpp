@@ -8,7 +8,6 @@
 #include <SDKDDKVer.h>
 #include <boost/asio.hpp>
 
-#include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "snake_collider.h"
 #include "sb_zone_object.h"
 

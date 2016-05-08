@@ -5,8 +5,6 @@
 #include <functional>
 #include <string>
 
-#include <acoross/snakebite/zone_system/details/signal.h>
-#include <acoross/snakebite/moving_object_system/moving_object_system.h>
 #include "sb_zone_object.h"
 
 namespace acoross {
